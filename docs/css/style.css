@@ -1,9 +1,9 @@
 :root {
     --bg-color: #0b0e14;
     --bento-bg: rgba(255, 255, 255, 0.02);
-    --bento-border: rgba(255, 255, 255, 0.05);
+    --bento-border: rgba(255, 255, 255, 0.08);
     --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
+    --text-secondary: rgba(248, 250, 252, 0.85);
     --accent-1: #8b5cf6; /* Purple */
     --accent-2: #3b82f6; /* Blue */
     --accent-3: #10b981; /* Green */
@@ -127,14 +127,37 @@ h3 {
     margin-bottom: 1.5rem;
     letter-spacing: -0.02em;
     font-family: var(--font-heading);
+    background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-1));
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientCycle 6s ease infinite;
+}
+
+/* Animated Multi-Color Text */
+.color-cycle-text {
+    background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-1));
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientCycle 6s ease infinite;
+}
+
+@keyframes gradientCycle {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* Hero Section */
 .hero {
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
+    justify-content: center;
+    text-align: center;
+    gap: 1.5rem;
     background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
 }
 
@@ -161,10 +184,12 @@ h3 {
 }
 
 .highlight {
-    background: linear-gradient(to right, #c084fc, #3b82f6);
+    background: linear-gradient(to right, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-1));
+    background-size: 300% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    animation: gradientCycle 5s ease infinite;
 }
 
 .hero h2 {
@@ -172,6 +197,12 @@ h3 {
     font-weight: 400;
     color: var(--text-secondary);
     margin-bottom: 1.5rem;
+    background: linear-gradient(90deg, var(--accent-2), var(--accent-3), var(--accent-1), var(--accent-2));
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientCycle 7s ease infinite;
 }
 
 .hero p {
@@ -184,6 +215,8 @@ h3 {
 .hero-cta {
     display: flex;
     gap: 1rem;
+    justify-content: center;
+    width: 100%;
 }
 
 .btn {
@@ -244,6 +277,10 @@ h3 {
     display: flex;
     flex-wrap: wrap;
     gap: 0.8rem;
+    justify-content: center;
+}
+.skills h3 {
+    text-align: center;
 }
 
 .skill-tag {
@@ -310,6 +347,12 @@ h3 {
 .project-info h4 {
     font-size: 1.2rem;
     margin-bottom: 0.3rem;
+    background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-1));
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientCycle 6s ease infinite;
 }
 
 .project-info p {
@@ -380,8 +423,8 @@ h3 {
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: linear-gradient(90deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.02) 100%);
-    padding: 3rem;
+    background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.05) 100%);
+    padding: 1.5rem;
 }
 
 .crm-content {
@@ -399,9 +442,9 @@ h3 {
 }
 
 .crm-content p {
-    font-size: 1.2rem;
+    font-size: 0.95rem;
     color: var(--text-secondary);
-    line-height: 1.8;
+    line-height: 1.5;
 }
 
 .crm-content strong {
@@ -481,4 +524,133 @@ h3 {
         text-align: center;
         width: 100%;
     }
+}
+
+/* Central Carousel Showcase */
+.showcase-carousel {
+    padding: 0;
+    min-height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
+}
+
+.carousel-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    border-radius: inherit;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out, transform 6s ease-out;
+    transform: scale(1.1);
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.carousel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(11, 14, 20, 0.1), rgba(11, 14, 20, 0.95));
+    z-index: 1;
+}
+
+/* Carousel Controls */
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(11, 14, 20, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: var(--transition);
+    backdrop-filter: blur(5px);
+}
+.carousel-nav:hover {
+    background: rgba(139, 92, 246, 0.8);
+    transform: translateY(-50%) scale(1.1);
+}
+.carousel-nav.prev { left: 1.5rem; }
+.carousel-nav.next { right: 1.5rem; }
+
+.carousel-glass-overlay {
+    position: relative;
+    z-index: 2;
+    padding: 2.5rem;
+    width: 100%;
+}
+
+.carousel-glass-overlay h3 {
+    margin-bottom: 0.5rem;
+    font-size: 2.2rem;
+}
+
+.carousel-glass-overlay p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+/* Rain Effect */
+.rain-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 100; /* Over everything */
+}
+
+.drop {
+    position: absolute;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(139, 92, 246, 0.4));
+    width: 1.5px;
+    height: 120px;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-120px); }
+    100% { transform: translateY(100vh); }
+}
+
+@media (max-width: 768px) {
+    .showcase-carousel {
+        min-height: 350px;
+    }
+    .carousel-nav {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    .carousel-nav.prev { left: 0.5rem; }
+    .carousel-nav.next { right: 0.5rem; }
 }
