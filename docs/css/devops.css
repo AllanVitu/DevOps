@@ -1,0 +1,93 @@
+/* Hero Senior */
+.senior-hero { margin-bottom: 8rem; }
+.tech-badge { 
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.4rem 1rem; border-radius: 2rem;
+    background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2);
+    color: var(--emerald-500); margin-bottom: 2rem;
+}
+
+.icon-sm { width: 16px; height: 16px; }
+
+.hero-title { 
+    font-size: clamp(2.5rem, 6vw, 4.5rem); 
+    font-weight: 800; 
+    line-height: 1.1; 
+    letter-spacing: -0.03em; 
+    margin-bottom: 1.5rem; 
+}
+
+.hero-subtitle { 
+    font-size: 1.1rem; 
+    color: var(--text-muted); 
+    max-width: 650px; 
+    margin-bottom: 2.5rem; 
+    line-height: 1.7;
+}
+
+/* CTA Buttons */
+.cta-group { display: flex; gap: 1rem; margin-bottom: 4rem; flex-wrap: wrap; }
+.btn-primary, .btn-secondary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.8rem 1.8rem; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s ease;
+}
+.btn-primary { 
+    background: var(--text-main); 
+    color: var(--bg-dark); 
+}
+.btn-primary:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 10px 20px rgba(255,255,255,0.1); 
+}
+.btn-secondary { 
+    background: transparent; 
+    color: var(--text-main); 
+    border: 1px solid var(--border-glass); 
+}
+.btn-secondary:hover { 
+    background: var(--bg-glass); 
+    border-color: rgba(255,255,255,0.2); 
+    transform: translateY(-2px);
+}
+
+/* Metrics */
+.hero-metrics { 
+    display: flex; gap: 3rem; 
+    border-top: 1px solid var(--border-glass); 
+    padding-top: 2rem; 
+    flex-wrap: wrap;
+}
+.metric { display: flex; flex-direction: column; }
+.metric-val { font-size: 2rem; font-weight: 700; color: var(--text-main); }
+.metric-label { font-family: var(--font-mono); color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-top: -5px; }
+
+/* Stack Cards */
+.stack-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 1.5rem; 
+}
+
+.card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.card-header h3 { font-size: 1.2rem; }
+
+.tech-stack p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;}
+
+.tags-container { display: flex; gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.tag { 
+    font-family: var(--font-mono); 
+    font-size: 0.75rem; 
+    padding: 0.3rem 0.8rem; 
+    background: rgba(255,255,255,0.05); 
+    border-radius: 4px; 
+    color: var(--text-muted); 
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Mini projects cards */
+.project-header {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;
+}
+.project-card h4 {
+    font-size: 1.1rem; color: var(--text-main);
+}
