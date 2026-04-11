@@ -1,14 +1,16 @@
 :root {
-    --bg-dark: #0A0A0B;
-    --surface-dark: #121214;
-    --border-glass: rgba(255, 255, 255, 0.06);
-    --bg-glass: rgba(255, 255, 255, 0.02);
+    --bg-main: #f8fafc; /* Very light cool grey */
+    --surface: #ffffff;
+    --border-glass: rgba(0, 0, 0, 0.08); /* Darker borders for light mode */
+    --bg-glass: rgba(255, 255, 255, 0.65);
     
-    --text-main: #F8FAFC;
-    --text-muted: #94A3B8;
+    --text-main: #0f172a; /* Slate 900 */
+    --text-muted: #64748b; /* Slate 500 */
     
-    --indigo-500: #6366F1;
-    --emerald-500: #10B981;
+    --indigo-500: #6366f1;
+    --emerald-500: #10b981;
+    --crimson-500: #e11d48;
+    --gold-500: #f59e0b;
     
     --font-heading: 'Plus Jakarta Sans', sans-serif;
     --font-mono: 'Roboto Mono', monospace;
@@ -22,11 +24,12 @@
 }
 
 body {
-    background-color: var(--bg-dark);
+    background-color: var(--bg-main);
     color: var(--text-main);
     font-family: var(--font-heading);
     line-height: 1.6;
     overflow-x: hidden;
+    position: relative;
 }
 
 a {
@@ -34,21 +37,47 @@ a {
     text-decoration: none;
 }
 
-/* Ambient glow subtile (remplace les blobs grossiers) */
-.glow-ambient {
+/* Background animation mesh/gradient */
+.animated-bg {
     position: fixed;
-    top: -10%; left: 50%;
-    transform: translateX(-50%);
-    width: 60vw; height: 500px;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, rgba(10, 10, 11, 0) 70%);
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: -2;
+    background: linear-gradient(120deg, #f8fafc, #f1f5f9, #e2e8f0, #f8fafc);
+    background-size: 400% 400%;
+    animation: gradientMove 20s ease infinite;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Add floating subtle blobs for depth */
+.blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
     z-index: -1;
-    pointer-events: none;
+    opacity: 0.8;
+    animation: float 25s infinite alternate ease-in-out;
+}
+.blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: rgba(99, 102, 241, 0.15); } 
+.blob-2 { bottom: -10%; right: -10%; width: 40vw; height: 40vw; background: rgba(225, 29, 72, 0.1); animation-delay: -5s; } 
+.blob-3 { top: 40%; left: 30%; width: 30vw; height: 30vw; background: rgba(16, 185, 129, 0.12); animation-delay: -10s; } 
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(40px, 60px) scale(1.05); }
 }
 
 .main-container {
     max-width: 1100px;
     margin: 0 auto;
     padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
 }
 
 /* Typography Helpers */
@@ -58,12 +87,12 @@ a {
 .text-emerald { color: var(--emerald-500); }
 
 .gradient-text-blue { 
-    background: linear-gradient(135deg, #818CF8, #4F46E5); 
+    background: linear-gradient(135deg, #4f46e5, #312e81); 
     -webkit-background-clip: text; 
     color: transparent; 
 }
 .gradient-text-emerald { 
-    background: linear-gradient(135deg, #34D399, #059669); 
+    background: linear-gradient(135deg, #059669, #064e3b); 
     -webkit-background-clip: text; 
     color: transparent; 
 }
@@ -82,13 +111,14 @@ a {
     border: 1px solid var(--border-glass); 
     border-radius: 16px; 
     padding: 2rem; 
-    backdrop-filter: blur(12px); 
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px); 
+    -webkit-backdrop-filter: blur(16px);
     transition: all 0.3s ease; 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
 
 .glass-panel:hover { 
-    border-color: rgba(255,255,255,0.15); 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+    border-color: rgba(0,0,0,0.15); 
+    box-shadow: 0 12px 40px rgba(0,0,0,0.06); 
     transform: translateY(-2px);
 }
