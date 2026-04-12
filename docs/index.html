@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" class="light">
+<html lang="fr" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,9 +29,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
 </head>
 <body>
+
     <!-- Glass Navbar -->
     <nav class="glass-navbar reveal-fade">
-        <a href="#" class="nav-brand">Allan<span class="gradient-text-blue">/</span>Vitu</a>
+        <div class="scroll-tracker"></div>
+        <a href="#" class="nav-brand magnetic-btn">Allan<span class="gradient-text-blue">/</span>Vitu</a>
         
         <div style="display: flex; align-items: center;">
             <div class="nav-links">
@@ -40,8 +42,9 @@
                 <a href="#contact">Contact</a>
             </div>
             <div class="social-icons">
-                <button id="theme-toggle" aria-label="Basculer le thème" style="background: none; border: none; padding: 0; margin-right: 0.5rem; cursor: pointer; color: var(--text-muted); transition: color 0.2s, transform 0.2s; display: flex; align-items: center;">
-                    <i data-lucide="moon" class="theme-icon"></i>
+                <button id="theme-toggle" aria-label="Basculer le thème" class="theme-btn-pro">
+                    <span id="theme-emoji">🌙</span>
+                    <span class="theme-label mono-text">Thème</span>
                 </button>
                 <a href="https://github.com/allanvitu" target="_blank" aria-label="GitHub" id="nav-github"><i data-lucide="github"></i></a>
                 <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" aria-label="LinkedIn" id="nav-linkedin"><i data-lucide="linkedin"></i></a>
@@ -60,12 +63,12 @@
         <header class="senior-hero reveal-fade">
             <div class="tech-badge">
                 <i data-lucide="terminal" class="icon-sm"></i>
-                <span class="mono-text">status: available_for_mission</span>
+                <span class="mono-text typewriter-effect">status: available_for_mission</span>
             </div>
             
             <h1 class="hero-title">
-                Architecte <span class="gradient-text-blue">Full-Stack</span><br>
-                & Ingénieur <span class="gradient-text-emerald">DevOps</span>
+                Architecte <span class="gradient-text-blue glitch-text" data-text="Full-Stack">Full-Stack</span><br>
+                & Ingénieur <span class="gradient-text-emerald glitch-text" data-text="DevOps">DevOps</span>
             </h1>
             
             <p class="hero-subtitle">
@@ -73,10 +76,10 @@
             </p>
             
             <div class="cta-group">
-                <a href="#contact" class="btn-primary">
+                <a href="#contact" class="btn-primary magnetic-btn">
                     Me contacter <i data-lucide="arrow-right"></i>
                 </a>
-                <a href="#projects" class="btn-secondary">
+                <a href="#projects" class="btn-secondary magnetic-btn">
                     <i data-lucide="folder-code"></i> Voir les projets
                 </a>
             </div>
@@ -127,52 +130,83 @@
             </div>
         </div>
 
-        <!-- Tech Stack Enterprise Layout -->
+        <!-- Bento Box Tech Stack -->
         <section class="tech-stack reveal-fade">
             <h2 class="section-title">Core <span class="mono-text text-muted">/ stack</span></h2>
-            <div class="stack-grid">
-                <!-- Frontend -->
-                <div class="stack-card glass-panel">
-                    <div class="card-header">
-                        <i data-lucide="layout" class="text-blue"></i>
-                        <h3>Frontend Architecture</h3>
+            <div class="bento-grid">
+
+                <!-- BENTO 1: Grande card Frontend (col-span 2) -->
+                <div class="bento-card bento-large glass-panel aurora-card tilt-card">
+                    <div class="bento-icon-top">
+                        <i data-lucide="layers" class="text-blue"></i>
                     </div>
+                    <h3>Frontend Architecture</h3>
                     <p>Développement de Web Components, PWA et SSR. Création d'interfaces utilisateur modernes et robustes.</p>
                     <div class="tags-container">
-                        <span class="tag">Vue.js 3</span> <span class="tag">JavaScript (ES6+)</span> <span class="tag">TailwindCSS</span>
+                        <span class="tag neon-tag">Vue.js 3</span>
+                        <span class="tag neon-tag">JavaScript ES6+</span>
+                        <span class="tag neon-tag">TailwindCSS</span>
+                        <span class="tag neon-tag">HTML / CSS</span>
                     </div>
+                    <div class="bento-glow bento-glow-blue"></div>
                 </div>
-                <!-- Backend & DB -->
-                <div class="stack-card glass-panel">
-                    <div class="card-header">
+
+                <!-- BENTO 2: Card stat disponibilité -->
+                <div class="bento-card bento-stat glass-panel aurora-card tilt-card">
+                    <span class="bento-label mono-text">Status</span>
+                    <div class="bento-status-dot"></div>
+                    <p class="bento-stat-title">Disponible</p>
+                    <p class="bento-stat-sub mono-text">pour missions freelance</p>
+                    <div class="bento-glow bento-glow-emerald"></div>
+                </div>
+
+                <!-- BENTO 3: Card Backend (normale) -->
+                <div class="bento-card bento-medium glass-panel aurora-card tilt-card">
+                    <div class="bento-icon-top">
                         <i data-lucide="database" class="text-emerald"></i>
-                        <h3>Backend & Data</h3>
                     </div>
-                    <p>Conception d'APIs RESTful sécurisées et gestion de bases de données relationnelles et NoSQL.</p>
+                    <h3>Backend &amp; Data</h3>
+                    <p>APIs RESTful sécurisées et gestion de bases de données relationnelles & NoSQL.</p>
                     <div class="tags-container">
-                        <span class="tag">PHP</span> <span class="tag">MySQL</span> <span class="tag">Node.js</span> <span class="tag">NoSQL</span>
+                        <span class="tag neon-tag">PHP 8</span>
+                        <span class="tag neon-tag">MySQL</span>
+                        <span class="tag neon-tag">Node.js</span>
+                        <span class="tag neon-tag">NoSQL</span>
                     </div>
+                    <div class="bento-glow bento-glow-cyan"></div>
                 </div>
-                <!-- Cloud & DevOps -->
-                <div class="stack-card glass-panel" style="position: relative; overflow: hidden;">
-                    <div class="card-header">
+
+                <!-- BENTO 4: DevOps card (col-span 2) -->
+                <div class="bento-card bento-wide glass-panel aurora-card tilt-card">
+                    <div class="bento-icon-top">
                         <i data-lucide="server" style="color: var(--crimson-500);"></i>
-                        <h3>DevOps & Infra.</h3>
                     </div>
-                    <p style="margin-bottom: 1.5rem;">Automatisation des déploiements, gestion d'infrastructures résilientes et intégration continue (CI/CD).</p>
-                    
-                    <!-- GitHub Graph Mockup -->
+                    <h3>DevOps &amp; Infrastructure</h3>
+                    <p>Automatisation des déploiements, gestion d'infrastructures résilientes et intégration continue CI/CD.</p>
                     <div class="github-chart" style="margin-top: 1rem; border-top: 1px dashed var(--border-glass); padding-top: 1.5rem;">
                         <h4 class="mono-text" style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="git-commit" style="width: 14px; height: 14px;"></i> Commit Timeline</h4>
                         <img src="https://ghchart.rshah.org/10B981/allanvitu" alt="Allan Vitu Github Chart" style="width: 100%; border-radius: 2px;">
                     </div>
-                    
-                    <div class="tags-container" style="margin-top: 1.5rem;">
-                        <span class="tag">Docker</span> <span class="tag">CI/CD</span> <span class="tag">Linux</span> <span class="tag">Cloud</span>
+                    <div class="tags-container" style="margin-top: 1rem;">
+                        <span class="tag neon-tag">Docker</span>
+                        <span class="tag neon-tag">CI/CD</span>
+                        <span class="tag neon-tag">Linux</span>
+                        <span class="tag neon-tag">Cloud</span>
                     </div>
+                    <div class="bento-glow bento-glow-crimson"></div>
                 </div>
+
+                <!-- BENTO 5: Petite card metric -->
+                <div class="bento-card bento-stat glass-panel aurora-card tilt-card" style="align-items: center; text-align: center;">
+                    <span class="bento-label mono-text">Spécialité</span>
+                    <p class="bento-stat-title" style="font-size: 2rem;">PWA</p>
+                    <p class="bento-stat-sub mono-text">Mobile-First &bull; Offline</p>
+                    <div class="bento-glow bento-glow-violet"></div>
+                </div>
+
             </div>
         </section>
+
 
         <!-- Mon Parcours -->
         <section id="experience" class="reveal-fade" style="margin-top: 8rem;">

@@ -1,19 +1,62 @@
 :root {
-    --bg-main: #f8fafc; /* Very light cool grey */
+    --font-heading: 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'Roboto Mono', monospace;
+    --magnetic-easing: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* === LIGHT MODE: NATURE TECH (BEIGE / VERT / GRIS) === */
+html.light, :root:not(.dark) {
+    --bg-main: #f8f7f2;
     --surface: #ffffff;
-    --border-glass: rgba(0, 0, 0, 0.08); /* Darker borders for light mode */
-    --bg-glass: rgba(255, 255, 255, 0.65);
+    --border-glass: rgba(5, 150, 105, 0.12);
+    --bg-glass: rgba(255, 255, 255, 0.75);
+
+    --text-main: #334155;
+    --text-muted: #64748b;
+
+    --primary: #059669;
+    --secondary: #64748b;
+    --accent: #10b981;
+
+    /* Theme-specific Colors */
+    --indigo-500: #059669; /* Map blue to green in light mode */
+    --emerald-500: #059669;
+    --crimson-500: #991b1b;
+    --gold-500: #854d0e;
     
-    --text-main: #0f172a; /* Slate 900 */
-    --text-muted: #64748b; /* Slate 500 */
+    --grid-color: rgba(5, 150, 105, 0.04);
     
+    --blob-1: rgba(5, 150, 105, 0.08);
+    --blob-2: rgba(5, 150, 105, 0.06);
+    --blob-3: rgba(133, 77, 14, 0.05); /* Beige/Gold blob */
+}
+
+/* === DARK MODE: DARK NEON (EXISTANT) === */
+html.dark {
+    --bg-main: #0d0d14;
+    --surface: #12121e;
+    --border-glass: rgba(124, 58, 237, 0.12);
+    --bg-glass: rgba(20, 20, 35, 0.70);
+
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+
+    --primary: #7c3aed;
+    --secondary: #06b6d4;
+    --accent: #7c3aed;
+
+    --violet-500: #7c3aed;
+    --cyan-500: #06b6d4;
     --indigo-500: #6366f1;
     --emerald-500: #10b981;
     --crimson-500: #e11d48;
     --gold-500: #f59e0b;
     
-    --font-heading: 'Plus Jakarta Sans', sans-serif;
-    --font-mono: 'Roboto Mono', monospace;
+    --grid-color: rgba(124, 58, 237, 0.06);
+    
+    --blob-1: rgba(124, 58, 237, 0.15);
+    --blob-2: rgba(6, 182, 212, 0.12);
+    --blob-3: rgba(16, 185, 129, 0.12);
 }
 
 * { 
@@ -37,21 +80,31 @@ a {
     text-decoration: none;
 }
 
-/* Background animation mesh/gradient */
+/* LED GRID BACKGROUND (Vercel / Grafana style) */
 .animated-bg {
     position: fixed;
     top: 0; left: 0;
     width: 100vw; height: 100vh;
     z-index: -2;
-    background: linear-gradient(120deg, #f8fafc, #f1f5f9, #e2e8f0, #f8fafc);
-    background-size: 400% 400%;
-    animation: gradientMove 20s ease infinite;
+    background-color: var(--bg-main);
+    background-image:
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 60px 60px;
+    transition: background-color 0.5s ease;
 }
 
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+/* Animated glow origin point */
+.animated-bg::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background:
+        radial-gradient(ellipse 80vw 60vh at 10% 0%, var(--border-glass) 0%, transparent 60%),
+        radial-gradient(ellipse 60vw 50vh at 90% 100%, var(--grid-color) 0%, transparent 60%);
+    pointer-events: none;
+    transition: background 0.5s ease;
 }
 
 /* Add floating subtle blobs for depth */
@@ -63,13 +116,26 @@ a {
     opacity: 0.8;
     animation: float 25s infinite alternate ease-in-out;
 }
-.blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: rgba(99, 102, 241, 0.15); } 
-.blob-2 { bottom: -10%; right: -10%; width: 40vw; height: 40vw; background: rgba(225, 29, 72, 0.1); animation-delay: -5s; } 
-.blob-3 { top: 40%; left: 30%; width: 30vw; height: 30vw; background: rgba(16, 185, 129, 0.12); animation-delay: -10s; } 
+.blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--blob-1); } 
+.blob-2 { bottom: -10%; right: -10%; width: 40vw; height: 40vw; background: var(--blob-2); animation-delay: -5s; } 
+.blob-3 { top: 40%; left: 30%; width: 30vw; height: 30vw; background: var(--blob-3); animation-delay: -10s; } 
 
 @keyframes float {
     0% { transform: translate(0, 0) scale(1); }
     100% { transform: translate(40px, 60px) scale(1.05); }
+}
+
+.scroll-tracker {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #7c3aed, #06b6d4, #10b981);
+    width: 0%;
+    z-index: 1001;
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 0 12px rgba(124, 58, 237, 0.7);
+    transition: width 0.1s ease-out;
 }
 
 .main-container {
@@ -87,14 +153,18 @@ a {
 .text-emerald { color: var(--emerald-500); }
 
 .gradient-text-blue { 
-    background: linear-gradient(135deg, #4f46e5, #312e81); 
-    -webkit-background-clip: text; 
-    color: transparent; 
+    background: linear-gradient(135deg, #7c3aed, #06b6d4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.5));
 }
 .gradient-text-emerald { 
-    background: linear-gradient(135deg, #059669, #064e3b); 
-    -webkit-background-clip: text; 
-    color: transparent; 
+    background: linear-gradient(135deg, #06b6d4, #10b981);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.5));
 }
 
 .section-title { 
@@ -117,8 +187,146 @@ a {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
 
-.glass-panel:hover { 
-    border-color: rgba(0,0,0,0.15); 
-    box-shadow: 0 12px 40px rgba(0,0,0,0.06); 
-    transform: translateY(-2px);
+.glass-panel:hover {
+    border-color: rgba(124, 58, 237, 0.3);
+    box-shadow: 0 12px 40px rgba(124, 58, 237, 0.1);
 }
+
+/* Spotlight Hover Effect */
+.glass-panel {
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-panel::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle 400px at var(--mouse-x, 0) var(--mouse-y, 0), rgba(99, 102, 241, 0.08), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.glass-panel:hover::before {
+    opacity: 1;
+}
+
+html.dark .glass-panel::before {
+    background: radial-gradient(circle 400px at var(--mouse-x, 0) var(--mouse-y, 0), rgba(16, 185, 129, 0.12), transparent 40%);
+}
+
+.magnetic-btn {
+    transition: transform 0.3s var(--magnetic-easing), box-shadow 0.3s ease;
+    will-change: transform;
+}
+.magnetic-btn:active {
+    transform: scale(0.95) !important;
+}
+
+/* =============================================
+   🌀 AURORA HOLOGRAPHIC BORDER
+   ============================================= */
+@property --aurora-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes aurora-rotate {
+    to { --aurora-angle: 360deg; }
+}
+
+.aurora-card {
+    position: relative;
+    border: none !important;
+    border-radius: 16px;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+    will-change: transform;
+    z-index: 0;
+}
+
+.aurora-card::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: conic-gradient(
+        from var(--aurora-angle, 0deg),
+        #7c3aed,
+        #06b6d4,
+        #10b981,
+        #f59e0b,
+        #e11d48,
+        #7c3aed
+    );
+    animation: aurora-rotate 6s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.aurora-card::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 14px;
+    background: var(--bg-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.aurora-card:hover::after {
+    opacity: 1;
+}
+
+.aurora-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Holographic sheen overlay on hover */
+.aurora-card::before {
+    background: radial-gradient(
+        circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(124, 58, 237, 0.08) 0%,
+        rgba(6, 182, 212, 0.05) 30%,
+        var(--bg-glass) 70%
+    );
+}
+
+html.dark .aurora-card::before {
+    background: radial-gradient(
+        circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(124, 58, 237, 0.15) 0%,
+        rgba(6, 182, 212, 0.08) 30%,
+        rgba(15, 23, 42, 0.9) 70%
+    );
+}
+
+/* =============================================
+   🤩 3D TILT (Pokémon Holographic)
+   ============================================= */
+.tilt-card {
+    transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+    will-change: transform;
+    transform-style: preserve-3d;
+}
+
+.tilt-card:hover {
+    box-shadow:
+        0 30px 60px rgba(124, 58, 237, 0.2),
+        0 15px 30px rgba(6, 182, 212, 0.15),
+        0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+@media (pointer: coarse) {
+    *, *::before, *::after { cursor: auto !important; }
+}
+
