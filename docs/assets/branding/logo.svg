@@ -1,0 +1,7 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Infinity symbol -->
+  <path d="M30 50C30 40 38 32 48 32C55 32 61 35 65 40L75 50C79 55 85 58 92 58C102 58 110 50 110 40C110 30 102 22 92 22C85 22 79 25 75 30L65 40C61 45 55 48 48 48C38 48 30 40 30 30" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" transform="scale(0.8) translate(12, 12)"/>
+  <!-- Code brackets Integrated -->
+  <path d="M25 35L15 50L25 65" stroke="var(--emerald-500)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M75 35L85 50L75 65" stroke="var(--violet-500)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
