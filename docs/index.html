@@ -5,10 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Allan Vitu | Architecte Full-Stack & DevOps</title>
     <meta name="description" content="Portfolio de Allan Vitu, Ingénieur DevOps et Architecte Full-Stack. Création d'applications Web performantes et d'infrastructures résilientes.">
+    
+    <!-- Open-Graph / Socials -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://allanvitu.github.io/">
+    <meta property="og:title" content="Allan Vitu | Ingénieur DevOps">
+    <meta property="og:description" content="Découvrez le portfolio d'Allan Vitu. Création d'infrastructures cloud robustes (Docker, K8s, AWS) et d'applications Web fluides.">
+    <meta property="og:image" content="https://allanvitu.github.io/docs/assets/imgs/imgs_carousel/captures_Rytiger.png">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Allan Vitu | Ingénieur DevOps">
+    <meta name="twitter:description" content="Architectures CI/CD, PWA Full-Stack et projets avancés.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/devops.css">
@@ -17,6 +29,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
 </head>
 <body>
+    <!-- Glass Navbar -->
+    <nav class="glass-navbar reveal-fade">
+        <a href="#" class="nav-brand">Allan<span class="gradient-text-blue">/</span>Vitu</a>
+        
+        <div style="display: flex; align-items: center;">
+            <div class="nav-links">
+                <a href="#experience">Parcours</a>
+                <a href="#projects">Projets</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="social-icons">
+                <button id="theme-toggle" aria-label="Basculer le thème" style="background: none; border: none; padding: 0; margin-right: 0.5rem; cursor: pointer; color: var(--text-muted); transition: color 0.2s, transform 0.2s; display: flex; align-items: center;">
+                    <i data-lucide="moon" class="theme-icon"></i>
+                </button>
+                <a href="https://github.com/allanvitu" target="_blank" aria-label="GitHub" id="nav-github"><i data-lucide="github"></i></a>
+                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" aria-label="LinkedIn" id="nav-linkedin"><i data-lucide="linkedin"></i></a>
+                <a href="https://www.instagram.com/allan.vitu/" target="_blank" aria-label="Instagram" id="nav-instagram"><i data-lucide="instagram"></i></a>
+            </div>
+        </div>
+    </nav>
+
     <div class="animated-bg"></div>
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -54,7 +87,45 @@
                 <div class="metric"><span class="metric-val">CI/CD</span><span class="metric-label">Automatisé</span></div>
                 <div class="metric"><span class="metric-val">PWA</span><span class="metric-label">Mobile First</span></div>
             </div>
+
+            <!-- Scroll Indicator -->
+            <div class="scroll-indicator">
+                <div class="mouse">
+                    <div class="wheel"></div>
+                </div>
+                <span class="mono-text" style="font-size: 0.7rem; color: var(--text-muted); padding-top: 0.5rem;">Scroll to explore</span>
+            </div>
         </header>
+
+        <!-- Infinite Tech Ticker -->
+        <div class="tech-ticker-container reveal-fade">
+            <div class="tech-ticker">
+                <div class="tech-ticker-track">
+                    <span>Vue.js 3</span> <span class="dot-separator">•</span>
+                    <span>Docker</span> <span class="dot-separator">•</span>
+                    <span>Kubernetes</span> <span class="dot-separator">•</span>
+                    <span>Node.js</span> <span class="dot-separator">•</span>
+                    <span>AWS</span> <span class="dot-separator">•</span>
+                    <span>GitLab CI</span> <span class="dot-separator">•</span>
+                    <span>PHP 8</span> <span class="dot-separator">•</span>
+                    <span>MySQL</span> <span class="dot-separator">•</span>
+                    <span>TailwindCSS</span> <span class="dot-separator">•</span>
+                    <span>PWA</span> <span class="dot-separator">•</span>
+                    
+                    <!-- Duplicated for infinite loop -->
+                    <span>Vue.js 3</span> <span class="dot-separator">•</span>
+                    <span>Docker</span> <span class="dot-separator">•</span>
+                    <span>Kubernetes</span> <span class="dot-separator">•</span>
+                    <span>Node.js</span> <span class="dot-separator">•</span>
+                    <span>AWS</span> <span class="dot-separator">•</span>
+                    <span>GitLab CI</span> <span class="dot-separator">•</span>
+                    <span>PHP 8</span> <span class="dot-separator">•</span>
+                    <span>MySQL</span> <span class="dot-separator">•</span>
+                    <span>TailwindCSS</span> <span class="dot-separator">•</span>
+                    <span>PWA</span> <span class="dot-separator">•</span>
+                </div>
+            </div>
+        </div>
 
         <!-- Tech Stack Enterprise Layout -->
         <section class="tech-stack reveal-fade">
@@ -82,6 +153,49 @@
                         <span class="tag">PHP</span> <span class="tag">MySQL</span> <span class="tag">Node.js</span> <span class="tag">NoSQL</span>
                     </div>
                 </div>
+                <!-- Cloud & DevOps -->
+                <div class="stack-card glass-panel" style="position: relative; overflow: hidden;">
+                    <div class="card-header">
+                        <i data-lucide="server" style="color: var(--crimson-500);"></i>
+                        <h3>DevOps & Infra.</h3>
+                    </div>
+                    <p style="margin-bottom: 1.5rem;">Automatisation des déploiements, gestion d'infrastructures résilientes et intégration continue (CI/CD).</p>
+                    
+                    <!-- GitHub Graph Mockup -->
+                    <div class="github-chart" style="margin-top: 1rem; border-top: 1px dashed var(--border-glass); padding-top: 1.5rem;">
+                        <h4 class="mono-text" style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="git-commit" style="width: 14px; height: 14px;"></i> Commit Timeline</h4>
+                        <img src="https://ghchart.rshah.org/10B981/allanvitu" alt="Allan Vitu Github Chart" style="width: 100%; border-radius: 2px;">
+                    </div>
+                    
+                    <div class="tags-container" style="margin-top: 1.5rem;">
+                        <span class="tag">Docker</span> <span class="tag">CI/CD</span> <span class="tag">Linux</span> <span class="tag">Cloud</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mon Parcours -->
+        <section id="experience" class="reveal-fade" style="margin-top: 8rem;">
+            <h2 class="section-title">Parcours <span class="mono-text text-muted">/ experience</span></h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="timeline-date">Actuel</span>
+                    <div class="timeline-content glass-panel" style="padding: 1.5rem;">
+                        <h3>Développeur Web et Web Mobile (DWWM)</h3>
+                        <h4>Centre de Réadaptation de Mulhouse (CRM)</h4>
+                        <p>Formation intensive et diplômante focalisée sur la conception complète d'architectures logicielles, le développement Full-Stack et le déploiement continu.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <span class="timeline-date">Expériences Projet</span>
+                    <div class="timeline-content glass-panel" style="padding: 1.5rem;">
+                        <h3>Création d'Architectures & Ingénierie</h3>
+                        <h4>Projets Techniques Indépendants</h4>
+                        <p>Conception de solutions logicielles avancées : PWA responsives (Rytiger RPG, QuantifyMe), architectures de jeux complexes (ChessWarkward), et environnements de déploiement CI/CD automatisés.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -89,24 +203,40 @@
         <section id="projects" class="showcase-rytiger reveal-fade">
             <div class="rytiger-header">
                 <span class="mono-text text-crimson">Case Study // 01</span>
-                <h2>Rytiger RPG</h2>
+                <h2>Rytiger RPG 🐯🗡️</h2>
                 <p>Application PWA Dark Fantasy. Moteur de combat au tour par tour, modes Rogue-like (Tour de l'Infini) et profils joueurs persistants.</p>
             </div>
 
             <div class="rytiger-grid">
-                <!-- Visual / App Preview -->
-                <div class="rytiger-preview glass-panel">
-                    <div class="browser-topbar">
-                        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-                        <div class="url-bar">allanvitu.github.io/Rytiger_RPG/</div>
-                    </div>
-                    <div class="preview-content">
-                        <!-- L'iframe est chargée statiquement avec un overlay "Click to play" pour l'UX et les perfs -->
-                        <div class="iframe-overlay" id="playBtn">
-                            <i data-lucide="play-circle" class="play-icon"></i>
-                            <span>Lancer l'application Vue.js</span>
+                <!-- Super Carousel -->
+                <div class="rytiger-carousel-wrapper">
+                    <div class="super-carousel" id="rytigerCarousel">
+                        <div class="slide active">
+                            <img src="./assets/imgs/imgs_carousel/captures_Rytiger.png" alt="Rytiger Screenshot 1">
                         </div>
-                        <iframe id="rpgFrame" data-src="https://allanvitu.github.io/Rytiger_RPG/" title="Rytiger RPG"></iframe>
+                        <div class="slide">
+                            <img src="./assets/imgs/imgs_carousel/captures_Rytiger2.png" alt="Rytiger Screenshot 2">
+                        </div>
+                        <div class="slide">
+                            <img src="./assets/imgs/imgs_carousel/captures_Rytiger3.png" alt="Rytiger Screenshot 3">
+                        </div>
+                        <div class="slide">
+                            <img src="./assets/imgs/imgs_carousel/captures_Rytiger4.png" alt="Rytiger Screenshot 4">
+                        </div>
+                        <div class="slide">
+                            <img src="./assets/imgs/imgs_carousel/captures_Rytiger5.png" alt="Rytiger Screenshot 5">
+                        </div>
+                        
+                        <button class="carousel-btn prev" id="rytigerPrev" aria-label="Précédent"><i data-lucide="chevron-left"></i></button>
+                        <button class="carousel-btn next" id="rytigerNext" aria-label="Suivant"><i data-lucide="chevron-right"></i></button>
+                        
+                        <div class="carousel-indicators" id="rytigerIndicators">
+                            <span class="indicator active" data-index="0"></span>
+                            <span class="indicator" data-index="1"></span>
+                            <span class="indicator" data-index="2"></span>
+                            <span class="indicator" data-index="3"></span>
+                            <span class="indicator" data-index="4"></span>
+                        </div>
                     </div>
                 </div>
 
@@ -141,16 +271,39 @@
                     </a>
                 </div>
             </div>
+
+            <!-- Gameplay Video Section -->
+            <div class="rytiger-gameplay-section reveal-fade" style="margin-top: 5rem; text-align: center;">
+                <div class="video-frame glass-panel" style="max-width: 800px; margin: 0 auto; padding: 0.5rem; border: 1px solid var(--gold-500); border-radius: 12px; box-shadow: 0 10px 40px rgba(245, 158, 11, 0.1);">
+                    <video controls autoplay muted loop playsinline style="width: 100%; border-radius: 8px; box-shadow: inset 0 0 20px rgba(0,0,0,0.5); display: block;">
+                        <source src="./assets/imgs/imgs_carousel/Captures_RytigerMP4.mp4" type="video/mp4">
+                        Votre navigateur ne supporte pas la balise vidéo.
+                    </video>
+                </div>
+                
+                <div class="elvish-text-container" style="max-width: 700px; margin: 2rem auto 0; cursor: crosshair;">
+                    <p class="elvish-description interactive-glow" style="font-size: 1.15rem; line-height: 1.8; color: var(--text-main); font-style: italic; transition: text-shadow 0.3s ease, color 0.3s ease; position: relative;">
+                        <span class="elvish-letters" style="font-family: 'Cinzel Decorative', cursive; color: var(--crimson-500); font-size: 1.5rem; margin-right: 0.5rem; font-weight: 700;">Mae govannen...</span>
+                        Plongez dans les tréfonds de la Tour de l'Infini. Maîtrisez les arcanes de la composition de groupe, enchaînez vos compétences et affrontez des ombres corrompues dans une épopée Dark Fantasy intemporelle.
+                    </p>
+                </div>
+            </div>
         </section>
 
         <!-- Autres Projets -->
         <section class="other-projects reveal-fade" style="margin-top: 6rem;">
-            <h3 class="section-title" style="font-size: 1.5rem; text-transform: lowercase;">Autres Projets</h3>
+            <h3 class="section-title" style="font-size: 1.5rem; text-transform: lowercase;">Autres Projets 🚀📁</h3>
             <div class="stack-grid">
                 <a href="https://www.chesswarkward.fr/#/intro" target="_blank" rel="noopener noreferrer" class="glass-panel project-card">
                     <div class="project-header">
                         <i data-lucide="swords" class="text-blue"></i>
-                        <h4 class="mono-text">ChessWarkward</h4>
+                        <h4 class="mono-text">ChessWarkward ♟️⚔️</h4>
+                    </div>
+                    <div class="pro-carousel" data-count="4">
+                        <img src="./assets/imgs/imgs_carousel/warchess/ChessWar_accueil.webp" alt="Accueil ChessWarkward">
+                        <img src="./assets/imgs/imgs_carousel/warchess/ChessWarMenu.webp" alt="Menu ChessWarkward">
+                        <img src="./assets/imgs/imgs_carousel/warchess/modeHistoireChessWar.webp" alt="Mode Histoire">
+                        <img src="./assets/imgs/imgs_carousel/warchess/paramettres-chesswar.webp" alt="Paramètres">
                     </div>
                     <p class="text-muted">Application d'échecs moderne. Interface fluide et gestion des parties complexe.</p>
                 </a>
@@ -158,7 +311,12 @@
                 <a href="https://allanvitu.github.io/Pokedex/" target="_blank" rel="noopener noreferrer" class="glass-panel project-card">
                     <div class="project-header">
                         <i data-lucide="book" class="text-emerald"></i>
-                        <h4 class="mono-text">Régiondex</h4>
+                        <h4 class="mono-text">Régiondex 📱🐾</h4>
+                    </div>
+                    <div class="pro-carousel" data-count="3">
+                        <img src="./assets/imgs/imgs_carousel/regiondex/regiondex_accueil.webp" alt="Accueil Régiondex">
+                        <img src="./assets/imgs/imgs_carousel/regiondex/regiondex_card.webp" alt="Carte Régiondex">
+                        <img src="./assets/imgs/imgs_carousel/regiondex/regiondex_menu.webp" alt="Menu Régiondex">
                     </div>
                     <p class="text-muted">Application Pokedex & design Bento Box pour explorer l'univers Pokémon de manière technique.</p>
                 </a>
@@ -166,27 +324,77 @@
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="contact-section reveal-fade" style="margin-top: 8rem; padding-top: 4rem; border-top: 1px solid var(--border-glass);">
-            <div class="rytiger-header" style="margin-bottom: 2rem;">
-                <span class="mono-text text-muted">Networking // ping</span>
-                <h2>Contact</h2>
-                <p>Diplômé du CRM (Centre de Réadaptation de Mulhouse) en tant que DWWM. Je suis ouvert à de nouvelles opportunités.</p>
-            </div>
-            
-            <div class="cta-group">
-                <a href="mailto:allan.vitu90@gmail.com" class="btn-secondary">
-                    <i data-lucide="mail"></i> allan.vitu90@gmail.com
-                </a>
-                <a href="tel:+33782452467" class="btn-secondary">
-                    <i data-lucide="phone"></i> 07 82 45 24 67
-                </a>
+        <section id="contact" class="contact-section reveal-fade" style="margin-top: 8rem; padding-top: 4rem; border-top: 1px solid var(--border-glass); margin-bottom: 6rem;">
+            <div class="tech-stack" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem;">
+                <div>
+                    <div class="rytiger-header" style="margin-bottom: 2rem;">
+                        <span class="mono-text text-muted">Networking // ping</span>
+                        <h2>Contact</h2>
+                        <p>Diplômé du CRM en tant que DWWM. Je suis disponible pour de nouvelles opportunités. Parlons architecture cloud, PWA ou CI/CD !</p>
+                    </div>
+                    
+                    <div class="cta-group" style="flex-direction: column; align-items: flex-start; gap: 1rem;">
+                        <a href="mailto:allan.vitu90@gmail.com" class="btn-secondary" style="width: 100%; justify-content: center;">
+                            <i data-lucide="mail"></i> allan.vitu90@gmail.com
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="glass-panel" style="padding: 2rem;">
+                    <form class="pro-contact-form" action="./contact.php" method="POST" id="contactForm">
+                        <h3 style="margin-top: 0; margin-bottom: 1.5rem; font-size: 1.2rem; color: var(--text-main);">Envoyer un message</h3>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label for="name" class="mono-text" style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Nom & Prénom <b style="font-weight: 500;">(Facultatif)</b></label>
+                            <input type="text" id="name" name="name" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-glass); background: rgba(0,0,0,0.02); color: var(--text-main); font-family: inherit; font-size: 1rem; outline: none; transition: border-color 0.2s;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label for="email" class="mono-text" style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Email</label>
+                            <input type="email" id="email" name="email" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-glass); background: rgba(0,0,0,0.02); color: var(--text-main); font-family: inherit; font-size: 1rem; outline: none; transition: border-color 0.2s;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="message" class="mono-text" style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Message</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Si vous avez saisi votre email et que vous écrivez un message, vous vous engagez à ce que votre demande ou critique soit constructive. Votre retour sera pris en compte avec plaisir. Tout troll sera filtré et mis en spam." required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-glass); background: rgba(0,0,0,0.02); color: var(--text-main); font-family: inherit; font-size: 0.95rem; outline: none; transition: border-color 0.2s; resize: vertical;"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; border: none; cursor: pointer;">
+                            <i data-lucide="send"></i> Envoyer le signal
+                        </button>
+                    </form>
+                </div>
             </div>
         </section>
         
     </main>
 
-    <footer style="text-align: center; padding: 3rem 0; color: var(--text-muted); border-top: 1px solid var(--border-glass); font-family: var(--font-mono); font-size: 0.8rem;">
-        <p>&copy; 2026 Allan Vitu. Architecte Full-Stack & DevOps.</p>
+    <footer style="padding: 4rem 0 2rem; color: var(--text-muted); border-top: 1px solid var(--border-glass);">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 3rem;">
+            <!-- Lighthouse Metrics Mock -->
+            <div class="lighthouse-metrics" style="display: flex; gap: 2rem; font-family: var(--font-mono); font-size: 0.75rem; flex-wrap: wrap; justify-content: center;">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                    <div style="width: 48px; height: 48px; border-radius: 50%; border: 3px solid #00CC66; display: flex; align-items: center; justify-content: center; color: #00CC66; font-weight: 700; font-size: 1.1rem;">100</div>
+                    <span>Performance</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                    <div style="width: 48px; height: 48px; border-radius: 50%; border: 3px solid #00CC66; display: flex; align-items: center; justify-content: center; color: #00CC66; font-weight: 700; font-size: 1.1rem;">100</div>
+                    <span>Accessibility</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                    <div style="width: 48px; height: 48px; border-radius: 50%; border: 3px solid #00CC66; display: flex; align-items: center; justify-content: center; color: #00CC66; font-weight: 700; font-size: 1.1rem;">100</div>
+                    <span>Best Practices</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                    <div style="width: 48px; height: 48px; border-radius: 50%; border: 3px solid #00CC66; display: flex; align-items: center; justify-content: center; color: #00CC66; font-weight: 700; font-size: 1.1rem;">100</div>
+                    <span>SEO</span>
+                </div>
+            </div>
+            
+            <div class="footer-socials" style="display: flex; gap: 2rem; justify-content: center; align-items: center; margin-top: 1rem;">
+                <a href="https://github.com/allanvitu" target="_blank" aria-label="GitHub" style="color: var(--text-muted); transition: color 0.2s;"><i data-lucide="github"></i></a>
+                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" aria-label="LinkedIn" style="color: var(--text-muted); transition: color 0.2s;"><i data-lucide="linkedin"></i></a>
+                <a href="https://www.instagram.com/allan.vitu/" target="_blank" aria-label="Instagram" style="color: var(--text-muted); transition: color 0.2s;"><i data-lucide="instagram"></i></a>
+            </div>
+            
+            <p style="font-family: var(--font-mono); font-size: 0.85rem; text-align: center;">&copy; 2026 Allan Vitu. Architecte Full-Stack & DevOps CI/CD.</p>
+        </div>
     </footer>
 
     <script src="./js/app.js"></script>
