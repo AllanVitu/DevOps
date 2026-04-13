@@ -97,7 +97,7 @@
             <div class="hero-metrics">
                 <div class="metric"><span class="metric-val">100%</span><span class="metric-label">Uptime</span></div>
                 <div class="metric"><span class="metric-val">CI/CD</span><span class="metric-label">Automatisé</span></div>
-                <div class="metric"><span class="metric-val">PWA</span><span class="metric-label">Mobile First</span></div>
+                <div class="metric" style="align-items: center; justify-content: center;"><img src="https://github.com/allanvitu/DevOps/actions/workflows/static.yml/badge.svg" alt="Deploy to GitHub Pages" style="margin-top: 0.5rem;"></div>
             </div>
 
             <!-- Scroll Indicator -->
@@ -125,16 +125,16 @@
                     <span>PWA</span> <span class="dot-separator">•</span>
                     
                     <!-- Duplicated for infinite loop -->
-                    <span>Vue.js 3</span> <span class="dot-separator">•</span>
-                    <span>Docker</span> <span class="dot-separator">•</span>
-                    <span>Kubernetes</span> <span class="dot-separator">•</span>
-                    <span>Node.js</span> <span class="dot-separator">•</span>
-                    <span>AWS</span> <span class="dot-separator">•</span>
-                    <span>GitLab CI</span> <span class="dot-separator">•</span>
-                    <span>PHP 8</span> <span class="dot-separator">•</span>
-                    <span>MySQL</span> <span class="dot-separator">•</span>
-                    <span>TailwindCSS</span> <span class="dot-separator">•</span>
-                    <span>PWA</span> <span class="dot-separator">•</span>
+                    <span aria-hidden="true">Vue.js 3</span> <span class="dot-separator" aria-hidden="true">•</span>
+                    <span aria-hidden="true">Docker</span> <span class="dot-separator" aria-hidden="true">•</span>
+                    <span aria-hidden="true">Kubernetes</span> <span class="dot-separator" aria-hidden="true">•</span>
+                    <span aria-hidden="true">Node.js</span> <span class="dot-separator" aria-hidden="true">•</span>
+                    <span aria-hidden="true">AWS</span> <span class="dot-separator" aria-hidden="true">•</span>
+                    <span aria-hidden="true">GitLab CI</span> <span class="dot-separator" aria-hidden="true">•</span>
+                    <span aria-hidden="true">PHP 8</span> <span class="dot-separator" aria-hidden="true">•</span>
+                    <span aria-hidden="true">MySQL</span> <span class="dot-separator" aria-hidden="true">•</span>
+                    <span aria-hidden="true">TailwindCSS</span> <span class="dot-separator" aria-hidden="true">•</span>
+                    <span aria-hidden="true">PWA</span> <span class="dot-separator" aria-hidden="true">•</span>
                 </div>
             </div>
         </div>
@@ -318,7 +318,7 @@
             <!-- Gameplay Video Section -->
             <div class="rytiger-gameplay-section reveal-fade" style="margin-top: 5rem; text-align: center;">
                 <div class="video-frame glass-panel" style="max-width: 800px; margin: 0 auto; padding: 0.5rem; border: 1px solid var(--gold-500); border-radius: 12px; box-shadow: 0 10px 40px rgba(245, 158, 11, 0.1);">
-                    <video controls autoplay muted loop playsinline style="width: 100%; border-radius: 8px; box-shadow: inset 0 0 20px rgba(0,0,0,0.5); display: block;">
+                    <video controls muted loop playsinline preload="metadata" poster="./assets/imgs/imgs_carousel/captures_Rytiger.png" style="width: 100%; border-radius: 8px; box-shadow: inset 0 0 20px rgba(0,0,0,0.5); display: block;">
                         <source src="./assets/imgs/imgs_carousel/Captures_RytigerMP4.mp4" type="video/mp4">
                         Votre navigateur ne supporte pas la balise vidéo.
                     </video>
@@ -384,7 +384,8 @@
                 </div>
                 
                 <div class="glass-panel" style="padding: 2rem;">
-                    <form class="pro-contact-form" action="./contact.php" method="POST" id="contactForm">
+                    <form class="pro-contact-form" action="https://api.web3forms.com/submit" method="POST" id="contactForm">
+                        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
                         <h3 style="margin-top: 0; margin-bottom: 1.5rem; font-size: 1.2rem; color: var(--text-main);">Envoyer un message</h3>
                         <div class="form-group" style="margin-bottom: 1rem;">
                             <label for="name" class="mono-text" style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Nom & Prénom <b style="font-weight: 500;">(Facultatif)</b></label>
@@ -396,7 +397,7 @@
                         </div>
                         <div class="form-group" style="margin-bottom: 1.5rem;">
                             <label for="message" class="mono-text" style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Message</label>
-                            <textarea id="message" name="message" rows="5" placeholder="Si vous avez saisi votre email et que vous écrivez un message, vous vous engagez à ce que votre demande ou critique soit constructive. Votre retour sera pris en compte avec plaisir. Tout troll sera filtré et mis en spam." required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-glass); background: rgba(0,0,0,0.02); color: var(--text-main); font-family: inherit; font-size: 0.95rem; outline: none; transition: border-color 0.2s; resize: vertical;"></textarea>
+                            <textarea id="message" name="message" rows="5" placeholder="Décrivez votre besoin, votre architecture ou une idée de mission. Parlons Tech ! ✨" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-glass); background: rgba(0,0,0,0.02); color: var(--text-main); font-family: inherit; font-size: 0.95rem; outline: none; transition: border-color 0.2s; resize: vertical;"></textarea>
                         </div>
                         <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; border: none; cursor: pointer;">
                             <i data-lucide="send"></i> Envoyer le signal
@@ -413,19 +414,19 @@
             <!-- Lighthouse Metrics Mock -->
             <div class="lighthouse-metrics" style="display: flex; gap: 2rem; font-family: var(--font-mono); font-size: 0.75rem; flex-wrap: wrap; justify-content: center;">
                 <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-                    <div style="width: 48px; height: 48px; border-radius: 50%; border: 3px solid #00CC66; display: flex; align-items: center; justify-content: center; color: #00CC66; font-weight: 700; font-size: 1.1rem;">100</div>
+                    <div class="lighthouse-score" style="width: 48px; height: 48px; border-radius: 50%; border: 3px solid #00CC66; display: flex; align-items: center; justify-content: center; color: #00CC66; font-weight: 700; font-size: 1.1rem;">0</div>
                     <span>Performance</span>
                 </div>
                 <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-                    <div style="width: 48px; height: 48px; border-radius: 50%; border: 3px solid #00CC66; display: flex; align-items: center; justify-content: center; color: #00CC66; font-weight: 700; font-size: 1.1rem;">100</div>
+                    <div class="lighthouse-score" style="width: 48px; height: 48px; border-radius: 50%; border: 3px solid #00CC66; display: flex; align-items: center; justify-content: center; color: #00CC66; font-weight: 700; font-size: 1.1rem;">0</div>
                     <span>Accessibility</span>
                 </div>
                 <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-                    <div style="width: 48px; height: 48px; border-radius: 50%; border: 3px solid #00CC66; display: flex; align-items: center; justify-content: center; color: #00CC66; font-weight: 700; font-size: 1.1rem;">100</div>
+                    <div class="lighthouse-score" style="width: 48px; height: 48px; border-radius: 50%; border: 3px solid #00CC66; display: flex; align-items: center; justify-content: center; color: #00CC66; font-weight: 700; font-size: 1.1rem;">0</div>
                     <span>Best Practices</span>
                 </div>
                 <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-                    <div style="width: 48px; height: 48px; border-radius: 50%; border: 3px solid #00CC66; display: flex; align-items: center; justify-content: center; color: #00CC66; font-weight: 700; font-size: 1.1rem;">100</div>
+                    <div class="lighthouse-score" style="width: 48px; height: 48px; border-radius: 50%; border: 3px solid #00CC66; display: flex; align-items: center; justify-content: center; color: #00CC66; font-weight: 700; font-size: 1.1rem;">0</div>
                     <span>SEO</span>
                 </div>
             </div>

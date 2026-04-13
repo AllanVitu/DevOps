@@ -66,6 +66,21 @@ html.dark {
     scroll-behavior: smooth;
 }
 
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border-glass);
+    border-radius: 10px;
+    border: 2px solid var(--bg-main);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
 body {
     background-color: var(--bg-main);
     color: var(--text-main);
@@ -330,3 +345,17 @@ html.dark .aurora-card::before {
     *, *::before, *::after { cursor: auto !important; }
 }
 
+/* =============================================
+   ✨ IntersectionObserver Reveal Animation
+   ============================================= */
+.reveal-fade {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    will-change: opacity, transform;
+}
+
+.reveal-fade.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}

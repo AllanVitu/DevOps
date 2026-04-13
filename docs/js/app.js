@@ -271,6 +271,50 @@ document.addEventListener('DOMContentLoaded', () => {
             card.style.setProperty('--mouse-y', '50%');
         });
     });
+    // Lighthouse Animation
+    const lighthouseScores = document.querySelectorAll('.lighthouse-score');
+    if (lighthouseScores.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = entry.target;
+                    let count = 0;
+                    const duration = 1500; // ms
+                    const targetValue = 100;
+                    const stepTime = Math.abs(Math.floor(duration / targetValue));
+                    
+                    const timer = setInterval(() => {
+                        count++;
+                        target.textContent = count;
+                        if (count >= targetValue) {
+                            clearInterval(timer);
+                            target.textContent = targetValue;
+                        }
+                    }, stepTime);
+                    
+                    observer.unobserve(target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        lighthouseScores.forEach(score => observer.observe(score));
+    }
+
+    // Reveal on Scroll
+    const revealElements = document.querySelectorAll('.reveal-fade');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+    });
+    
+    revealElements.forEach(el => revealObserver.observe(el));
 });
 
 

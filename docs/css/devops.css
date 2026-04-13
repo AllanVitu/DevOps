@@ -515,6 +515,7 @@ html.dark .glass-navbar { background: rgba(15, 23, 42, 0.7); }
 html.dark .tech-ticker-container { background: rgba(0,0,0,0.2); }
 .tech-ticker { margin: 0 auto; white-space: nowrap; overflow: hidden; display: flex; }
 .tech-ticker-track { display: inline-flex; animation: scrollTicker 30s linear infinite; align-items: center;}
+.tech-ticker-track:hover { animation-play-state: paused; cursor: default; }
 .tech-ticker-track span { font-family: var(--font-mono); font-weight: 600; font-size: 1.2rem; color: var(--text-main); margin: 0 2rem; letter-spacing: -0.02em;}
 .tech-ticker-track .dot-separator { color: var(--crimson-500); font-weight: bold; font-size: 1.5rem; margin: 0;}
 @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
