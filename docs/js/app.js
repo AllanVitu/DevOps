@@ -4,89 +4,66 @@ document.addEventListener('DOMContentLoaded', () => {
         lucide.createIcons();
     }
 
-    // 1. Theme Toggle Logic (TOP PRIORITY)
-    const themeBtn = document.getElementById('theme-toggle');
-    const themeEmoji = document.getElementById('theme-emoji');
-    
-    function updateThemeUI(isDark) {
-        console.log("Updating theme UI. isDark:", isDark);
-        if (isDark) {
-            document.documentElement.classList.add('dark');
-            document.documentElement.classList.remove('light');
-            if (themeEmoji) themeEmoji.textContent = '🌙'; 
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.documentElement.classList.add('light');
-            document.documentElement.classList.remove('dark');
-            if (themeEmoji) themeEmoji.textContent = '☀️'; 
-            localStorage.setItem('theme', 'light');
-        }
-        
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+    // 1. Theme Logic (Forced Dark Mode)
+    document.documentElement.classList.add('dark');
+    document.documentElement.classList.remove('light');
+
+    function createRain() {
+        const container = document.getElementById('rain-container');
+        if (!container) return;
+        container.innerHTML = '';
+        const count = 100; // More drops for density behind glass
+        for (let i = 0; i < count; i++) {
+            const drop = document.createElement('div');
+            drop.classList.add('rain-drop');
+            drop.style.left = Math.random() * 100 + 'vw';
+            drop.style.animation = `fall ${Math.random() * 0.4 + 0.3}s linear infinite`;
+            drop.style.animationDelay = Math.random() * 2 + 's';
+            drop.style.opacity = Math.random() * 0.2 + 0.1;
+            container.appendChild(drop);
         }
     }
+    createRain();
 
-    if(themeBtn) {
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const initialIsDark = savedTheme === 'dark' || (!savedTheme && prefersDark) || (!savedTheme && !prefersDark && document.documentElement.classList.contains('dark'));
-        
-        updateThemeUI(initialIsDark);
-        
-        themeBtn.onclick = (e) => {
-            const isCurrentlyDark = document.documentElement.classList.contains('dark');
-            updateThemeUI(!isCurrentlyDark);
-        };
-    }
+    // 2. Carousel Logic for Projects
+    function initCarousel(carouselId, prevBtnId, nextBtnId) {
+        const carousel = document.getElementById(carouselId);
+        if (carousel) {
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            const nextBtn = document.getElementById(nextBtnId);
+            const prevBtn = document.getElementById(prevBtnId);
+            let currentSlide = 0;
 
-    // 2. Super Carousel Logic for Rytiger
-    const superCarousel = document.getElementById('rytigerCarousel');
-
-    // Contact form Logic
-    const contactForm = document.getElementById('contactForm');
-    if(contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault(); 
-            
-            const btn = contactForm.querySelector('button');
-            const originalText = btn.innerHTML;
-            
-            btn.innerHTML = '<i data-lucide="loader-2" style="animation: spin 1s linear infinite;"></i> Envoi en cours...';
-            lucide.createIcons();
-            
-            const formData = new FormData(contactForm);
-            
-            try {
-                const response = await fetch(contactForm.getAttribute('action'), {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                if(response.ok) {
-                    btn.innerHTML = '<i data-lucide="check"></i> Message envoyé !';
-                    btn.style.background = 'var(--emerald-500)';
-                    btn.style.color = 'white';
-                    lucide.createIcons();
-                    contactForm.reset();
-                } else {
-                    throw new Error('Server error');
-                }
-            } catch(error) {
-                btn.innerHTML = '<i data-lucide="alert-circle"></i> Erreur lors de l\'envoi';
-                btn.style.background = 'var(--crimson-500)';
-                btn.style.color = 'white';
-                lucide.createIcons();
+            function showSlide(index) {
+                slides.forEach(s => s.classList.remove('active'));
+                if (slides[index]) slides[index].classList.add('active');
             }
-            
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.background = '';
-                btn.style.color = '';
-                lucide.createIcons();
-            }, 4000);
-        });
+
+            if (nextBtn) {
+                nextBtn.onclick = () => {
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    showSlide(currentSlide);
+                };
+            }
+            if (prevBtn) {
+                prevBtn.onclick = () => {
+                    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                    showSlide(currentSlide);
+                };
+            }
+
+            // Auto play every 6s
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }, 6000);
+        }
     }
+
+    initCarousel('forgeCarousel', 'forgePrev', 'forgeNext');
+    initCarousel('rytigerCarousel', 'rytigerPrev', 'rytigerNext');
+    initCarousel('regiondexCarousel', 'regionPrev', 'regionNext');
+
     // Scroll Tracker Logic
     const scrollTracker = document.querySelector('.scroll-tracker');
     if (scrollTracker) {

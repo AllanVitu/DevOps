@@ -325,14 +325,18 @@ html.dark .hero-title {
 }
 
 .bento-card:hover .bento-glow {
-    opacity: 0.15;
+    opacity: 0.1;
 }
 
-.bento-glow-blue { background: radial-gradient(circle at center, var(--indigo-500), transparent 70%); }
-.bento-glow-emerald { background: radial-gradient(circle at center, var(--emerald-500), transparent 70%); }
-.bento-glow-cyan { background: radial-gradient(circle at center, var(--secondary), transparent 70%); }
-.bento-glow-crimson { background: radial-gradient(circle at center, var(--crimson-500), transparent 70%); }
-.bento-glow-violet { background: radial-gradient(circle at center, var(--violet-500), transparent 70%); }
+
+.bento-glow-blue, 
+.bento-glow-emerald, 
+.bento-glow-cyan, 
+.bento-glow-crimson, 
+.bento-glow-violet { 
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.4), transparent 70%); 
+}
+
 
 @media (max-width: 1024px) {
     .bento-grid {

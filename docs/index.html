@@ -51,10 +51,6 @@
                 <a href="#contact">Contact</a>
             </div>
             <div class="social-icons">
-                <button id="theme-toggle" aria-label="Basculer le thème" class="theme-btn-pro">
-                    <span id="theme-emoji">🌙</span>
-                    <span class="theme-label mono-text">Thème</span>
-                </button>
                 <a href="https://github.com/allanvitu" target="_blank" aria-label="GitHub" id="nav-github"><i data-lucide="github"></i></a>
                 <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" aria-label="LinkedIn" id="nav-linkedin"><i data-lucide="linkedin"></i></a>
                 <a href="https://www.instagram.com/allan.vitu/" target="_blank" aria-label="Instagram" id="nav-instagram"><i data-lucide="instagram"></i></a>
@@ -63,6 +59,9 @@
     </nav>
 
     <div class="animated-bg"></div>
+    <div id="sun-rays"></div>
+    <div id="rain-container"></div>
+    <div id="glass-overlay"></div>
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
@@ -70,74 +69,26 @@
     <main class="main-container">
         <!-- Hero Section -->
         <header class="senior-hero reveal-fade">
-            <div class="tech-badge">
-                <i data-lucide="terminal" class="icon-sm"></i>
-                <span class="mono-text typewriter-effect">status: available_for_mission</span>
+            <div class="tech-badge" style="border-color: rgba(0, 255, 204, 0.3); background: rgba(0, 255, 204, 0.05);">
+                <i data-lucide="zap" class="icon-sm" style="color: #00ffcc;"></i>
+                <span class="mono-text typewriter-effect" style="color: #00ffcc;">status: creative_architect</span>
             </div>
             
-            <h1 class="hero-title">
-                Architecte <span class="gradient-text-blue glitch-text" data-text="Full-Stack">Full-Stack</span><br>
-                & Ingénieur <span class="gradient-text-emerald glitch-text" data-text="DevOps">DevOps</span>
+            <h1 class="hero-title" style="font-size: clamp(3rem, 6vw, 5rem); line-height: 1.1; margin-bottom: 1.5rem;">
+                Créateur d'<span class="gradient-text-emerald glitch-text" data-text="Expériences">Expériences</span><br>
+                <span class="gradient-text-blue glitch-text" data-text="Numériques">Numériques</span>
             </h1>
             
-            <p class="hero-subtitle">
-                Allan Vitu. Je conçois des architectures résilientes et développe des expériences web et mobiles de pointe. De l'infrastructure cloud à l'interface pixel-perfect.
+            <p class="hero-subtitle" style="max-width: 600px; margin: 0 auto 2.5rem; font-size: 1.2rem; color: var(--text-muted);">
+                Je conçois des applications web immersives et des interfaces premium. Design system cyberpunk, PWA performantes et architectures cloud.
             </p>
             
-            <div class="cta-group">
-                <a href="#contact" class="btn-primary magnetic-btn">
-                    Me contacter <i data-lucide="arrow-right"></i>
+            <div class="cta-group" style="justify-content: center;">
+                <a href="#projects" class="btn-primary magnetic-btn" style="background: linear-gradient(135deg, #00ffcc 0%, #0088ff 100%); color: #0a0a0c; font-weight: 700; border: none; box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);">
+                    Découvrir les Projets <i data-lucide="arrow-down"></i>
                 </a>
-                <a href="#projects" class="btn-secondary magnetic-btn">
-                    <i data-lucide="folder-code"></i> Voir les projets
-                </a>
-            </div>
-            
-            <!-- Section Stats / Data -->
-            <div class="hero-metrics">
-                <div class="metric"><span class="metric-val">100%</span><span class="metric-label">Uptime</span></div>
-                <div class="metric"><span class="metric-val">CI/CD</span><span class="metric-label">Automatisé</span></div>
-                <div class="metric" style="align-items: center; justify-content: center;"><img src="https://github.com/allanvitu/DevOps/actions/workflows/static.yml/badge.svg" alt="Deploy to GitHub Pages" style="margin-top: 0.5rem;"></div>
-            </div>
-
-            <!-- Scroll Indicator -->
-            <div class="scroll-indicator">
-                <div class="mouse">
-                    <div class="wheel"></div>
-                </div>
-                <span class="mono-text" style="font-size: 0.7rem; color: var(--text-muted); padding-top: 0.5rem;">Scroll to explore</span>
             </div>
         </header>
-
-        <!-- Infinite Tech Ticker -->
-        <div class="tech-ticker-container reveal-fade">
-            <div class="tech-ticker">
-                <div class="tech-ticker-track">
-                    <span>Vue.js 3</span> <span class="dot-separator">•</span>
-                    <span>Docker</span> <span class="dot-separator">•</span>
-                    <span>Kubernetes</span> <span class="dot-separator">•</span>
-                    <span>Node.js</span> <span class="dot-separator">•</span>
-                    <span>AWS</span> <span class="dot-separator">•</span>
-                    <span>GitLab CI</span> <span class="dot-separator">•</span>
-                    <span>PHP 8</span> <span class="dot-separator">•</span>
-                    <span>MySQL</span> <span class="dot-separator">•</span>
-                    <span>TailwindCSS</span> <span class="dot-separator">•</span>
-                    <span>PWA</span> <span class="dot-separator">•</span>
-                    
-                    <!-- Duplicated for infinite loop -->
-                    <span aria-hidden="true">Vue.js 3</span> <span class="dot-separator" aria-hidden="true">•</span>
-                    <span aria-hidden="true">Docker</span> <span class="dot-separator" aria-hidden="true">•</span>
-                    <span aria-hidden="true">Kubernetes</span> <span class="dot-separator" aria-hidden="true">•</span>
-                    <span aria-hidden="true">Node.js</span> <span class="dot-separator" aria-hidden="true">•</span>
-                    <span aria-hidden="true">AWS</span> <span class="dot-separator" aria-hidden="true">•</span>
-                    <span aria-hidden="true">GitLab CI</span> <span class="dot-separator" aria-hidden="true">•</span>
-                    <span aria-hidden="true">PHP 8</span> <span class="dot-separator" aria-hidden="true">•</span>
-                    <span aria-hidden="true">MySQL</span> <span class="dot-separator" aria-hidden="true">•</span>
-                    <span aria-hidden="true">TailwindCSS</span> <span class="dot-separator" aria-hidden="true">•</span>
-                    <span aria-hidden="true">PWA</span> <span class="dot-separator" aria-hidden="true">•</span>
-                </div>
-            </div>
-        </div>
 
         <!-- Bento Box Tech Stack -->
         <section class="tech-stack reveal-fade">
@@ -217,35 +168,49 @@
         </section>
 
 
-        <!-- Mon Parcours -->
-        <section id="experience" class="reveal-fade" style="margin-top: 8rem;">
-            <h2 class="section-title">Parcours <span class="mono-text text-muted">/ experience</span></h2>
-            
-            <div class="timeline">
-                <div class="timeline-item">
-                    <span class="timeline-date">Actuel</span>
-                    <div class="timeline-content glass-panel" style="padding: 1.5rem;">
-                        <h3>Développeur Web et Web Mobile (DWWM)</h3>
-                        <h4>Centre de Réadaptation de Mulhouse (CRM)</h4>
-                        <p>Formation intensive et diplômante focalisée sur la conception complète d'architectures logicielles, le développement Full-Stack et le déploiement continu.</p>
+
+
+        <!-- FORGE UI Showcase (NEW) -->
+        <section id="projects" class="showcase-forge reveal-fade" style="margin-top: 6rem;">
+            <div class="rytiger-header" style="text-align: center;">
+                <span class="mono-text" style="color: #00ffcc; text-shadow: 0 0 10px rgba(0,255,204,0.5);">Premium Showcase // 01</span>
+                <h2 style="font-size: 3rem; margin-bottom: 1rem; background: linear-gradient(to right, #ffffff, #00ffcc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">FORGE UI</h2>
+                <p style="max-width: 700px; margin: 0 auto; color: var(--text-muted); font-size: 1.1rem;">Une plateforme e-commerce avant-gardiste distribuant des Design Systems Premium. Thèmes Dark Fantasy, animations cyberpunk et composants prêts à l'emploi.</p>
+            </div>
+
+            <div class="forge-showcase-container" style="margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; align-items: center;">
+                <div class="video-frame glass-panel" style="width: 100%; max-width: 1000px; padding: 0.5rem; border: 1px solid rgba(0, 255, 204, 0.3); border-radius: 12px; box-shadow: 0 10px 50px rgba(0, 255, 204, 0.1);">
+                    <div class="simple-carousel" id="forgeCarousel">
+                        <div class="carousel-track">
+                            <div class="carousel-slide active">
+                                <img src="./assets/imgs/capture e-commerce.png" alt="FORGE UI Home" style="width: 100%; border-radius: 8px;">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="./assets/imgs/capture e-commerce 2.png" alt="FORGE UI Features" style="width: 100%; border-radius: 8px;">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="./assets/imgs/capture e-commerce 3.png" alt="FORGE UI Components" style="width: 100%; border-radius: 8px;">
+                            </div>
+                        </div>
+                        <div class="carousel-controls">
+                            <button class="nav-arrow prev" id="forgePrev" aria-label="Previous"><i data-lucide="chevron-left"></i></button>
+                            <button class="nav-arrow next" id="forgeNext" aria-label="Next"><i data-lucide="chevron-right"></i></button>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="timeline-item">
-                    <span class="timeline-date">Expériences Projet</span>
-                    <div class="timeline-content glass-panel" style="padding: 1.5rem;">
-                        <h3>Création d'Architectures & Ingénierie</h3>
-                        <h4>Projets Techniques Indépendants</h4>
-                        <p>Conception de solutions logicielles avancées : PWA responsives (Rytiger RPG, QuantifyMe), architectures de jeux complexes (ChessWarkward), et environnements de déploiement CI/CD automatisés.</p>
-                    </div>
+
+                <div class="cta-group" style="justify-content: center; margin-top: 1rem;">
+                    <a href="https://e-commerce-production-53ac.up.railway.app/#/" target="_blank" rel="noopener noreferrer" class="btn-primary magnetic-btn" style="background: rgba(0, 255, 204, 0.1); border: 1px solid #00ffcc; color: #00ffcc; box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);">
+                        Visiter FORGE UI <i data-lucide="external-link"></i>
+                    </a>
                 </div>
             </div>
         </section>
 
         <!-- Rytiger RPG Case Study Section -->
-        <section id="projects" class="showcase-rytiger reveal-fade">
+        <section class="showcase-rytiger reveal-fade" style="margin-top: 8rem; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 6rem;">
             <div class="rytiger-header">
-                <span class="mono-text text-crimson">Case Study // 01</span>
+                <span class="mono-text text-crimson">Case Study // 02</span>
                 <h2>Rytiger RPG 🐯🗡️</h2>
                 <p>Application PWA Dark Fantasy. Moteur de combat au tour par tour, modes Rogue-like (Tour de l'Infini) et profils joueurs persistants.</p>
             </div>
@@ -253,32 +218,28 @@
             <div class="rytiger-grid">
                 <!-- Super Carousel -->
                 <div class="rytiger-carousel-wrapper">
-                    <div class="super-carousel" id="rytigerCarousel">
-                        <div class="slide active">
-                            <img src="./assets/imgs/imgs_carousel/captures_Rytiger.png" alt="Rytiger Screenshot 1">
-                        </div>
-                        <div class="slide">
-                            <img src="./assets/imgs/imgs_carousel/captures_Rytiger2.png" alt="Rytiger Screenshot 2">
-                        </div>
-                        <div class="slide">
-                            <img src="./assets/imgs/imgs_carousel/captures_Rytiger3.png" alt="Rytiger Screenshot 3">
-                        </div>
-                        <div class="slide">
-                            <img src="./assets/imgs/imgs_carousel/captures_Rytiger4.png" alt="Rytiger Screenshot 4">
-                        </div>
-                        <div class="slide">
-                            <img src="./assets/imgs/imgs_carousel/captures_Rytiger5.png" alt="Rytiger Screenshot 5">
+                    <div class="simple-carousel" id="rytigerCarousel">
+                        <div class="carousel-track">
+                            <div class="carousel-slide active">
+                                <img src="./assets/imgs/imgs_carousel/captures_Rytiger.png" alt="Rytiger Screenshot 1">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="./assets/imgs/imgs_carousel/captures_Rytiger2.png" alt="Rytiger Screenshot 2">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="./assets/imgs/imgs_carousel/captures_Rytiger3.png" alt="Rytiger Screenshot 3">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="./assets/imgs/imgs_carousel/captures_Rytiger4.png" alt="Rytiger Screenshot 4">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="./assets/imgs/imgs_carousel/captures_Rytiger5.png" alt="Rytiger Screenshot 5">
+                            </div>
                         </div>
                         
-                        <button class="carousel-btn prev" id="rytigerPrev" aria-label="Précédent"><i data-lucide="chevron-left"></i></button>
-                        <button class="carousel-btn next" id="rytigerNext" aria-label="Suivant"><i data-lucide="chevron-right"></i></button>
-                        
-                        <div class="carousel-indicators" id="rytigerIndicators">
-                            <span class="indicator active" data-index="0"></span>
-                            <span class="indicator" data-index="1"></span>
-                            <span class="indicator" data-index="2"></span>
-                            <span class="indicator" data-index="3"></span>
-                            <span class="indicator" data-index="4"></span>
+                        <div class="carousel-controls">
+                            <button class="nav-arrow prev" id="rytigerPrev" aria-label="Previous"><i data-lucide="chevron-left"></i></button>
+                            <button class="nav-arrow next" id="rytigerNext" aria-label="Next"><i data-lucide="chevron-right"></i></button>
                         </div>
                     </div>
                 </div>
@@ -333,36 +294,67 @@
             </div>
         </section>
 
-        <!-- Autres Projets -->
-        <section class="other-projects reveal-fade" style="margin-top: 6rem;">
-            <h3 class="section-title" style="font-size: 1.5rem; text-transform: lowercase;">Autres Projets 🚀📁</h3>
-            <div class="stack-grid">
-                <a href="https://www.chesswarkward.fr/#/intro" target="_blank" rel="noopener noreferrer" class="glass-panel project-card">
-                    <div class="project-header">
-                        <i data-lucide="swords" class="text-blue"></i>
-                        <h4 class="mono-text">ChessWarkward ♟️⚔️</h4>
-                    </div>
-                    <div class="pro-carousel" data-count="4">
-                        <img src="./assets/imgs/imgs_carousel/warchess/ChessWar_accueil.webp" alt="Accueil ChessWarkward">
-                        <img src="./assets/imgs/imgs_carousel/warchess/ChessWarMenu.webp" alt="Menu ChessWarkward">
-                        <img src="./assets/imgs/imgs_carousel/warchess/modeHistoireChessWar.webp" alt="Mode Histoire">
-                        <img src="./assets/imgs/imgs_carousel/warchess/paramettres-chesswar.webp" alt="Paramètres">
-                    </div>
-                    <p class="text-muted">Application d'échecs moderne. Interface fluide et gestion des parties complexe.</p>
-                </a>
+        <!-- RégionDex Showcase -->
+        <section class="showcase-rytiger reveal-fade" style="margin-top: 8rem; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 6rem;">
+            <div class="rytiger-header" style="text-align: right;">
+                <span class="mono-text text-emerald">Case Study // 03</span>
+                <h2>RégionDex 📱🐾</h2>
+                <p style="margin-left: auto;">Application Pokedex ultime. Interface fluide avec un design Bento Box, permettant d'explorer l'univers Pokémon de manière technique et immersive.</p>
+            </div>
 
-                <a href="https://allanvitu.github.io/Pokedex/" target="_blank" rel="noopener noreferrer" class="glass-panel project-card">
-                    <div class="project-header">
-                        <i data-lucide="book" class="text-emerald"></i>
-                        <h4 class="mono-text">Régiondex 📱🐾</h4>
+            <div class="rytiger-grid" style="direction: rtl;">
+                <!-- Carousel RegionDex -->
+                <div class="rytiger-carousel-wrapper" style="direction: ltr;">
+                    <div class="simple-carousel" id="regiondexCarousel">
+                        <div class="carousel-track">
+                            <div class="carousel-slide active">
+                                <img src="./assets/imgs/imgs_carousel/regiondex/regiondex_accueil.webp" alt="RégionDex Screenshot 1">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="./assets/imgs/imgs_carousel/regiondex/regiondex_card.webp" alt="RégionDex Screenshot 2">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="./assets/imgs/imgs_carousel/regiondex/regiondex_menu.webp" alt="RégionDex Screenshot 3">
+                            </div>
+                        </div>
+                        
+                        <div class="carousel-controls">
+                            <button class="nav-arrow prev" id="regionPrev" aria-label="Previous"><i data-lucide="chevron-left"></i></button>
+                            <button class="nav-arrow next" id="regionNext" aria-label="Next"><i data-lucide="chevron-right"></i></button>
+                        </div>
                     </div>
-                    <div class="pro-carousel" data-count="3">
-                        <img src="./assets/imgs/imgs_carousel/regiondex/regiondex_accueil.webp" alt="Accueil Régiondex">
-                        <img src="./assets/imgs/imgs_carousel/regiondex/regiondex_card.webp" alt="Carte Régiondex">
-                        <img src="./assets/imgs/imgs_carousel/regiondex/regiondex_menu.webp" alt="Menu Régiondex">
-                    </div>
-                    <p class="text-muted">Application Pokedex & design Bento Box pour explorer l'univers Pokémon de manière technique.</p>
-                </a>
+                </div>
+
+                <!-- Technical Specs RégionDex -->
+                <div class="rytiger-specs glass-panel" style="direction: ltr; text-align: left;">
+                    <h3>Architecture Technique</h3>
+                    <ul class="spec-list">
+                        <li>
+                            <i data-lucide="layout-grid" class="text-emerald"></i>
+                            <div class="spec-text">
+                                <strong>Bento Box UI</strong>
+                                <span>Interface moderne inspirée du design Bento pour une lecture claire des statistiques.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i data-lucide="database" class="text-emerald"></i>
+                            <div class="spec-text">
+                                <strong>Data Handling</strong>
+                                <span>Consommation et formatage de multiples API pour regrouper toutes les données Pokémon.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i data-lucide="zap" class="text-emerald"></i>
+                            <div class="spec-text">
+                                <strong>PWA Ready</strong>
+                                <span>Installation locale, fonctionnement rapide et cache optimisé.</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <a href="https://allanvitu.github.io/Pokedex/" target="_blank" rel="noopener noreferrer" class="btn-rytiger" style="background: rgba(16, 185, 129, 0.1); border-color: #10b981; color: #10b981;">
+                        Ouvrir RégionDex <i data-lucide="external-link"></i>
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -377,32 +369,29 @@
                     </div>
                     
                     <div class="cta-group" style="flex-direction: column; align-items: flex-start; gap: 1rem;">
-                        <a href="mailto:allan.vitu90@gmail.com" class="btn-secondary" style="width: 100%; justify-content: center;">
+                        <a href="mailto:allan.vitu90@gmail.com" class="btn-secondary" style="width: 100%; justify-content: center; border: 1px solid var(--primary);">
                             <i data-lucide="mail"></i> allan.vitu90@gmail.com
                         </a>
+                        <div style="display: flex; gap: 1rem; width: 100%;">
+                            <a href="https://github.com/allanvitu" target="_blank" class="btn-secondary" style="flex: 1; justify-content: center; padding: 0.8rem; background: #24292f; color: white; border: none;" id="contact-github">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.041-1.416-4.041-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg> GitHub
+                            </a>
+                            <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" class="btn-secondary" style="flex: 1; justify-content: center; padding: 0.8rem; background: #0077b5; color: white; border: none;" id="contact-linkedin">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px;"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg> LinkedIn
+                            </a>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="glass-panel" style="padding: 2rem;">
-                    <form class="pro-contact-form" action="https://api.web3forms.com/submit" method="POST" id="contactForm">
-                        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
-                        <h3 style="margin-top: 0; margin-bottom: 1.5rem; font-size: 1.2rem; color: var(--text-main);">Envoyer un message</h3>
-                        <div class="form-group" style="margin-bottom: 1rem;">
-                            <label for="name" class="mono-text" style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Nom & Prénom <b style="font-weight: 500;">(Facultatif)</b></label>
-                            <input type="text" id="name" name="name" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-glass); background: rgba(0,0,0,0.02); color: var(--text-main); font-family: inherit; font-size: 1rem; outline: none; transition: border-color 0.2s;">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 1rem;">
-                            <label for="email" class="mono-text" style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Email</label>
-                            <input type="email" id="email" name="email" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-glass); background: rgba(0,0,0,0.02); color: var(--text-main); font-family: inherit; font-size: 1rem; outline: none; transition: border-color 0.2s;">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 1.5rem;">
-                            <label for="message" class="mono-text" style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Message</label>
-                            <textarea id="message" name="message" rows="5" placeholder="Décrivez votre besoin, votre architecture ou une idée de mission. Parlons Tech ! ✨" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-glass); background: rgba(0,0,0,0.02); color: var(--text-main); font-family: inherit; font-size: 0.95rem; outline: none; transition: border-color 0.2s; resize: vertical;"></textarea>
-                        </div>
-                        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; border: none; cursor: pointer;">
-                            <i data-lucide="send"></i> Envoyer le signal
-                        </button>
-                    </form>
+                <div class="glass-panel contact-notice" style="padding: 2.5rem; text-align: center; border-style: dashed; display: flex; flex-direction: column; justify-content: center;">
+                    <div class="bento-icon-top" style="margin-bottom: 1.5rem;">
+                        <i data-lucide="info" class="text-blue" style="width: 40px; height: 40px;"></i>
+                    </div>
+                    <h3 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.4rem;">Disponibilité Directe</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6;">Le formulaire a été désactivé pour simplifier nos échanges. Merci de me contacter directement par e-mail pour toute demande de mission ou collaboration.</p>
+                    <div style="background: var(--border-glass); padding: 0.8rem; border-radius: 8px;">
+                        <span class="mono-text" style="color: var(--primary); font-weight: 700;">PROMPT_REPLY: <span style="color: var(--text-main);">within_24h</span></span>
+                    </div>
                 </div>
             </div>
         </section>

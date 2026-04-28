@@ -33,13 +33,14 @@ html.light, :root:not(.dark) {
 
 /* === DARK MODE: DARK NEON (EXISTANT) === */
 html.dark {
-    --bg-main: #0d0d14;
-    --surface: #12121e;
-    --border-glass: rgba(124, 58, 237, 0.12);
-    --bg-glass: rgba(20, 20, 35, 0.70);
+    --bg-main: #09090b;
+    --surface: #09090b;
+    --border-glass: rgba(255, 255, 255, 0.05);
+    --bg-glass: rgba(9, 9, 11, 0.85);
 
     --text-main: #f1f5f9;
     --text-muted: #94a3b8;
+
 
     --primary: #7c3aed;
     --secondary: #06b6d4;
@@ -95,7 +96,7 @@ a {
     text-decoration: none;
 }
 
-/* LED GRID BACKGROUND (Vercel / Grafana style) */
+/* LED GRID BACKGROUND */
 .animated-bg {
     position: fixed;
     top: 0; left: 0;
@@ -106,8 +107,47 @@ a {
         linear-gradient(var(--grid-color) 1px, transparent 1px),
         linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
     background-size: 60px 60px;
-    transition: background-color 0.5s ease;
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* Light Mode: SUNSET & SUN RAYS */
+html.light .animated-bg {
+    background: linear-gradient(135deg, #f8f7f2 0%, #fff7ed 60%, #ffedd5 100%);
+}
+
+#sun-rays {
+    position: fixed;
+    top: -20%; right: -20%;
+    width: 100vw; height: 100vw;
+    background: conic-gradient(
+        transparent 0deg, 
+        rgba(251, 146, 60, 0.05) 15deg, 
+        transparent 30deg,
+        rgba(251, 146, 60, 0.08) 45deg,
+        transparent 60deg
+    );
+    filter: blur(40px);
+    z-index: -2;
+    animation: rotateRays 60s linear infinite;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+html.light #sun-rays {
+    opacity: 1;
+}
+
+@keyframes rotateRays {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes sunsetPulse {
+    0% { transform: scale(1); opacity: 0.3; }
+    100% { transform: scale(1.4); opacity: 0.6; }
+}
+
+
 
 /* Animated glow origin point */
 .animated-bg::after {
@@ -135,10 +175,59 @@ a {
 .blob-2 { bottom: -10%; right: -10%; width: 40vw; height: 40vw; background: var(--blob-2); animation-delay: -5s; } 
 .blob-3 { top: 40%; left: 30%; width: 30vw; height: 30vw; background: var(--blob-3); animation-delay: -10s; } 
 
+/* GLASS PANE OVERLAY */
+#glass-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    background: rgba(255, 255, 255, 0.02);
+    /* Subtle glass noise/grid */
+    background-image: 
+        radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
+    background-size: 40px 40px;
+}
+
+html.dark #glass-overlay {
+    background: rgba(0, 0, 0, 0.1);
+    background-image: 
+        radial-gradient(circle at 1px 1px, rgba(255,255,255,0.03) 1px, transparent 0);
+    background-size: 30px 30px;
+}
+
+/* RAIN EFFECT (Dark Mode) */
+#rain-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: -2; /* Behind the glass */
+    overflow: hidden;
+    opacity: 0.8;
+}
+
+.rain-drop {
+    position: absolute;
+    background-color: var(--primary);
+    width: 1px;
+    height: 80px;
+    top: -100px;
+    filter: blur(1px);
+}
+
+@keyframes fall {
+    to { transform: translateY(115vh); }
+}
+
 @keyframes float {
     0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(40px, 60px) scale(1.05); }
+    100% { transform: translate(30px, 50px) scale(1.05); }
 }
+
+
 
 .scroll-tracker {
     position: absolute;
@@ -267,23 +356,21 @@ html.dark .glass-panel::before {
 .aurora-card::after {
     content: '';
     position: absolute;
-    inset: -2px;
+    inset: -1px;
     border-radius: inherit;
-    background: conic-gradient(
-        from var(--aurora-angle, 0deg),
-        #7c3aed,
-        #06b6d4,
-        #10b981,
-        #f59e0b,
-        #e11d48,
-        #7c3aed
+    background: linear-gradient(
+        var(--aurora-angle, 0deg),
+        rgba(124, 58, 237, 0.4),
+        transparent 50%,
+        rgba(124, 58, 237, 0.4)
     );
-    animation: aurora-rotate 6s linear infinite;
+    animation: aurora-rotate 10s linear infinite;
     z-index: -1;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.6s ease;
 }
+
 
 .aurora-card::before {
     content: '';
@@ -310,20 +397,19 @@ html.dark .glass-panel::before {
 .aurora-card::before {
     background: radial-gradient(
         circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-        rgba(124, 58, 237, 0.08) 0%,
-        rgba(6, 182, 212, 0.05) 30%,
-        var(--bg-glass) 70%
+        rgba(255, 255, 255, 0.02) 0%,
+        transparent 70%
     );
 }
 
 html.dark .aurora-card::before {
     background: radial-gradient(
         circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-        rgba(124, 58, 237, 0.15) 0%,
-        rgba(6, 182, 212, 0.08) 30%,
-        rgba(15, 23, 42, 0.9) 70%
+        rgba(255, 255, 255, 0.03) 0%,
+        transparent 70%
     );
 }
+
 
 /* =============================================
    🤩 3D TILT (Pokémon Holographic)
