@@ -9,7 +9,7 @@
     <meta property="og:url" content="https://allanvitu.github.io/DevOps/docs/">
     <meta property="og:title" content="Allan Vitu | Développeur Full-Stack & DevOps">
     <meta property="og:description" content="Applications web performantes, interfaces premium et architectures cloud résilientes.">
-    <meta property="og:image" content="https://allanvitu.github.io/DevOps/docs/assets/imgs/imgs_carousel/captures_Rytiger.png">
+    <meta property="og:image" content="https://allanvitu.github.io/DevOps/docs/assets/imgs/imgs_carousel/Rytiger/Rytiger_Home.png">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" type="image/png" href="./assets/branding/favicon.png" sizes="32x32">
     <link rel="apple-touch-icon" href="./assets/branding/logo-main.png">
@@ -110,7 +110,7 @@
                     </div>
                 </div>
                 <div class="about-visual glass-panel">
-                    <div class="avatar-ring"><span>AV</span></div>
+                    <div class="avatar-ring"><img src="./assets/imgs/AvatarKward.jpg" alt="Allan Vitu" class="avatar-img"></div>
                     <div class="about-code">
 <pre><code>const allan = {
   role: "Full-Stack & DevOps",
@@ -221,27 +221,43 @@
             <!-- FORGE UI -->
             <div class="project-showcase reveal-fade">
                 <div class="project-header-block">
-                    <span class="section-label mono-text">Projet // 01</span>
-                    <h2>FORGE UI</h2>
-                    <p class="project-tagline">Plateforme e-commerce de Design Systems</p>
-                    <p>Une marketplace avant-gardiste distribuant des thèmes Dark Fantasy, animations cyberpunk et composants UI prêts à l'emploi.</p>
+                    <span class="section-label mono-text" style="color: var(--violet-500);">Projet // 01</span>
+                    <h2 class="violet-gradient">FORGE UI : L'Écosystème du Design System</h2>
+                    <p class="project-tagline violet">Marketplace de Composants & Thèmes Premium</p>
+                    <p>FORGE UI est une plateforme e-commerce avant-gardiste conçue pour centraliser et distribuer des ressources de design de haute qualité. Elle propose une marketplace de composants UI atomiques, des thèmes complets (Dark Fantasy, Cyberpunk) et des animations CSS/JS complexes prêtes à l'intégration.</p>
                 </div>
-                <div class="project-content centered">
-                    <div class="forge-content">
-                        <div class="forge-carousel-frame glass-panel">
-                            <div class="simple-carousel" id="forgeCarousel">
-                                <div class="carousel-track">
-                                    <div class="carousel-slide active"><img src="./assets/imgs/capture-ecommerce-1.png" alt="FORGE UI — Page d'accueil"></div>
-                                    <div class="carousel-slide"><img src="./assets/imgs/capture-ecommerce-2.png" alt="FORGE UI — Catalogue"></div>
-                                    <div class="carousel-slide"><img src="./assets/imgs/capture-ecommerce-3.png" alt="FORGE UI — Détail produit"></div>
-                                </div>
-                                <div class="carousel-controls">
-                                    <button class="nav-arrow prev" id="forgePrev" aria-label="Précédent"><i data-lucide="chevron-left"></i></button>
-                                    <button class="nav-arrow next" id="forgeNext" aria-label="Suivant"><i data-lucide="chevron-right"></i></button>
-                                </div>
+                <div class="project-content">
+                    <div class="carousel-wrapper carousel-forge">
+                        <div class="simple-carousel" id="forgeCarousel">
+                            <div class="carousel-track">
+                                <div class="carousel-slide active"><img src="./assets/imgs/imgs_carousel/ForgeUI/forge_accueil.png" alt="FORGE UI — Page d'accueil"></div>
+                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/ForgeUI/forge_accueil_pack.png" alt="FORGE UI — Catalogue de packs"></div>
+                            </div>
+                            <div class="carousel-controls">
+                                <button class="nav-arrow prev" id="forgePrev" aria-label="Précédent"><i data-lucide="chevron-left"></i></button>
+                                <button class="nav-arrow next" id="forgeNext" aria-label="Suivant"><i data-lucide="chevron-right"></i></button>
                             </div>
                         </div>
-                        <a href="https://e-commerce-production-53ac.up.railway.app/#/" target="_blank" rel="noopener noreferrer" class="btn-project violet">Visiter FORGE UI <i data-lucide="external-link"></i></a>
+                    </div>
+                    <div class="project-details glass-panel">
+                        <h3>Descriptif Technique</h3>
+                        <ul class="spec-list">
+                            <li>
+                                <i data-lucide="layers" class="text-violet"></i>
+                                <div class="spec-text"><strong>Architecture Frontend</strong><span>Développé avec Vue.js 3 (Composition API) et Vite pour des performances optimales et un Hot Reload instantané.</span></div>
+                            </li>
+                            <li>
+                                <i data-lucide="database" class="text-violet"></i>
+                                <div class="spec-text"><strong>Gestion d'État Scalable</strong><span>Intégration de Pinia pour une gestion fluide des données du catalogue, du panier et des préférences utilisateur.</span></div>
+                            </li>
+                            <li>
+                                <i data-lucide="shopping-cart" class="text-violet"></i>
+                                <div class="spec-text"><strong>Marketplace Dynamique</strong><span>Système de filtrage avancé, prévisualisation interactive des composants et tunnel d'achat sécurisé.</span></div>
+                            </li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://e-commerce-production-53ac.up.railway.app/#/" target="_blank" rel="noopener noreferrer" class="btn-project violet">Visiter FORGE UI <i data-lucide="external-link"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -250,19 +266,19 @@
             <div class="project-showcase reveal-fade">
                 <div class="project-header-block">
                     <span class="section-label mono-text" style="color: var(--gold-500);">Case Study // 02</span>
-                    <h2 class="gold-gradient">Rytiger RPG 🐯🗡️</h2>
-                    <p class="project-tagline gold">PWA Dark Fantasy — Combat au tour par tour</p>
-                    <p>Application PWA immersive avec moteur de combat, modes Rogue-like (Tour de l'Infini) et profils joueurs persistants.</p>
+                    <h2 class="gold-gradient">Rytiger RPG : L'Éveil de la Forge 🐯🗡️</h2>
+                    <p class="project-tagline gold">Expérience RPG Premium — Dark Fantasy & Stratégie ATB</p>
+                    <p>Un jeu de rôle épique alliant pixel art néo-rétro et mécaniques modernes. Collectionnez des héros légendaires, maîtrisez la forge de fusion et gravissez les étages de la Tour de l'Infini dans une interface desktop-first ultra-fluide.</p>
                 </div>
                 <div class="project-content">
                     <div class="carousel-wrapper carousel-rytiger">
                         <div class="simple-carousel" id="rytigerCarousel">
                             <div class="carousel-track">
-                                <div class="carousel-slide active"><img src="./assets/imgs/imgs_carousel/captures_Rytiger.png" alt="Rytiger — Menu principal"></div>
-                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/captures_Rytiger2.png" alt="Rytiger — Combat"></div>
-                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/captures_Rytiger3.png" alt="Rytiger — Inventaire"></div>
-                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/captures_Rytiger4.png" alt="Rytiger — Tour de l'Infini"></div>
-                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/captures_Rytiger5.png" alt="Rytiger — Profil"></div>
+                                <div class="carousel-slide active"><img src="./assets/imgs/imgs_carousel/Rytiger/Rytiger_Home.png" alt="Rytiger — Menu Principal"></div>
+                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/Rytiger/Rytiger_Equipe.png" alt="Rytiger — Gestion de l'Équipe"></div>
+                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/Rytiger/Rytiger_Forge_fusion.png" alt="Rytiger — Forge de Fusion"></div>
+                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/Rytiger/Rytiger_Campagne.png" alt="Rytiger — Mode Campagne"></div>
+                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/Rytiger/Rytiger_Guide.png" alt="Rytiger — Guide de l'Aventurier"></div>
                             </div>
                             <div class="carousel-controls">
                                 <button class="nav-arrow prev" id="rytigerPrev" aria-label="Précédent"><i data-lucide="chevron-left"></i></button>
@@ -274,26 +290,28 @@
                         <h3>Architecture Technique</h3>
                         <ul class="spec-list">
                             <li>
-                                <i data-lucide="smartphone"></i>
-                                <div class="spec-text"><strong>Mobile-First PWA</strong><span>Optimisé iPhone 15/17, bottom nav fluide. Cross-platform.</span></div>
+                                <i data-lucide="monitor"></i>
+                                <div class="spec-text"><strong>Desktop-First Architecture</strong><span>Interface optimisée pour les écrans larges avec une UX immersive et réactive.</span></div>
                             </li>
                             <li>
                                 <i data-lucide="swords"></i>
-                                <div class="spec-text"><strong>Moteur de Combat (Vue3)</strong><span>États asynchrones complexes, animations de frappe, i18n.</span></div>
+                                <div class="spec-text"><strong>Moteur de Combat Avancé</strong><span>Système ATB asynchrone, animations fluides et gestion complexe des états de combat.</span></div>
                             </li>
                             <li>
-                                <i data-lucide="save"></i>
-                                <div class="spec-text"><strong>Local Persistence</strong><span>Sauvegarde complète via Pinia & LocalStorage.</span></div>
+                                <i data-lucide="database"></i>
+                                <div class="spec-text"><strong>Écosystème de Données</strong><span>Gestion d'inventaire persistante, fusion de héros et progression dynamique (Pinia/LocalStorage).</span></div>
                             </li>
                         </ul>
-                        <a href="https://allanvitu.github.io/Rytiger_RPG/" target="_blank" rel="noopener noreferrer" class="btn-project crimson">Ouvrir le jeu <i data-lucide="external-link"></i></a>
+                        <div class="project-links">
+                            <a href="https://allanvitu.github.io/Rytiger_RPG/" target="_blank" rel="noopener noreferrer" class="btn-project crimson">Ouvrir le jeu <i data-lucide="external-link"></i></a>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Gameplay Video -->
                 <div class="gameplay-section reveal-fade">
                     <div class="video-frame glass-panel">
-                        <video controls muted loop playsinline preload="metadata" poster="./assets/imgs/imgs_carousel/captures_Rytiger.png" loading="lazy">
+                        <video controls muted loop playsinline preload="metadata" poster="./assets/imgs/imgs_carousel/Rytiger/Rytiger_Home.png" loading="lazy">
                             <source src="./assets/imgs/imgs_carousel/Captures_RytigerMP4.mp4" type="video/mp4">
                         </video>
                     </div>

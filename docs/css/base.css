@@ -7,18 +7,18 @@
     --font-heading: 'Plus Jakarta Sans', sans-serif;
     --font-mono: 'Roboto Mono', monospace;
 
-    /* Colors — Dark Neon */
-    --bg-main: #06060a;
-    --surface: #0a0a0f;
-    --border-glass: rgba(255, 255, 255, 0.06);
-    --bg-glass: rgba(10, 10, 15, 0.8);
+    /* Colors — Premium Light */
+    --bg-main: #f8fafc;
+    --surface: #ffffff;
+    --border-glass: rgba(15, 23, 42, 0.1);
+    --bg-glass: rgba(255, 255, 255, 0.7);
 
-    --text-main: #f1f5f9;
-    --text-muted: #94a3b8;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
 
-    --primary: #a78bfa;
-    --secondary: #22d3ee;
-    --accent: #34d399;
+    --primary: #8b5cf6;
+    --secondary: #0ea5e9;
+    --accent: #10b981;
 
     --violet-500: #7c3aed;
     --cyan-500: #06b6d4;
@@ -27,10 +27,10 @@
     --crimson-500: #e11d48;
     --gold-500: #f59e0b;
 
-    --grid-color: rgba(124, 58, 237, 0.04);
-    --blob-1: rgba(124, 58, 237, 0.12);
-    --blob-2: rgba(6, 182, 212, 0.10);
-    --blob-3: rgba(16, 185, 129, 0.08);
+    --grid-color: rgba(139, 92, 246, 0.08);
+    --blob-1: rgba(139, 92, 246, 0.08);
+    --blob-2: rgba(14, 165, 233, 0.06);
+    --blob-3: rgba(16, 185, 129, 0.05);
 
     /* Easing */
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -84,7 +84,7 @@ button {
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-main); }
 ::-webkit-scrollbar-thumb {
-    background: rgba(167, 139, 250, 0.3);
+    background: rgba(139, 92, 246, 0.2);
     border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -238,8 +238,8 @@ button {
 }
 
 .glass-panel:hover {
-    border-color: rgba(167, 139, 250, 0.2);
-    box-shadow: 0 12px 40px rgba(124, 58, 237, 0.08);
+    border-color: rgba(139, 92, 246, 0.25);
+    box-shadow: 0 12px 40px rgba(139, 92, 246, 0.12);
 }
 
 .glass-panel:hover::before { opacity: 1; }
@@ -325,9 +325,9 @@ button {
 
 .tilt-card:hover {
     box-shadow:
-        0 30px 60px rgba(124, 58, 237, 0.15),
-        0 15px 30px rgba(6, 182, 212, 0.1),
-        0 5px 15px rgba(0, 0, 0, 0.2);
+        0 30px 60px rgba(139, 92, 246, 0.1),
+        0 15px 30px rgba(14, 165, 233, 0.05),
+        0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 /* Disable tilt on touch */
@@ -388,7 +388,7 @@ button {
     font-weight: 700;
     color: var(--primary);
     animation: loaderPulse 1.2s ease-in-out infinite;
-    text-shadow: 0 0 30px rgba(167, 139, 250, 0.5);
+    text-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
 }
 
 @keyframes loaderPulse {
@@ -409,7 +409,7 @@ button {
     z-index: 10000;
     transition: transform 0.1s ease;
     transform: translate(-50%, -50%);
-    mix-blend-mode: difference;
+    mix-blend-mode: multiply;
 }
 
 .cursor-outline {
