@@ -67,8 +67,12 @@
                 <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener" aria-label="Instagram"><i data-lucide="instagram"></i></a>
             </div>
             <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
-                <i data-lucide="sun" class="icon-sun"></i>
-                <i data-lucide="moon" class="icon-moon"></i>
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                </svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
             </button>
             <a href="mailto:allan.vitu90@gmail.com" class="btn-cv magnetic-btn"><i data-lucide="mail"></i> Contact</a>
             <button class="hamburger" id="hamburgerBtn" aria-label="Ouvrir le menu">
@@ -443,33 +447,31 @@
 
         <!-- Contact -->
         <section id="contact" class="contact-section reveal-fade">
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <span class="section-label mono-text">Contact // ping</span>
-                    <h2 class="section-title">Travaillons ensemble</h2>
-                    <p>Diplômé DWWM, je suis disponible pour de nouvelles opportunités. Parlons architecture cloud, PWA ou CI/CD !</p>
-                    <div class="contact-buttons">
-                        <a href="mailto:allan.vitu90@gmail.com" class="contact-email" id="contact-email">
-                            <i data-lucide="mail"></i> allan.vitu90@gmail.com
-                        </a>
-                        <div class="contact-social-row">
-                            <a href="https://github.com/allanvitu" target="_blank" class="btn-secondary btn-github" id="contact-github">
-                                <i data-lucide="github"></i> GitHub
-                            </a>
-                            <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" class="btn-secondary btn-linkedin" id="contact-linkedin">
-                                <i data-lucide="linkedin"></i> LinkedIn
-                            </a>
-                        </div>
-                    </div>
+            <div class="contact-center">
+                <span class="section-label mono-text">Contact // ping</span>
+                <h2 class="section-title">Travaillons ensemble</h2>
+                <p class="contact-lead">Diplômé DWWM, disponible pour toute mission freelance ou CDI.<br>Parlons architecture cloud, PWA ou CI/CD !</p>
+                <div class="contact-socials">
+                    <!-- Gmail -->
+                    <a href="mailto:allan.vitu90@gmail.com" class="social-icon-btn social-gmail" aria-label="Gmail">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                        </svg>
+                    </a>
+                    <!-- GitHub -->
+                    <a href="https://github.com/allanvitu" target="_blank" rel="noopener" class="social-icon-btn social-github" aria-label="GitHub">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener" class="social-icon-btn social-linkedin" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener" class="social-icon-btn social-instagram" aria-label="Instagram">
+                        <i data-lucide="instagram"></i>
+                    </a>
                 </div>
-                <div class="glass-panel contact-notice">
-                    <div class="bento-icon-top"><i data-lucide="sparkles" class="text-violet"></i></div>
-                    <h3>Disponibilité Directe</h3>
-                    <p>Contactez-moi directement par e-mail pour toute demande de mission ou collaboration technique.</p>
-                    <div class="contact-notice-badge">
-                        <span class="mono-text"><span class="text-violet">RESPONSE_TIME:</span> within_24h</span>
-                    </div>
-                </div>
+                <p class="contact-email-hint mono-text">allan.vitu90@gmail.com</p>
             </div>
         </section>
     </main>
