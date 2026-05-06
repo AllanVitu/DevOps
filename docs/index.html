@@ -24,6 +24,15 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
 </head>
 <body>
+    <!-- Dark mode : applied before paint to prevent flash -->
+    <script>
+    (function(){
+        const t = localStorage.getItem('theme');
+        const dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (dark) document.body.classList.add('dark');
+    })();
+    </script>
+
     <!-- Loader -->
     <div id="page-loader"><span class="loader-logo">AV</span></div>
 
@@ -57,6 +66,10 @@
                 <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
                 <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener" aria-label="Instagram"><i data-lucide="instagram"></i></a>
             </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
+                <i data-lucide="sun" class="icon-sun"></i>
+                <i data-lucide="moon" class="icon-moon"></i>
+            </button>
             <a href="mailto:allan.vitu90@gmail.com" class="btn-cv magnetic-btn"><i data-lucide="mail"></i> Contact</a>
             <button class="hamburger" id="hamburgerBtn" aria-label="Ouvrir le menu">
                 <span></span><span></span><span></span>

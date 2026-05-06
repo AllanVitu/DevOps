@@ -1,8 +1,38 @@
+// =============================================
+// DARK MODE — early toggle (before DOMContentLoaded)
+// =============================================
+(function () {
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (saved ? saved === 'dark' : prefersDark) document.body.classList.add('dark');
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
     // =============================================
     // ICON INIT
     // =============================================
     if (typeof lucide !== 'undefined') lucide.createIcons();
+
+    // =============================================
+    // DARK MODE TOGGLE
+    // =============================================
+    const themeToggle = document.getElementById('themeToggle');
+
+    function applyTheme(dark) {
+        document.body.classList.toggle('dark', dark);
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+    }
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            applyTheme(!document.body.classList.contains('dark'));
+        });
+    }
+
+    // Sync with OS-level preference changes (if no manual preference saved)
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) applyTheme(e.matches);
+    });
 
     // =============================================
     // PAGE LOADER

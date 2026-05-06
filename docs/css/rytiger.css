@@ -456,3 +456,39 @@
     .nav-arrow.prev { left: 0.5rem; }
     .nav-arrow.next { right: 0.5rem; }
 }
+
+/* =============================================
+   DARK MODE — PROJECT OVERRIDES
+   ============================================= */
+
+/* Project section border */
+body.dark .project-showcase { border-top-color: rgba(255, 255, 255, 0.05); }
+
+/* Carousel nav arrows */
+body.dark .nav-arrow {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+body.dark .nav-arrow:hover { background: var(--primary); border-color: var(--primary); }
+body.dark .carousel-rytiger .nav-arrow:hover  { background: var(--crimson-500); border-color: var(--crimson-500); }
+body.dark .carousel-regiondex .nav-arrow:hover { background: var(--emerald-500); border-color: var(--emerald-500); }
+body.dark .carousel-snake .nav-arrow:hover { background: #22c55e; border-color: #22c55e; }
+
+/* Spec list items */
+body.dark .spec-list li:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+body.dark .spec-list i { background: rgba(245, 158, 11, 0.1); }
+
+/* Elvish description hover */
+body.dark .elvish-description:hover {
+    color: var(--gold-500) !important;
+    text-shadow: 0 0 30px rgba(245, 158, 11, 0.5), 0 0 60px rgba(245, 158, 11, 0.25);
+}
+
+/* Video frame */
+body.dark .video-frame {
+    box-shadow: 0 10px 50px rgba(245, 158, 11, 0.06);
+    background: rgba(14, 20, 32, 0.6);
+}

@@ -770,3 +770,74 @@
     .main-container { padding: 0 1rem; }
     .contact-social-row { flex-direction: column; }
 }
+
+/* =============================================
+   DARK MODE — COMPONENT OVERRIDES
+   ============================================= */
+
+/* Navbar */
+body.dark .glass-navbar {
+    background: rgba(7, 9, 15, 0.88);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Mobile menu */
+body.dark .mobile-menu {
+    background: rgba(7, 9, 15, 0.98);
+}
+
+/* Hamburger bars */
+body.dark .hamburger span { background: var(--text-main); }
+
+/* btn-outline */
+body.dark .btn-outline {
+    color: var(--text-main);
+    border-color: var(--border-glass);
+}
+body.dark .btn-outline:hover {
+    border-color: var(--primary);
+    background: rgba(139, 92, 246, 0.1);
+}
+
+/* btn-cv in dark */
+body.dark .btn-cv {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.3);
+}
+body.dark .btn-cv:hover {
+    background: var(--primary);
+    color: #fff;
+}
+
+/* Timeline bullet bg */
+body.dark .timeline-item::before { background: var(--surface); }
+
+/* Avatar border */
+body.dark .avatar-img { border-color: var(--surface); }
+
+/* About code block (already dark — keep border coherent) */
+body.dark .about-code { border-color: rgba(255, 255, 255, 0.06); }
+
+/* Tags */
+body.dark .tag { background: rgba(255, 255, 255, 0.04); }
+body.dark .neon-tag { background: rgba(139, 92, 246, 0.06); border-color: rgba(139, 92, 246, 0.25); }
+body.dark .neon-tag:hover { background: var(--primary); color: #fff; }
+
+/* GitHub chart — remove the light-mode inversion filter */
+body.dark .github-chart img {
+    filter: brightness(0.85) contrast(1.05) saturate(1.2);
+}
+
+/* Contact notice */
+body.dark .contact-notice-badge { border-color: rgba(255, 255, 255, 0.08); }
+
+/* Hero badge */
+body.dark .hero-badge {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.3);
+}
+
+/* Scroll tracker (stays vibrant) */
+body.dark .scroll-tracker {
+    box-shadow: 0 0 14px rgba(167, 139, 250, 0.8);
+}
