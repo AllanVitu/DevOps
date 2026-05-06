@@ -649,8 +649,10 @@
 
 .social-icon-btn svg,
 .social-icon-btn i {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    display: block;
 }
 
 .social-icon-btn:hover { transform: translateY(-5px); }
