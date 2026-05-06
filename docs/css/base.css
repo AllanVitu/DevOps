@@ -100,6 +100,7 @@ button {
 .text-emerald { color: var(--emerald-500); }
 .text-blue { color: var(--indigo-500); }
 .text-crimson { color: var(--crimson-500); }
+.text-green { color: #22c55e; }
 
 .gradient-text {
     background: linear-gradient(135deg, var(--primary), var(--secondary));

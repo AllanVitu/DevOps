@@ -168,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCarousel('forgeCarousel', 'forgePrev', 'forgeNext');
     initCarousel('rytigerCarousel', 'rytigerPrev', 'rytigerNext');
     initCarousel('regiondexCarousel', 'regionPrev', 'regionNext');
+    initCarousel('snakeCarousel', 'snakePrev', 'snakeNext');
 
     // =============================================
     // SPOTLIGHT HOVER ON GLASS PANELS
