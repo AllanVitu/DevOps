@@ -199,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCarousel('rytigerCarousel', 'rytigerPrev', 'rytigerNext');
     initCarousel('regiondexCarousel', 'regionPrev', 'regionNext');
     initCarousel('snakeCarousel', 'snakePrev', 'snakeNext');
+    initCarousel('focusCarousel', 'focusPrev', 'focusNext');
 
     // =============================================
     // PROJECT GRID FILTER

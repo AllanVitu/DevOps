@@ -167,6 +167,7 @@
 .badge-game     { background: var(--crimson-500); color: #fff; }
 .badge-pwa      { background: var(--emerald-500); color: #fff; }
 .badge-vanilla  { background: var(--gold-500); color: #000; }
+.badge-tdah     { background: var(--cyan-500); color: #fff; }
 
 /* --- Card body --- */
 .project-card-body {
