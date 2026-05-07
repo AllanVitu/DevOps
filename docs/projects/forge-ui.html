@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORGE UI — Allan Vitu</title>
+    <meta name="description" content="FORGE UI — Marketplace de composants UI atomiques & thèmes premium. Vue.js 3, Pinia, Vite.">
+    <link rel="icon" type="image/png" href="../assets/branding/favicon.png" sizes="32x32">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/devops.css">
+    <link rel="stylesheet" href="../css/rytiger.css">
+    <link rel="stylesheet" href="../css/projects.css">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
+</head>
+<body>
+    <script>
+    (function(){
+        const t = localStorage.getItem('theme');
+        const dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (dark) document.body.classList.add('dark');
+    })();
+    </script>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+    <div class="animated-bg"></div>
+    <div id="rain-container"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <nav class="glass-navbar" id="navbar">
+        <div class="scroll-tracker"></div>
+        <a href="../" class="nav-brand magnetic-btn">
+            <img src="../assets/branding/logo.svg" alt="Logo" class="nav-logo">
+            Allan<span class="gradient-text">/</span>Vitu
+        </a>
+        <div class="nav-center">
+            <a href="../#about">À propos</a>
+            <a href="../#experience">Parcours</a>
+            <a href="../#projects">Projets</a>
+            <a href="../#contact">Contact</a>
+        </div>
+        <div class="nav-right">
+            <div class="social-icons">
+                <a href="https://github.com/allanvitu" target="_blank" rel="noopener" aria-label="GitHub"><i data-lucide="github"></i></a>
+                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+                <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                </svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+            <a href="mailto:allan.vitu90@gmail.com" class="btn-cv magnetic-btn"><i data-lucide="mail"></i> Contact</a>
+            <button class="hamburger" id="hamburgerBtn" aria-label="Ouvrir le menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="../#about">À propos</a>
+        <a href="../#experience">Parcours</a>
+        <a href="../#projects">Projets</a>
+        <a href="../#contact">Contact</a>
+        <div class="mobile-socials">
+            <a href="https://github.com/allanvitu" target="_blank" aria-label="GitHub"><i data-lucide="github"></i></a>
+            <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+            <a href="https://www.instagram.com/allan.vitu/" target="_blank" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+        </div>
+    </div>
+
+    <main class="main-container">
+        <nav class="project-breadcrumb" aria-label="Fil d'Ariane">
+            <a href="../" class="breadcrumb-link">Home</a>
+            <span class="breadcrumb-sep">/</span>
+            <a href="../#projects" class="breadcrumb-link">Projets</a>
+            <span class="breadcrumb-sep">/</span>
+            <span class="breadcrumb-current">FORGE UI</span>
+        </nav>
+
+        <div class="project-showcase reveal-fade">
+            <div class="project-header-block">
+                <span class="section-label mono-text" style="color: var(--violet-500);">Projet // 01</span>
+                <h2 class="violet-gradient">FORGE UI : L'Écosystème du Design System</h2>
+                <p class="project-tagline violet">Marketplace de Composants & Thèmes Premium</p>
+                <p>FORGE UI est une plateforme e-commerce avant-gardiste conçue pour centraliser et distribuer des ressources de design de haute qualité. Elle propose une marketplace de composants UI atomiques, des thèmes complets (Dark Fantasy, Cyberpunk) et des animations CSS/JS complexes prêtes à l'intégration.</p>
+            </div>
+            <div class="project-content">
+                <div class="carousel-wrapper carousel-forge">
+                    <div class="simple-carousel" id="forgeCarousel">
+                        <div class="carousel-track">
+                            <div class="carousel-slide active"><img src="../assets/imgs/imgs_carousel/ForgeUI/forge_accueil.png" alt="FORGE UI — Page d'accueil"></div>
+                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/ForgeUI/forge_accueil_pack.png" alt="FORGE UI — Catalogue de packs"></div>
+                        </div>
+                        <div class="carousel-controls">
+                            <button class="nav-arrow prev" id="forgePrev" aria-label="Précédent"><i data-lucide="chevron-left"></i></button>
+                            <button class="nav-arrow next" id="forgeNext" aria-label="Suivant"><i data-lucide="chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-details glass-panel">
+                    <h3>Descriptif Technique</h3>
+                    <ul class="spec-list">
+                        <li>
+                            <i data-lucide="layers" class="text-violet"></i>
+                            <div class="spec-text"><strong>Architecture Frontend</strong><span>Développé avec Vue.js 3 (Composition API) et Vite pour des performances optimales et un Hot Reload instantané.</span></div>
+                        </li>
+                        <li>
+                            <i data-lucide="database" class="text-violet"></i>
+                            <div class="spec-text"><strong>Gestion d'État Scalable</strong><span>Intégration de Pinia pour une gestion fluide des données du catalogue, du panier et des préférences utilisateur.</span></div>
+                        </li>
+                        <li>
+                            <i data-lucide="shopping-cart" class="text-violet"></i>
+                            <div class="spec-text"><strong>Marketplace Dynamique</strong><span>Système de filtrage avancé, prévisualisation interactive des composants et tunnel d'achat sécurisé.</span></div>
+                        </li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://e-commerce-production-53ac.up.railway.app/#/" target="_blank" rel="noopener noreferrer" class="btn-project violet">Visiter FORGE UI <i data-lucide="external-link"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="project-page-nav-footer" aria-label="Navigation entre projets">
+            <div class="prev-next-placeholder"></div>
+            <a href="./rytiger.html" class="prev-next-link next">
+                <div>
+                    <span class="prev-next-label">Projet suivant</span>
+                    <strong class="prev-next-title">Rytiger RPG 🐯</strong>
+                </div>
+                <i data-lucide="arrow-right"></i>
+            </a>
+        </nav>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-socials">
+                <a href="https://github.com/allanvitu" target="_blank" aria-label="GitHub"><i data-lucide="github"></i></a>
+                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+                <a href="https://www.instagram.com/allan.vitu/" target="_blank" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+            </div>
+            <p class="footer-copy">&copy; 2026 Allan Vitu. Développeur Full-Stack & DevOps.</p>
+        </div>
+    </footer>
+
+    <script src="../js/app.js"></script>
+</body>
+</html>

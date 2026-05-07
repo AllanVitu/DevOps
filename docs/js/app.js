@@ -201,6 +201,29 @@ document.addEventListener('DOMContentLoaded', () => {
     initCarousel('snakeCarousel', 'snakePrev', 'snakeNext');
 
     // =============================================
+    // PROJECT GRID FILTER
+    // =============================================
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card[data-tags]');
+
+    if (filterBtns.length > 0 && projectCards.length > 0) {
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.dataset.filter;
+
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                projectCards.forEach(card => {
+                    const tags = (card.dataset.tags || '').split(',');
+                    const match = filter === 'all' || tags.includes(filter);
+                    card.style.display = match ? '' : 'none';
+                });
+            });
+        });
+    }
+
+    // =============================================
     // SPOTLIGHT HOVER ON GLASS PANELS
     // =============================================
     document.querySelectorAll('.glass-panel').forEach(panel => {

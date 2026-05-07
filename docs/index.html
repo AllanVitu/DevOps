@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/devops.css">
     <link rel="stylesheet" href="./css/rytiger.css">
+    <link rel="stylesheet" href="./css/projects.css">
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
 </head>
 <body>
@@ -234,214 +235,119 @@
 
         <!-- Projects -->
         <section id="projects" class="projects-section">
-
-            <!-- FORGE UI -->
-            <div class="project-showcase reveal-fade">
-                <div class="project-header-block">
-                    <span class="section-label mono-text" style="color: var(--violet-500);">Projet // 01</span>
-                    <h2 class="violet-gradient">FORGE UI : L'Écosystème du Design System</h2>
-                    <p class="project-tagline violet">Marketplace de Composants & Thèmes Premium</p>
-                    <p>FORGE UI est une plateforme e-commerce avant-gardiste conçue pour centraliser et distribuer des ressources de design de haute qualité. Elle propose une marketplace de composants UI atomiques, des thèmes complets (Dark Fantasy, Cyberpunk) et des animations CSS/JS complexes prêtes à l'intégration.</p>
-                </div>
-                <div class="project-content">
-                    <div class="carousel-wrapper carousel-forge">
-                        <div class="simple-carousel" id="forgeCarousel">
-                            <div class="carousel-track">
-                                <div class="carousel-slide active"><img src="./assets/imgs/imgs_carousel/ForgeUI/forge_accueil.png" alt="FORGE UI — Page d'accueil"></div>
-                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/ForgeUI/forge_accueil_pack.png" alt="FORGE UI — Catalogue de packs"></div>
-                            </div>
-                            <div class="carousel-controls">
-                                <button class="nav-arrow prev" id="forgePrev" aria-label="Précédent"><i data-lucide="chevron-left"></i></button>
-                                <button class="nav-arrow next" id="forgeNext" aria-label="Suivant"><i data-lucide="chevron-right"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-details glass-panel">
-                        <h3>Descriptif Technique</h3>
-                        <ul class="spec-list">
-                            <li>
-                                <i data-lucide="layers" class="text-violet"></i>
-                                <div class="spec-text"><strong>Architecture Frontend</strong><span>Développé avec Vue.js 3 (Composition API) et Vite pour des performances optimales et un Hot Reload instantané.</span></div>
-                            </li>
-                            <li>
-                                <i data-lucide="database" class="text-violet"></i>
-                                <div class="spec-text"><strong>Gestion d'État Scalable</strong><span>Intégration de Pinia pour une gestion fluide des données du catalogue, du panier et des préférences utilisateur.</span></div>
-                            </li>
-                            <li>
-                                <i data-lucide="shopping-cart" class="text-violet"></i>
-                                <div class="spec-text"><strong>Marketplace Dynamique</strong><span>Système de filtrage avancé, prévisualisation interactive des composants et tunnel d'achat sécurisé.</span></div>
-                            </li>
-                        </ul>
-                        <div class="project-links">
-                            <a href="https://e-commerce-production-53ac.up.railway.app/#/" target="_blank" rel="noopener noreferrer" class="btn-project violet">Visiter FORGE UI <i data-lucide="external-link"></i></a>
-                        </div>
-                    </div>
-                </div>
+            <div class="projects-header reveal-fade">
+                <span class="section-label mono-text">Projets // portfolio</span>
+                <h2 class="section-title">Ce que je construis</h2>
             </div>
 
-            <!-- Rytiger RPG -->
-            <div class="project-showcase reveal-fade">
-                <div class="project-header-block">
-                    <span class="section-label mono-text" style="color: var(--gold-500);">Case Study // 02</span>
-                    <h2 class="gold-gradient">Rytiger RPG : L'Éveil de la Forge 🐯🗡️</h2>
-                    <p class="project-tagline gold">Expérience RPG Premium — Dark Fantasy & Stratégie ATB</p>
-                    <p>Un jeu de rôle épique alliant pixel art néo-rétro et mécaniques modernes. Collectionnez des héros légendaires, maîtrisez la forge de fusion et gravissez les étages de la Tour de l'Infini dans une interface desktop-first ultra-fluide.</p>
-                </div>
-                <div class="project-content">
-                    <div class="carousel-wrapper carousel-rytiger">
-                        <div class="simple-carousel" id="rytigerCarousel">
-                            <div class="carousel-track">
-                                <div class="carousel-slide active"><img src="./assets/imgs/imgs_carousel/Rytiger/Rytiger_Home.png" alt="Rytiger — Menu Principal"></div>
-                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/Rytiger/Rytiger_Equipe.png" alt="Rytiger — Gestion de l'Équipe"></div>
-                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/Rytiger/Rytiger_Forge_fusion.png" alt="Rytiger — Forge de Fusion"></div>
-                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/Rytiger/Rytiger_Campagne.png" alt="Rytiger — Mode Campagne"></div>
-                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/Rytiger/Rytiger_Guide.png" alt="Rytiger — Guide de l'Aventurier"></div>
-                            </div>
-                            <div class="carousel-controls">
-                                <button class="nav-arrow prev" id="rytigerPrev" aria-label="Précédent"><i data-lucide="chevron-left"></i></button>
-                                <button class="nav-arrow next" id="rytigerNext" aria-label="Suivant"><i data-lucide="chevron-right"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-details glass-panel">
-                        <h3>Architecture Technique</h3>
-                        <ul class="spec-list">
-                            <li>
-                                <i data-lucide="monitor"></i>
-                                <div class="spec-text"><strong>Desktop-First Architecture</strong><span>Interface optimisée pour les écrans larges avec une UX immersive et réactive.</span></div>
-                            </li>
-                            <li>
-                                <i data-lucide="swords"></i>
-                                <div class="spec-text"><strong>Moteur de Combat Avancé</strong><span>Système ATB asynchrone, animations fluides et gestion complexe des états de combat.</span></div>
-                            </li>
-                            <li>
-                                <i data-lucide="database"></i>
-                                <div class="spec-text"><strong>Écosystème de Données</strong><span>Gestion d'inventaire persistante, fusion de héros et progression dynamique (Pinia/LocalStorage).</span></div>
-                            </li>
-                        </ul>
-                        <div class="project-links">
-                            <a href="https://allanvitu.github.io/Rytiger_RPG/" target="_blank" rel="noopener noreferrer" class="btn-project crimson">Ouvrir le jeu <i data-lucide="external-link"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Gameplay Video -->
-                <div class="gameplay-section reveal-fade">
-                    <div class="video-frame glass-panel">
-                        <video controls muted loop playsinline preload="metadata" poster="./assets/imgs/imgs_carousel/Rytiger/Rytiger_Home.png" loading="lazy">
-                            <source src="./assets/imgs/imgs_carousel/Captures_RytigerMP4.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="elvish-text">
-                        <p class="elvish-description">
-                            <span class="elvish-letters">Mae govannen...</span>
-                            Plongez dans les tréfonds de la Tour de l'Infini. Maîtrisez les arcanes de la composition de groupe, enchaînez vos compétences et affrontez des ombres corrompues dans une épopée Dark Fantasy intemporelle.
-                        </p>
-                    </div>
-                </div>
+            <!-- Filter bar -->
+            <div class="projects-filter reveal-fade">
+                <button class="filter-btn active" data-filter="all">Tous</button>
+                <button class="filter-btn" data-filter="vue">Vue.js</button>
+                <button class="filter-btn" data-filter="game">Game</button>
+                <button class="filter-btn" data-filter="pwa">PWA</button>
+                <button class="filter-btn" data-filter="vanilla">Vanilla JS</button>
             </div>
 
-            <!-- RégionDex -->
-            <div class="project-showcase reveal-fade">
-                <div class="project-header-block align-right">
-                    <span class="section-label mono-text" style="color: var(--emerald-500);">Case Study // 03</span>
-                    <h2 class="emerald-gradient">RégionDex 📱🐾</h2>
-                    <p class="project-tagline emerald">Pokédex PWA — Interface Bento Box</p>
-                    <p>Application Pokédex ultime avec design Bento Box moderne, exploration technique et immersive de l'univers Pokémon.</p>
-                </div>
-                <div class="project-content reversed">
-                    <div class="carousel-wrapper carousel-regiondex">
-                        <div class="simple-carousel" id="regiondexCarousel">
-                            <div class="carousel-track">
-                                <div class="carousel-slide active"><img src="./assets/imgs/imgs_carousel/regiondex/regiondex_accueil.webp" alt="RégionDex — Accueil"></div>
-                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/regiondex/regiondex_card.webp" alt="RégionDex — Fiche Pokémon"></div>
-                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/regiondex/regiondex_menu.webp" alt="RégionDex — Menu"></div>
-                            </div>
-                            <div class="carousel-controls">
-                                <button class="nav-arrow prev" id="regionPrev" aria-label="Précédent"><i data-lucide="chevron-left"></i></button>
-                                <button class="nav-arrow next" id="regionNext" aria-label="Suivant"><i data-lucide="chevron-right"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-details glass-panel">
-                        <h3>Architecture Technique</h3>
-                        <ul class="spec-list">
-                            <li>
-                                <i data-lucide="layout-grid" class="text-emerald"></i>
-                                <div class="spec-text"><strong>Bento Box UI</strong><span>Interface moderne pour une lecture claire des statistiques.</span></div>
-                            </li>
-                            <li>
-                                <i data-lucide="database" class="text-emerald"></i>
-                                <div class="spec-text"><strong>Data Handling</strong><span>Consommation de multiples API pour toutes les données Pokémon.</span></div>
-                            </li>
-                            <li>
-                                <i data-lucide="zap" class="text-emerald"></i>
-                                <div class="spec-text"><strong>PWA Ready</strong><span>Installation locale, cache optimisé et fonctionnement rapide.</span></div>
-                            </li>
-                        </ul>
-                        <a href="https://allanvitu.github.io/Pokedex/" target="_blank" rel="noopener noreferrer" class="btn-project emerald">Ouvrir RégionDex <i data-lucide="external-link"></i></a>
-                    </div>
-                </div>
-            </div>
+            <!-- Grid -->
+            <div class="projects-grid reveal-fade">
 
-            <!-- Super Snake -->
-            <div class="project-showcase reveal-fade">
-                <div class="project-header-block">
-                    <span class="section-label mono-text" style="color: #22c55e;">Projet // 04</span>
-                    <h2 class="green-gradient">Super Snake 🐍</h2>
-                    <p class="project-tagline green">Arcade Game — Gacha System & Multi-Modes</p>
-                    <p>Une réinvention moderne du Snake classique, enrichie d'un système de Gacha pour débloquer des skins et personnages exclusifs, et de multiples modes de jeu pour une rejouabilité infinie. Un jeu arcade addictif où chaque partie est unique.</p>
-                </div>
-                <div class="project-content">
-                    <div class="carousel-wrapper carousel-snake">
-                        <div class="simple-carousel" id="snakeCarousel">
-                            <div class="carousel-track">
-                                <div class="carousel-slide active"><img src="./assets/imgs/imgs_carousel/SuperSnake/super_snake_acceuil.png" alt="Super Snake — Accueil"></div>
-                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/SuperSnake/super_snake_gasha.png" alt="Super Snake — Système Gacha"></div>
-                                <div class="carousel-slide"><img src="./assets/imgs/imgs_carousel/SuperSnake/super_snake_mode_de_jeux.png" alt="Super Snake — Modes de Jeu"></div>
+                <!-- FORGE UI — Featured -->
+                <a href="./projects/forge-ui.html" class="project-card project-card--featured glass-panel" data-tags="vue,ecommerce,ui">
+                    <div class="project-card-thumb">
+                        <img src="./assets/imgs/imgs_carousel/ForgeUI/forge_accueil.png" alt="FORGE UI — Page d'accueil" loading="lazy">
+                        <div class="project-card-overlay">
+                            <span class="card-cta-label">Voir le projet <i data-lucide="arrow-right"></i></span>
+                        </div>
+                        <span class="project-card-badge badge-featured">Featured</span>
+                    </div>
+                    <div class="project-card-body">
+                        <span class="project-card-num mono-text" style="color: var(--violet-500);">01</span>
+                        <h3>FORGE UI</h3>
+                        <p class="project-card-desc">Marketplace de composants UI atomiques & thèmes premium — Vue.js 3, Pinia, Vite, e-commerce complet.</p>
+                        <div class="project-card-footer">
+                            <div class="project-card-tags">
+                                <span class="tag neon-tag">Vue.js</span>
+                                <span class="tag neon-tag">Pinia</span>
+                                <span class="tag neon-tag">E-commerce</span>
                             </div>
-                            <div class="carousel-controls">
-                                <button class="nav-arrow prev" id="snakePrev" aria-label="Précédent"><i data-lucide="chevron-left"></i></button>
-                                <button class="nav-arrow next" id="snakeNext" aria-label="Suivant"><i data-lucide="chevron-right"></i></button>
-                            </div>
+                            <div class="project-card-arrow"><i data-lucide="arrow-right"></i></div>
                         </div>
                     </div>
-                    <div class="project-details glass-panel">
-                        <h3>Descriptif Technique</h3>
-                        <ul class="spec-list">
-                            <li>
-                                <i data-lucide="sparkles" class="text-green"></i>
-                                <div class="spec-text"><strong>Système Gacha</strong><span>Débloquez des skins et personnages exclusifs via un système d'invocations intégré au cœur de l'expérience.</span></div>
-                            </li>
-                            <li>
-                                <i data-lucide="gamepad-2" class="text-green"></i>
-                                <div class="spec-text"><strong>Multi-Modes de Jeu</strong><span>Plusieurs modes uniques — chaque session offre des règles et des défis différents pour une rejouabilité infinie.</span></div>
-                            </li>
-                            <li>
-                                <i data-lucide="zap" class="text-green"></i>
-                                <div class="spec-text"><strong>Gameplay Arcade Pur</strong><span>Réinvention moderne du Snake classique avec des mécaniques fluides et une progression addictive.</span></div>
-                            </li>
-                        </ul>
-                        <div class="project-links">
-                            <a href="https://allanvitu.github.io/Ultimate_Snake/" target="_blank" rel="noopener noreferrer" class="btn-project green">Jouer à Super Snake <i data-lucide="external-link"></i></a>
-                        </div>
-                    </div>
-                </div>
+                </a>
 
-                <!-- Gameplay Video -->
-                <div class="gameplay-section reveal-fade">
-                    <div class="video-frame glass-panel" style="border-color: #22c55e !important; box-shadow: 0 10px 40px rgba(34, 197, 94, 0.08);">
-                        <video controls muted loop playsinline preload="metadata" poster="./assets/imgs/imgs_carousel/SuperSnake/super_snake_acceuil.png" loading="lazy">
-                            <source src="./assets/imgs/imgs_carousel/SuperSnake/GamePlaySuperSnake.mp4" type="video/mp4">
-                        </video>
+                <!-- Rytiger RPG -->
+                <a href="./projects/rytiger.html" class="project-card glass-panel" data-tags="vue,game,pwa">
+                    <div class="project-card-thumb">
+                        <img src="./assets/imgs/imgs_carousel/Rytiger/Rytiger_Home.png" alt="Rytiger RPG" loading="lazy">
+                        <div class="project-card-overlay">
+                            <span class="card-cta-label">Voir le projet <i data-lucide="arrow-right"></i></span>
+                        </div>
+                        <span class="project-card-badge badge-game">RPG</span>
                     </div>
-                    <div class="elvish-text">
-                        <p class="elvish-description" style="color: var(--text-muted);">
-                            <span style="font-family: 'Cinzel Decorative', cursive; color: #22c55e; font-size: 1.4rem; font-weight: 700; margin-right: 0.5rem;">Slither & Conquer...</span>
-                            Guidez votre serpent à travers des arènes de plus en plus intenses. Tentez votre chance au Gacha, déverrouillez des modes inédits et battez vos propres records dans cette odyssée arcade néon.
-                        </p>
+                    <div class="project-card-body">
+                        <span class="project-card-num mono-text" style="color: var(--gold-500);">02</span>
+                        <h3>Rytiger RPG 🐯</h3>
+                        <p class="project-card-desc">RPG Dark Fantasy — système ATB, forge de fusion et Tour de l'Infini.</p>
+                        <div class="project-card-footer">
+                            <div class="project-card-tags">
+                                <span class="tag">Vue.js</span>
+                                <span class="tag">Game</span>
+                                <span class="tag">PWA</span>
+                            </div>
+                            <div class="project-card-arrow"><i data-lucide="arrow-right"></i></div>
+                        </div>
                     </div>
-                </div>
+                </a>
+
+                <!-- RégionDex -->
+                <a href="./projects/regiondex.html" class="project-card glass-panel" data-tags="vue,pwa,api">
+                    <div class="project-card-thumb">
+                        <img src="./assets/imgs/imgs_carousel/regiondex/regiondex_accueil.webp" alt="RégionDex" loading="lazy">
+                        <div class="project-card-overlay">
+                            <span class="card-cta-label">Voir le projet <i data-lucide="arrow-right"></i></span>
+                        </div>
+                        <span class="project-card-badge badge-pwa">PWA</span>
+                    </div>
+                    <div class="project-card-body">
+                        <span class="project-card-num mono-text" style="color: var(--emerald-500);">03</span>
+                        <h3>RégionDex 📱</h3>
+                        <p class="project-card-desc">Pokédex PWA — UI Bento Box, multi-API Pokémon et cache optimisé.</p>
+                        <div class="project-card-footer">
+                            <div class="project-card-tags">
+                                <span class="tag">Vue.js</span>
+                                <span class="tag">PWA</span>
+                                <span class="tag">REST API</span>
+                            </div>
+                            <div class="project-card-arrow"><i data-lucide="arrow-right"></i></div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Super Snake -->
+                <a href="./projects/super-snake.html" class="project-card glass-panel" data-tags="vanilla,game">
+                    <div class="project-card-thumb">
+                        <img src="./assets/imgs/imgs_carousel/SuperSnake/super_snake_acceuil.png" alt="Super Snake" loading="lazy">
+                        <div class="project-card-overlay">
+                            <span class="card-cta-label">Voir le projet <i data-lucide="arrow-right"></i></span>
+                        </div>
+                        <span class="project-card-badge badge-vanilla">Arcade</span>
+                    </div>
+                    <div class="project-card-body">
+                        <span class="project-card-num mono-text" style="color: #22c55e;">04</span>
+                        <h3>Super Snake 🐍</h3>
+                        <p class="project-card-desc">Snake arcade moderne — Gacha System, multi-modes et skins déblocables.</p>
+                        <div class="project-card-footer">
+                            <div class="project-card-tags">
+                                <span class="tag">Vanilla JS</span>
+                                <span class="tag">Game</span>
+                                <span class="tag">Arcade</span>
+                            </div>
+                            <div class="project-card-arrow"><i data-lucide="arrow-right"></i></div>
+                        </div>
+                    </div>
+                </a>
+
             </div>
         </section>
 

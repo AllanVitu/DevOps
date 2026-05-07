@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rytiger RPG — Allan Vitu</title>
+    <meta name="description" content="Rytiger RPG — Jeu de rôle Dark Fantasy avec système ATB, forge de fusion et Tour de l'Infini.">
+    <link rel="icon" type="image/png" href="../assets/branding/favicon.png" sizes="32x32">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/devops.css">
+    <link rel="stylesheet" href="../css/rytiger.css">
+    <link rel="stylesheet" href="../css/projects.css">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
+</head>
+<body>
+    <script>
+    (function(){
+        const t = localStorage.getItem('theme');
+        const dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (dark) document.body.classList.add('dark');
+    })();
+    </script>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+    <div class="animated-bg"></div>
+    <div id="rain-container"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <nav class="glass-navbar" id="navbar">
+        <div class="scroll-tracker"></div>
+        <a href="../" class="nav-brand magnetic-btn">
+            <img src="../assets/branding/logo.svg" alt="Logo" class="nav-logo">
+            Allan<span class="gradient-text">/</span>Vitu
+        </a>
+        <div class="nav-center">
+            <a href="../#about">À propos</a>
+            <a href="../#experience">Parcours</a>
+            <a href="../#projects">Projets</a>
+            <a href="../#contact">Contact</a>
+        </div>
+        <div class="nav-right">
+            <div class="social-icons">
+                <a href="https://github.com/allanvitu" target="_blank" rel="noopener" aria-label="GitHub"><i data-lucide="github"></i></a>
+                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+                <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                </svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+            <a href="mailto:allan.vitu90@gmail.com" class="btn-cv magnetic-btn"><i data-lucide="mail"></i> Contact</a>
+            <button class="hamburger" id="hamburgerBtn" aria-label="Ouvrir le menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="../#about">À propos</a>
+        <a href="../#experience">Parcours</a>
+        <a href="../#projects">Projets</a>
+        <a href="../#contact">Contact</a>
+        <div class="mobile-socials">
+            <a href="https://github.com/allanvitu" target="_blank" aria-label="GitHub"><i data-lucide="github"></i></a>
+            <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+            <a href="https://www.instagram.com/allan.vitu/" target="_blank" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+        </div>
+    </div>
+
+    <main class="main-container">
+        <nav class="project-breadcrumb" aria-label="Fil d'Ariane">
+            <a href="../" class="breadcrumb-link">Home</a>
+            <span class="breadcrumb-sep">/</span>
+            <a href="../#projects" class="breadcrumb-link">Projets</a>
+            <span class="breadcrumb-sep">/</span>
+            <span class="breadcrumb-current">Rytiger RPG</span>
+        </nav>
+
+        <div class="project-showcase reveal-fade">
+            <div class="project-header-block">
+                <span class="section-label mono-text" style="color: var(--gold-500);">Case Study // 02</span>
+                <h2 class="gold-gradient">Rytiger RPG : L'Éveil de la Forge 🐯🗡️</h2>
+                <p class="project-tagline gold">Expérience RPG Premium — Dark Fantasy & Stratégie ATB</p>
+                <p>Un jeu de rôle épique alliant pixel art néo-rétro et mécaniques modernes. Collectionnez des héros légendaires, maîtrisez la forge de fusion et gravissez les étages de la Tour de l'Infini dans une interface desktop-first ultra-fluide.</p>
+            </div>
+            <div class="project-content">
+                <div class="carousel-wrapper carousel-rytiger">
+                    <div class="simple-carousel" id="rytigerCarousel">
+                        <div class="carousel-track">
+                            <div class="carousel-slide active"><img src="../assets/imgs/imgs_carousel/Rytiger/Rytiger_Home.png" alt="Rytiger — Menu Principal"></div>
+                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Rytiger/Rytiger_Equipe.png" alt="Rytiger — Gestion de l'Équipe"></div>
+                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Rytiger/Rytiger_Forge_fusion.png" alt="Rytiger — Forge de Fusion"></div>
+                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Rytiger/Rytiger_Campagne.png" alt="Rytiger — Mode Campagne"></div>
+                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Rytiger/Rytiger_Guide.png" alt="Rytiger — Guide de l'Aventurier"></div>
+                        </div>
+                        <div class="carousel-controls">
+                            <button class="nav-arrow prev" id="rytigerPrev" aria-label="Précédent"><i data-lucide="chevron-left"></i></button>
+                            <button class="nav-arrow next" id="rytigerNext" aria-label="Suivant"><i data-lucide="chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-details glass-panel">
+                    <h3>Architecture Technique</h3>
+                    <ul class="spec-list">
+                        <li>
+                            <i data-lucide="monitor"></i>
+                            <div class="spec-text"><strong>Desktop-First Architecture</strong><span>Interface optimisée pour les écrans larges avec une UX immersive et réactive.</span></div>
+                        </li>
+                        <li>
+                            <i data-lucide="swords"></i>
+                            <div class="spec-text"><strong>Moteur de Combat Avancé</strong><span>Système ATB asynchrone, animations fluides et gestion complexe des états de combat.</span></div>
+                        </li>
+                        <li>
+                            <i data-lucide="database"></i>
+                            <div class="spec-text"><strong>Écosystème de Données</strong><span>Gestion d'inventaire persistante, fusion de héros et progression dynamique (Pinia/LocalStorage).</span></div>
+                        </li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://allanvitu.github.io/Rytiger_RPG/" target="_blank" rel="noopener noreferrer" class="btn-project crimson">Ouvrir le jeu <i data-lucide="external-link"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gameplay-section reveal-fade">
+                <div class="video-frame glass-panel">
+                    <video controls muted loop playsinline preload="metadata" poster="../assets/imgs/imgs_carousel/Rytiger/Rytiger_Home.png" loading="lazy">
+                        <source src="../assets/imgs/imgs_carousel/Captures_RytigerMP4.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="elvish-text">
+                    <p class="elvish-description">
+                        <span class="elvish-letters">Mae govannen...</span>
+                        Plongez dans les tréfonds de la Tour de l'Infini. Maîtrisez les arcanes de la composition de groupe, enchaînez vos compétences et affrontez des ombres corrompues dans une épopée Dark Fantasy intemporelle.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="project-page-nav-footer" aria-label="Navigation entre projets">
+            <a href="./forge-ui.html" class="prev-next-link">
+                <i data-lucide="arrow-left"></i>
+                <div>
+                    <span class="prev-next-label">Projet précédent</span>
+                    <strong class="prev-next-title">FORGE UI</strong>
+                </div>
+            </a>
+            <a href="./regiondex.html" class="prev-next-link next">
+                <div>
+                    <span class="prev-next-label">Projet suivant</span>
+                    <strong class="prev-next-title">RégionDex 📱</strong>
+                </div>
+                <i data-lucide="arrow-right"></i>
+            </a>
+        </nav>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-socials">
+                <a href="https://github.com/allanvitu" target="_blank" aria-label="GitHub"><i data-lucide="github"></i></a>
+                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+                <a href="https://www.instagram.com/allan.vitu/" target="_blank" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+            </div>
+            <p class="footer-copy">&copy; 2026 Allan Vitu. Développeur Full-Stack & DevOps.</p>
+        </div>
+    </footer>
+
+    <script src="../js/app.js"></script>
+</body>
+</html>
