@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:allanvitu.github.io)",
+      "WebSearch",
+      "Bash(gh api *)"
+    ]
+  }
+}
