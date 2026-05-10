@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RégionDex Studio — Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0d0f10;
+      --bg-card: #15181a;
+      --bg-code: #0a0c0d;
+      --bg-aside: #111415;
+      --ink: #f0f2f5;
+      --muted: #8d959c;
+      --accent: #5c62fa;
+      --accent-dim: #2b2f7a;
+      --accent-text: #a4a8ff;
+      --green: #4ade80;
+      --orange: #fb923c;
+      --red: #f87171;
+      --yellow: #facc15;
+      --stroke: #252a2e;
+      --stroke-strong: #32383d;
+      --radius: 12px;
+      --mono: "JetBrains Mono", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    a { color: var(--accent-text); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Layout ─────────────────────────────────────── */
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      grid-template-rows: 56px 1fr;
+      min-height: 100vh;
+    }
+
+    /* ── Top bar ─────────────────────────────────────── */
+
+    .topbar {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 28px;
+      background: rgba(15, 17, 18, 0.9);
+      border-bottom: 1px solid var(--stroke);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar-logo {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+    }
+
+    .topbar-logo span { color: var(--accent-text); }
+
+    .topbar-badge {
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--accent-dim);
+      color: var(--accent-text);
+      padding: 2px 8px;
+      border-radius: 100px;
+      letter-spacing: 0.05em;
+    }
+
+    .topbar-links {
+      margin-left: auto;
+      display: flex;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .topbar-links a { color: var(--muted); }
+    .topbar-links a:hover { color: var(--ink); }
+
+    /* ── Sidebar ─────────────────────────────────────── */
+
+    .sidebar {
+      padding: 28px 0;
+      border-right: 1px solid var(--stroke);
+      position: sticky;
+      top: 56px;
+      height: calc(100vh - 56px);
+      overflow-y: auto;
+      background: var(--bg-aside);
+    }
+
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--stroke-strong); border-radius: 4px; }
+
+    .nav-section {
+      margin-bottom: 24px;
+    }
+
+    .nav-section-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      padding: 0 20px 8px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 20px;
+      font-size: 13px;
+      color: var(--muted);
+      border-left: 2px solid transparent;
+      transition: all 150ms;
+    }
+
+    .nav-link:hover {
+      color: var(--ink);
+      background: rgba(255,255,255,0.03);
+      text-decoration: none;
+    }
+
+    .nav-link.active {
+      color: var(--accent-text);
+      border-left-color: var(--accent);
+      background: rgba(92, 98, 250, 0.08);
+    }
+
+    .nav-icon {
+      width: 14px;
+      height: 14px;
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+
+    /* ── Main content ─────────────────────────────────── */
+
+    .main {
+      padding: 48px 60px;
+      max-width: 920px;
+    }
+
+    section {
+      margin-bottom: 72px;
+      scroll-margin-top: 72px;
+    }
+
+    /* ── Headings ─────────────────────────────────────── */
+
+    h1 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    h1 .highlight {
+      background: linear-gradient(135deg, var(--accent-text), #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--stroke);
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--ink);
+    }
+
+    h4 {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    p { margin-bottom: 14px; color: var(--muted); }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── Hero ─────────────────────────────────────────── */
+
+    .hero {
+      margin-bottom: 56px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 100px;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-blue { background: var(--accent-dim); color: var(--accent-text); }
+    .badge-green { background: rgba(74,222,128,0.12); color: var(--green); }
+    .badge-orange { background: rgba(251,146,60,0.12); color: var(--orange); }
+    .badge-gray { background: rgba(255,255,255,0.06); color: var(--muted); }
+
+    .hero-desc {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 680px;
+    }
+
+    /* ── Cards ─────────────────────────────────────────── */
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    .card-icon {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .card p {
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    /* ── File tree ─────────────────────────────────────── */
+
+    .file-tree {
+      background: var(--bg-code);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .file-tree .dir { color: var(--accent-text); font-weight: 600; }
+    .file-tree .file { color: var(--ink); }
+    .file-tree .comment { color: var(--muted); }
+    .file-tree .indent-1 { padding-left: 20px; }
+    .file-tree .indent-2 { padding-left: 40px; }
+    .file-tree .indent-3 { padding-left: 60px; }
+
+    /* ── Code blocks ─────────────────────────────────────── */
+
+    pre {
+      background: var(--bg-code);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      overflow-x: auto;
+      margin: 16px 0 24px;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    code {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      background: rgba(255,255,255,0.06);
+      padding: 2px 6px;
+      border-radius: 5px;
+      color: var(--accent-text);
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      border-radius: 0;
+      color: var(--ink);
+      font-size: 13px;
+    }
+
+    .kw { color: #c084fc; }
+    .fn { color: #93c5fd; }
+    .str { color: #86efac; }
+    .cmt { color: #4a5568; font-style: italic; }
+    .num { color: #f9a8d4; }
+    .prop { color: #fbbf24; }
+
+    /* ── Tables ─────────────────────────────────────────── */
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 16px 0 24px;
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+
+    thead tr {
+      background: var(--bg-aside);
+    }
+
+    th {
+      text-align: left;
+      padding: 11px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--stroke);
+    }
+
+    td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--stroke);
+      color: var(--muted);
+      vertical-align: top;
+    }
+
+    td:first-child { color: var(--ink); font-family: var(--mono); font-size: 12.5px; }
+
+    tbody tr:last-child td { border-bottom: none; }
+
+    tbody tr:hover { background: rgba(255,255,255,0.015); }
+
+    /* ── Flow diagram ─────────────────────────────────────── */
+
+    .flow {
+      background: var(--bg-code);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin: 16px 0 24px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .flow-box {
+      background: var(--bg-card);
+      border: 1px solid var(--stroke-strong);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 12px;
+      font-family: var(--mono);
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .flow-box.accent {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+      color: var(--accent-text);
+    }
+
+    .flow-arrow {
+      font-size: 16px;
+      color: var(--muted);
+      padding: 0 8px;
+    }
+
+    /* ── Callouts ─────────────────────────────────────────── */
+
+    .callout {
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 13.5px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .callout-info { background: rgba(92,98,250,0.08); border: 1px solid rgba(92,98,250,0.25); }
+    .callout-warn { background: rgba(251,146,60,0.08); border: 1px solid rgba(251,146,60,0.25); }
+    .callout-tip { background: rgba(74,222,128,0.06); border: 1px solid rgba(74,222,128,0.2); }
+
+    .callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .callout-body { color: var(--muted); line-height: 1.6; }
+    .callout-body strong { color: var(--ink); }
+
+    /* ── Entity list ─────────────────────────────────────── */
+
+    .entity-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+      margin: 16px 0 24px;
+    }
+
+    .entity-card {
+      background: var(--bg-card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .entity-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .entity-name {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .entity-id {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .entity-habitat {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .entity-types {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 4px;
+    }
+
+    .type-tag {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .rarity-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 100px;
+      letter-spacing: 0.04em;
+    }
+
+    .rarity-Légendaire { background: rgba(250,204,21,0.12); color: #fbbf24; }
+    .rarity-Mythique { background: rgba(192,132,252,0.12); color: #c084fc; }
+    .rarity-Épique { background: rgba(92,98,250,0.12); color: var(--accent-text); }
+    .rarity-Rare { background: rgba(74,222,128,0.1); color: var(--green); }
+
+    /* ── Function doc ─────────────────────────────────────── */
+
+    .fn-doc {
+      background: var(--bg-card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .fn-doc-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--stroke);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-aside);
+    }
+
+    .fn-sig {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink);
+    }
+
+    .fn-sig .fn-name { color: #93c5fd; font-weight: 600; }
+    .fn-sig .fn-param { color: #fbbf24; }
+    .fn-sig .fn-type { color: #c084fc; }
+
+    .fn-async {
+      font-size: 10px;
+      font-weight: 700;
+      background: rgba(251,146,60,0.12);
+      color: var(--orange);
+      padding: 2px 8px;
+      border-radius: 100px;
+      letter-spacing: 0.05em;
+    }
+
+    .fn-doc-body {
+      padding: 16px 20px;
+    }
+
+    .fn-doc-body p { font-size: 13.5px; }
+
+    /* ── CSS var table ─────────────────────────────────────── */
+
+    .var-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 6px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* ── State diagram ─────────────────────────────────────── */
+
+    .state-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 16px 0 24px;
+    }
+
+    .state-prop {
+      background: var(--bg-card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+    }
+
+    .state-key {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: #fbbf24;
+      margin-bottom: 4px;
+    }
+
+    .state-type {
+      font-size: 11px;
+      color: #c084fc;
+      margin-bottom: 6px;
+    }
+
+    .state-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── Responsive ─────────────────────────────────────────── */
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: 56px auto 1fr;
+      }
+      .sidebar { display: none; }
+      .main { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ── Top bar ───────────────────────────── -->
+  <header class="topbar">
+    <span class="topbar-logo">Région<span>Dex</span> Studio</span>
+    <span class="topbar-badge">DOCS v1.0</span>
+    <nav class="topbar-links">
+      <a href="#overview">Vue d'ensemble</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#api">API interne</a>
+      <a href="#data">Données</a>
+      <a href="../index.html" target="_blank">Voir l'app →</a>
+    </nav>
+  </header>
+
+  <!-- ── Sidebar ───────────────────────────── -->
+  <aside class="sidebar">
+    <div class="nav-section">
+      <div class="nav-section-title">Introduction</div>
+      <a class="nav-link active" href="#overview">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.5a5.5 5.5 0 110 11 5.5 5.5 0 010-11zM8 4a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 018 4zm0 7.25a.75.75 0 100-1.5.75.75 0 000 1.5z"/></svg>
+        Vue d'ensemble
+      </a>
+      <a class="nav-link" href="#stack">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M1 3.5A1.5 1.5 0 012.5 2h11A1.5 1.5 0 0115 3.5v2A1.5 1.5 0 0113.5 7h-11A1.5 1.5 0 011 5.5v-2zm1.5-.5a.5.5 0 00-.5.5v2a.5.5 0 00.5.5h11a.5.5 0 00.5-.5v-2a.5.5 0 00-.5-.5h-11zM1 9.5A1.5 1.5 0 012.5 8h11A1.5 1.5 0 0115 9.5v2A1.5 1.5 0 0113.5 13h-11A1.5 1.5 0 011 11.5v-2zm1.5-.5a.5.5 0 00-.5.5v2a.5.5 0 00.5.5h11a.5.5 0 00.5-.5v-2a.5.5 0 00-.5-.5h-11z"/></svg>
+        Stack technique
+      </a>
+      <a class="nav-link" href="#structure">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M1.75 1A1.75 1.75 0 000 2.75v10.5A1.75 1.75 0 001.75 15h12.5A1.75 1.75 0 0016 13.25V4.75A1.75 1.75 0 0014.25 3H7.5L5.75 1h-4z"/></svg>
+        Structure des fichiers
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">Architecture</div>
+      <a class="nav-link" href="#architecture">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M6 3.5A1.5 1.5 0 017.5 2h1A1.5 1.5 0 0110 3.5v1A1.5 1.5 0 018.5 6v1H14a.5.5 0 010 1H8.5v1A1.5 1.5 0 0110 10.5v1A1.5 1.5 0 018.5 13h-1A1.5 1.5 0 016 11.5v-1A1.5 1.5 0 017.5 9V8H2a.5.5 0 010-1h5.5V6A1.5 1.5 0 016 4.5v-1z"/></svg>
+        Vue globale
+      </a>
+      <a class="nav-link" href="#dataflow">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M11.534 7h3.932a.25.25 0 01.192.41l-1.966 2.36a.25.25 0 01-.384 0l-1.966-2.36a.25.25 0 01.192-.41zm-11 2h3.932a.25.25 0 00.192-.41L2.692 6.23a.25.25 0 00-.384 0L.342 8.59A.25.25 0 00.534 9z"/><path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 11-.771-.636A6.002 6.002 0 0115.925 5H14.9a5.002 5.002 0 00-6.9-2zm-4.783 8.136A5.002 5.002 0 008 13a5.002 5.002 0 004.9-4h1.025a6.002 6.002 0 01-11.532 1.5l-.176-.364z"/></svg>
+        Flux de données
+      </a>
+      <a class="nav-link" href="#state">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 6a6 6 0 1110.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0110.5 13h-5a.5.5 0 01-.46-.302l-.761-1.77a1.964 1.964 0 00-.453-.618A5.984 5.984 0 012 6zm3 8.5a.5.5 0 01.5-.5h5a.5.5 0 010 1H5.5a.5.5 0 01-.5-.5zm-1-1.5a.5.5 0 01.5-.5h7a.5.5 0 010 1H4.5a.5.5 0 01-.5-.5z"/></svg>
+        État global (store.js)
+      </a>
+      <a class="nav-link" href="#routing">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M0 3.5A1.5 1.5 0 011.5 2h13A1.5 1.5 0 0116 3.5v9a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 010 12.5v-9zM1.5 3a.5.5 0 00-.5.5v9a.5.5 0 00.5.5h13a.5.5 0 00.5-.5v-9a.5.5 0 00-.5-.5h-13z"/><path d="M2 4.5a.5.5 0 01.5-.5h3a.5.5 0 010 1H3v2.5a.5.5 0 01-1 0V4.5z"/></svg>
+        Routage (Hash)
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">Frontend</div>
+      <a class="nav-link" href="#html">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M5.854 4.854a.5.5 0 10-.708-.708l-3.5 3.5a.5.5 0 000 .708l3.5 3.5a.5.5 0 00.708-.708L2.707 8l3.147-3.146zm4.292 0a.5.5 0 01.708-.708l3.5 3.5a.5.5 0 010 .708l-3.5 3.5a.5.5 0 01-.708-.708L13.293 8l-3.147-3.146z"/></svg>
+        Structure HTML
+      </a>
+      <a class="nav-link" href="#api">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M14 1a1 1 0 011 1v12a1 1 0 01-1 1H2a1 1 0 01-1-1V2a1 1 0 011-1h12zm0 1H2v12h12V2z"/><path d="M5.854 7.146a.5.5 0 000 .708l1.5 1.5a.5.5 0 00.692-.004l3-3a.5.5 0 00-.707-.707l-2.65 2.65-.646-.647a.5.5 0 00-.353-.146z"/></svg>
+        Fonctions JS (app.js)
+      </a>
+      <a class="nav-link" href="#css">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 4.754a3.246 3.246 0 100 6.492 3.246 3.246 0 000-6.492zM5.754 8a2.246 2.246 0 114.492 0 2.246 2.246 0 01-4.492 0z"/><path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 01-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 01-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 01.52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 011.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 011.255-.52l.292.16c1.64.892 3.433-.902 2.54-2.541l-.159-.292a.873.873 0 01.52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 01-.52-1.255l.16-.292c.892-1.64-.901-3.433-2.541-2.54l-.292.159a.873.873 0 01-1.255-.52l-.094-.319z"/></svg>
+        Styles CSS
+      </a>
+      <a class="nav-link" href="#storage">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M1 3.5A1.5 1.5 0 012.5 2h11A1.5 1.5 0 0115 3.5V5H1V3.5zM1 6v6.5A1.5 1.5 0 002.5 14h11a1.5 1.5 0 001.5-1.5V6H1zm2 3a1 1 0 112 0 1 1 0 01-2 0zm4 0a1 1 0 112 0 1 1 0 01-2 0z"/></svg>
+        Persistance
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">Données</div>
+      <a class="nav-link" href="#data">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C5.093 0 2 1.204 2 3.5v9C2 14.796 5.093 16 8 16s6-1.204 6-3.5v-9C14 1.204 10.907 0 8 0zm5 3.5c0 1.088-2.07 2.5-5 2.5S3 4.588 3 3.5 5.07 1 8 1s5 1.412 5 2.5z"/></svg>
+        Modèle de données
+      </a>
+      <a class="nav-link" href="#entities">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 100-6 3 3 0 000 6z"/><path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 015 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 005 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/><path d="M4.5 8a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/></svg>
+        Entités (12)
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">Référence</div>
+      <a class="nav-link" href="#accessibility">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/><path fill-rule="evenodd" d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z"/></svg>
+        Accessibilité
+      </a>
+      <a class="nav-link" href="#performance">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 01-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 01.872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 012.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 012.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 01.872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 01-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 01-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 110-5.858 2.929 2.929 0 010 5.858z"/></svg>
+        Performance
+      </a>
+    </div>
+  </aside>
+
+  <!-- ── Main ───────────────────────────────── -->
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-meta">
+        <span class="badge badge-blue">Documentation</span>
+        <span class="badge badge-green">Frontend Only</span>
+        <span class="badge badge-gray">v1.0 — 2026</span>
+      </div>
+      <h1><span class="highlight">RégionDex</span> Studio</h1>
+      <p class="hero-desc">
+        Documentation complète de l'application web <strong style="color:var(--ink)">RégionDex Studio</strong> — un Pokédex interactif thématisant les régions françaises et européennes comme des créatures légendaires à collecter.
+      </p>
+    </div>
+
+    <!-- ── OVERVIEW ─────────────────────────────────── -->
+    <section id="overview">
+      <h2>Vue d'ensemble</h2>
+      <p>
+        RégionDex Studio est une <strong style="color:var(--ink)">application web 100% frontend</strong>, sans serveur ni base de données. Toutes les données sont statiques (codées en dur dans <code>data.js</code>) et l'état utilisateur est persisté en <code>localStorage</code>. Elle est hébergeable directement sur GitHub Pages.
+      </p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">🗺️</div>
+          <h3>Explorer</h3>
+          <p>Navigation en grille de toutes les entités avec recherche textuelle et filtres par type.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">❤️</div>
+          <h3>Favoris</h3>
+          <p>Marquage et consultation des entités favorites. Persisté en localStorage.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⭐</div>
+          <h3>Équipe de Rêve</h3>
+          <p>Constitution d'une équipe de 6 entités maximum, façon Pokémon.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔍</div>
+          <h3>Fiche Détail</h3>
+          <p>Modal plein-écran avec image, stats, talents et description narrative.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎲</div>
+          <h3>Aléatoire</h3>
+          <p>Bouton "Quick Random" pour ouvrir directement la fiche d'une entité tirée au sort.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📱</div>
+          <h3>Mobile-first</h3>
+          <p>Design responsive avec support du swipe, bottom sheet modal et navigation tactile.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── STACK ─────────────────────────────────── -->
+    <section id="stack">
+      <h2>Stack technique</h2>
+      <p>L'application utilise exclusivement des technologies web natives, sans aucun framework ou dépendance externe.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Technologie</th>
+              <th>Usage</th>
+              <th>Détail</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>HTML5</td>
+              <td>Structure</td>
+              <td>SPA avec templates <code>&lt;template&gt;</code>, attributs ARIA</td>
+            </tr>
+            <tr>
+              <td>CSS3</td>
+              <td>Styles</td>
+              <td>Custom properties, Grid, backdrop-filter, keyframes</td>
+            </tr>
+            <tr>
+              <td>JavaScript ES6+</td>
+              <td>Logique</td>
+              <td>Modules ES, async/await, Sets, URL API</td>
+            </tr>
+            <tr>
+              <td>localStorage</td>
+              <td>Persistance</td>
+              <td>Clé <code>pokedex_studio_v3</code> — JSON sérialisé</td>
+            </tr>
+            <tr>
+              <td>sessionStorage</td>
+              <td>État de session</td>
+              <td>Clé <code>introDismissed</code> — évite la re-affichage de l'intro</td>
+            </tr>
+            <tr>
+              <td>URL Hash API</td>
+              <td>Routage</td>
+              <td><code>#explore</code>, <code>#favorites</code>, <code>#team</code></td>
+            </tr>
+            <tr>
+              <td>Google Fonts</td>
+              <td>Typographie</td>
+              <td>Inter (UI) via CDN</td>
+            </tr>
+            <tr>
+              <td>WebP</td>
+              <td>Images</td>
+              <td>Format d'image optimisé, lazy loading natif</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ️</span>
+        <div class="callout-body"><strong>Aucun backend :</strong> L'application est purement statique. Aucun appel réseau, aucune API externe. Elle fonctionne hors-ligne après le premier chargement (hors fonts Google).</div>
+      </div>
+    </section>
+
+    <!-- ── STRUCTURE ─────────────────────────────────── -->
+    <section id="structure">
+      <h2>Structure des fichiers</h2>
+
+      <div class="file-tree">
+        <div><span class="dir">Pokedex/</span></div>
+        <div class="indent-1"><span class="dir">docs/</span> <span class="comment">  ← Racine publiée (GitHub Pages)</span></div>
+        <div class="indent-2"><span class="file">index.html</span> <span class="comment">    196 lignes — SPA principale</span></div>
+        <div class="indent-2"><span class="file">app.js</span> <span class="comment">        406 lignes — Logique applicative</span></div>
+        <div class="indent-2"><span class="file">store.js</span> <span class="comment">       91 lignes — État global réactif</span></div>
+        <div class="indent-2"><span class="file">data.js</span> <span class="comment">        196 lignes — Données des entités</span></div>
+        <div class="indent-2"><span class="file">styles.css</span> <span class="comment">     133 lignes — Variables globales</span></div>
+        <div class="indent-2"><span class="file">layout.css</span> <span class="comment">     89 lignes — Grille et responsive</span></div>
+        <div class="indent-2"><span class="file">components.css</span> <span class="comment"> 405 lignes — Composants UI</span></div>
+        <div class="indent-2"><span class="file">modal.css</span> <span class="comment">      272 lignes — Fiche détail</span></div>
+        <div class="indent-2"><span class="file">intro.css</span> <span class="comment">      112 lignes — Écran d'intro</span></div>
+        <div class="indent-2"><span class="dir">assets/imgs/</span></div>
+        <div class="indent-3"><span class="file">Juracron_card.webp</span></div>
+        <div class="indent-3"><span class="file">Belforion_card.webp</span></div>
+        <div class="indent-3"><span class="file">Vogsrâl_card.webp</span></div>
+        <div class="indent-3"><span class="file">Alsace_card.webp</span></div>
+        <div class="indent-3"><span class="file">Espagne_card.webp</span></div>
+        <div class="indent-3"><span class="file">Ile_de_France_card.webp</span></div>
+        <div class="indent-3"><span class="file">Italie_card.webp</span></div>
+        <div class="indent-3"><span class="file">Pays_Basque_card.webp</span></div>
+        <div class="indent-3"><span class="file">Portugal_card.webp</span></div>
+        <div class="indent-3"><span class="file">L-Aerofar.webp</span></div>
+        <div class="indent-3"><span class="file">LaFontandine.webp</span></div>
+        <div class="indent-1"><span class="dir">.vscode/</span></div>
+        <div class="indent-2"><span class="file">settings.json</span></div>
+      </div>
+    </section>
+
+    <!-- ── ARCHITECTURE ─────────────────────────────────── -->
+    <section id="architecture">
+      <h2>Architecture globale</h2>
+      <p>
+        L'application suit un pattern <strong style="color:var(--ink)">MVC simplifié avec réactivité manuelle</strong>. Le store centralise l'état et notifie les abonnés à chaque mutation. Le rendu est toujours complet (pas de diff DOM).
+      </p>
+
+      <div class="flow">
+        <div class="flow-step">
+          <div class="flow-box accent">Interaction utilisateur</div>
+          <div class="flow-arrow">→</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-box">Event listener<br/>(app.js)</div>
+          <div class="flow-arrow">→</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-box">Mutation state<br/>(store.js)</div>
+          <div class="flow-arrow">→</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-box">persistState()<br/>localStorage</div>
+        </div>
+      </div>
+
+      <div class="flow" style="margin-top: 8px;">
+        <div class="flow-step">
+          <div class="flow-box">notify()</div>
+          <div class="flow-arrow">→</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-box">render()</div>
+          <div class="flow-arrow">→</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-box accent">MAJ DOM</div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 24px;">Modules et responsabilités</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Fichier</th><th>Rôle</th><th>Dépendances</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>index.html</td>
+              <td>Point d'entrée, squelette DOM, templates de rendu</td>
+              <td>app.js (module)</td>
+            </tr>
+            <tr>
+              <td>app.js</td>
+              <td>Contrôleur principal — events, rendu, interactions UI</td>
+              <td>store.js, data.js</td>
+            </tr>
+            <tr>
+              <td>store.js</td>
+              <td>État global réactif, persistence, routage par hash</td>
+              <td>Aucune</td>
+            </tr>
+            <tr>
+              <td>data.js</td>
+              <td>Données des 12 entités, sonde de disponibilité des images</td>
+              <td>Aucune</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── DATA FLOW ─────────────────────────────────── -->
+    <section id="dataflow">
+      <h2>Flux de données</h2>
+
+      <h3>Initialisation (<code>initApp</code>)</h3>
+      <pre><code><span class="kw">async function</span> <span class="fn">initApp</span>() {
+  <span class="cmt">// 1. Sonder les images et construire le pokedex filtré</span>
+  <span class="kw">const</span> pokedex = <span class="kw">await</span> <span class="fn">buildPokedexFromAssets</span>(probeImage);
+  state.pokedex = pokedex;
+
+  <span class="cmt">// 2. Charger l'état persisté (favorites, team, query…)</span>
+  <span class="fn">hydrateStateFromStorage</span>();
+
+  <span class="cmt">// 3. Synchro vue depuis URL hash (#explore, #favorites, #team)</span>
+  <span class="fn">syncViewWithHash</span>();
+
+  <span class="cmt">// 4. Abonner render() aux changements d'état</span>
+  <span class="fn">subscribe</span>(render);
+
+  <span class="cmt">// 5. Nettoyer les IDs invalides dans favorites/team</span>
+  <span class="fn">cleanInvalidRefs</span>();
+
+  <span class="cmt">// 6. Premier rendu</span>
+  <span class="fn">render</span>();
+}</code></pre>
+
+      <h3>Cycle de rendu</h3>
+      <p>Le rendu est <strong style="color:var(--ink)">complet et synchrone</strong> — à chaque changement d'état, l'intégralité du DOM visible est reconstruit.</p>
+      <pre><code><span class="kw">function</span> <span class="fn">render</span>() {
+  <span class="kw">const</span> items = <span class="fn">getDisplayList</span>();  <span class="cmt">// Vue + filtre type + query</span>
+  <span class="fn">renderCards</span>(items);
+  <span class="fn">renderTypeFilters</span>(<span class="fn">getUniqueTypes</span>());
+  <span class="fn">syncNavButtons</span>();
+  <span class="fn">updateHeader</span>(items.length);
+  <span class="kw">if</span> (items.length === <span class="num">0</span>) <span class="fn">renderEmptyState</span>();
+}</code></pre>
+    </section>
+
+    <!-- ── STATE ─────────────────────────────────── -->
+    <section id="state">
+      <h2>État global (store.js)</h2>
+      <p>Un objet singleton partagé via module ES. Les mutations déclenchent <code>notify()</code> qui appelle tous les abonnés (<code>render</code>).</p>
+
+      <div class="state-grid">
+        <div class="state-prop">
+          <div class="state-key">query</div>
+          <div class="state-type">string</div>
+          <div class="state-desc">Terme de recherche textuel. Comparé au nom, type et catégorie de chaque entité.</div>
+        </div>
+        <div class="state-prop">
+          <div class="state-key">type</div>
+          <div class="state-type">string</div>
+          <div class="state-desc">Filtre par type actif. Valeur par défaut : <code>"Tous"</code>.</div>
+        </div>
+        <div class="state-prop">
+          <div class="state-key">view</div>
+          <div class="state-type">"explore" | "favorites" | "team"</div>
+          <div class="state-desc">Vue courante. Synchronisé avec l'URL hash.</div>
+        </div>
+        <div class="state-prop">
+          <div class="state-key">favorites</div>
+          <div class="state-type">Set&lt;string&gt;</div>
+          <div class="state-desc">Ensemble des IDs marqués favoris. Persisté en localStorage.</div>
+        </div>
+        <div class="state-prop">
+          <div class="state-key">team</div>
+          <div class="state-type">Set&lt;string&gt;</div>
+          <div class="state-desc">Ensemble des IDs dans l'équipe. Maximum 6 membres.</div>
+        </div>
+        <div class="state-prop">
+          <div class="state-key">pokedex</div>
+          <div class="state-type">Entity[]</div>
+          <div class="state-desc">Tableau de toutes les entités disponibles (images validées).</div>
+        </div>
+      </div>
+
+      <h3>État par défaut</h3>
+      <pre><code><span class="cmt">// Valeurs initiales avant hydratation localStorage</span>
+state.favorites = <span class="kw">new</span> <span class="fn">Set</span>([<span class="str">"001"</span>]);   <span class="cmt">// Juracron</span>
+state.team      = <span class="kw">new</span> <span class="fn">Set</span>([<span class="str">"001"</span>, <span class="str">"090"</span>]); <span class="cmt">// Juracron + Belforion</span></code></pre>
+
+      <h3>Clé localStorage</h3>
+      <pre><code><span class="str">"pokedex_studio_v3"</span>  <span class="cmt">→  { query, type, favorites: [], team: [] }</span></code></pre>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body"><strong>Versionning :</strong> La clé inclut <code>v3</code>. Si le format des données change, incrémenter la version efface l'état persisté des utilisateurs existants — comportement intentionnel.</div>
+      </div>
+    </section>
+
+    <!-- ── ROUTING ─────────────────────────────────── -->
+    <section id="routing">
+      <h2>Routage (URL Hash)</h2>
+      <p>La navigation entre vues utilise l'URL hash pour permettre le partage de liens et le bouton retour du navigateur.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Hash URL</th><th>Vue</th><th>Contenu affiché</th></tr></thead>
+          <tbody>
+            <tr><td>#explore</td><td>explore</td><td>Toutes les entités du pokédex</td></tr>
+            <tr><td>#favorites</td><td>favorites</td><td>Entités marquées favoris</td></tr>
+            <tr><td>#team</td><td>team</td><td>Équipe de rêve (max 6)</td></tr>
+            <tr><td>(vide)</td><td>explore</td><td>Vue par défaut au premier chargement</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <pre><code><span class="cmt">// Lecture du hash à l'init</span>
+<span class="kw">function</span> <span class="fn">syncViewWithHash</span>() {
+  <span class="kw">const</span> hash = window.location.hash.replace(<span class="str">"#"</span>, <span class="str">""</span>);
+  <span class="kw">if</span> ([<span class="str">"explore"</span>, <span class="str">"favorites"</span>, <span class="str">"team"</span>].includes(hash)) {
+    state.view = hash;
+  }
+}
+
+<span class="cmt">// Navigation programmatique</span>
+<span class="kw">function</span> <span class="fn">navigateTo</span>(view) {
+  window.location.hash = view;
+  state.view = view;
+  <span class="fn">notify</span>();
+}</code></pre>
+    </section>
+
+    <!-- ── HTML ─────────────────────────────────── -->
+    <section id="html">
+      <h2>Structure HTML (index.html)</h2>
+      <p>L'application est une SPA avec cinq zones structurelles principales.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Sélecteur</th><th>Rôle</th></tr></thead>
+          <tbody>
+            <tr><td>.intro-screen</td><td>Écran d'accueil animé, z-index 1000, dismissed via swipe ou bouton</td></tr>
+            <tr><td>.app-container</td><td>Conteneur principal (max 1600px centré)</td></tr>
+            <tr><td>.grand-header</td><td>En-tête : titre, recherche, filtres, navigation</td></tr>
+            <tr><td>.deck</td><td>Grille de cartes CSS Grid responsive</td></tr>
+            <tr><td>.detail-sheet</td><td>Modal fiche détail (overlay plein-écran)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Templates de rendu</h3>
+      <p>Deux templates <code>&lt;template&gt;</code> sont clonés à chaque rendu :</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Template ID</th><th>Usage</th><th>Remplissage</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>#cardTemplate</td>
+              <td>Carte de la grille</td>
+              <td>Image, ID, nom, types, bouton favori</td>
+            </tr>
+            <tr>
+              <td>#detailTemplate</td>
+              <td>Contenu de la fiche détail</td>
+              <td>Hero image, stats, talents, description, bouton équipe</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── JS FUNCTIONS ─────────────────────────────────── -->
+    <section id="api">
+      <h2>Fonctions JavaScript (app.js)</h2>
+
+      <div class="fn-doc">
+        <div class="fn-doc-header">
+          <div class="fn-sig">
+            <span class="fn-name">initApp</span>()
+          </div>
+          <span class="fn-async">ASYNC</span>
+        </div>
+        <div class="fn-doc-body">
+          <p>Point d'entrée de l'application. Sonde les images, hydrate l'état depuis le localStorage, s'abonne aux changements, et déclenche le premier rendu.</p>
+        </div>
+      </div>
+
+      <div class="fn-doc">
+        <div class="fn-doc-header">
+          <div class="fn-sig">
+            <span class="fn-name">render</span>()
+          </div>
+        </div>
+        <div class="fn-doc-body">
+          <p>Fonction de rendu principale. Appelée à chaque mutation d'état. Récupère la liste filtrée via <code>getDisplayList()</code> et met à jour l'intégralité du DOM visible.</p>
+        </div>
+      </div>
+
+      <div class="fn-doc">
+        <div class="fn-doc-header">
+          <div class="fn-sig">
+            <span class="fn-name">renderCards</span>(<span class="fn-param">items</span>: <span class="fn-type">Entity[]</span>)
+          </div>
+        </div>
+        <div class="fn-doc-body">
+          <p>Vide le container <code>.deck</code>, puis clone et remplit le template <code>#cardTemplate</code> pour chaque entité. Les délais d'animation sont échelonnés (<code>animation-delay</code>) selon l'index de la carte.</p>
+        </div>
+      </div>
+
+      <div class="fn-doc">
+        <div class="fn-doc-header">
+          <div class="fn-sig">
+            <span class="fn-name">openDetail</span>(<span class="fn-param">item</span>: <span class="fn-type">Entity</span>)
+          </div>
+        </div>
+        <div class="fn-doc-body">
+          <p>Remplit le template <code>#detailTemplate</code> avec les données de l'entité, applique la couleur d'accent dynamique (<code>--accent</code>), et ouvre le modal en ajoutant la classe <code>.open</code>.</p>
+        </div>
+      </div>
+
+      <div class="fn-doc">
+        <div class="fn-doc-header">
+          <div class="fn-sig">
+            <span class="fn-name">closeDetail</span>()
+          </div>
+        </div>
+        <div class="fn-doc-body">
+          <p>Ferme le modal en retirant la classe <code>.open</code>. Déclenché par : bouton close, clic sur l'overlay, touche Échap.</p>
+        </div>
+      </div>
+
+      <div class="fn-doc">
+        <div class="fn-doc-header">
+          <div class="fn-sig">
+            <span class="fn-name">toggleTeam</span>(<span class="fn-param">id</span>: <span class="fn-type">string</span>)
+          </div>
+        </div>
+        <div class="fn-doc-body">
+          <p>Ajoute ou retire une entité de l'équipe. Si l'équipe est pleine (6 membres) et que l'entité n'y est pas, affiche un toast d'erreur et n'ajoute pas.</p>
+        </div>
+      </div>
+
+      <div class="fn-doc">
+        <div class="fn-doc-header">
+          <div class="fn-sig">
+            <span class="fn-name">pickRandom</span>()
+          </div>
+        </div>
+        <div class="fn-doc-body">
+          <p>Sélectionne une entité aléatoire dans le pokédex complet et ouvre sa fiche détail. Bascule sur la vue Explorer si nécessaire.</p>
+        </div>
+      </div>
+
+      <div class="fn-doc">
+        <div class="fn-doc-header">
+          <div class="fn-sig">
+            <span class="fn-name">probeImage</span>(<span class="fn-param">src</span>: <span class="fn-type">string</span>) → <span class="fn-type">Promise&lt;boolean&gt;</span>
+          </div>
+          <span class="fn-async">ASYNC</span>
+        </div>
+        <div class="fn-doc-body">
+          <p>Tente de charger une image avec un timeout de 2 secondes. Retourne <code>true</code> si l'image se charge, <code>false</code> en cas d'erreur ou de timeout. Utilisé à l'init pour filtrer les entités avec images manquantes.</p>
+        </div>
+      </div>
+
+      <div class="fn-doc">
+        <div class="fn-doc-header">
+          <div class="fn-sig">
+            <span class="fn-name">showToast</span>(<span class="fn-param">message</span>: <span class="fn-type">string</span>)
+          </div>
+        </div>
+        <div class="fn-doc-body">
+          <p>Crée et affiche un toast de notification pendant 3 secondes, puis le retire du DOM.</p>
+        </div>
+      </div>
+
+      <div class="fn-doc">
+        <div class="fn-doc-header">
+          <div class="fn-sig">
+            <span class="fn-name">setupIntroScreen</span>()
+          </div>
+        </div>
+        <div class="fn-doc-body">
+          <p>Initialise l'écran d'intro : vérifie <code>sessionStorage.introDismissed</code>, attache le swipe-up (seuil 50px) et le clic bouton. Le dismiss ajoute la classe <code>.dismissed</code> qui déclenche l'animation de sortie.</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 24px;">Fonctions de store.js</h3>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Fonction</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>subscribe(fn)</td><td>Enregistre un callback appelé à chaque <code>notify()</code></td></tr>
+            <tr><td>notify()</td><td>Appelle tous les listeners enregistrés</td></tr>
+            <tr><td>persistState()</td><td>Sérialise et sauvegarde l'état en localStorage</td></tr>
+            <tr><td>hydrateStateFromStorage()</td><td>Charge et désérialise l'état depuis localStorage</td></tr>
+            <tr><td>syncViewWithHash()</td><td>Lit l'URL hash et met à jour <code>state.view</code></td></tr>
+            <tr><td>navigateTo(view)</td><td>Change la vue et met à jour l'URL hash</td></tr>
+            <tr><td>getUniqueTypes()</td><td>Extrait tous les types uniques du pokédex + <code>"Tous"</code></td></tr>
+            <tr><td>getDisplayList()</td><td>Filtre le pokédex selon la vue, le type et la query</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Logique de filtrage (<code>getDisplayList</code>)</h3>
+      <pre><code><span class="kw">function</span> <span class="fn">getDisplayList</span>() {
+  <span class="kw">let</span> list = state.pokedex;
+
+  <span class="cmt">// 1. Scope de la vue</span>
+  <span class="kw">if</span> (state.view === <span class="str">"favorites"</span>)
+    list = list.<span class="fn">filter</span>(e => state.favorites.<span class="fn">has</span>(e.id));
+  <span class="kw">else if</span> (state.view === <span class="str">"team"</span>)
+    list = list.<span class="fn">filter</span>(e => state.team.<span class="fn">has</span>(e.id));
+
+  <span class="cmt">// 2. Filtre par type</span>
+  <span class="kw">if</span> (state.type !== <span class="str">"Tous"</span>)
+    list = list.<span class="fn">filter</span>(e => e.types.<span class="fn">includes</span>(state.type));
+
+  <span class="cmt">// 3. Recherche textuelle (nom, type, catégorie)</span>
+  <span class="kw">if</span> (state.query) {
+    <span class="kw">const</span> q = state.query.<span class="fn">toLowerCase</span>();
+    list = list.<span class="fn">filter</span>(e =>
+      e.name.<span class="fn">toLowerCase</span>().<span class="fn">includes</span>(q) ||
+      e.types.<span class="fn">some</span>(t => t.<span class="fn">toLowerCase</span>().<span class="fn">includes</span>(q)) ||
+      e.category.<span class="fn">toLowerCase</span>().<span class="fn">includes</span>(q)
+    );
+  }
+  <span class="kw">return</span> list;
+}</code></pre>
+    </section>
+
+    <!-- ── CSS ─────────────────────────────────── -->
+    <section id="css">
+      <h2>Styles CSS</h2>
+
+      <h3>Variables globales (styles.css)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Variable</th><th>Valeur</th><th>Usage</th></tr></thead>
+          <tbody>
+            <tr><td>--bg-page</td><td><span class="var-swatch" style="background:#0d0f10"></span>#0d0f10</td><td>Fond de page principal</td></tr>
+            <tr><td>--bg-card</td><td><span class="var-swatch" style="background:#15181a"></span>#15181a</td><td>Fond des cartes</td></tr>
+            <tr><td>--bg-input</td><td><span class="var-swatch" style="background:#1a1e20"></span>#1a1e20</td><td>Fond des champs de saisie</td></tr>
+            <tr><td>--bg-panel</td><td><span class="var-swatch" style="background:#111415"></span>#111415</td><td>Fond du panel de détail</td></tr>
+            <tr><td>--ink</td><td><span class="var-swatch" style="background:#f0f2f5;border-color:#555"></span>#f0f2f5</td><td>Texte principal (blanc chaud)</td></tr>
+            <tr><td>--muted</td><td><span class="var-swatch" style="background:#8d959c"></span>#8d959c</td><td>Texte secondaire (gris)</td></tr>
+            <tr><td>--stroke</td><td><span class="var-swatch" style="background:#252a2e"></span>#252a2e</td><td>Bordures légères</td></tr>
+            <tr><td>--accent</td><td><span class="var-swatch" style="background:#5c62fa"></span>#5c62fa</td><td>Couleur d'accent — <strong>change dynamiquement</strong> par entité</td></tr>
+            <tr><td>--accent-strong</td><td><span class="var-swatch" style="background:#a4a8ff"></span>#a4a8ff</td><td>Variante claire de l'accent</td></tr>
+            <tr><td>--radius-md</td><td>16px</td><td>Coins des cartes</td></tr>
+            <tr><td>--radius-lg</td><td>24px</td><td>Coins des modals</td></tr>
+            <tr><td>--transition-smooth</td><td>300ms cubic-bezier(0.2, 0.8, 0.2, 1)</td><td>Transitions UI standard</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body"><strong>Theming dynamique :</strong> À chaque ouverture de fiche détail, <code>--accent</code> est remplacé sur <code>:root</code> par la couleur propre à l'entité (<code>item.accent</code>). Cela propage l'effet à tous les composants via CSS inheritance.</div>
+      </div>
+
+      <h3>Architecture CSS (5 fichiers)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Fichier</th><th>Contenu</th></tr></thead>
+          <tbody>
+            <tr><td>styles.css</td><td>Reset, variables CSS, body, typographie de base, animations de fond (<code>bg-mesh-move</code>)</td></tr>
+            <tr><td>layout.css</td><td>Grid responsive <code>.deck</code>, <code>.app-container</code>, breakpoints mobile (max 768px)</td></tr>
+            <tr><td>components.css</td><td>Cards (<code>.poke-card</code>), boutons, chips de type, barre de nav, barre de recherche, toasts</td></tr>
+            <tr><td>modal.css</td><td>Overlay <code>.detail-sheet</code>, panel de contenu, hero image, stats, talents, bottom sheet mobile</td></tr>
+            <tr><td>intro.css</td><td>Écran d'intro, animations <code>pulse-glow</code> et <code>fade-in-up</code>, sortie <code>.dismissed</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Animation d'entrée des cartes</h3>
+      <pre><code><span class="cmt">/* Délai échelonné selon l'index — créé via JS */</span>
+.<span class="prop">poke-card</span> {
+  <span class="prop">animation</span>: <span class="fn">card-in</span> 400ms ease forwards;
+  <span class="prop">animation-delay</span>: calc(var(--i) * 60ms);
+}
+
+<span class="kw">@keyframes</span> <span class="fn">card-in</span> {
+  <span class="kw">from</span> { opacity: <span class="num">0</span>; transform: translateY(<span class="num">20px</span>); }
+  <span class="kw">to</span>   { opacity: <span class="num">1</span>; transform: translateY(<span class="num">0</span>); }
+}</code></pre>
+    </section>
+
+    <!-- ── STORAGE ─────────────────────────────────── -->
+    <section id="storage">
+      <h2>Persistance des données</h2>
+
+      <h3>localStorage — <code>pokedex_studio_v3</code></h3>
+      <pre><code><span class="cmt">// Structure JSON stockée</span>
+{
+  <span class="prop">"query"</span>:     <span class="str">""</span>,
+  <span class="prop">"type"</span>:      <span class="str">"Tous"</span>,
+  <span class="prop">"favorites"</span>: [<span class="str">"001"</span>, <span class="str">"003"</span>],
+  <span class="prop">"team"</span>:      [<span class="str">"001"</span>, <span class="str">"090"</span>]
+}</code></pre>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ️</span>
+        <div class="callout-body">Les <code>Set</code> JavaScript sont sérialisés en tableaux JSON, puis rechargés comme <code>new Set(array)</code> à l'hydratation.</div>
+      </div>
+
+      <h3>sessionStorage — <code>introDismissed</code></h3>
+      <p>Stocke <code>"true"</code> après que l'utilisateur a fermé l'écran d'intro. Réinitialise à chaque fermeture d'onglet/navigateur (comportement sessionStorage).</p>
+    </section>
+
+    <!-- ── DATA MODEL ─────────────────────────────────── -->
+    <section id="data">
+      <h2>Modèle de données</h2>
+      <p>Chaque entité (<code>Entity</code>) est un objet JavaScript avec les propriétés suivantes :</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Propriété</th><th>Type</th><th>Exemple</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>id</td><td>string</td><td>"001"</td><td>Identifiant unique, format 3 chiffres</td></tr>
+            <tr><td>name</td><td>string</td><td>"Juracron"</td><td>Nom de la créature/région</td></tr>
+            <tr><td>image</td><td>string</td><td>"./assets/imgs/Juracron_card.webp"</td><td>Chemin relatif vers l'image WebP</td></tr>
+            <tr><td>accent</td><td>string (hex)</td><td>"#b6dde0"</td><td>Couleur thématique pour le theming dynamique</td></tr>
+            <tr><td>types</td><td>string[]</td><td>["Nature", "Eau", "Roche"]</td><td>2 à 3 types, utilisés pour les filtres</td></tr>
+            <tr><td>rarity</td><td>string</td><td>"Légendaire"</td><td>Légendaire / Mythique / Épique / Rare</td></tr>
+            <tr><td>weight</td><td>string</td><td>"450 kg"</td><td>Poids (avec unité)</td></tr>
+            <tr><td>height</td><td>string</td><td>"3.0 m"</td><td>Taille (avec unité)</td></tr>
+            <tr><td>category</td><td>string</td><td>"Esprit de la Montagne"</td><td>Description poétique courte</td></tr>
+            <tr><td>habitat</td><td>string</td><td>"Jura"</td><td>Région géographique d'origine</td></tr>
+            <tr><td>summary</td><td>string</td><td>"Gardien des lacs…"</td><td>Description narrative (en français)</td></tr>
+            <tr><td>talents</td><td>string[]</td><td>["Cascades Breath", …]</td><td>3 talents/capacités spéciales nommés</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Niveaux de rareté</h3>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin: 12px 0 24px;">
+        <span class="rarity-tag rarity-Légendaire">Légendaire</span>
+        <span class="rarity-tag rarity-Mythique">Mythique</span>
+        <span class="rarity-tag rarity-Épique">Épique</span>
+        <span class="rarity-tag rarity-Rare">Rare</span>
+      </div>
+
+      <h3>Types disponibles</h3>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin: 12px 0 24px;">
+        <span class="type-tag">Nature</span>
+        <span class="type-tag">Eau</span>
+        <span class="type-tag">Roche</span>
+        <span class="type-tag">Feu</span>
+        <span class="type-tag">Vent</span>
+        <span class="type-tag">Terre</span>
+        <span class="type-tag">Lumière</span>
+        <span class="type-tag">Ombre</span>
+        <span class="type-tag">Glace</span>
+        <span class="type-tag">Tempête</span>
+      </div>
+
+      <h3>Fonction <code>buildPokedexFromAssets</code></h3>
+      <pre><code><span class="kw">async function</span> <span class="fn">buildPokedexFromAssets</span>(probeFunction) {
+  <span class="cmt">// Tester chaque image en parallèle</span>
+  <span class="kw">const</span> results = <span class="kw">await</span> Promise.<span class="fn">all</span>(
+    allPokemon.<span class="fn">map</span>(p => probeFunction(p.image))
+  );
+
+  <span class="cmt">// Garder seulement les entités avec image disponible</span>
+  <span class="kw">const</span> available = allPokemon.<span class="fn">filter</span>((_, i) => results[i]);
+
+  <span class="cmt">// Fallback : si aucune image, tout garder avec image vide</span>
+  <span class="kw">if</span> (available.length === <span class="num">0</span>) {
+    <span class="kw">return</span> allPokemon.<span class="fn">map</span>(p => ({ ...p, image: <span class="str">""</span> }));
+  }
+
+  <span class="kw">return</span> available;
+}</code></pre>
+    </section>
+
+    <!-- ── ENTITIES ─────────────────────────────────── -->
+    <section id="entities">
+      <h2>Entités — Catalogue complet (12)</h2>
+
+      <div class="entity-list">
+        <div class="entity-card">
+          <div class="entity-card-header">
+            <span class="entity-name">Juracron</span>
+            <span class="entity-id">#001</span>
+          </div>
+          <div class="entity-habitat">🗺️ Jura</div>
+          <div class="entity-types">
+            <span class="type-tag">Nature</span>
+            <span class="type-tag">Eau</span>
+            <span class="type-tag">Roche</span>
+            <span class="rarity-tag rarity-Légendaire">Légendaire</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-card-header">
+            <span class="entity-name">Belforion</span>
+            <span class="entity-id">#090</span>
+          </div>
+          <div class="entity-habitat">🗺️ Territoire de Belfort</div>
+          <div class="entity-types">
+            <span class="rarity-tag rarity-Mythique">Mythique</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-card-header">
+            <span class="entity-name">Vogsrâl</span>
+            <span class="entity-id">#003</span>
+          </div>
+          <div class="entity-habitat">🗺️ Vosges</div>
+          <div class="entity-types">
+            <span class="rarity-tag rarity-Rare">Rare</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-card-header">
+            <span class="entity-name">Alsace</span>
+            <span class="entity-id">#004</span>
+          </div>
+          <div class="entity-habitat">🗺️ Alsace</div>
+          <div class="entity-types">
+            <span class="rarity-tag rarity-Épique">Épique</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-card-header">
+            <span class="entity-name">Espagne</span>
+            <span class="entity-id">#005</span>
+          </div>
+          <div class="entity-habitat">🗺️ Espagne</div>
+          <div class="entity-types">
+            <span class="rarity-tag rarity-Légendaire">Légendaire</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-card-header">
+            <span class="entity-name">Île-de-France</span>
+            <span class="entity-id">#006</span>
+          </div>
+          <div class="entity-habitat">🗺️ Île-de-France</div>
+          <div class="entity-types">
+            <span class="rarity-tag rarity-Épique">Épique</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-card-header">
+            <span class="entity-name">Italie</span>
+            <span class="entity-id">#007</span>
+          </div>
+          <div class="entity-habitat">🗺️ Italie</div>
+          <div class="entity-types">
+            <span class="rarity-tag rarity-Légendaire">Légendaire</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-card-header">
+            <span class="entity-name">Pays Basque</span>
+            <span class="entity-id">#008</span>
+          </div>
+          <div class="entity-habitat">🗺️ Pays Basque</div>
+          <div class="entity-types">
+            <span class="rarity-tag rarity-Rare">Rare</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-card-header">
+            <span class="entity-name">Portugal</span>
+            <span class="entity-id">#009</span>
+          </div>
+          <div class="entity-habitat">🗺️ Portugal</div>
+          <div class="entity-types">
+            <span class="rarity-tag rarity-Légendaire">Légendaire</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-card-header">
+            <span class="entity-name">L'Aérofar</span>
+            <span class="entity-id">#010</span>
+          </div>
+          <div class="entity-habitat">🗺️ Créature du vent</div>
+          <div class="entity-types">
+            <span class="type-tag">Vent</span>
+            <span class="rarity-tag rarity-Épique">Épique</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-card-header">
+            <span class="entity-name">LaFontandine</span>
+            <span class="entity-id">#011</span>
+          </div>
+          <div class="entity-habitat">🗺️ Esprit de l'eau</div>
+          <div class="entity-types">
+            <span class="type-tag">Eau</span>
+            <span class="rarity-tag rarity-Rare">Rare</span>
+          </div>
+        </div>
+
+        <div class="entity-card">
+          <div class="entity-card-header">
+            <span class="entity-name">Bretagne</span>
+            <span class="entity-id">#012</span>
+          </div>
+          <div class="entity-habitat">🗺️ Bretagne</div>
+          <div class="entity-types">
+            <span class="rarity-tag rarity-Épique">Épique</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ACCESSIBILITY ─────────────────────────────────── -->
+    <section id="accessibility">
+      <h2>Accessibilité</h2>
+      <p>L'application implémente les bonnes pratiques WCAG 2.1 pour une expérience inclusive.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Mécanisme</th><th>Implémentation</th></tr></thead>
+          <tbody>
+            <tr><td>Sémantique HTML5</td><td><code>&lt;main&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code></td></tr>
+            <tr><td>ARIA labels</td><td><code>aria-label</code> sur tous les boutons icon-only</td></tr>
+            <tr><td>ARIA modal</td><td><code>aria-modal="true"</code>, <code>role="dialog"</code> sur la fiche détail</td></tr>
+            <tr><td>ARIA live region</td><td><code>aria-live="polite"</code> sur le conteneur de toasts</td></tr>
+            <tr><td>ARIA expanded</td><td><code>aria-expanded</code> sur le bouton de filtre mobile</td></tr>
+            <tr><td>Navigation clavier</td><td>Touche Échap pour fermer le modal</td></tr>
+            <tr><td>Focus visible</td><td>Outline 2px accent sur tous les éléments focusables</td></tr>
+            <tr><td>Taille de cibles</td><td>Minimum 48px pour tous les boutons tactiles</td></tr>
+            <tr><td>Texte alternatif</td><td>Attribut <code>alt</code> sur toutes les images</td></tr>
+            <tr><td>Contraste</td><td>Thème sombre avec ratio &gt;4.5:1 pour le texte principal</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── PERFORMANCE ─────────────────────────────────── -->
+    <section id="performance">
+      <h2>Performance</h2>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">🖼️</div>
+          <h3>Lazy loading</h3>
+          <p>Toutes les images utilisent <code>loading="lazy"</code>. Seules les images visibles dans le viewport sont chargées.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔍</div>
+          <h3>Sonde d'images</h3>
+          <p>À l'init, les images non disponibles sont filtrées (timeout 2s) pour éviter les images cassées en production.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📌</div>
+          <h3>Cache DOM</h3>
+          <p>Les références DOM fréquemment utilisées sont cachées dans l'objet <code>refs</code> pour éviter les <code>querySelector</code> répétés.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📦</div>
+          <h3>Zéro dépendance</h3>
+          <p>Aucun framework, aucun bundler. Chargement instantané sans <code>node_modules</code> ni build step.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎨</div>
+          <h3>CSS natif</h3>
+          <p>Animations GPU-only (<code>transform</code>, <code>opacity</code>). Transitions CSS plutôt que JS pour 60 fps garanti.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🌐</div>
+          <h3>GitHub Pages ready</h3>
+          <p>Fichiers 100% statiques. Déployable directement depuis le dossier <code>docs/</code> sans configuration serveur.</p>
+        </div>
+      </div>
+
+      <h3>Déploiement</h3>
+      <p>L'application est prête pour GitHub Pages. La branche <code>main</code> publie le dossier <code>/docs</code>. Aucune étape de build n'est nécessaire.</p>
+
+      <pre><code><span class="cmt"># Déploiement GitHub Pages</span>
+Repo Settings → Pages → Source: <span class="str">"Deploy from a branch"</span>
+Branch: <span class="str">main</span>  /  Folder: <span class="str">/docs</span></code></pre>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // Highlight active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

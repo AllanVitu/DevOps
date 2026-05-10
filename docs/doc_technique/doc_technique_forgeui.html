@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FORGE UI — Documentation Technique</title>
+  <style>
+    :root {
+      --brand:      #7c3aed;
+      --brand-light:#a855f7;
+      --brand-pale: #f5f3ff;
+      --brand-muted:#ede9fe;
+      --dark:       #1e1b4b;
+      --text:       #1a1a2e;
+      --muted:      #6b7280;
+      --border:     #e5e7eb;
+      --radius:     10px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--text);
+      background: #f8f7ff;
+      display: flex;
+    }
+
+    /* ─── SIDEBAR ─────────────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 240px;
+      height: 100vh;
+      background: linear-gradient(180deg, #1e1b4b 0%, #2d1b69 100%);
+      overflow-y: auto;
+      padding: 28px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 100;
+    }
+    #sidebar .logo {
+      font-size: 17px; font-weight: 800; color: #fff;
+      padding: 0 8px 20px;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      margin-bottom: 12px;
+    }
+    #sidebar .logo span { color: var(--brand-light); }
+    #sidebar a {
+      display: flex; align-items: center; gap: 9px;
+      padding: 8px 12px; border-radius: 7px;
+      color: rgba(255,255,255,.65); text-decoration: none;
+      font-size: 12.5px; font-weight: 500; transition: all .15s;
+    }
+    #sidebar a:hover, #sidebar a.active { background: rgba(168,85,247,.25); color: #fff; }
+    #sidebar a .num {
+      margin-left: auto; font-size: 10px;
+      background: rgba(168,85,247,.3); color: var(--brand-light);
+      padding: 1px 6px; border-radius: 20px; font-weight: 700;
+    }
+
+    /* ─── MAIN ────────────────────────────────── */
+    #main { margin-left: 240px; flex: 1; padding: 48px 56px; max-width: calc(100% - 240px); }
+
+    /* ─── PAGE HEADER ─────────────────────────── */
+    .page-header {
+      background: linear-gradient(135deg, #1e1b4b 0%, #7c3aed 55%, #a855f7 100%);
+      border-radius: 16px; padding: 40px 48px; color: #fff;
+      margin-bottom: 48px; position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: ''; position: absolute;
+      top: -60px; right: -60px; width: 220px; height: 220px;
+      background: rgba(255,255,255,.06); border-radius: 50%;
+    }
+    .page-header h1 { font-size: 28px; font-weight: 800; margin-bottom: 10px; }
+    .page-header p { color: rgba(255,255,255,.8); font-size: 14px; max-width: 600px; }
+    .badge-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+    .badge {
+      background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.2);
+      color: #fff; padding: 4px 13px; border-radius: 20px;
+      font-size: 12px; font-weight: 600;
+    }
+
+    /* ─── SECTIONS ────────────────────────────── */
+    section { margin-bottom: 56px; scroll-margin-top: 24px; }
+    .section-title { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+    .section-title .icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-light));
+      border-radius: 9px; display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .section-title h2 { font-size: 20px; font-weight: 800; color: var(--text); }
+
+    /* ─── CARDS ───────────────────────────────── */
+    .card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px;
+      margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.05);
+    }
+    .card-title { font-size: 13px; font-weight: 700; color: var(--brand); margin-bottom: 10px; }
+
+    .store-card {
+      background: #fff; border: 1px solid var(--border);
+      border-left: 4px solid var(--brand);
+      border-radius: var(--radius); padding: 20px 24px;
+      margin-bottom: 20px; box-shadow: 0 2px 8px rgba(124,58,237,.06);
+    }
+    .store-card h3 {
+      font-size: 14px; font-weight: 700; color: var(--text);
+      margin-bottom: 6px; display: flex; align-items: center; gap: 10px;
+    }
+    .store-card h3 .key {
+      font-size: 10.5px; background: var(--dark); color: #c4b5fd;
+      padding: 2px 9px; border-radius: 4px;
+      font-family: Consolas, monospace; font-weight: 500;
+    }
+    .store-card .desc { font-size: 12.5px; color: var(--muted); margin-bottom: 14px; }
+
+    /* ─── TABLES ──────────────────────────────── */
+    .table-wrap { overflow-x: auto; margin: 16px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    thead tr { background: linear-gradient(90deg, var(--brand), var(--brand-light)); }
+    th { color: #fff; padding: 9px 14px; text-align: left; font-weight: 600; font-size: 11.5px; }
+    td { padding: 8px 14px; border-bottom: 1px solid var(--brand-muted); color: #374151; vertical-align: top; }
+    tr:nth-child(even) td { background: var(--brand-pale); }
+    tr:hover td { background: #f3e8ff; }
+
+    /* ─── CODE ────────────────────────────────── */
+    code {
+      font-family: Consolas, monospace; font-size: 12px;
+      background: var(--brand-muted); color: #6b21a8;
+      padding: 1px 6px; border-radius: 4px;
+    }
+    pre {
+      background: var(--dark); color: #c4b5fd;
+      padding: 18px 22px; border-radius: 10px;
+      font-size: 12px; line-height: 1.7;
+      overflow-x: auto; margin: 16px 0;
+      border-left: 4px solid var(--brand-light);
+      font-family: Consolas, monospace;
+    }
+    pre code { background: none; color: #c4b5fd; padding: 0; }
+
+    /* ─── PILLS ───────────────────────────────── */
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+    .pill {
+      background: var(--brand-pale); border: 1px solid var(--brand-muted);
+      color: var(--brand); padding: 5px 14px;
+      border-radius: 20px; font-size: 12px; font-weight: 600;
+    }
+
+    /* ─── GRIDS ───────────────────────────────── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    @media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+    /* ─── STAT CARDS ──────────────────────────── */
+    .stat-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px; text-align: center;
+    }
+    .stat-card .num {
+      font-size: 36px; font-weight: 800;
+      background: linear-gradient(135deg, var(--brand), var(--brand-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      line-height: 1.1;
+    }
+    .stat-card .label { font-size: 12px; color: var(--muted); margin-top: 4px; font-weight: 500; }
+
+    /* ─── FLOW ────────────────────────────────── */
+    .flow { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin: 12px 0; }
+    .flow-step { display: flex; align-items: flex-start; gap: 14px; padding: 10px 0; border-bottom: 1px dashed var(--brand-muted); }
+    .flow-step:last-child { border-bottom: none; }
+    .flow-step .arrow {
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-light));
+      color: #fff; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+    }
+    .flow-step .content strong { font-size: 12.5px; display: block; margin-bottom: 2px; }
+    .flow-step .content span { font-size: 11.5px; color: var(--muted); }
+
+    /* ─── MISC ────────────────────────────────── */
+    .divider { height: 1px; background: linear-gradient(90deg, var(--brand-muted), transparent); margin: 28px 0; }
+    ul.nice { list-style: none; padding: 0; }
+    ul.nice li {
+      padding: 6px 0; border-bottom: 1px solid var(--brand-muted);
+      font-size: 12.5px; display: flex; align-items: flex-start; gap: 8px;
+    }
+    ul.nice li::before { content: '▸'; color: var(--brand-light); flex-shrink: 0; margin-top: 1px; }
+    ul.nice li:last-child { border-bottom: none; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: var(--brand-muted); border-radius: 3px; }
+
+    @media (max-width: 768px) {
+      #sidebar { display: none; }
+      #main { margin-left: 0; max-width: 100%; padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════ SIDEBAR ═══════════════════ -->
+<nav id="sidebar">
+  <div class="logo">FORGE<span>UI</span> ⚔️</div>
+  <a href="../projects/forge-ui.html" style="background:rgba(168,85,247,.2);color:#fff;font-weight:700;margin-bottom:6px;">← Retour Projet</a>
+  <a href="../" style="color:rgba(255,255,255,.4);font-size:11.5px;margin-bottom:12px;">↗ Portfolio</a>
+  <a href="#stack">📦 Stack</a>
+  <a href="#architecture">🏗️ Architecture</a>
+  <a href="#stores">🗄️ Stores Pinia <span class="num">3</span></a>
+  <a href="#components">🧩 Composants <span class="num">7</span></a>
+  <a href="#router">🔀 Routes <span class="num">5</span></a>
+  <a href="#ecommerce">🛒 Flux E-commerce</a>
+  <a href="#deployment">🚀 Déploiement</a>
+  <a href="#summary">📊 Résumé</a>
+</nav>
+
+<!-- ═══════════════════ MAIN ═══════════════════════ -->
+<main id="main">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <h1>FORGE UI — Documentation Technique</h1>
+    <p>Marketplace de composants UI atomiques &amp; thèmes premium. SPA Vue.js 3 avec e-commerce intégré — catalogue filtré, panier Pinia, prévisualisation interactive et déploiement Railway.</p>
+    <div class="badge-row">
+      <span class="badge">Vue 3</span>
+      <span class="badge">Pinia</span>
+      <span class="badge">Vue Router 4</span>
+      <span class="badge">TailwindCSS</span>
+      <span class="badge">Vite 5</span>
+      <span class="badge">Railway</span>
+      <span class="badge">3 stores</span>
+      <span class="badge">5 routes</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       1. STACK
+  ══════════════════════════════════════════════ -->
+  <section id="stack">
+    <div class="section-title"><div class="icon">📦</div><h2>1. Stack Technologique</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Couche</th><th>Technologie</th><th>Version</th><th>Rôle</th></tr></thead>
+        <tbody>
+          <tr><td>Framework UI</td><td>Vue 3 — Composition API + script setup</td><td><code>3.4</code></td><td>SPA réactive, composants réutilisables</td></tr>
+          <tr><td>State management</td><td>Pinia</td><td><code>2.1</code></td><td>Catalogue, panier, UI state</td></tr>
+          <tr><td>Routing</td><td>Vue Router 4 — hash history</td><td><code>4.3</code></td><td>Navigation SPA (<code>#/</code>), lazy-loading</td></tr>
+          <tr><td>Styling</td><td>TailwindCSS + config custom</td><td><code>3.4</code></td><td>Design system violet/premium</td></tr>
+          <tr><td>Build</td><td>Vite</td><td><code>5.2</code></td><td>HMR, tree-shaking, build optimisé</td></tr>
+          <tr><td>Icônes</td><td>Lucide Vue</td><td><code>0.378</code></td><td>Icon set UI</td></tr>
+          <tr><td>Hébergement</td><td>Railway — Static Site</td><td>—</td><td>Déploiement continu, HTTPS auto</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card" style="background:var(--brand-pale);border-color:var(--brand-muted);">
+      <strong>⚡ Architecture 100 % client-side :</strong> aucun backend applicatif. Le hash routing (<code>#/</code>) rend le SPA compatible avec le serving statique Railway sans réécriture d'URL côté serveur.
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       2. ARCHITECTURE
+  ══════════════════════════════════════════════ -->
+  <section id="architecture">
+    <div class="section-title"><div class="icon">🏗️</div><h2>2. Architecture Globale</h2></div>
+    <pre>src/
+├── main.js                 # createApp → Pinia + Router + mount('#app')
+├── App.vue                 # Root : AppNavbar + CartDrawer + RouterView
+├── router/index.js         # 5 routes hash, lazy-loading sur toutes les views
+│
+├── stores/
+│   ├── catalog.js          # Produits, filtres, tri, recherche
+│   ├── cart.js             # Items panier, totaux, persistence localStorage
+│   └── ui.js              # cartOpen, modals, thème dark/light
+│
+├── views/
+│   ├── HomeView.vue        # Hero animé + produits en vedette
+│   ├── CatalogView.vue     # Grille 3 cols + FilterBar + SortSelect
+│   ├── PackView.vue        # Galerie + ThemePreview + CTA achat
+│   ├── CartView.vue        # Récap commande + code promo
+│   └── CheckoutView.vue    # Formulaire + confirmation
+│
+└── components/
+    ├── layout/             # AppNavbar, AppFooter, CartDrawer
+    ├── catalog/            # ProductCard, FilterBar, SortSelect, SearchBar
+    └── pack/               # ThemePreview, MediaGallery, ComponentDemo</pre>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">🔀 Routing</div>
+        <ul class="nice">
+          <li>Hash history — aucune config serveur requise</li>
+          <li>Lazy-loading (<code>() => import()</code>) sur toutes les views</li>
+          <li>Guard navigation : CartView/Checkout inaccessibles si panier vide</li>
+          <li>Scroll reset automatique au changement de route</li>
+          <li>Meta title dynamique par route</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">⚡ App.vue — Root</div>
+        <ul class="nice">
+          <li>AppNavbar sticky avec badge panier réactif</li>
+          <li>CartDrawer via <code>Teleport</code> vers <code>body</code></li>
+          <li>RouterView avec transitions <code>fade</code> (300ms)</li>
+          <li>Init thème dark/light depuis <code>localStorage</code> au montage</li>
+          <li>Overlay backdrop lors ouverture du drawer</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       3. STORES PINIA
+  ══════════════════════════════════════════════ -->
+  <section id="stores">
+    <div class="section-title"><div class="icon">🗄️</div><h2>3. Stores Pinia</h2></div>
+    <p style="color:var(--muted);margin-bottom:24px;font-size:13px;">Pattern commun : lecture depuis <code>localStorage</code> à l'init · sauvegarde JSON après chaque mutation sur cart.js.</p>
+
+    <!-- catalog -->
+    <div class="store-card">
+      <h3>catalog.js <span class="key">forge_catalog_filters</span></h3>
+      <p class="desc">Source de vérité du catalogue produits. Charge les données depuis un fichier JSON statique et gère filtrage, tri et recherche entièrement côté client.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>State</th><th>Type</th><th>Valeurs</th></tr></thead>
+          <tbody>
+            <tr><td><code>products</code></td><td>Product[]</td><td>Catalogue complet chargé au montage</td></tr>
+            <tr><td><code>activeFilters</code></td><td>object</td><td>{ category, tags[], priceMax, theme }</td></tr>
+            <tr><td><code>sortBy</code></td><td>string</td><td>'newest' · 'popular' · 'price-asc' · 'price-desc'</td></tr>
+            <tr><td><code>searchQuery</code></td><td>string</td><td>Full-text sur name + tags</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pills">
+        <span class="pill">filteredProducts (computed)</span>
+        <span class="pill">featuredProducts (computed)</span>
+        <span class="pill">setFilter(key, val)</span>
+        <span class="pill">resetFilters()</span>
+        <span class="pill">setSort(val)</span>
+        <span class="pill">getById(id)</span>
+      </div>
+      <pre>const filteredProducts = computed(() => {
+  let list = products.value
+  if (activeFilters.category)
+    list = list.filter(p => p.category === activeFilters.category)
+  if (activeFilters.tags.length)
+    list = list.filter(p => activeFilters.tags.every(t => p.tags.includes(t)))
+  if (searchQuery.value.trim())
+    list = list.filter(p => p.name.toLowerCase().includes(searchQuery.value.toLowerCase()))
+  return [...list].sort(SORT_FNS[sortBy.value])
+})</pre>
+    </div>
+
+    <!-- cart -->
+    <div class="store-card">
+      <h3>cart.js <span class="key">forge_cart</span></h3>
+      <p class="desc">Panier e-commerce avec persistence localStorage automatique. Synchronisé via <code>watch(items, save, { deep: true })</code>. Rechargé à l'init depuis la clé localStorage.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>State</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>items</code></td><td>CartItem[]</td><td>{ id, name, price, quantity, thumb }</td></tr>
+            <tr><td><code>promoCode</code></td><td>string|null</td><td>Code promo actif</td></tr>
+            <tr><td><code>discount</code></td><td>number</td><td>Réduction appliquée en %</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pills">
+        <span class="pill">total (computed)</span>
+        <span class="pill">itemCount (computed)</span>
+        <span class="pill">addItem(product)</span>
+        <span class="pill">removeItem(id)</span>
+        <span class="pill">updateQty(id, qty)</span>
+        <span class="pill">applyPromo(code)</span>
+        <span class="pill">clearCart()</span>
+      </div>
+    </div>
+
+    <!-- ui -->
+    <div class="store-card">
+      <h3>ui.js</h3>
+      <p class="desc">État éphémère de l'interface — pas de persistance. Gère l'ouverture du drawer panier, les modals et le thème (dark/light persisté séparément dans localStorage).</p>
+      <div class="pills">
+        <span class="pill">cartOpen</span>
+        <span class="pill">activeModal (preview | checkout | null)</span>
+        <span class="pill">isDark</span>
+        <span class="pill">openCart() / closeCart()</span>
+        <span class="pill">openModal(name) / closeModal()</span>
+        <span class="pill">toggleTheme()</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       4. COMPOSANTS
+  ══════════════════════════════════════════════ -->
+  <section id="components">
+    <div class="section-title"><div class="icon">🧩</div><h2>4. Composants Principaux</h2></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">ProductCard.vue</div>
+        <ul class="nice">
+          <li>3 variantes prop : <code>featured</code> · <code>normal</code> · <code>compact</code></li>
+          <li>Badge rareté (Gratuit / Pro / Premium)</li>
+          <li>Thumbnail + tags catégorie + prix</li>
+          <li>Bouton "Ajouter" → <code>cart.addItem()</code></li>
+          <li>Hover : scale + overlay "Voir le détail"</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">FilterBar.vue</div>
+        <ul class="nice">
+          <li>Filtres multi-select : catégorie, tags, thème</li>
+          <li>Slider de prix max</li>
+          <li>Emit vers <code>catalog.setFilter()</code> en temps réel</li>
+          <li>Badge compteur de filtres actifs</li>
+          <li>Bouton "Tout réinitialiser" → <code>catalog.resetFilters()</code></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">CartDrawer.vue</div>
+        <ul class="nice">
+          <li>Rendu via <code>Teleport to="body"</code></li>
+          <li>Slide-in depuis la droite (transition transform 300ms)</li>
+          <li>Liste items avec quantité éditable</li>
+          <li>Sous-total + code promo inline</li>
+          <li>CTA "Commander" → route <code>#/checkout</code></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">ThemePreview.vue</div>
+        <ul class="nice">
+          <li>Preview live du thème sélectionné (iframe ou inlined)</li>
+          <li>Toggle Dark / Light par thème</li>
+          <li>Bouton "Copier CSS" → Clipboard API</li>
+          <li>Miniature interactive des composants inclus</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">AppNavbar.vue</div>
+        <ul class="nice">
+          <li>Logo + liens de navigation principaux</li>
+          <li>Badge compteur panier (<code>cart.itemCount</code>, réactif)</li>
+          <li>Icône cart → <code>ui.openCart()</code></li>
+          <li>Toggle thème dark/light</li>
+          <li>Hamburger menu responsive mobile</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">SearchBar.vue + SortSelect.vue</div>
+        <ul class="nice">
+          <li>SearchBar : input debounced 300 ms → <code>catalog.searchQuery</code></li>
+          <li>SortSelect : 4 options de tri, recalcul computed immédiat</li>
+          <li>Aucune requête réseau — tout filtré côté client</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       5. ROUTES
+  ══════════════════════════════════════════════ -->
+  <section id="router">
+    <div class="section-title"><div class="icon">🔀</div><h2>5. Routes &amp; Pages</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Route</th><th>View</th><th>Stores</th><th>Fonctionnalité clé</th></tr></thead>
+        <tbody>
+          <tr><td><code>#/</code></td><td>HomeView</td><td>catalog</td><td>Hero animé + produits en vedette (<code>featured: true</code>)</td></tr>
+          <tr><td><code>#/catalog</code></td><td>CatalogView</td><td>catalog · ui</td><td>Grille 3 cols, FilterBar, SortSelect, SearchBar</td></tr>
+          <tr><td><code>#/pack/:slug</code></td><td>PackView</td><td>catalog · cart</td><td>Galerie médias, ThemePreview, CTA achat</td></tr>
+          <tr><td><code>#/cart</code></td><td>CartView</td><td>cart</td><td>Récap items, code promo, total avec remise</td></tr>
+          <tr><td><code>#/checkout</code></td><td>CheckoutView</td><td>cart · ui</td><td>Formulaire livraison + simulation paiement</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       6. FLUX E-COMMERCE
+  ══════════════════════════════════════════════ -->
+  <section id="ecommerce">
+    <div class="section-title"><div class="icon">🛒</div><h2>6. Flux E-commerce</h2></div>
+    <p style="color:var(--muted);margin-bottom:16px;font-size:13px;">Parcours complet d'un utilisateur de la découverte à la commande.</p>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="arrow">1</div>
+        <div class="content"><strong>HomeView — Découverte</strong><span>Hero + produits en vedette. L'utilisateur voit les packs populaires et les thèmes mis en avant.</span></div>
+      </div>
+      <div class="flow-step">
+        <div class="arrow">2</div>
+        <div class="content"><strong>CatalogView — Filtrage</strong><span><code>catalog.filteredProducts</code> recalcule instantanément. Filtres catégorie/tags, tri par prix ou popularité.</span></div>
+      </div>
+      <div class="flow-step">
+        <div class="arrow">3</div>
+        <div class="content"><strong>PackView — Prévisualisation</strong><span>Galerie screenshots, ThemePreview dark/light interactif, liste des composants inclus.</span></div>
+      </div>
+      <div class="flow-step">
+        <div class="arrow">4</div>
+        <div class="content"><strong>Ajout panier</strong><span><code>cart.addItem(product)</code> → badge navbar mis à jour · <code>ui.cartOpen = true</code> → CartDrawer s'ouvre automatiquement.</span></div>
+      </div>
+      <div class="flow-step">
+        <div class="arrow">5</div>
+        <div class="content"><strong>CartView — Récapitulatif</strong><span>Items éditables, code promo (<code>cart.applyPromo()</code>), total avec remise calculé.</span></div>
+      </div>
+      <div class="flow-step">
+        <div class="arrow">6</div>
+        <div class="content"><strong>CheckoutView — Finalisation</strong><span>Formulaire coordonnées + paiement simulé → <code>cart.clearCart()</code> + page de confirmation.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       7. DÉPLOIEMENT
+  ══════════════════════════════════════════════ -->
+  <section id="deployment">
+    <div class="section-title"><div class="icon">🚀</div><h2>7. Déploiement Railway</h2></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Pipeline de build</div>
+        <pre>npm run dev      # Dev → localhost:5173
+npm run build    # Vite → dist/
+npm run preview  # Preview prod → localhost:4173</pre>
+        <p style="font-size:12.5px;color:var(--muted);margin-top:12px;">Railway détecte automatiquement le <code>dist/</code> et sert les fichiers statiques via son proxy HTTP.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Config Railway</div>
+        <ul class="nice">
+          <li>Type : <strong>Static Site</strong></li>
+          <li>Build command : <code>npm run build</code></li>
+          <li>Output directory : <code>dist</code></li>
+          <li>HTTPS automatique (Let's Encrypt)</li>
+          <li>Deploy on git push (CD)</li>
+          <li>URL : <code>*.up.railway.app</code></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="background:var(--brand-pale);border-color:var(--brand-muted);margin-top:4px;">
+      <strong>💡 Hash routing :</strong> le <code>#/</code> de Vue Router évite tout besoin de règle de réécriture URL côté serveur. Toute la navigation se fait côté client — aucune erreur 404 sur Railway.
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       8. RÉSUMÉ
+  ══════════════════════════════════════════════ -->
+  <section id="summary">
+    <div class="section-title"><div class="icon">📊</div><h2>8. Résumé Chiffré</h2></div>
+    <div class="grid-3">
+      <div class="stat-card"><div class="num">3</div><div class="label">Stores Pinia</div></div>
+      <div class="stat-card"><div class="num">5</div><div class="label">Pages / Routes</div></div>
+      <div class="stat-card"><div class="num">7</div><div class="label">Composants clés</div></div>
+      <div class="stat-card"><div class="num">4</div><div class="label">Options de tri</div></div>
+      <div class="stat-card"><div class="num">0</div><div class="label">Backend (SPA client-side)</div></div>
+      <div class="stat-card"><div class="num">∞</div><div class="label">Filtres combinables</div></div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  const links = document.querySelectorAll('#sidebar a[href^="#"]')
+  const sections = document.querySelectorAll('section[id]')
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'))
+        const a = document.querySelector(`#sidebar a[href="#${e.target.id}"]`)
+        if (a) a.classList.add('active')
+      }
+    })
+  }, { threshold: 0.25 })
+  sections.forEach(s => obs.observe(s))
+</script>
+</body>
+</html>
