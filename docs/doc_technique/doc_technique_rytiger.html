@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rytiger RPG — Documentation Technique v2.0</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Rajdhani:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --bg:        #0D0A08;
+    --bg2:       #12100E;
+    --bg3:       #1A1410;
+    --bg4:       #211B14;
+    --border:    #2E2518;
+    --border2:   #3D3020;
+    --gold:      #C89B3C;
+    --gold-dim:  #8A6A28;
+    --gold-glow: #E8B84B;
+    --cream:     #E8DCC8;
+    --text:      #C8BBA0;
+    --text-dim:  #7A6E5E;
+    --rare:      #4A9EFF;
+    --epique:    #A855F7;
+    --legendaire:#C89B3C;
+    --ultimate:  #F0E8D8;
+    --guerrier:  #E85D20;
+    --mage:      #7C3AED;
+    --arche:     #4A7C59;
+    --assassin:  #9D174D;
+    --code-bg:   #0A0806;
+    --code-text: #8BBF6A;
+    --red:       #EF4444;
+    --green:     #22C55E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── LAYOUT ─────────────────────────────────── */
+  .layout {
+    display: grid;
+    grid-template-columns: 270px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR ─────────────────────────────────── */
+  .sidebar {
+    position: sticky;
+    top: 38px;
+    height: calc(100vh - 38px);
+    overflow-y: auto;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 0 0 40px 0;
+    z-index: 10;
+  }
+
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border2); }
+
+  .sidebar-logo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 8px;
+  }
+
+  .sidebar-logo .game-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .sidebar-logo .doc-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+  }
+
+  .sidebar-badge {
+    display: inline-block;
+    background: var(--bg4);
+    border: 1px solid var(--border2);
+    color: var(--gold-dim);
+    font-size: 10px;
+    padding: 2px 8px;
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  .nav-section {
+    padding: 8px 0;
+  }
+
+  .nav-section-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    padding: 8px 20px 4px;
+  }
+
+  .nav-link {
+    display: block;
+    padding: 7px 20px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: var(--cream);
+    background: var(--bg3);
+    border-left-color: var(--gold-dim);
+  }
+
+  .nav-link.active {
+    color: var(--gold);
+    background: var(--bg4);
+    border-left-color: var(--gold);
+  }
+
+  .nav-link.sub {
+    padding-left: 34px;
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  /* ── MAIN ─────────────────────────────────── */
+  .main {
+    min-width: 0;
+    padding: 0 60px 80px;
+    max-width: 900px;
+  }
+
+  /* ── HERO HEADER ─────────────────────────────────── */
+  .hero {
+    background: linear-gradient(180deg, #1A1208 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 64px 60px 52px;
+    margin: 0 -60px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 50% 0%, rgba(200,155,60,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--gold-dim);
+    margin-bottom: 12px;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 42px;
+    color: var(--gold);
+    letter-spacing: 4px;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    text-shadow: 0 0 40px rgba(200,155,60,0.3);
+  }
+
+  .hero-sub {
+    font-family: 'Crimson Text', serif;
+    font-size: 20px;
+    color: var(--cream);
+    font-style: italic;
+    margin-bottom: 28px;
+    opacity: 0.8;
+  }
+
+  .hero-divider {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin-bottom: 24px;
+  }
+
+  .hero-desc {
+    font-family: 'Crimson Text', serif;
+    font-size: 16px;
+    color: var(--text);
+    max-width: 620px;
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    color: var(--text-dim);
+    font-size: 12px;
+    padding: 5px 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .badge.green .dot { background: var(--green); }
+  .badge.blue .dot { background: var(--rare); }
+
+  /* ── STAT CARDS ─────────────────────────────────── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .stat-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 18px 16px;
+    text-align: center;
+  }
+
+  .stat-card .val {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 28px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-card .lbl {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+  }
+
+  /* ── SECTIONS ─────────────────────────────────── */
+  .section {
+    margin-bottom: 64px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .section-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  .section-num {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 11px;
+    color: var(--gold-dim);
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    padding: 4px 10px;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── SUBSECTIONS ─────────────────────────────────── */
+  .subsection {
+    margin-bottom: 36px;
+    scroll-margin-top: 24px;
+  }
+
+  .sub-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    padding-left: 12px;
+    border-left: 3px solid var(--gold);
+  }
+
+  .sub-title-2 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: 0.5px;
+    margin: 20px 0 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── PROSE ─────────────────────────────────── */
+  p {
+    margin-bottom: 14px;
+    color: var(--text);
+    font-family: 'Crimson Text', serif;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  /* ── LISTS ─────────────────────────────────── */
+  .list {
+    list-style: none;
+    margin-bottom: 16px;
+  }
+
+  .list li {
+    padding: 5px 0 5px 20px;
+    position: relative;
+    font-size: 14px;
+    color: var(--text);
+    border-bottom: 1px solid rgba(46,37,24,0.4);
+  }
+
+  .list li:last-child { border-bottom: none; }
+
+  .list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--gold-dim);
+    font-size: 11px;
+    top: 7px;
+  }
+
+  .check-list { list-style: none; margin-bottom: 16px; }
+
+  .check-list li {
+    padding: 5px 0 5px 24px;
+    position: relative;
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .check-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-size: 12px;
+    top: 7px;
+  }
+
+  /* ── CODE BLOCKS ─────────────────────────────────── */
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold-dim);
+    padding: 18px 20px;
+    overflow-x: auto;
+    margin-bottom: 16px;
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+
+  code {
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    color: var(--code-text);
+  }
+
+  pre code { color: var(--code-text); }
+
+  .kw  { color: #F08080; }
+  .st  { color: #A8D8A8; }
+  .cm  { color: #6A8A6A; font-style: italic; }
+  .nb  { color: #A8C4E8; }
+  .nm  { color: #E8D09A; }
+
+  /* ── TABLES ─────────────────────────────────── */
+  .tbl-wrap {
+    overflow-x: auto;
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead tr {
+    background: var(--bg4);
+    border-bottom: 2px solid var(--gold-dim);
+  }
+
+  thead th {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--gold);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+
+  tbody tr:hover { background: var(--bg3); }
+
+  tbody td {
+    padding: 9px 14px;
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  tbody td:first-child {
+    color: var(--cream);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .td-mono {
+    font-family: 'Cascadia Code', monospace;
+    font-size: 12px;
+    color: var(--code-text) !important;
+    font-weight: 400 !important;
+  }
+
+  /* ── RARITY BADGES ─────────────────────────────────── */
+  .r-rare { color: var(--rare); font-weight: 700; }
+  .r-epic { color: var(--epique); font-weight: 700; }
+  .r-leg  { color: var(--legendaire); font-weight: 700; }
+  .r-ult  { color: var(--ultimate); font-weight: 700; }
+
+  /* ── INFO BOXES ─────────────────────────────────── */
+  .infobox {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-left: 4px solid var(--gold);
+    padding: 16px 20px;
+    margin-bottom: 20px;
+  }
+
+  .infobox p {
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: var(--cream);
+  }
+
+  .infobox p:last-child { margin-bottom: 0; }
+
+  .infobox.blue { border-left-color: var(--rare); }
+  .infobox.green { border-left-color: var(--green); }
+  .infobox.red { border-left-color: var(--red); }
+
+  /* ── CLASS BADGES ─────────────────────────────────── */
+  .cls {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .cls-g { background: rgba(232,93,32,0.15); color: var(--guerrier); border: 1px solid rgba(232,93,32,0.3); }
+  .cls-m { background: rgba(124,58,237,0.15); color: var(--mage); border: 1px solid rgba(124,58,237,0.3); }
+  .cls-a { background: rgba(74,124,89,0.15); color: var(--arche); border: 1px solid rgba(74,124,89,0.3); }
+  .cls-s { background: rgba(157,23,77,0.15); color: var(--assassin); border: 1px solid rgba(157,23,77,0.3); }
+
+  /* ── 2-COL GRID ─────────────────────────────────── */
+  .col2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .col3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 16px;
+  }
+
+  .card-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--gold-dim);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  .card p {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  /* ── PHASE CARDS ─────────────────────────────────── */
+  .phase-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .phase-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 16px;
+  }
+
+  .phase-card .ph-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+
+  .phase-card .ph-range {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 13px;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .phase-card .ph-desc {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  /* ── ARCH PATTERN ─────────────────────────────────── */
+  .pattern {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .pattern-num {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 10px;
+    color: var(--gold-dim);
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+
+  .pattern-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .pattern p {
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+
+  /* ── FOOTER ─────────────────────────────────── */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 24px 60px;
+    margin: 60px -60px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  footer strong { color: var(--gold-dim); }
+
+  /* ── SCROLLBAR ─────────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg2); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+
+  /* ── PRINT ─────────────────────────────────── */
+  @media print {
+    .sidebar { display: none; }
+    .layout { display: block; }
+    .main { max-width: 100%; padding: 0 30px; }
+    .hero { margin: 0 -30px; padding: 40px 30px; }
+    .section { page-break-inside: avoid; }
+    pre { border-left-color: #666; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  /* ── RESPONSIVE ─────────────────────────────────── */
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .main { padding: 0 24px 60px; }
+    .hero { padding: 40px 24px; margin: 0 -24px 40px; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .col2, .col3, .phase-grid { grid-template-columns: 1fr; }
+    footer { margin: 40px -24px 0; padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ BACK BANNER ══ -->
+<div style="position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(13,10,8,0.94); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid rgba(200,155,60,0.2); padding:0.55rem 1.5rem; display:flex; align-items:center; gap:1.5rem;">
+  <a href="../projects/rytiger.html" style="display:inline-flex; align-items:center; gap:0.5rem; color:#C89B3C; font-size:0.78rem; font-weight:700; text-decoration:none; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em;">
+    ← Retour au projet
+  </a>
+  <span style="color:rgba(200,155,60,0.25);">|</span>
+  <span style="font-size:0.72rem; color:rgba(200,155,60,0.45); font-family:'Rajdhani',sans-serif; letter-spacing:0.1em; text-transform:uppercase;">Rytiger RPG — Documentation Technique v2.0</span>
+  <a href="../" style="margin-left:auto; font-size:0.72rem; color:rgba(200,155,60,0.4); text-decoration:none; font-family:'Rajdhani',sans-serif; letter-spacing:0.05em;">
+    Portfolio ↗
+  </a>
+</div>
+<div style="height:38px;"></div>
+
+<div class="layout">
+
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="game-title">RYTIGER RPG</span>
+      <span class="doc-label">Documentation Technique</span>
+      <span class="sidebar-badge">v2.0 — Mai 2026</span>
+    </div>
+    <a href="../projects/rytiger.html" style="display:flex; align-items:center; gap:8px; margin:8px 16px 12px; padding:7px 12px; background:rgba(200,155,60,0.1); border:1px solid rgba(200,155,60,0.25); border-radius:7px; color:#C89B3C; font-size:12px; font-weight:700; text-decoration:none; letter-spacing:0.05em; transition:all 0.15s;">
+      ← Retour au projet
+    </a>
+
+    <nav class="nav-section">
+      <div class="nav-section-label">Introduction</div>
+      <a href="#overview" class="nav-link">1. Vue d'ensemble</a>
+      <a href="#stack" class="nav-link">2. Stack technique</a>
+      <a href="#structure" class="nav-link">3. Structure projet</a>
+      <a href="#entree" class="nav-link">4. Point d'entrée</a>
+    </nav>
+
+    <nav class="nav-section">
+      <div class="nav-section-label">Moteur de jeu</div>
+      <a href="#engine" class="nav-link">5. Engine</a>
+      <a href="#gamestate" class="nav-link sub">5.1 GameState</a>
+      <a href="#combat" class="nav-link sub">5.2 CombatEngine</a>
+      <a href="#atb" class="nav-link sub">5.3 ATBCombatEngine</a>
+      <a href="#gacha" class="nav-link sub">5.4 GachaSystem</a>
+    </nav>
+
+    <nav class="nav-section">
+      <div class="nav-section-label">Données</div>
+      <a href="#data" class="nav-link">6. Data</a>
+      <a href="#characters" class="nav-link sub">6.1 characters.js</a>
+      <a href="#items" class="nav-link sub">6.2 items.js</a>
+      <a href="#zones" class="nav-link sub">6.3 zones.js</a>
+      <a href="#dungeon" class="nav-link sub">6.4 DungeonData</a>
+    </nav>
+
+    <nav class="nav-section">
+      <div class="nav-section-label">Interface</div>
+      <a href="#screens" class="nav-link">7. Écrans (×19)</a>
+      <a href="#utils" class="nav-link">8. Utilitaires</a>
+      <a href="#styles" class="nav-link">9. Design System</a>
+    </nav>
+
+    <nav class="nav-section">
+      <div class="nav-section-label">Infrastructure</div>
+      <a href="#electron" class="nav-link">10. Electron</a>
+      <a href="#build" class="nav-link">11. Build & Deploy</a>
+      <a href="#tests" class="nav-link">12. Tests</a>
+      <a href="#patterns" class="nav-link">13. Patterns</a>
+      <a href="#stats" class="nav-link">14. Statistiques</a>
+    </nav>
+  </aside>
+
+  <!-- ══ MAIN ══ -->
+  <main class="main">
+
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero-eyebrow">Documentation Technique Complète</div>
+      <div class="hero-title">RYTIGER RPG</div>
+      <div class="hero-sub">Les Chroniques des Oubliés</div>
+      <div class="hero-divider"></div>
+      <p class="hero-desc">
+        Architecture complète du projet — moteurs de jeu, systèmes de données, composants d'interface,
+        utilitaires, design system, déploiement et tests. Version 2.0, Mai 2026.
+      </p>
+      <div class="hero-meta">
+        <span class="badge"><span class="dot"></span>Version 2.0.0</span>
+        <span class="badge"><span class="dot"></span>Vanilla JS — Zero Framework</span>
+        <span class="badge blue"><span class="dot"></span>Vite 5 · Electron 41</span>
+        <span class="badge green"><span class="dot"></span>PWA · Desktop · Cloud Save</span>
+      </div>
+    </header>
+
+    <!-- STAT CARDS -->
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="val">37</div>
+        <div class="lbl">Héros uniques</div>
+      </div>
+      <div class="stat-card">
+        <div class="val">200</div>
+        <div class="lbl">Niveaux campagne</div>
+      </div>
+      <div class="stat-card">
+        <div class="val">480+</div>
+        <div class="lbl">Équipements</div>
+      </div>
+      <div class="stat-card">
+        <div class="val">~21k</div>
+        <div class="lbl">Lignes de code</div>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════
+         1. VUE D'ENSEMBLE
+    ═══════════════════════════════════════════════ -->
+    <section id="overview" class="section">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2 class="section-title">Vue d'ensemble du projet</h2>
+      </div>
+
+      <p>
+        <strong style="color:var(--cream)">Rytiger RPG</strong> (Les Chroniques des Oubliés) est un jeu de rôle dark fantasy
+        développé intégralement en <strong style="color:var(--cream)">Vanilla JavaScript</strong> sans aucun framework d'interface.
+        Le projet utilise <strong style="color:var(--cream)">Vite 5</strong> comme outil de build moderne et
+        <strong style="color:var(--cream)">Electron 41</strong> pour empaqueter une version desktop Windows native.
+        L'esthétique s'inspire de Dark Souls et Elden Ring : palette sombre,
+        typographie pixel art (Press Start 2P, VT323), coins nets et ombres dures façon Minecraft.
+      </p>
+      <p>
+        Le jeu est distribué sous trois formes : une application web déployée sur GitHub Pages (PWA installable offline),
+        un exécutable portable Windows via Electron, et un installateur Windows via electron-builder.
+        Une sauvegarde cloud optionnelle s'appuie sur l'API REST Supabase (sans SDK — <code>fetch</code> natif uniquement).
+      </p>
+
+      <div class="sub-title-2">Caractéristiques principales</div>
+      <ul class="list">
+        <li>37 héros uniques avec 4 classes (Guerrier, Mage, Arche, Assassin) et 6 niveaux de rareté</li>
+        <li>200 niveaux de campagne sur 10 zones organisées en 3 tiers de difficulté</li>
+        <li>Combat ATB (Active Time Battle) 4v4 — jauges de progression basées sur la vitesse SPD</li>
+        <li>Système de Break élémentaire : faiblesses, stagger, +50 % vulnérabilité</li>
+        <li>Dual gacha : portail héros + portail équipements avec garantie Épique au ×10</li>
+        <li>Forge de héros : fusion 2 héros → demi-dieu avec stats combinées</li>
+        <li>480+ équipements sur 4 emplacements (Arme, Armure, Accessoire, Amulette)</li>
+        <li>32 succès, missions journalières/hebdomadaires, connexion quotidienne avec streak</li>
+        <li>5 modes additionnels : Donjon (5 étages), Horde, Raid, Tour de combat, VS PvP IA</li>
+        <li>Persistance duale : IndexedDB primaire + localStorage fallback + cloud Supabase</li>
+        <li>PWA offline, Service Worker, Gamepad API, haptics mobile, i18n FR/EN</li>
+      </ul>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+         2. STACK TECHNIQUE
+    ═══════════════════════════════════════════════ -->
+    <section id="stack" class="section">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2 class="section-title">Stack technique & dépendances</h2>
+      </div>
+
+      <div class="subsection">
+        <div class="sub-title">Dépendances de développement</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Outil</th><th>Version</th><th>Rôle</th></tr></thead>
+            <tbody>
+              <tr><td>Vite</td><td class="td-mono">5.4.0</td><td>Build system, dev server HMR sur port 3000, code splitting manuel</td></tr>
+              <tr><td>Vitest</td><td class="td-mono">4.1.5</td><td>Framework de tests unitaires (18 tests, environnement Node.js)</td></tr>
+              <tr><td>Electron</td><td class="td-mono">41.0.4</td><td>Framework desktop cross-platform (wrapper Chromium)</td></tr>
+              <tr><td>electron-builder</td><td class="td-mono">26.8.1</td><td>Création d'installateur Windows setup.exe</td></tr>
+              <tr><td>electron-packager</td><td class="td-mono">17.1.2</td><td>Packaging exécutable Windows portable</td></tr>
+              <tr><td>sharp</td><td class="td-mono">0.34.5</td><td>Traitement d'images haute performance (génération sprites)</td></tr>
+              <tr><td>png-to-ico</td><td class="td-mono">3.0.1</td><td>Conversion PNG → icône Windows .ico</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="sub-title">Dépendances runtime</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Package</th><th>Version</th><th>Utilisation</th></tr></thead>
+            <tbody>
+              <tr><td>jimp</td><td class="td-mono">1.6.1</td><td>Génération et manipulation de pixel art pour les sprites de personnages</td></tr>
+              <tr><td>@imgly/background-removal-node</td><td class="td-mono">1.4.5</td><td>Suppression automatique d'arrière-plan sur les portraits</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="infobox green">
+        <p>⬡ Zero dépendances framework UI (React, Vue, Angular, Svelte) — JavaScript vanilla pur</p>
+        <p>⬡ Zero dépendances SDK Supabase — communication REST via <code>fetch()</code> natif uniquement</p>
+        <p>⬡ Cible de build : Chrome 120+ (Chromium d'Electron 41, supporte ESNext complet)</p>
+      </div>
+
+      <div class="subsection">
+        <div class="sub-title">Configuration Vite</div>
+        <ul class="list">
+          <li><strong>Target</strong> : <code>chrome120</code> — active toutes les features ESNext modernes</li>
+          <li><strong>Output</strong> : <code>dist/</code> pour le web, <code>docs/</code> pour GitHub Pages</li>
+          <li><strong>Code splitting</strong> : 3 chunks manuels — <code>game-engine</code>, <code>game-data</code>, <code>app UI</code></li>
+          <li><strong>Minification</strong> : esbuild (~×3 plus rapide que Terser)</li>
+          <li><strong>Assets &lt; 8 Ko</strong> : inlinés automatiquement en base64</li>
+          <li><strong>Seuil d'avertissement</strong> : 500 Ko par chunk</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+         3. STRUCTURE DU PROJET
+    ═══════════════════════════════════════════════ -->
+    <section id="structure" class="section">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-title">Structure du projet</h2>
+      </div>
+
+      <pre><code><span class="nm">rytiger_rpg/</span>
+├── <span class="st">package.json</span>               <span class="cm">— Configuration npm v2.0.0, type: "module" (ESM)</span>
+├── <span class="st">vite.config.js</span>             <span class="cm">— Build Vite : target chrome120, manual chunks</span>
+├── <span class="st">index.html</span>                 <span class="cm">— Entrée PWA, viewport 1920×1080, Google Fonts</span>
+├── <span class="st">.env.example</span>               <span class="cm">— Variables Supabase pour la sauvegarde cloud</span>
+│
+├── <span class="nb">src/</span>
+│   ├── <span class="st">main.js</span>                <span class="cm">— Point d'entrée (187 lignes) — routes, init, PWA</span>
+│   ├── <span class="nb">engine/</span>                <span class="cm">— Moteurs de jeu (GameState, Combat, ATB, Gacha)</span>
+│   │   ├── GameState.js           <span class="cm">~800 lignes — état global, persistance</span>
+│   │   ├── CombatEngine.js        <span class="cm">~600 lignes — combat tour par tour 4v4</span>
+│   │   ├── ATBCombatEngine.js     <span class="cm">~1000 lignes — Active Time Battle</span>
+│   │   ├── MMORPGCombatEngine.js  <span class="cm">— Variante mécanique raid</span>
+│   │   ├── GachaSystem.js         <span class="cm">~200 lignes — dual gacha héros + items</span>
+│   │   └── ATBCombatEngine.test.js<span class="cm">— 18 tests Vitest</span>
+│   ├── <span class="nb">data/</span>                  <span class="cm">— Données statiques du jeu</span>
+│   │   ├── characters.js          <span class="cm">~1000 lignes — 37 héros, 40+ compétences</span>
+│   │   ├── items.js               <span class="cm">~800 lignes  — 480+ équipements</span>
+│   │   ├── zones.js               <span class="cm">~1200 lignes — 10 zones × 20 niveaux</span>
+│   │   └── DungeonData.js         <span class="cm">~500 lignes  — donjon 5 étages, boss Samaël</span>
+│   ├── <span class="nb">screens/</span>               <span class="cm">— 19 composants d'écran SPA</span>
+│   ├── <span class="nb">utils/</span>                 <span class="cm">— Router, Audio, IDB, CloudSave, Sprites, Input...</span>
+│   └── <span class="nb">styles/</span>                <span class="cm">— Design system CSS (index.css, thèmes, mobile)</span>
+│
+├── <span class="nb">electron/</span>
+│   └── <span class="st">main.cjs</span>               <span class="cm">— Processus principal Electron (66 lignes)</span>
+├── <span class="nb">public/</span>                    <span class="cm">— Assets statiques (icon.png, manifest.json, favicons)</span>
+├── <span class="nb">scripts/</span>                   <span class="cm">— Scripts de build (build-docs.js, génération sprites)</span>
+├── <span class="nb">song/</span>                      <span class="cm">— 2 pistes BGM MP3 (Break_the_Iron_Sky, Shatter_the_Sky)</span>
+└── <span class="nb">docs/</span>                      <span class="cm">— Output GitHub Pages (npm run deploy)</span></code></pre>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+         4. POINT D'ENTRÉE
+    ═══════════════════════════════════════════════ -->
+    <section id="entree" class="section">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2 class="section-title">Point d'entrée & configuration</h2>
+      </div>
+
+      <div class="subsection">
+        <div class="sub-title">src/main.js (187 lignes)</div>
+        <p>Module de démarrage de l'application — <em>side effects uniquement</em>, aucun export. Il orchestre l'initialisation complète au chargement de la page.</p>
+
+        <div class="sub-title-2">Séquence d'initialisation</div>
+        <ul class="list">
+          <li>Imports CSS : <code>index.css</code>, <code>mobile.css</code>, <code>theme-light.css</code>, <code>theme-celestial.css</code>, <code>theme-archive.css</code></li>
+          <li>Détection mobile (width ≤ 768px ou touch support) — active la navigation inférieure</li>
+          <li>Enregistrement de <strong style="color:var(--cream)">18 routes</strong> via <code>router.on()</code> : home, campaign, combat, team, invocation, inventory, dashboard, settings, forge, horde, raid, vs, tower, achievements, combat-history, tutorial, dungeon, profile</li>
+          <li>Affichage d'un écran de chargement animé (2 secondes, barre de progression, thème Nether)</li>
+          <li>Pré-chargement asynchrone des sprites via <code>preloadImages()</code> en arrière-plan</li>
+          <li>Enregistrement du Service Worker PWA avec détection des mises à jour disponibles</li>
+          <li>Déverrouillage audio au premier événement utilisateur (conformité iOS autoplay policy)</li>
+          <li>Feedback haptique (Vibration API) à chaque changement de route</li>
+          <li>Raccourci clavier global : touche Échap → retour à l'accueil</li>
+          <li>Migration sprites V1 pixel art → V2 (flag en localStorage)</li>
+        </ul>
+      </div>
+
+      <div class="subsection">
+        <div class="sub-title">index.html — Entrée PWA</div>
+        <div class="col2">
+          <div class="card">
+            <div class="card-title">Viewport & PWA</div>
+            <p>Viewport 1920×1080, <code>manifest.json</code>, Apple touch icon, status bar iOS styling</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Polices</div>
+            <p>Press Start 2P, VT323 (pixel art) + Cinzel Decorative, Rajdhani, Crimson Text, Oswald</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Point de montage</div>
+            <p><code>&lt;div id="app"&gt;&lt;/div&gt;</code> — unique, toute l'UI y est injectée</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Script</div>
+            <p><code>/src/main.js</code> en <code>type="module"</code> (ESM natif)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+         5. MOTEUR DE JEU
+    ═══════════════════════════════════════════════ -->
+    <section id="engine" class="section">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2 class="section-title">Moteur de jeu (src/engine/)</h2>
+      </div>
+
+      <!-- 5.1 GameState -->
+      <div id="gamestate" class="subsection">
+        <div class="sub-title">5.1 GameState.js — État global (~800 lignes)</div>
+        <p>Singleton centralisant l'intégralité des données persistantes du joueur. <em>Source unique de vérité</em> (single source of truth) pour la progression, l'équipe, l'inventaire et toutes les statistiques.</p>
+
+        <div class="sub-title-2">Structure de la sauvegarde (schéma v6)</div>
+        <pre><code>{
+  version: 6,                   <span class="cm">// Numéro de migration du schéma</span>
+  playerLevel: <span class="kw">number</span>,
+  archireve: <span class="kw">number</span>,            <span class="cm">// Monnaie premium (Archirêves)</span>
+  team: [4 charIds],            <span class="cm">// IDs des 4 héros de l'équipe active</span>
+  ownedCharacters: [{ id, level, xp, stats }],
+  fusedCharacters: [{ id, name, type, rarity, stats }],
+  inventory: [{ instanceId, itemId }],
+  equipped: { charId: { weapon, armor, accessory, amulet } },
+  campaignProgress: { [zoneId]: { [levelIndex]: flames } },
+  dungeonProgress: { <span class="nm">1-5</span>: { clears, bestTime } },
+  dailyMissions: { date, missions[] },
+  weeklyMissions: { week, missions[] },
+  achievements: { achievementId: timestamp },
+  combatHistory: [<span class="cm">20 derniers combats</span>],
+  tower: { currentFloor, bestFloor, inRun, activeBuffs },
+  dailyLogin: { lastClaimDate, streak, totalDays },
+  freePulls: <span class="kw">number</span>,
+  hordeHighScore: <span class="kw">number</span>,
+  berserkClears: { <span class="st">'zoneId_levelIndex'</span>: <span class="kw">true</span> },
+  tutorialDone: <span class="kw">boolean</span>
+}</code></pre>
+
+        <div class="sub-title-2">Méthodes clés</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Méthode</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>init()</code></td><td>Charge depuis IndexedDB avec fallback localStorage automatique</td></tr>
+              <tr><td><code>save()</code></td><td>Écriture duale IDB + localStorage à chaque modification significative</td></tr>
+              <tr><td><code>getTeamInstances()</code></td><td>Résout les 4 IDs d'équipe en objets personnage complets avec stats calculées</td></tr>
+              <tr><td><code>addCharacter(charId)</code></td><td>Ajoute un héros ou convertit un doublon en XP pour le héros existant</td></tr>
+              <tr><td><code>addItem(itemId)</code></td><td>Crée une instance d'inventaire avec <code>instanceId</code> unique (timestamp + random)</td></tr>
+              <tr><td><code>getLevelFlames(zoneId, levelIndex)</code></td><td>Score étoiles (1–3 flammes) d'un niveau spécifique</td></tr>
+              <tr><td><code>xpForLevel(level)</code></td><td>Formule de seuil XP par niveau</td></tr>
+              <tr><td><code>xpToGain({zone, level, win, firstClear})</code></td><td>Calcule la récompense XP d'un combat</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="infobox">
+          <p><strong style="color:var(--gold)">Persistance duale</strong> — Chaque <code>save()</code> écrit simultanément dans IndexedDB
+          (base "rytiger_db" v1, store "kv", ~250 Mo) et localStorage (~5 Mo fallback).
+          Au chargement, <code>init()</code> lit en priorité depuis IDB et tombe en fallback si la lecture échoue.
+          Aucune donnée n'est perdue même en navigation privée Safari où IDB est restreint.</p>
+        </div>
+      </div>
+
+      <!-- 5.2 CombatEngine -->
+      <div id="combat" class="subsection">
+        <div class="sub-title">5.2 CombatEngine.js — Combat tour par tour (~600 lignes)</div>
+        <p>Moteur 4v4 en tours. Classe pure sans accès DOM — communique avec l'UI via des callbacks (<code>onUpdate</code>, <code>onLog</code>). Entièrement testable dans Node.js.</p>
+
+        <pre><code><span class="cm">// Structure d'une unité de combat</span>
+{
+  id, name, type, rarity, alive: <span class="kw">true</span>,
+  stats: { hp, maxHp, atk, def, spd, magAtk, magDef },
+  skills: [skillId1, skillId2, skillId3, skillId4],
+  buffs:   [{ stat, boost, turns }],   <span class="cm">// ex: { stat: 'atk', boost: 0.3, turns: 2 }</span>
+  debuffs: [{ type, damage, turns }],  <span class="cm">// ex: { type: 'poison', damage: 15, turns: 3 }</span>
+  x, y                                 <span class="cm">// Position sur la grille de combat</span>
+}</code></pre>
+
+        <div class="sub-title-2">Mécaniques de combat</div>
+        <div class="col2">
+          <div class="card">
+            <div class="card-title">Calcul des dégâts</div>
+            <p>Physique : <code>max(1, ATK − DEF) × puissance</code></p>
+            <p>Magique : <code>max(1, magAtk − magDef) × puissance</code></p>
+            <p>Critique : <code>×1.5</code> selon stat CRIT</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Système de Break</div>
+            <p>Frappe de faiblesse élémentaire → jauge de rupture++</p>
+            <p>Jauge pleine → <strong>Stagger</strong> → +50 % vulnérabilité N tours</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Effets de statut</div>
+            <p>Poison, Brûlure : dégâts fixes par tour</p>
+            <p>Garde : −50 % dégâts reçus (action défensive)</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Forge Gauge</div>
+            <p>Jauge combo d'équipe commune</p>
+            <p>Effets spéciaux déclenchés au maximum</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5.3 ATBCombatEngine -->
+      <div id="atb" class="subsection">
+        <div class="sub-title">5.3 ATBCombatEngine.js — Active Time Battle (~1000 lignes)</div>
+        <p>Implémentation principale du combat. Les unités agissent selon une jauge ATB qui se remplit progressivement en fonction de leur vitesse (SPD), simulant un temps semi-réel.</p>
+
+        <pre><code><span class="cm">// Chaque frame de mise à jour :</span>
+fillRate = unit.stats.spd / <span class="nm">100</span>          <span class="cm">// SPD 90 → remplit 0.9 par unité de temps</span>
+unit.atbGauge += fillRate * deltaTime
+
+<span class="cm">// Quand la jauge atteint 100 :</span>
+unit.atbGauge = <span class="nm">0</span>
+unit.canAct = <span class="kw">true</span>                      <span class="cm">// L'unité est prête à agir</span>
+
+<span class="cm">// Après l'action, temps de récupération selon la compétence :</span>
+unit.atbGauge = -skill.recovery              <span class="cm">// ex: -30 pour une attaque lourde</span></code></pre>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Type</th><th>Stat offensive</th><th>Stat défensive</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>physical</td><td>ATK</td><td>DEF</td><td>Attaque physique standard</td></tr>
+              <tr><td>magical</td><td>magAtk</td><td>magDef</td><td>Attaque magique élémentaire</td></tr>
+              <tr><td>heal</td><td>—</td><td>—</td><td>Restaure des HP à une cible alliée</td></tr>
+              <tr><td>buff</td><td>—</td><td>—</td><td>Augmente une stat alliée pour N tours</td></tr>
+              <tr><td>debuff</td><td>—</td><td>—</td><td>Réduit une stat ennemie pour N tours</td></tr>
+              <tr><td>special</td><td>Variable</td><td>Variable</td><td>Mécaniques uniques (clones, domaines, absorptions)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 5.4 GachaSystem -->
+      <div id="gacha" class="subsection">
+        <div class="sub-title">5.4 GachaSystem.js — Système de tirage (~200 lignes)</div>
+        <p>Double gacha héros + équipements. Même structure de probabilités et de coûts pour les deux portails.</p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Rareté</th><th>Probabilité</th><th>Coût simple</th><th>Coût ×10</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><span class="r-rare">Rare (3★)</span></td>
+                <td>60 %</td><td>100 Archirêves</td><td rowspan="4" style="vertical-align:middle">1 000 Archirêves<br><small>(Épique garanti au 10ème)</small></td>
+              </tr>
+              <tr><td><span class="r-epic">Épique (4★)</span></td><td>30 %</td><td>—</td></tr>
+              <tr><td><span class="r-leg">Légendaire (5★)</span></td><td>9 %</td><td>—</td></tr>
+              <tr><td><span class="r-ult">Ultimate (6★)</span></td><td>1 %</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="list">
+          <li>Doublons héros : convertis automatiquement en XP de niveau pour le héros existant</li>
+          <li>Pity doux : après 90 tirages sans Légendaire, les taux Épique/Légendaire augmentent</li>
+          <li>Retour : <code>{ success, results: [{ type, rarity, character|item, isNew, levelUp }] }</code></li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+         6. DONNÉES DU JEU
+    ═══════════════════════════════════════════════ -->
+    <section id="data" class="section">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2 class="section-title">Données du jeu (src/data/)</h2>
+      </div>
+
+      <!-- 6.1 characters -->
+      <div id="characters" class="subsection">
+        <div class="sub-title">6.1 characters.js — 37 héros & 40+ compétences (~1000 lignes)</div>
+
+        <div class="sub-title-2">Système de rarités</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Rareté</th><th>Étoiles</th><th>Multiplicateur stats</th><th>Accentuation</th></tr></thead>
+            <tbody>
+              <tr><td><span class="r-rare">Rare</span></td><td>3★</td><td>×1.0 (base)</td><td style="color:var(--rare)">#3B82F6 — Bleu</td></tr>
+              <tr><td><span class="r-epic">Épique</span></td><td>4★</td><td>×1.3</td><td style="color:var(--epique)">#9333EA — Violet</td></tr>
+              <tr><td><span class="r-leg">Légendaire</span></td><td>5★</td><td>×1.7</td><td style="color:var(--legendaire)">#C89B3C — Or</td></tr>
+              <tr><td><span class="r-ult">Ultimate</span></td><td>6★</td><td>×2.2</td><td style="color:var(--ultimate)">#F5F0E8 — Blanc</td></tr>
+              <tr><td>Semi-Ultimate</td><td>7★</td><td>×3.4</td><td style="color:var(--text-dim)">Couleur spéciale</td></tr>
+              <tr><td>Suprême Divin</td><td>8★</td><td>×22.0</td><td style="color:var(--gold)">Unique (forge avancée)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-title-2">Classes & stats de base</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Classe</th><th>HP</th><th>ATK</th><th>DEF</th><th>SPD</th><th>magAtk</th><th>magDef</th><th>Rôle</th></tr></thead>
+            <tbody>
+              <tr><td><span class="cls cls-g">Guerrier</span></td><td>350</td><td>70</td><td>90</td><td>40</td><td>30</td><td>60</td><td>Tank résistant</td></tr>
+              <tr><td><span class="cls cls-m">Mage</span></td><td>220</td><td>35</td><td>45</td><td>55</td><td>95</td><td>75</td><td>DPS magique burst</td></tr>
+              <tr><td><span class="cls cls-a">Arche</span></td><td>260</td><td>85</td><td>50</td><td>65</td><td>40</td><td>50</td><td>DPS physique équilibré</td></tr>
+              <tr><td><span class="cls cls-s">Assassin</span></td><td>240</td><td>80</td><td>40</td><td>90</td><td>45</td><td>40</td><td>Finisseur — vitesse max</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-title-2">Roster complet (37 héros)</div>
+        <div class="col2">
+          <div>
+            <ul class="list">
+              <li><strong style="color:var(--cream)">Starters Légendaires :</strong> Kael <span class="cls cls-g">Guerrier</span>, Lyra <span class="cls cls-m">Mage</span>, Zephyr <span class="cls cls-s">Assassin</span></li>
+              <li><strong style="color:var(--guerrier)">Guerriers :</strong> Gorak, Theron, Berga, Valkyr, Darius, Ragnar, Titan</li>
+              <li><strong style="color:var(--mage)">Mages :</strong> Elya, Nori, Zalia, Morgath, Seraphine, Archimède, Voidmancer</li>
+            </ul>
+          </div>
+          <div>
+            <ul class="list">
+              <li><strong style="color:var(--arche)">Archés :</strong> Sylva, Bolt, Iris, Artémis, Hawk, Oracle, Célestia</li>
+              <li><strong style="color:var(--assassin)">Assassins :</strong> Shadow, Viper, Raven, Phantom, Nyx, Void Blade, Reaper</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="sub-title-2">Structure d'une compétence</div>
+        <pre><code>{
+  id, name,
+  type: <span class="st">'physical'</span> | <span class="st">'magical'</span> | <span class="st">'heal'</span> | <span class="st">'buff'</span> | <span class="st">'debuff'</span> | <span class="st">'special'</span>,
+  power: <span class="kw">number</span>,       <span class="cm">// Multiplicateur de dégâts (ex: 1.8 = 180%)</span>
+  accuracy: <span class="nm">0-100</span>,     <span class="cm">// Chance de toucher en %</span>
+  speed: <span class="st">'fast'</span> | <span class="st">'medium'</span> | <span class="st">'heavy'</span>,
+  recovery: <span class="kw">number</span>,     <span class="cm">// Temps de récupération ATB en ms</span>
+  element: <span class="st">'Feu'</span> | <span class="st">'Glace'</span> | <span class="st">'Foudre'</span> | <span class="st">'Nature'</span> | <span class="st">'Ténèbres'</span> | <span class="st">'Physique'</span>,
+  critBonus: <span class="kw">number</span>,    <span class="cm">// Bonus critique (ex: 0.15 = +15%)</span>
+  aoe: <span class="kw">boolean</span>,         <span class="cm">// true = cible toute l'équipe adverse</span>
+  effect: { stat, boost, turns, type, damage }
+}</code></pre>
+      </div>
+
+      <!-- 6.2 items -->
+      <div id="items" class="subsection">
+        <div class="sub-title">6.2 items.js — 480+ équipements (~800 lignes)</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Rareté</th><th>Multiplicateur</th><th>Couleur</th><th>Exemples</th></tr></thead>
+            <tbody>
+              <tr><td><span class="r-rare">Rare</span></td><td>×1.0</td><td>#3B82F6 Bleu</td><td>Épée de Fer, Bâton Arcanique, Arc Sylvestre, Dague</td></tr>
+              <tr><td><span class="r-epic">Épique</span></td><td>×1.6</td><td>#9333EA Violet</td><td>Claymore Violette, Grimoire Ancien, Longbow de Précision</td></tr>
+              <tr><td><span class="r-leg">Légendaire</span></td><td>×2.5</td><td>#C89B3C Or</td><td>Hache Brutale Légendaire, Orbe du Néant, Katar Tranchant</td></tr>
+              <tr><td><span class="r-ult">Ultimate</span></td><td>×4.0</td><td>#F5F0E8 Blanc</td><td>Claymore du Néant, Sceptre Primordial, Lame Fantôme Ultimate</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="list">
+          <li>4 emplacements : Arme ⚔️ (ATK/magAtk), Armure 🛡️ (DEF/magDef), Accessoire 💍 (SPD/HP), Amulette 📿 (stats mixtes)</li>
+          <li>4 classes × 4 emplacements × 4 rarités = 64 templates × ~7–8 variants = 480+ items uniques</li>
+          <li>Chaque item possède un <code>instanceId</code> unique pour le tracking dans l'inventaire</li>
+        </ul>
+      </div>
+
+      <!-- 6.3 zones -->
+      <div id="zones" class="subsection">
+        <div class="sub-title">6.3 zones.js — 10 zones de campagne (~1200 lignes)</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Zone</th><th>Tier</th><th>Thème</th><th>Boss principal</th></tr></thead>
+            <tbody>
+              <tr><td>Terre de l'Enchantement</td><td>1</td><td>Fées, Golems magiques</td><td>Roi des Fées</td></tr>
+              <tr><td>Désert d'Osiris</td><td>1</td><td>Momies, Scarabées sacrés</td><td>Osiris le Pharaon</td></tr>
+              <tr><td>Marécage du Supplice</td><td>1</td><td>Hydres, Créatures venimeuses</td><td>Reine Hydra</td></tr>
+              <tr><td>Forêt de Maragorh</td><td>1</td><td>Trents, Bêtes anciennes</td><td>Ancien Gardien Sylvestre</td></tr>
+              <tr><td>Royaume d'Imotep</td><td>1</td><td>Magie sombre, Feu</td><td>Imotep le Maudit</td></tr>
+              <tr><td>Abysses Éternelles</td><td>2</td><td>Démons, Créatures abyssales</td><td>Seigneur des Abysses</td></tr>
+              <tr><td>Citadelle Céleste</td><td>2</td><td>Anges déchus, Paladins</td><td>Archange Corrompu</td></tr>
+              <tr><td>Terre Désolée</td><td>2</td><td>Golems, Liche, Mort-vivants</td><td>Liche Éternelle</td></tr>
+              <tr><td>Nexus Originel</td><td>3</td><td>Êtres primordiaux, Fragments</td><td>Gardien du Nexus</td></tr>
+              <tr><td>Préludes des Dieux</td><td>3</td><td>Divinités, Avatars divins</td><td>Avatar du Dieu Primordial</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="list">
+          <li><strong>Flammes :</strong> 1 à 3 par niveau selon la performance (équivalent système d'étoiles)</li>
+          <li>Bonus premier clear : ×2.0 XP — encourage l'exploration</li>
+          <li>Clears suivants : −30 % XP — farming réduit mais toujours rentable</li>
+          <li>Mode Berserk : débloqué après 3 flammes — ennemis plus forts, récompenses supérieures</li>
+        </ul>
+      </div>
+
+      <!-- 6.4 Dungeon -->
+      <div id="dungeon" class="subsection">
+        <div class="sub-title">6.4 DungeonData.js — L'Épreuve de Samaël (~500 lignes)</div>
+        <p>Donjon linéaire de 5 étages avec boss à mécaniques exclusives. Chaque étage se déverrouille séquentiellement.</p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Étage</th><th>Boss</th><th>Classe</th><th>Mécanique spéciale</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Le Gardien du Seuil</td><td><span class="cls cls-g">Guerrier</span></td><td>Régénération de bouclier (50 HP/tour)</td></tr>
+              <tr><td>2</td><td>L'Oracle Déchu</td><td><span class="cls cls-m">Mage</span></td><td>Invocation de clones spectraux (ATB accélérée)</td></tr>
+              <tr><td>3</td><td>Hydre des Ténèbres</td><td><span class="cls cls-g">Guerrier</span></td><td>Multi-attaque ×3 + enrage &lt; 30 % HP</td></tr>
+              <tr><td>4</td><td>Archange Corrompu</td><td>Hybride</td><td>Phases d'invisibilité (immunité 2 tours)</td></tr>
+              <tr><td style="color:var(--gold)">5 — Final</td><td style="color:var(--gold)">SAMAËL</td><td><span class="r-ult">Ultimate ×22</span></td><td>3 phases évolutives</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="phase-grid">
+          <div class="phase-card">
+            <div class="ph-label">Phase 1</div>
+            <div class="ph-range">100 % → 66 % HP</div>
+            <div class="ph-desc">Attaques de base + vagues de ténèbres AOE (toute l'équipe)</div>
+          </div>
+          <div class="phase-card" style="border-color:var(--gold-dim)">
+            <div class="ph-label">Phase 2</div>
+            <div class="ph-range">66 % → 33 % HP</div>
+            <div class="ph-desc">Champ de domaine actif (aura dégâts/tour) + Absorption d'âmes (soin proportionnel)</div>
+          </div>
+          <div class="phase-card" style="border-color:var(--red)">
+            <div class="ph-label">Phase 3</div>
+            <div class="ph-range">&lt; 33 % HP</div>
+            <div class="ph-desc">Armageddon (AOE massif critique garanti) + Malédiction Finale (−50 % toutes stats)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+         7. ÉCRANS
+    ═══════════════════════════════════════════════ -->
+    <section id="screens" class="section">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <h2 class="section-title">Composants écrans — 19 fichiers</h2>
+      </div>
+
+      <p>Chaque écran exporte une fonction <code>renderXxxScreen(container, params)</code> qui remplace intégralement le contenu du container DOM. Les screens lisent depuis <code>gameState</code> (singleton) et ne gèrent aucun état propre. La navigation est gérée exclusivement par le Router.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Fichier</th><th>Lignes</th><th>Description fonctionnelle</th></tr></thead>
+          <tbody>
+            <tr><td>HomeScreen.js</td><td>600+</td><td>Menu principal, progression résumée, streak connexion, puissance équipe</td></tr>
+            <tr><td>CampaignScreen.js</td><td>700+</td><td>Sélecteur zone/niveau par tier, compteur flammes, indicateurs boss</td></tr>
+            <tr><td>CombatScreen.js</td><td>1200+</td><td>IU combat ATB 4v4 : jauges, grille positionnement, compétences, log de combat</td></tr>
+            <tr><td>TeamScreen.js</td><td>800+</td><td>Formation équipe, collection héros, filtres classe/rareté, tri, calcul synergie</td></tr>
+            <tr><td>InvocationScreen.js</td><td>1000+</td><td>Dual gacha animé, portail héros + portail items, compteur pity, historique</td></tr>
+            <tr><td>InventoryScreen.js</td><td>600+</td><td>Gestion équipement par personnage, inspection stats, filtre rareté</td></tr>
+            <tr><td>ForgeScreen.js</td><td>800+</td><td>Fusion 2 héros → demi-dieu, sélection, aperçu stats combinées</td></tr>
+            <tr><td>ProfileScreen.js</td><td>500+</td><td>Profil joueur, niveau, succès débloqués, statistiques globales</td></tr>
+            <tr><td>DashboardScreen.js</td><td>700+</td><td>Tableau de bord analytique, graphiques, taux victoire, dégâts/zone</td></tr>
+            <tr><td>SettingsScreen.js</td><td>500+</td><td>Thèmes, volumes BGM/SFX, langue FR/EN, raccourcis clavier, infos app</td></tr>
+            <tr><td>DungeonScreen.js</td><td>600+</td><td>Entrée donjon, sélection étage, historique clears, meilleurs temps</td></tr>
+            <tr><td>DungeonCinematic.js</td><td>400+</td><td>Textes cinématiques narratifs par étage, dialogues boss</td></tr>
+            <tr><td>HordeScreen.js</td><td>700+</td><td>Mode survie vagues infinies, compteur, meilleur score global</td></tr>
+            <tr><td>RaidScreen.js</td><td>800+</td><td>Mode raid boss, mécaniques spéciales, bonus synergie équipe</td></tr>
+            <tr><td>CombatHistoryScreen.js</td><td>500+</td><td>20 derniers combats : filtres zone, dégâts, victoires/défaites, durée</td></tr>
+            <tr><td>TowerScreen.js</td><td>700+</td><td>Tour ascendante, buffs/debuffs croissants, difficulté escalade</td></tr>
+            <tr><td>VSScreen.js</td><td>600+</td><td>Combats VS IA, sélection adversaire, comparaison équipes</td></tr>
+            <tr><td>AchievementsScreen.js</td><td>600+</td><td>32 succès, conditions déblocage, barres progression, récompenses</td></tr>
+            <tr><td>TutorialScreen.js</td><td>500+</td><td>Onboarding interactif, étapes guidées mécaniques, option de passage</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+         8. UTILITAIRES
+    ═══════════════════════════════════════════════ -->
+    <section id="utils" class="section">
+      <div class="section-header">
+        <span class="section-num">08</span>
+        <h2 class="section-title">Utilitaires (src/utils/)</h2>
+      </div>
+
+      <div class="subsection">
+        <div class="sub-title">8.1 Router.js — Navigation SPA (81 lignes)</div>
+        <p>Routeur SPA hash-based minimaliste, sans dépendances. Singleton partagé. Transitions fade-out 150ms / fade-in 250ms entre écrans.</p>
+        <pre><code>router.on(<span class="st">'/home'</span>, renderHomeScreen)          <span class="cm">// Enregistrement de route</span>
+router.navigate(<span class="st">'/combat?zone=1&amp;level=5'</span>)    <span class="cm">// Navigation avec paramètres</span>
+router.current                                <span class="cm">// Route active courante</span>
+router.start()                                <span class="cm">// Init (écoute hashchange + route initiale)</span></code></pre>
+      </div>
+
+      <div class="subsection">
+        <div class="sub-title">8.2 AudioManager.js (~150 lignes)</div>
+        <ul class="list">
+          <li>2 pistes BGM : <code>Break_the_Iron_Sky.mp3</code>, <code>Shatter_the_Sky.mp3</code></li>
+          <li>Démarrage aléatoire (après premier événement utilisateur — politique iOS autoplay)</li>
+          <li>Fondu enchaîné crossfade 2000ms entre pistes</li>
+          <li>Volume maître (0–1) et volume SFX indépendants, persistés en localStorage</li>
+          <li><code>toggleMute()</code> — coupure son sans perdre le niveau de volume</li>
+        </ul>
+      </div>
+
+      <div class="subsection">
+        <div class="sub-title">8.3 IDB.js — Abstraction IndexedDB (80 lignes)</div>
+        <p>Wrapper Promise autour d'IndexedDB avec fallback localStorage automatique.</p>
+        <pre><code><span class="kw">await</span> idbSet(<span class="st">'gameState'</span>, data)          <span class="cm">// Écriture async</span>
+<span class="kw">const</span> data = <span class="kw">await</span> idbGet(<span class="st">'gameState'</span>)  <span class="cm">// Lecture async</span>
+<span class="kw">await</span> idbDel(<span class="st">'gameState'</span>)               <span class="cm">// Suppression</span>
+<span class="kw">const</span> keys = <span class="kw">await</span> idbKeys()            <span class="cm">// Liste toutes les clés</span>
+
+<span class="cm">// Base : 'rytiger_db' v1 — Store : 'kv' (key-value générique)</span></code></pre>
+      </div>
+
+      <div class="subsection">
+        <div class="sub-title">8.4 CloudSave.js — Sauvegarde Supabase (~150 lignes)</div>
+        <p>API REST Supabase sans SDK. Auth via Magic Link (lien par email, sans mot de passe).</p>
+        <ul class="list">
+          <li><code>requestMagicLink(email)</code> — Envoie un lien de connexion par email</li>
+          <li><code>getSaveSlots()</code> — Liste les slots de sauvegarde cloud disponibles</li>
+          <li><code>uploadSave(gameState)</code> — Sérialise et uploade l'état complet (POST REST)</li>
+          <li><code>downloadSave(slotId)</code> — Télécharge et restaure une sauvegarde (GET REST)</li>
+          <li>Config : <code>VITE_SUPABASE_URL</code> et <code>VITE_SUPABASE_ANON_KEY</code> dans <code>.env</code></li>
+        </ul>
+      </div>
+
+      <div class="subsection">
+        <div class="sub-title">8.5 AssetUtils.js & SpriteAPI.js (~350 lignes)</div>
+        <ul class="list">
+          <li>Cache session mémoire : préfixe <code>sprite_cache_v5_local_</code> (sessionStorage)</li>
+          <li>Chargement lazy via <code>IntersectionObserver</code> — marge 200px de pré-chargement</li>
+          <li>Fallback par type de classe si le sprite individuel est absent</li>
+          <li>37 sprites uniques + 4 fallbacks par classe + boss/sbires</li>
+          <li>PNG 32×32 base, mise à l'échelle CSS (<code>image-rendering: pixelated</code>)</li>
+          <li><code>injectSpriteLazy(imgEl, type, charId)</code> — injection différée pour les listes</li>
+        </ul>
+      </div>
+
+      <div class="subsection">
+        <div class="sub-title">8.6 InputManager.js (~100 lignes)</div>
+        <div class="col2">
+          <ul class="list">
+            <li>Gamepad API W3C — Xbox/PlayStation, mapping standard</li>
+            <li>Bouton 0 = Confirmer, 1 = Annuler, 2 = Action X, 3 = Action Y</li>
+            <li>Boutons 12–15 = D-Pad (haut, bas, gauche, droite)</li>
+          </ul>
+          <ul class="list">
+            <li>Clavier : Flèches, Entrée, Échap</li>
+            <li>Anti-spam : cooldown 200ms entre deux actions</li>
+            <li>Mapping de boutons personnalisable</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Fichier</th><th>Rôle</th></tr></thead>
+          <tbody>
+            <tr><td>SpriteAnimator.js</td><td>Animation de spritesheet — avancement de frames pour les personnages</td></tr>
+            <tr><td>Haptics.js</td><td>Vibration API mobile : tap (50ms), success, defeat — fallback silencieux si non supporté</td></tr>
+            <tr><td>MobileNav.js</td><td>Navigation inférieure injectée sur mobile (hors écran combat)</td></tr>
+            <tr><td>NavBar.js</td><td>Barre de navigation supérieure</td></tr>
+            <tr><td>i18n.js</td><td>Internationalisation — FR (défaut) et EN, système de clés de traduction</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+         9. DESIGN SYSTEM
+    ═══════════════════════════════════════════════ -->
+    <section id="styles" class="section">
+      <div class="section-header">
+        <span class="section-num">09</span>
+        <h2 class="section-title">Design System & Styles</h2>
+      </div>
+
+      <p>Plus de <strong style="color:var(--cream)">200 variables CSS</strong> centralisées dans <code>index.css</code>. Esthétique Dark Souls / Elden Ring : palette sombre, pixel art, coins nets, ombres dures Minecraft.</p>
+
+      <div class="subsection">
+        <div class="sub-title">Palette de couleurs</div>
+        <pre><code><span class="cm">/* Arrière-plans */</span>
+--bg-primary:   <span class="nm">#0D0A08</span>;   <span class="cm">/* Noir brun "Nether" — fond principal */</span>
+--bg-secondary: <span class="nm">#161008</span>;   <span class="cm">/* Fond secondaire, panneaux */</span>
+--text-primary: <span class="nm">#E8DCC8</span>;   <span class="cm">/* Crème parchemin — texte principal */</span>
+
+<span class="cm">/* Rareté */</span>
+--rare:         <span class="nm">#3B82F6</span>;   --epique:      <span class="nm">#9333EA</span>;
+--legendaire:   <span class="nm">#C89B3C</span>;   --ultimate:    <span class="nm">#F5F0E8</span>;
+
+<span class="cm">/* Classes */</span>
+--guerrier:  <span class="nm">#E85D20</span>;      --mage:     <span class="nm">#7C3AED</span>;
+--arche:     <span class="nm">#4A7C59</span>;      --assassin: <span class="nm">#9D174D</span>;</code></pre>
+      </div>
+
+      <div class="subsection">
+        <div class="sub-title">Typographie & effets</div>
+        <div class="col2">
+          <ul class="list">
+            <li><code>--font-title</code> : Press Start 2P — titres pixel art</li>
+            <li><code>--font-ui</code> : VT323 — interface monospace rétro</li>
+            <li><code>--font-body</code> : VT323 — corps de texte cohérent</li>
+            <li><code>--font-stat</code> : VT323 — statistiques de combat</li>
+          </ul>
+          <ul class="list">
+            <li>Spacing : 4px → 8px → 16px → 24px → 32px → 48px → 64px</li>
+            <li>Ombres : style Minecraft (4px offset, dur, sans flou)</li>
+            <li>Transitions : 0s (désactivées — rendu immédiat rétro)</li>
+            <li>Border-radius : 0px (coins nets)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="sub-title">4 thèmes disponibles</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Thème</th><th>Fichier CSS</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>Dark (défaut)</td><td><code>index.css</code></td><td>Fond #0D0A08, texte crème — esthétique Nether principale</td></tr>
+              <tr><td>Light</td><td><code>theme-light.css</code></td><td>Fond clair, texte sombre — accessibilité lumière ambiante</td></tr>
+              <tr><td>Celestial</td><td><code>theme-celestial.css</code></td><td>Blues et argentés — ambiance céleste/divine</td></tr>
+              <tr><td>Archive</td><td><code>theme-archive.css</code></td><td>Tons sépia — ambiance manuscrit/archivé</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="sub-title">Responsive Mobile (mobile.css)</div>
+        <ul class="list">
+          <li>Breakpoint : ≤ 768px ou détection tactile (<code>window.ontouchstart</code>)</li>
+          <li>Disposition : scroll vertical, grilles CSS → 1 colonne</li>
+          <li>Boutons : minimum 48px de hauteur (recommandation WCAG tactile)</li>
+          <li>Support encoches iOS : <code>env(safe-area-inset-top/bottom)</code></li>
+          <li>Navigation inférieure injectée sur tous les écrans hors combat</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+         10. ELECTRON
+    ═══════════════════════════════════════════════ -->
+    <section id="electron" class="section">
+      <div class="section-header">
+        <span class="section-num">10</span>
+        <h2 class="section-title">Application Electron Desktop</h2>
+      </div>
+
+      <p>Electron 41 empaquette le jeu en exécutable Windows natif. La fenêtre principale charge <code>dist/index.html</code> (output Vite) avec des paramètres de sécurité stricts.</p>
+
+      <pre><code><span class="cm">// electron/main.cjs</span>
+mainWindow = <span class="kw">new</span> BrowserWindow({
+  width: <span class="nm">1920</span>, height: <span class="nm">1080</span>,
+  minWidth: <span class="nm">1280</span>, minHeight: <span class="nm">720</span>,
+  title: <span class="st">'Rytiger RPG'</span>,
+  autoHideMenuBar: <span class="kw">true</span>,
+  backgroundColor: <span class="st">'#0D0A08'</span>,  <span class="cm">// Évite le flash blanc au démarrage</span>
+  show: <span class="kw">false</span>,                   <span class="cm">// Affiché uniquement après 'ready-to-show'</span>
+  webPreferences: {
+    nodeIntegration: <span class="kw">false</span>,      <span class="cm">// Pas d'accès Node.js depuis le renderer</span>
+    contextIsolation: <span class="kw">true</span>,      <span class="cm">// Isolation totale du contexte JS</span>
+    devTools: <span class="kw">false</span>             <span class="cm">// DevTools désactivés en production</span>
+  }
+})</code></pre>
+
+      <div class="col2">
+        <div class="card">
+          <div class="card-title">Sécurité</div>
+          <p><code>nodeIntegration: false</code> — zéro accès Node depuis l'UI</p>
+          <p><code>contextIsolation: true</code> — isolation totale JS</p>
+          <p>DevTools désactivés en production (anti-triche)</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Instance unique</div>
+          <p><code>app.requestSingleInstanceLock()</code></p>
+          <p>Empêche plusieurs lancements simultanés</p>
+          <p>Aucun IPC défini — app single-window autonome</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+         11. BUILD & DÉPLOIEMENT
+    ═══════════════════════════════════════════════ -->
+    <section id="build" class="section">
+      <div class="section-header">
+        <span class="section-num">11</span>
+        <h2 class="section-title">Build, scripts & déploiement</h2>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Commande</th><th>Output</th><th>Usage</th></tr></thead>
+          <tbody>
+            <tr><td><code>npm run dev</code></td><td>localhost:3000</td><td>Développement local avec HMR Vite</td></tr>
+            <tr><td><code>npm run build</code></td><td>dist/</td><td>Build web optimisé (chunks + minification esbuild)</td></tr>
+            <tr><td><code>npm run deploy</code></td><td>docs/</td><td>GitHub Pages — allanvitu.github.io/Rytiger_RPG/</td></tr>
+            <tr><td><code>npm run electron:dev</code></td><td>Electron window</td><td>Build + launch Electron (développement)</td></tr>
+            <tr><td><code>npm run electron:pack</code></td><td>release/</td><td>Portable .exe Windows (electron-packager)</td></tr>
+            <tr><td><code>npm run electron:build</code></td><td>release/</td><td>Installateur Windows .exe (electron-builder)</td></tr>
+            <tr><td><code>npm test</code></td><td>Terminal</td><td>18 tests unitaires Vitest (Node, pas de DOM)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-title-2">Chunking Vite</div>
+      <div class="col3">
+        <div class="card">
+          <div class="card-title">game-engine</div>
+          <p>GameState.js<br>CombatEngine.js<br>GachaSystem.js</p>
+        </div>
+        <div class="card">
+          <div class="card-title">game-data</div>
+          <p>characters.js<br>zones.js<br>items.js</p>
+        </div>
+        <div class="card">
+          <div class="card-title">app</div>
+          <p>screens/<br>utils/<br>styles/ (chargé en premier)</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+         12. TESTS
+    ═══════════════════════════════════════════════ -->
+    <section id="tests" class="section">
+      <div class="section-header">
+        <span class="section-num">12</span>
+        <h2 class="section-title">Tests unitaires</h2>
+      </div>
+
+      <p>18 tests Vitest dans <code>src/engine/ATBCombatEngine.test.js</code>. Exécution dans Node.js sans DOM grâce à la séparation stricte logique/interface.</p>
+
+      <div class="col2">
+        <div>
+          <div class="sub-title-2">Couverture</div>
+          <ul class="list">
+            <li>Dégâts physiques : <code>max(1, ATK − DEF) × puissance</code></li>
+            <li>Dégâts magiques : <code>max(1, magAtk − magDef) × puissance</code></li>
+            <li>Coups critiques : ×1.5, probabilité CRIT + critBonus</li>
+            <li>Système de Break : faiblesse élémentaire → jauge rupture</li>
+            <li>Stagger : jauge pleine → +50 % vulnérabilité</li>
+            <li>Application buffs/debuffs — durée en tours</li>
+            <li>Décroissance effets de statut (−1 tour/passage)</li>
+            <li>Poison & brûlure — dégâts par tour</li>
+            <li>Mécaniques boss : régén bouclier, clones, enrage</li>
+          </ul>
+        </div>
+        <div>
+          <div class="sub-title-2">Couverture (suite)</div>
+          <ul class="list">
+            <li>Jauges ATB — vitesse SPD 90 vs SPD 40</li>
+            <li>Ordre d'action : unité la plus rapide en premier</li>
+            <li>Victoire : équipe adverse entièrement éliminée</li>
+            <li>Défaite : équipe joueur entièrement éliminée</li>
+          </ul>
+          <div class="sub-title-2">Lancement</div>
+          <pre style="margin-top:8px"><code>npm test              <span class="cm"># CI</span>
+npm run test:watch    <span class="cm"># Dev</span></code></pre>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+         13. PATTERNS ARCHITECTURAUX
+    ═══════════════════════════════════════════════ -->
+    <section id="patterns" class="section">
+      <div class="section-header">
+        <span class="section-num">13</span>
+        <h2 class="section-title">Patterns architecturaux</h2>
+      </div>
+
+      <div class="pattern">
+        <div class="pattern-num">PATTERN 01</div>
+        <div class="pattern-title">Singleton global</div>
+        <p>Trois singletons partagent l'état global : <code>gameState</code> (données joueur), <code>router</code> (navigation SPA), <code>audioManager</code> (BGM/SFX). Instanciés une fois au démarrage, importés par référence — pas de prop-drilling, pas de Context API.</p>
+      </div>
+
+      <div class="pattern">
+        <div class="pattern-num">PATTERN 02</div>
+        <div class="pattern-title">Séparation logique / interface</div>
+        <p>Les moteurs de combat (<code>CombatEngine</code>, <code>ATBCombatEngine</code>) ne contiennent aucun accès DOM. La communication avec les screens se fait uniquement via des callbacks passés à l'initialisation (<code>onUpdate</code>, <code>onLog</code>, <code>onBattleEnd</code>). Cela rend le moteur 100 % testable dans Node.js et remplaçable sans toucher à la logique.</p>
+      </div>
+
+      <div class="pattern">
+        <div class="pattern-num">PATTERN 03</div>
+        <div class="pattern-title">Persistance duale & résilience</div>
+        <p>Chaque <code>save()</code> écrit simultanément dans IndexedDB (primaire, ~250 Mo) et localStorage (fallback, ~5 Mo). Au chargement, <code>init()</code> lit en priorité depuis IDB. Aucune donnée n'est perdue même en navigation privée Safari où IDB est restreint.</p>
+      </div>
+
+      <div class="pattern">
+        <div class="pattern-num">PATTERN 04</div>
+        <div class="pattern-title">Rendu par remplacement complet</div>
+        <p>Chaque <code>renderXxxScreen(container)</code> remplace intégralement <code>innerHTML</code> du container, puis attache les event listeners. Pas de VDOM, pas de diff, pas de composants à états internes. Simple, prévisible, sans fuites de listeners grâce au remplacement total.</p>
+      </div>
+
+      <div class="pattern">
+        <div class="pattern-num">PATTERN 05</div>
+        <div class="pattern-title">Lazy-loading d'assets</div>
+        <p>Sprites chargés à la demande via <code>IntersectionObserver</code> avec marge anticipatoire 200px. Cache sessionStorage évite les rechargements inter-écrans. Fallback automatique vers le sprite générique du type de classe si l'image individuelle est absente.</p>
+      </div>
+
+      <div class="pattern">
+        <div class="pattern-num">PATTERN 06</div>
+        <div class="pattern-title">ES Modules natifs (ESM)</div>
+        <p>Projet entièrement en <code>type: "module"</code>. Aucun CommonJS dans le code source. Vite gère uniquement le bundling pour la production — en développement, les imports ESM natifs du navigateur sont utilisés directement, éliminant toute étape de transpilation et accélérant le HMR.</p>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+         14. STATISTIQUES
+    ═══════════════════════════════════════════════ -->
+    <section id="stats" class="section">
+      <div class="section-header">
+        <span class="section-num">14</span>
+        <h2 class="section-title">Statistiques & checklist fonctionnelle</h2>
+      </div>
+
+      <div class="subsection">
+        <div class="sub-title">Volume du code source</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Composant</th><th>Fichiers</th><th>Lignes estimées</th><th>Part</th></tr></thead>
+            <tbody>
+              <tr><td>Écrans (screens/)</td><td>19</td><td>~12 000</td><td>57 %</td></tr>
+              <tr><td>Données statiques (data/)</td><td>4</td><td>~3 500</td><td>17 %</td></tr>
+              <tr><td>Moteur de jeu (engine/)</td><td>5</td><td>~2 400</td><td>11 %</td></tr>
+              <tr><td>Styles CSS (styles/)</td><td>5</td><td>~1 500</td><td>7 %</td></tr>
+              <tr><td>Utilitaires (utils/)</td><td>12</td><td>~1 500</td><td>7 %</td></tr>
+              <tr><td>Electron + Tests + Scripts</td><td>3+</td><td>~270</td><td>&lt; 1 %</td></tr>
+              <tr style="background:var(--bg4);font-weight:700"><td style="color:var(--gold)">TOTAL</td><td style="color:var(--gold)">48+</td><td style="color:var(--gold)">~21 170</td><td style="color:var(--gold)">100 %</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="sub-title">Checklist technique</div>
+        <div class="col2">
+          <ul class="check-list">
+            <li>Zero dépendances framework UI — Vanilla JS pur</li>
+            <li>18 tests unitaires Vitest (moteur ATB)</li>
+            <li>Build Vite : 3 chunks, esbuild, base64 inlining</li>
+            <li>Service Worker — mode offline complet (PWA)</li>
+            <li>Persistance duale : IDB + localStorage</li>
+            <li>Lazy-loading sprites (IntersectionObserver)</li>
+            <li>Design system CSS : 200+ variables, 4 thèmes</li>
+            <li>i18n Français / Anglais</li>
+            <li>PWA installable (manifest + icônes multi-densités)</li>
+            <li>Application desktop Windows (Electron 41)</li>
+          </ul>
+          <ul class="check-list">
+            <li>Cloud save Supabase (Magic Link, fetch natif)</li>
+            <li>Gamepad API Xbox/PlayStation + clavier custom</li>
+            <li>Haptics — Vibration API mobile</li>
+            <li>Responsive mobile complet (breakpoint 768px)</li>
+            <li>Audio BGM playlist + crossfade 2s + SFX</li>
+            <li>Écran de chargement animé (2s, barre progression)</li>
+            <li>Raccourci global Échap → accueil</li>
+            <li>DevTools désactivés en prod (anti-triche Electron)</li>
+            <li>Migration schéma automatique (v6 actuel)</li>
+            <li>Assets base64 &lt; 8 Ko (Vite inlining)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="sub-title">Contenu du jeu</div>
+        <div class="col3">
+          <div class="card">
+            <div class="card-title">Héros & Combat</div>
+            <p>37 héros uniques</p>
+            <p>4 classes × 6 rarités</p>
+            <p>40+ compétences</p>
+            <p>Combat ATB 4v4</p>
+            <p>Break élémentaire</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Contenu & Modes</div>
+            <p>200 niveaux campagne</p>
+            <p>Donjon 5 étages</p>
+            <p>Horde, Raid, Tour, VS</p>
+            <p>480+ équipements</p>
+            <p>Forge de héros</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Progression</div>
+            <p>32 succès</p>
+            <p>Missions J/H</p>
+            <p>Connexion quotidienne</p>
+            <p>Dual gacha</p>
+            <p>Dashboard analytique</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <span><strong>Rytiger RPG</strong> — Les Chroniques des Oubliés</span>
+      <span>Documentation Technique v2.0 — Mai 2026</span>
+      <span>Vanilla JS · Vite 5 · Electron 41</span>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  // Highlight active nav link on scroll
+  const sections = document.querySelectorAll('.section, .subsection[id]');
+  const links = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        links.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => s.id && observer.observe(s));
+</script>
+
+</body>
+</html>

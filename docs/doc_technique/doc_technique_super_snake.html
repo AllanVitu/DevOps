@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Super Snake — Documentation Technique</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+    :root {
+      --purple: #8B5CF6;
+      --cyan:   #06B6D4;
+      --gold:   #F59E0B;
+      --red:    #EF4444;
+      --bg:     #0D0018;
+      --bg2:    #130025;
+      --border: rgba(139,92,246,0.25);
+      --text:   #E2E8F0;
+      --muted:  #94A3B8;
+      --accent: #A78BFA;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #ffffff;
+      color: #1e1e2e;
+      font-size: 11pt;
+      line-height: 1.7;
+    }
+
+    /* ── COVER PAGE ─────────────────────────────────────────────────── */
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, #0D0018 0%, #130025 50%, #0a001a 100%);
+      color: #E2E8F0;
+      padding: 60px 40px;
+      page-break-after: always;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(139,92,246,0.04) 0px, rgba(139,92,246,0.04) 1px, transparent 1px, transparent 24px),
+        repeating-linear-gradient(90deg, rgba(139,92,246,0.04) 0px, rgba(139,92,246,0.04) 1px, transparent 1px, transparent 24px);
+    }
+
+    .cover-inner { position: relative; z-index: 1; text-align: center; }
+
+    .cover-tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9pt;
+      letter-spacing: 0.4em;
+      color: #F59E0B;
+      border: 1px solid rgba(245,158,11,0.4);
+      padding: 4px 16px;
+      border-radius: 100px;
+      margin-bottom: 32px;
+      text-transform: uppercase;
+    }
+
+    .cover h1 {
+      font-size: 60pt;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .cover h1 span {
+      display: block;
+      background: linear-gradient(135deg, #8B5CF6, #06B6D4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cover-sub {
+      font-size: 13pt;
+      color: #94A3B8;
+      letter-spacing: 0.15em;
+      margin-bottom: 60px;
+      font-weight: 300;
+    }
+
+    .cover-pills {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 64px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8pt;
+      padding: 5px 14px;
+      border-radius: 100px;
+      border: 1px solid;
+      letter-spacing: 0.05em;
+    }
+    .pill.purple { color:#A78BFA; border-color:rgba(139,92,246,0.5); background:rgba(139,92,246,0.08); }
+    .pill.cyan   { color:#67E8F9; border-color:rgba(6,182,212,0.5); background:rgba(6,182,212,0.08); }
+    .pill.gold   { color:#FDE68A; border-color:rgba(245,158,11,0.5); background:rgba(245,158,11,0.08); }
+    .pill.green  { color:#6EE7B7; border-color:rgba(16,185,129,0.4); background:rgba(16,185,129,0.06); }
+
+    .cover-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8pt;
+      color: #475569;
+      border-top: 1px solid rgba(139,92,246,0.15);
+      padding-top: 24px;
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* ── CONTENT PAGES ──────────────────────────────────────────────── */
+    .page {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 48px 64px;
+    }
+
+    /* Chapter heading */
+    .chapter {
+      margin-top: 56px;
+      margin-bottom: 24px;
+      page-break-before: auto;
+    }
+
+    .chapter-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8pt;
+      color: #8B5CF6;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .chapter h2 {
+      font-size: 22pt;
+      font-weight: 700;
+      color: #1e1e2e;
+      letter-spacing: -0.01em;
+      border-bottom: 2px solid #8B5CF6;
+      padding-bottom: 8px;
+      display: inline-block;
+    }
+
+    /* Section heading */
+    h3 {
+      font-size: 13pt;
+      font-weight: 600;
+      color: #2d2d4e;
+      margin-top: 32px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h3::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 16px;
+      background: linear-gradient(180deg, #8B5CF6, #06B6D4);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    h4 {
+      font-size: 10pt;
+      font-weight: 600;
+      color: #6B7280;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+
+    p { margin-bottom: 12px; color: #374151; }
+
+    /* Code blocks */
+    pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8.5pt;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin: 14px 0;
+      overflow-x: auto;
+      border: 1px solid rgba(139,92,246,0.2);
+      line-height: 1.6;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8.5pt;
+      background: #f1f5f9;
+      color: #7C3AED;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    pre code {
+      background: none;
+      color: inherit;
+      padding: 0;
+    }
+
+    /* Syntax colours in pre */
+    .kw  { color: #cba6f7; } /* keyword */
+    .fn  { color: #89b4fa; } /* function */
+    .str { color: #a6e3a1; } /* string */
+    .num { color: #fab387; } /* number */
+    .cm  { color: #585b70; } /* comment */
+    .cn  { color: #f38ba8; } /* constant */
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 9.5pt;
+    }
+
+    th {
+      background: #1e1e2e;
+      color: #A78BFA;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8pt;
+      font-weight: 500;
+      text-align: left;
+      padding: 9px 14px;
+      letter-spacing: 0.08em;
+      border-bottom: 2px solid rgba(139,92,246,0.4);
+    }
+
+    td {
+      padding: 8px 14px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #374151;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td { background: #fafafa; }
+
+    /* Info box */
+    .box {
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 16px 0;
+      border-left: 4px solid;
+      font-size: 10pt;
+    }
+
+    .box.purple { border-color: #8B5CF6; background: #faf5ff; color: #4c1d95; }
+    .box.cyan   { border-color: #06B6D4; background: #ecfeff; color: #164e63; }
+    .box.gold   { border-color: #F59E0B; background: #fffbeb; color: #78350f; }
+    .box.red    { border-color: #EF4444; background: #fef2f2; color: #7f1d1d; }
+
+    /* File tree */
+    .tree {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8.5pt;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 20px 24px;
+      border-radius: 8px;
+      line-height: 2;
+      border: 1px solid rgba(139,92,246,0.2);
+    }
+
+    .tree .dir  { color: #89b4fa; font-weight: 500; }
+    .tree .file { color: #a6e3a1; }
+    .tree .desc { color: #585b70; }
+
+    /* Rarity badges */
+    .rarity {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7.5pt;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 100px;
+      letter-spacing: 0.08em;
+    }
+
+    .r-commun     { background:#94A3B1; color:#fff; }
+    .r-rare       { background:#3B82F6; color:#fff; }
+    .r-epique     { background:#A855F7; color:#fff; }
+    .r-legendaire { background:#F97316; color:#fff; }
+    .r-celeste    { background:linear-gradient(90deg,#F59E0B,#A855F7); color:#fff; }
+
+    /* Tag chips */
+    .tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7.5pt;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin: 1px 2px;
+      background: #f3f4f6;
+      color: #4B5563;
+      border: 1px solid #e5e7eb;
+    }
+
+    /* Two-column layout */
+    .cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .col-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+
+    .col-card h4 { margin-top: 0; margin-bottom: 8px; }
+
+    /* Divider */
+    hr {
+      border: none;
+      border-top: 1px solid #e2e8f0;
+      margin: 40px 0;
+    }
+
+    /* Print settings */
+    @media print {
+      body { font-size: 10pt; }
+      .cover { min-height: 100vh; }
+      .chapter { page-break-before: always; }
+      pre, table, .box { page-break-inside: avoid; }
+      @page { margin: 18mm 18mm; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════ BACK BANNER ═══════════════════ -->
+<div style="position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(13,0,24,0.92); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid rgba(139,92,246,0.25); padding:0.6rem 2rem; display:flex; align-items:center; gap:1.5rem;">
+  <a href="../projects/super-snake.html" style="display:inline-flex; align-items:center; gap:0.5rem; color:#A78BFA; font-family:'JetBrains Mono',monospace; font-size:0.8rem; font-weight:600; text-decoration:none; transition:color 0.2s;">
+    ← Retour au projet
+  </a>
+  <span style="color:rgba(139,92,246,0.3); font-size:0.75rem;">|</span>
+  <span style="font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:rgba(148,163,184,0.6);">Super Snake — Documentation Technique v1.0</span>
+  <a href="../" style="margin-left:auto; display:inline-flex; align-items:center; gap:0.4rem; color:rgba(148,163,184,0.6); font-family:'JetBrains Mono',monospace; font-size:0.75rem; text-decoration:none; transition:color 0.2s;">
+    Portfolio ↗
+  </a>
+</div>
+<div style="height:41px;"></div>
+
+<!-- ═══════════════════ COVER ═══════════════════ -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-tag">✦ Édition Allan — Documentation Technique</div>
+
+    <div class="cover h1" style="font-size:0">
+      <h1 style="font-size:58pt;font-weight:700;letter-spacing:0.04em;line-height:1;color:#E2E8F0;margin-bottom:2px;">SUPER</h1>
+      <h1 style="font-size:58pt;font-weight:700;letter-spacing:0.04em;line-height:1;">
+        <span style="background:linear-gradient(135deg,#8B5CF6,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">SNAKE</span>
+      </h1>
+    </div>
+
+    <p class="cover-sub" style="margin-top:20px;">Architecture &amp; Spécifications Techniques — v1.0</p>
+
+    <div class="cover-pills">
+      <div class="pill purple">⬡ Vue 3.4</div>
+      <div class="pill cyan">⚡ Vite 5</div>
+      <div class="pill gold">◈ Tailwind 3.4</div>
+      <div class="pill green">♪ Web Audio API</div>
+      <div class="pill purple">Canvas 2D</div>
+      <div class="pill cyan">LocalStorage</div>
+    </div>
+
+    <div class="cover-meta">
+      <span>Super Snake — Édition Allan</span>
+      <span>Mai 2026</span>
+      <span>Kward</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CONTENT ═══════════════════ -->
+<div class="page">
+
+  <!-- ── SOMMAIRE ── -->
+  <div class="chapter" style="margin-top:0;">
+    <div class="chapter-num">00 — index</div>
+    <h2>Sommaire</h2>
+  </div>
+
+  <table>
+    <thead><tr><th>#</th><th>Section</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td>Stack &amp; Architecture</td><td>Technologies, outils, structure SPA</td></tr>
+      <tr><td>02</td><td>Structure des fichiers</td><td>Arborescence complète annotée</td></tr>
+      <tr><td>03</td><td>Constantes &amp; Config</td><td>Grille, vitesses, types de nourriture</td></tr>
+      <tr><td>04</td><td>Logique de jeu — useSnake</td><td>Moteur snake, queue, power-ups, scoring</td></tr>
+      <tr><td>05</td><td>Rendu Canvas — renderer</td><td>Pipeline de rendu 2D, particules, effets</td></tr>
+      <tr><td>06</td><td>Audio procédural — sounds</td><td>Web Audio API, synthèse sonore</td></tr>
+      <tr><td>07</td><td>Skins &amp; Raretés</td><td>Système de skins, trails, raretés pondérées</td></tr>
+      <tr><td>08</td><td>Système Gacha — useGacha</td><td>Roll algorithmique, économie, persistence</td></tr>
+      <tr><td>09</td><td>Composants Vue</td><td>App, GameCanvas, Screens, HUD, SkinCard</td></tr>
+      <tr><td>10</td><td>Flux de navigation</td><td>Machine d'état des phases</td></tr>
+      <tr><td>11</td><td>Performance &amp; optimisations</td><td>RAF loop, particules, réactivité Vue</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ── 01 STACK ── -->
+  <div class="chapter">
+    <div class="chapter-num">01 — overview</div>
+    <h2>Stack &amp; Architecture</h2>
+  </div>
+
+  <p>
+    Super Snake est une <strong>Single Page Application</strong> construite avec Vue 3 en mode Composition API.
+    Aucun routeur externe n'est utilisé : la navigation entre les écrans est gérée via une variable réactive
+    <code>phase</code> dans <code>App.vue</code>. Le rendu du jeu repose entièrement sur un
+    <strong>canvas HTML5 2D</strong> animé via <code>requestAnimationFrame</code>.
+  </p>
+
+  <div class="cols">
+    <div class="col-card">
+      <h4>Runtime</h4>
+      <table style="margin:0;">
+        <tr><td><code>vue</code></td><td>3.4.21</td></tr>
+        <tr><td><code>vite</code></td><td>5.2.0</td></tr>
+        <tr><td><code>@vitejs/plugin-vue</code></td><td>5.0.4</td></tr>
+      </table>
+    </div>
+    <div class="col-card">
+      <h4>CSS &amp; Style</h4>
+      <table style="margin:0;">
+        <tr><td><code>tailwindcss</code></td><td>3.4.3</td></tr>
+        <tr><td><code>postcss</code></td><td>8.4.38</td></tr>
+        <tr><td><code>autoprefixer</code></td><td>10.4.19</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="box cyan">
+    <strong>Aucune dépendance backend.</strong> Toute la persistence (skins, œufs, high score) passe par
+    <code>localStorage</code>. Le jeu tourne intégralement côté client, sans réseau.
+  </div>
+
+  <h3>Choix architecturaux clés</h3>
+
+  <table>
+    <thead><tr><th>Décision</th><th>Raison</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Composition API + <code>script setup</code></td>
+        <td>Meilleure inférence TypeScript, composables plus simples, moins de boilerplate</td>
+      </tr>
+      <tr>
+        <td>Canvas 2D plutôt que DOM/SVG</td>
+        <td>60 fps sans layout thrashing, contrôle pixel-perfect du rendu, effets visuels complexes</td>
+      </tr>
+      <tr>
+        <td>Particules en tableau JS brut</td>
+        <td>Évite la réactivité Vue sur des objets mutés 60×/s — gains de perf significatifs</td>
+      </tr>
+      <tr>
+        <td>Machine d'état <code>phase</code> dans App.vue</td>
+        <td>Simplicité — 4 états seulement (menu, playing, gacha, gameover), pas besoin de vue-router</td>
+      </tr>
+      <tr>
+        <td>Séparation logique / rendu / son</td>
+        <td><code>useSnake</code> (logique pure), <code>renderer.js</code> (canvas), <code>sounds.js</code> (audio) — testabilité et clarté</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ── 02 STRUCTURE ── -->
+  <div class="chapter">
+    <div class="chapter-num">02 — filesystem</div>
+    <h2>Structure des fichiers</h2>
+  </div>
+
+  <div class="tree">
+<span class="dir">Super_Snake/</span><br>
+├── <span class="file">index.html</span>          <span class="desc">— Point d'entrée HTML, mount #app</span><br>
+├── <span class="file">vite.config.js</span>      <span class="desc">— Vite + plugin Vue, base: '/Ultimate_Snake/'</span><br>
+├── <span class="file">tailwind.config.js</span>  <span class="desc">— Thème custom (couleurs neon, fonts Orbitron)</span><br>
+├── <span class="file">postcss.config.js</span>   <span class="desc">— Pipeline CSS (tailwind + autoprefixer)</span><br>
+├── <span class="file">package.json</span>        <span class="desc">— Dépendances, scripts dev/build/preview</span><br>
+└── <span class="dir">src/</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="file">main.js</span>            <span class="desc">— createApp(App).mount('#app')</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="file">style.css</span>          <span class="desc">— Directives Tailwind + animations globales</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="file">App.vue</span>            <span class="desc">— Racine : gestion phase, highScore, gacha</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="dir">composables/</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="file">useSnake.js</span>    <span class="desc">— Moteur de jeu complet (état + logique)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── <span class="file">useGacha.js</span>    <span class="desc">— Système gacha + persistence localStorage</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="dir">utils/</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="file">constants.js</span>   <span class="desc">— Constantes grille, food types, vitesses</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="file">renderer.js</span>    <span class="desc">— Rendu canvas 2D (background, snake, food, FX)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── <span class="file">sounds.js</span>      <span class="desc">— Synthèse audio Web Audio API</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="dir">data/</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── <span class="file">skins.js</span>       <span class="desc">— 14 skins, RARITY, TRAIL_CONFIGS, EGGS_PER_SCORE</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="dir">components/</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="file">GameCanvas.vue</span> <span class="desc">— Canvas + RAF loop + particules + events</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="file">HUD.vue</span>        <span class="desc">— Score, niveau, combo, power-ups actifs</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="file">PauseMenu.vue</span>  <span class="desc">— Overlay pause (reprendre / quitter)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="file">StartScreen.vue</span><span class="desc">— Menu, sélection de mode, skin actif</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="file">GachaScreen.vue</span><span class="desc">— Interface invocation, collection skins</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="file">GameOverScreen.vue</span><span class="desc">— Stats, œufs gagnés, score animé</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="file">SkinCard.vue</span>   <span class="desc">— Carte skin réutilisable (3 tailles)</span>
+  </div>
+
+  <!-- ── 03 CONSTANTES ── -->
+  <div class="chapter">
+    <div class="chapter-num">03 — constants.js</div>
+    <h2>Constantes &amp; Configuration</h2>
+  </div>
+
+  <h3>Grille de jeu</h3>
+
+  <table>
+    <thead><tr><th>Constante</th><th>Valeur</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>COLS</code></td><td>30</td><td>Nombre de colonnes de la grille</td></tr>
+      <tr><td><code>ROWS</code></td><td>20</td><td>Nombre de lignes de la grille</td></tr>
+      <tr><td><code>CELL</code></td><td>24 px</td><td>Taille en pixels d'une cellule</td></tr>
+      <tr><td><code>CANVAS_W</code></td><td>720 px</td><td>COLS × CELL = largeur du canvas</td></tr>
+      <tr><td><code>CANVAS_H</code></td><td>480 px</td><td>ROWS × CELL = hauteur du canvas</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Vitesse par niveau</h3>
+
+  <p>La fonction <code>speedForLevel(level)</code> retourne un intervalle en millisecondes entre deux ticks.
+  Les valeurs diminuent à mesure que le niveau monte, accélérant le serpent.</p>
+
+  <pre><code><span class="kw">export function</span> <span class="fn">speedForLevel</span>(level) {
+  <span class="kw">const</span> speeds = [<span class="num">185</span>, <span class="num">162</span>, <span class="num">142</span>, <span class="num">124</span>, <span class="num">108</span>, <span class="num">94</span>, <span class="num">82</span>, <span class="num">72</span>, <span class="num">64</span>, <span class="num">58</span>, <span class="num">53</span>, <span class="num">49</span>]
+  <span class="kw">return</span> speeds[Math.<span class="fn">min</span>(level - <span class="num">1</span>, speeds.length - <span class="num">1</span>)]
+}</code></pre>
+
+  <table>
+    <thead><tr><th>Niveau</th><th>1</th><th>2</th><th>3</th><th>5</th><th>8</th><th>10</th><th>12+</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Intervalle (ms)</td>
+        <td>185</td><td>162</td><td>142</td><td>108</td><td>72</td><td>58</td><td>49</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box gold">
+    Le power-up <strong>Slow</strong> (Orbe) multiplie l'intervalle par <strong>×1.75</strong>, ralentissant
+    temporairement le serpent pendant 3,5 secondes.
+  </div>
+
+  <h3>Types de nourriture</h3>
+
+  <table>
+    <thead><tr><th>Type</th><th>Points</th><th>Effet</th><th>Durée</th><th>Apparition</th></tr></thead>
+    <tbody>
+      <tr><td><code>APPLE</code></td><td>+1</td><td>—</td><td>—</td><td>Niveau 1+, poids décroissant</td></tr>
+      <tr><td><code>STAR</code></td><td>+5</td><td>×2 score</td><td>5 s</td><td>Niveau 1+, poids croissant</td></tr>
+      <tr><td><code>CRYSTAL</code></td><td>+10</td><td>Bouclier</td><td>4 s</td><td>Niveau 3+</td></tr>
+      <tr><td><code>ORB</code></td><td>+3</td><td>Ralenti</td><td>3,5 s</td><td>Niveau 2+</td></tr>
+      <tr><td><code>SKULL</code></td><td>−5</td><td>Inversé</td><td>3 s</td><td>Niveau 4+</td></tr>
+      <tr><td><code>RAINBOW</code></td><td>+20</td><td>Arc-en-ciel</td><td>6 s</td><td>Niveau 5+</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ── 04 USESNAKE ── -->
+  <div class="chapter">
+    <div class="chapter-num">04 — useSnake.js</div>
+    <h2>Logique de jeu</h2>
+  </div>
+
+  <p>
+    <code>useSnake(mode)</code> est un composable Vue 3 qui encapsule <em>toute</em> la logique du jeu
+    sans aucune référence au DOM ni au canvas. Il expose un état réactif et une API impérative appelée
+    depuis <code>GameCanvas.vue</code>.
+  </p>
+
+  <h3>État réactif exposé</h3>
+
+  <div class="cols">
+    <div class="col-card">
+      <h4>Réfs de jeu</h4>
+      <table style="margin:0;font-size:9pt;">
+        <tr><td><code>snake</code></td><td>Array de <code>{x,y}</code></td></tr>
+        <tr><td><code>direction</code></td><td><code>'RIGHT'|'LEFT'|'UP'|'DOWN'</code></td></tr>
+        <tr><td><code>foods</code></td><td>Array de food objects</td></tr>
+        <tr><td><code>score</code></td><td>Score courant</td></tr>
+        <tr><td><code>level</code></td><td>Niveau courant</td></tr>
+        <tr><td><code>combo</code></td><td>Enchaînements &lt;3,5s</td></tr>
+        <tr><td><code>maxLen</code></td><td>Longueur max atteinte</td></tr>
+      </table>
+    </div>
+    <div class="col-card">
+      <h4>États &amp; power-ups</h4>
+      <table style="margin:0;font-size:9pt;">
+        <tr><td><code>isPlaying</code></td><td>Partie en cours</td></tr>
+        <tr><td><code>isDead</code></td><td>Mort déclenchée</td></tr>
+        <tr><td><code>isPaused</code></td><td>Partie en pause</td></tr>
+        <tr><td><code>activePowerUps</code></td><td>reactive — 5 clés, chacune <code>null | {until}</code></td></tr>
+        <tr><td><code>moveInterval</code></td><td>computed — ms entre ticks (avec slow)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h3>Queue de direction</h3>
+
+  <p>
+    Le changement de direction ne s'applique pas immédiatement — il passe par <code>dirQueue</code>,
+    un buffer de 2 entrées. Cela permet au joueur de placer jusqu'à 2 virages d'avance sans
+    perdre d'input. La direction opposée et la répétition de la même direction sont ignorées.
+  </p>
+
+  <pre><code><span class="kw">function</span> <span class="fn">queueDir</span>(dir) {
+  <span class="kw">const</span> last = dirQueue.value.<span class="fn">at</span>(-<span class="num">1</span>) ?? direction.value
+  <span class="kw">if</span> (OPPOSITE[dir] === last || dir === last) <span class="kw">return</span>   <span class="cm">// ignoré</span>
+  <span class="kw">if</span> (dirQueue.value.length &lt; <span class="num">2</span>) dirQueue.value.<span class="fn">push</span>(dir)  <span class="cm">// buffer max 2</span>
+}</code></pre>
+
+  <h3>Tick de jeu</h3>
+
+  <p>La fonction <code>tick(now)</code> est appelée depuis le RAF loop de <code>GameCanvas.vue</code>
+  dès que <code>Date.now() - lastMove ≥ moveInterval</code>. Elle :</p>
+
+  <ol style="margin-left:24px;color:#374151;margin-bottom:12px;">
+    <li>Expire les power-ups dont le timestamp <code>until</code> est dépassé</li>
+    <li>Dépile la queue de direction</li>
+    <li>Calcule la nouvelle tête en tenant compte du mode (portal / murs) et de l'inversion</li>
+    <li>Vérifie la collision self (ignorée si bouclier actif)</li>
+    <li>Détecte la nourriture mangée, calcule les points avec multiplicateurs et combo</li>
+    <li>Déclenche l'effet du food type, fait monter le niveau tous les 10 items mangés</li>
+    <li>Retourne un objet <code>{died, ate, leveledUp}</code> exploité par GameCanvas</li>
+  </ol>
+
+  <h3>Calcul du score</h3>
+
+  <pre><code><span class="kw">const</span> mult  = (activePowerUps.multiplier &amp;&amp; now &lt; activePowerUps.multiplier.until) ? <span class="num">2</span> : <span class="num">1</span>
+<span class="kw">const</span> bonus = Math.<span class="fn">floor</span>(combo.value / <span class="num">3</span>)   <span class="cm">// +1× par tranche de 3 combos</span>
+<span class="kw">const</span> pts   = Math.<span class="fn">max</span>(<span class="num">0</span>, info.points) * mult * (<span class="num">1</span> + bonus)
+score.value += pts</code></pre>
+
+  <h3>Modes de jeu</h3>
+
+  <table>
+    <thead><tr><th>Mode</th><th>Comportement aux bords</th><th>Couleur UI</th></tr></thead>
+    <tbody>
+      <tr><td><code>portal</code></td><td>Téléportation côté opposé <code>(nx + COLS) % COLS</code></td><td>Cyan</td></tr>
+      <tr><td><code>classic</code></td><td>Mort si hors grille</td><td>Gold</td></tr>
+      <tr><td><code>walls</code></td><td>Mort si hors grille (même logique, vitesse plus haute)</td><td>Red</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ── 05 RENDERER ── -->
+  <div class="chapter">
+    <div class="chapter-num">05 — renderer.js</div>
+    <h2>Rendu Canvas 2D</h2>
+  </div>
+
+  <p>
+    Le module <code>renderer.js</code> exporte des fonctions pures qui prennent un contexte 2D en
+    premier argument. Aucun état interne — le rendu est entièrement déterministe à partir des paramètres.
+  </p>
+
+  <h3>Pipeline de rendu (ordre d'appel)</h3>
+
+  <pre><code><span class="fn">drawBackground</span>(ctx, W, H, ts)   <span class="cm">// fond + grille + vignette</span>
+<span class="fn">drawFoods</span>(ctx, foods, ts)        <span class="cm">// nourriture avec formes spécifiques</span>
+<span class="fn">drawSnake</span>(ctx, snake, dir, ts, powerUps, now, skin)
+<span class="fn">drawParticles</span>(ctx, particles)   <span class="cm">// particules burst + trail</span>
+<span class="fn">drawFlash</span>(ctx, W, H, color, alpha)  <span class="cm">// overlay flash (eat/death)</span></code></pre>
+
+  <h3>drawBackground</h3>
+  <p>Trois couches superposées :</p>
+  <ol style="margin-left:24px;color:#374151;margin-bottom:12px;">
+    <li><strong>Fond uni</strong> <code>#0D0018</code></li>
+    <li><strong>Grille</strong> en lignes violet très subtiles, opacité animée via <code>Math.sin(time * 0.0008)</code></li>
+    <li><strong>Vignette</strong> radiale noir aux bords</li>
+  </ol>
+
+  <h3>drawFoods</h3>
+  <p>Chaque food a un <code>phase</code> random fixé à la création pour que l'animation de pulse soit désynchronisée.
+  Les formes sont calculées géométriquement :</p>
+
+  <table>
+    <thead><tr><th>Food</th><th>Forme</th><th>Particularité visuelle</th></tr></thead>
+    <tbody>
+      <tr><td>APPLE</td><td>Cercle</td><td>Gradient radial + halo pulsant</td></tr>
+      <tr><td>STAR</td><td>Étoile 5 branches</td><td>Spike ratio inner 0.42</td></tr>
+      <tr><td>CRYSTAL</td><td>Diamant</td><td>Reflet blanc 35% en coin</td></tr>
+      <tr><td>SKULL</td><td>Cercle + croix yeux</td><td>Fond sombre, yeux en X dessinés au stroke</td></tr>
+      <tr><td>RAINBOW</td><td>Cercle</td><td>Teinte HSL qui tourne <code>time * 0.08</code>, ring externe</td></tr>
+    </tbody>
+  </table>
+
+  <h3>drawSnake</h3>
+  <p>Le serpent est dessiné de la queue vers la tête (boucle <code>i = length-1 → 0</code>) pour
+  que la tête soit toujours au-dessus. Chaque segment a un rayon qui diminue légèrement vers la queue.</p>
+
+  <p>La couleur des segments est interpolée linéairement entre <code>bodyA</code> et <code>bodyB</code>
+  du skin actif selon la position dans le serpent (<code>progress = i / length</code>). En mode Rainbow
+  (power-up ou skin Cosmique), la couleur est calculée en HSL tournant.</p>
+
+  <p>La <strong>tête</strong> (index 0) reçoit un traitement spécial : yeux directionnels, couronne animée,
+  bouclier cyan pulsant si actif, aura spéciale ALLAN PRIME si <code>skin.special === 'allan'</code>.</p>
+
+  <h3>Fonctions utilitaires</h3>
+
+  <table>
+    <thead><tr><th>Fonction</th><th>Rôle</th></tr></thead>
+    <tbody>
+      <tr><td><code>lerp(a, b, t)</code></td><td>Interpolation linéaire pour les couleurs de segments</td></tr>
+      <tr><td><code>lighten(hex, amt)</code></td><td>Éclaircit une couleur hex par ajout de valeur RGB</td></tr>
+      <tr><td><code>drawCrown()</code></td><td>Couronne SVG-like animée au-dessus de la tête, double couronne pour ALLAN PRIME</td></tr>
+      <tr><td><code>drawAllanAura()</code></td><td>3 anneaux pulsants dorés autour de la tête</td></tr>
+      <tr><td><code>drawFlash()</code></td><td>Rectangle RGBA plein, alpha décrémenté de 0.018/frame</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ── 06 AUDIO ── -->
+  <div class="chapter">
+    <div class="chapter-num">06 — sounds.js</div>
+    <h2>Audio procédural — Web Audio API</h2>
+  </div>
+
+  <p>
+    Aucun fichier audio externe. Tous les sons sont synthétisés à la volée via
+    <strong>Web Audio API</strong>. L'<code>AudioContext</code> est créé en lazy singleton
+    (premier son joué = initialisation) pour respecter la politique autoplay des navigateurs.
+  </p>
+
+  <h3>Fonction de base : tone()</h3>
+
+  <pre><code><span class="kw">function</span> <span class="fn">tone</span>(freq, dur, vol = <span class="num">0.15</span>, type = <span class="str">'sine'</span>, detune = <span class="num">0</span>) {
+  <span class="kw">const</span> osc  = ac.<span class="fn">createOscillator</span>()  <span class="cm">// générateur de fréquence</span>
+  <span class="kw">const</span> gain = ac.<span class="fn">createGain</span>()         <span class="cm">// contrôle du volume</span>
+  osc.<span class="fn">connect</span>(gain); gain.<span class="fn">connect</span>(ac.destination)
+  gain.gain.<span class="fn">setValueAtTime</span>(vol, ac.currentTime)
+  gain.gain.<span class="fn">exponentialRampToValueAtTime</span>(<span class="num">0.001</span>, ac.currentTime + dur)
+  osc.<span class="fn">start</span>(); osc.<span class="fn">stop</span>(ac.currentTime + dur)
+}</code></pre>
+
+  <table>
+    <thead><tr><th>Son</th><th>Technique</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>playEat(APPLE)</code></td><td>2 sines (C5+G5), 55ms délai</td><td>Bip court montant</td></tr>
+      <tr><td><code>playEat(STAR)</code></td><td>3 sines (E5→A5→C6), 50ms intervalles</td><td>Arpège ascendant</td></tr>
+      <tr><td><code>playEat(CRYSTAL)</code></td><td>2 sines simultanés (C6+E6)</td><td>Accord cristallin</td></tr>
+      <tr><td><code>playEat(SKULL)</code></td><td>2 sawtooth descendants</td><td>Son grave inquiétant</td></tr>
+      <tr><td><code>playEat(RAINBOW)</code></td><td>5 sines (C5→E5→G5→C6→E6) 40ms</td><td>Fanfare montante</td></tr>
+      <tr><td><code>playDeath()</code></td><td>4 sawtooth 440→330→220→110</td><td>Descente dramatique</td></tr>
+      <tr><td><code>playLevelUp()</code></td><td>4 sines C5→E5→G5→C6</td><td>Arpège victoire</td></tr>
+      <tr><td><code>playPause()</code></td><td>2 square 440→330</td><td>Double bip discret</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ── 07 SKINS ── -->
+  <div class="chapter">
+    <div class="chapter-num">07 — data/skins.js</div>
+    <h2>Skins &amp; Raretés</h2>
+  </div>
+
+  <h3>Système de raretés</h3>
+
+  <table>
+    <thead><tr><th>Rareté</th><th>Label</th><th>Couleur</th><th>Poids</th><th>Probabilité</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="rarity r-commun">COMMUN</span></td>
+        <td>COMMUN</td><td><code>#94A3B8</code></td><td>50</td><td>50 %</td>
+      </tr>
+      <tr>
+        <td><span class="rarity r-rare">RARE</span></td>
+        <td>RARE</td><td><code>#3B82F6</code></td><td>30</td><td>30 %</td>
+      </tr>
+      <tr>
+        <td><span class="rarity r-epique">ÉPIQUE</span></td>
+        <td>ÉPIQUE</td><td><code>#A855F7</code></td><td>15</td><td>15 %</td>
+      </tr>
+      <tr>
+        <td><span class="rarity r-legendaire">LÉGENDAIRE</span></td>
+        <td>LÉGENDAIRE</td><td><code>#F97316</code></td><td>4</td><td>4 %</td>
+      </tr>
+      <tr>
+        <td><span class="rarity r-celeste">CÉLESTE</span></td>
+        <td>CÉLESTE</td><td><code>#F59E0B</code></td><td>1</td><td>1 %</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Catalogue des 14 skins</h3>
+
+  <table>
+    <thead><tr><th>Skin</th><th>Rareté</th><th>Trail</th><th>Spécial</th></tr></thead>
+    <tbody>
+      <tr><td>Viper</td><td><span class="rarity r-commun">COMMUN</span></td><td>—</td><td>Skin de départ, toujours possédé</td></tr>
+      <tr><td>Verdant</td><td><span class="rarity r-commun">COMMUN</span></td><td>—</td><td>—</td></tr>
+      <tr><td>Cobalt</td><td><span class="rarity r-commun">COMMUN</span></td><td>—</td><td>—</td></tr>
+      <tr><td>Inferno</td><td><span class="rarity r-rare">RARE</span></td><td>—</td><td>—</td></tr>
+      <tr><td>Spectre</td><td><span class="rarity r-rare">RARE</span></td><td>—</td><td>—</td></tr>
+      <tr><td>Toxic</td><td><span class="rarity r-rare">RARE</span></td><td>—</td><td>—</td></tr>
+      <tr><td>Dragon Doré</td><td><span class="rarity r-epique">ÉPIQUE</span></td><td>—</td><td>—</td></tr>
+      <tr><td>Void Walker</td><td><span class="rarity r-epique">ÉPIQUE</span></td><td>void 🌑</td><td>—</td></tr>
+      <tr><td>Deep Ocean</td><td><span class="rarity r-epique">ÉPIQUE</span></td><td>—</td><td>—</td></tr>
+      <tr><td>Phénix</td><td><span class="rarity r-legendaire">LÉGENDAIRE</span></td><td>fire 🔥</td><td>—</td></tr>
+      <tr><td>Blizzard</td><td><span class="rarity r-legendaire">LÉGENDAIRE</span></td><td>ice ❄</td><td>—</td></tr>
+      <tr><td>Thunder</td><td><span class="rarity r-legendaire">LÉGENDAIRE</span></td><td>lightning ⚡</td><td>—</td></tr>
+      <tr><td>Cosmique</td><td><span class="rarity r-celeste">CÉLESTE</span></td><td>stars ✨</td><td>Mode Rainbow permanent</td></tr>
+      <tr><td>ALLAN PRIME</td><td><span class="rarity r-celeste">CÉLESTE</span></td><td>gold ✦</td><td>Aura triple anneaux, double couronne</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Structure d'un skin</h3>
+
+  <pre><code>{
+  id:          <span class="str">'phoenix'</span>,          <span class="cm">// clé unique</span>
+  name:        <span class="str">'Phénix'</span>,
+  rarity:      <span class="str">'legendaire'</span>,
+  desc:        <span class="str">'Renaît de ses cendres...'</span>,
+  bodyA:       [<span class="num">254</span>, <span class="num">240</span>, <span class="num">138</span>],    <span class="cm">// RGB côté tête</span>
+  bodyB:       [<span class="num">185</span>,  <span class="num">28</span>,  <span class="num">28</span>],    <span class="cm">// RGB côté queue</span>
+  headA:       <span class="str">'#FEF08A'</span>,           <span class="cm">// hex bright</span>
+  headB:       <span class="str">'#7F1D1D'</span>,           <span class="cm">// hex dark</span>
+  glow:        <span class="str">'#F97316'</span>,           <span class="cm">// couleur de lueur</span>
+  crown:       <span class="str">'#FBBF24'</span>,           <span class="cm">// couleur couronne</span>
+  trail:       <span class="str">'fire'</span>,              <span class="cm">// clé TRAIL_CONFIGS | null</span>
+  rainbow:     <span class="cn">false</span>,              <span class="cm">// override couleur arc-en-ciel</span>
+  special:     <span class="cn">null</span>,               <span class="cm">'allan' pour ALLAN PRIME</span>
+  alwaysOwned: <span class="cn">false</span>,              <span class="cm">// true = Viper uniquement</span>
+}</code></pre>
+
+  <h3>Trail Configs</h3>
+
+  <table>
+    <thead><tr><th>Trail</th><th>Rate (ms)</th><th>Life (ms)</th><th>Taille px</th><th>Gravité Y</th><th>Spread px</th></tr></thead>
+    <tbody>
+      <tr><td>fire 🔥</td><td>40</td><td>360</td><td>4</td><td>−0.09 (monte)</td><td>10</td></tr>
+      <tr><td>ice ❄</td><td>55</td><td>480</td><td>3</td><td>0 (flotte)</td><td>12</td></tr>
+      <tr><td>lightning ⚡</td><td>22</td><td>180</td><td>2</td><td>0</td><td>14</td></tr>
+      <tr><td>void 🌑</td><td>52</td><td>420</td><td>3</td><td>0</td><td>8</td></tr>
+      <tr><td>stars ✨</td><td>38</td><td>550</td><td>2</td><td>−0.02</td><td>16</td></tr>
+      <tr><td>gold ✦</td><td>38</td><td>370</td><td>3</td><td>−0.07 (monte)</td><td>9</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ── 08 GACHA ── -->
+  <div class="chapter">
+    <div class="chapter-num">08 — useGacha.js</div>
+    <h2>Système Gacha</h2>
+  </div>
+
+  <h3>Économie d'œufs</h3>
+
+  <table>
+    <thead><tr><th>Règle</th><th>Valeur</th></tr></thead>
+    <tbody>
+      <tr><td>Œufs par score</td><td>1 œuf pour chaque tranche de 30 points</td></tr>
+      <tr><td>Coût d'un pull ×1</td><td>1 œuf</td></tr>
+      <tr><td>Coût d'un pull ×10</td><td>10 œufs</td></tr>
+      <tr><td>Gain à la mort</td><td>Automatique — <code>Math.floor(score / 30)</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Algorithme de tirage</h3>
+
+  <p>Le tirage se fait en deux étapes :</p>
+
+  <ol style="margin-left:24px;color:#374151;margin-bottom:12px;">
+    <li><strong>rollRarity()</strong> — tire une rareté via une roue pondérée (total 100)</li>
+    <li><strong>rollOneSkin()</strong> — filtre les skins de cette rareté, préfère les non-possédés</li>
+  </ol>
+
+  <pre><code><span class="kw">function</span> <span class="fn">rollOneSkin</span>() {
+  <span class="kw">const</span> rarity  = <span class="fn">rollRarity</span>()
+  <span class="kw">const</span> ofRarity = SKINS_LIST.<span class="fn">filter</span>(s => s.rarity === rarity &amp;&amp; !s.alwaysOwned)
+  <span class="kw">const</span> unowned  = ofRarity.<span class="fn">filter</span>(s => !ownedIds.value.<span class="fn">includes</span>(s.id))
+  <span class="kw">const</span> pool     = unowned.length ? unowned : ofRarity  <span class="cm">// préfère non-possédés</span>
+  <span class="kw">return</span> pool[Math.<span class="fn">floor</span>(Math.<span class="fn">random</span>() * pool.length)]
+}</code></pre>
+
+  <div class="box purple">
+    <strong>Pity system implicite :</strong> si tous les skins d'une rareté tirée sont déjà possédés,
+    le pool se remplit quand même avec les skins possédés (pas de pity dur, mais préférence explicite
+    pour les non-possédés sur chaque rareté).
+  </div>
+
+  <h3>Persistence localStorage</h3>
+
+  <table>
+    <thead><tr><th>Clé</th><th>Type</th><th>Contenu</th></tr></thead>
+    <tbody>
+      <tr><td><code>ss_eggs</code></td><td>number</td><td>Nombre d'œufs actuels</td></tr>
+      <tr><td><code>ss_owned</code></td><td>string[]</td><td>IDs des skins possédés</td></tr>
+      <tr><td><code>ss_active</code></td><td>string</td><td>ID du skin actif</td></tr>
+      <tr><td><code>superSnakeHigh</code></td><td>number</td><td>High score (géré dans App.vue)</td></tr>
+    </tbody>
+  </table>
+
+  <p>Les trois refs gacha sont synced avec <code>watch()</code> : toute mutation déclenche immédiatement
+  un <code>localStorage.setItem</code>. La lecture initiale se fait via une fonction <code>load(key, fallback)</code>
+  qui parse JSON et fallback si la clé est absente ou corrompue.</p>
+
+  <!-- ── 09 COMPOSANTS ── -->
+  <div class="chapter">
+    <div class="chapter-num">09 — components/</div>
+    <h2>Composants Vue</h2>
+  </div>
+
+  <h3>App.vue — orchestrateur</h3>
+
+  <p>Gère l'état global de l'application. Instancie <code>useGacha()</code> (singleton), déclare
+  <code>phase</code>, <code>highScore</code>, et orchestre les transitions entre écrans via
+  <code>&lt;Transition name="fade" mode="out-in"&gt;</code>.</p>
+
+  <table>
+    <thead><tr><th>Responsabilité</th><th>Mécanisme</th></tr></thead>
+    <tbody>
+      <tr><td>Navigation entre écrans</td><td><code>phase ref</code> + <code>v-if/v-else-if</code></td></tr>
+      <tr><td>High score</td><td>lu au démarrage depuis localStorage, sauvé à chaque game over</td></tr>
+      <tr><td>Étoiles d'ambiance</td><td>40 div positionnées via formule nombre d'or <code>i * 137.508</code></td></tr>
+      <tr><td>Distribution des œufs</td><td>appel <code>gacha.addEggsFromScore(stats.score)</code> à chaque game over</td></tr>
+    </tbody>
+  </table>
+
+  <h3>GameCanvas.vue — cœur du jeu</h3>
+
+  <p>Composant pivot qui connecte le moteur de jeu (<code>useSnake</code>), le rendu canvas
+  (<code>renderer.js</code>), le son et les particules dans un seul RAF loop.</p>
+
+  <h4>RAF Loop</h4>
+
+  <pre><code><span class="kw">function</span> <span class="fn">loop</span>(ts) {
+  <span class="cm">// 1. Tick moteur si intervalle écoulé</span>
+  <span class="kw">if</span> (ts - lastMove >= moveInterval.value) { ... lastMove = ts }
+  <span class="cm">// 2. Mise à jour des particules</span>
+  <span class="fn">updateTrail</span>(ts); <span class="fn">updateParticles</span>()
+  <span class="cm">// 3. Décrémentation flash alpha</span>
+  <span class="kw">if</span> (flashAlpha > <span class="num">0</span>) flashAlpha = Math.<span class="fn">max</span>(<span class="num">0</span>, flashAlpha - <span class="num">0.018</span>)
+  <span class="cm">// 4. Rendu complet</span>
+  <span class="fn">drawBackground</span>(ctx, W, H, ts)
+  <span class="fn">drawFoods</span>(ctx, foods.value, ts)
+  <span class="fn">drawSnake</span>(ctx, snake.value, direction.value, ts, activePowerUps, Date.<span class="fn">now</span>(), props.activeSkin)
+  <span class="fn">drawParticles</span>(ctx, particles)
+  <span class="fn">drawFlash</span>(ctx, W, H, flashColor, flashAlpha)
+  rafId = <span class="fn">requestAnimationFrame</span>(loop)
+}</code></pre>
+
+  <h4>Système de particules</h4>
+
+  <table>
+    <thead><tr><th>Fonction</th><th>Rôle</th><th>Particules</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>burst(x, y, color, count)</code></td>
+        <td>Explosion radiale à la position d'un food mangé</td>
+        <td>14 (22 pour RAINBOW), vitesse 1.2–4.4 px/frame</td>
+      </tr>
+      <tr>
+        <td><code>updateTrail(ts)</code></td>
+        <td>Émet des particules colorées depuis les 6 premiers segments</td>
+        <td>Rate depuis TRAIL_CONFIGS, probabilité 35% par segment</td>
+      </tr>
+      <tr>
+        <td><code>updateParticles()</code></td>
+        <td>Avance et expire toutes les particules</td>
+        <td>Gravity +0.055 Y, friction 0.97 X, life −16.67/frame</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>HUD.vue</h3>
+
+  <p>Overlay positionné en <code>absolute inset-0 pointer-events-none</code> sur le canvas.
+  Affiche score, niveau, combo (visible seulement si ≥ 3), et power-ups actifs avec countdown en secondes.
+  Le score flash (<code>scale-110</code> 150ms) est déclenché via un <code>watch(score)</code>.</p>
+
+  <h3>GachaScreen.vue</h3>
+
+  <p>Gère l'UI d'invocation et la collection. Le flow d'un pull :</p>
+
+  <ol style="margin-left:24px;color:#374151;margin-bottom:12px;">
+    <li>Bouton cliqué → <code>isOpening = true</code>, animation shake de l'œuf (320ms)</li>
+    <li>Appel <code>pullFn(count)</code> → résultats + nouveaux IDs</li>
+    <li>Flash de la rareté la plus haute tirée sur l'œuf (280ms)</li>
+    <li>Overlay plein écran <code>showReveal</code> avec SkinCards animées en stagger 70ms</li>
+  </ol>
+
+  <h3>SkinCard.vue</h3>
+
+  <p>Composant réutilisable avec 3 tailles (<code>tiny / normal / large</code>). Le preview gradient
+  est calculé depuis <code>bodyA/bodyB</code> du skin. Les skins non possédés sont affichés
+  en <code>opacity-40 grayscale</code> avec un cadenas. Badge <code>NEW</code> si <code>isNew</code>.</p>
+
+  <h3>GameOverScreen.vue</h3>
+
+  <p>Le score s'anime avec une easing cubique (<code>1 - (1-p)³</code>) sur 1100ms via RAF.
+  Les messages de mort sont tirés aléatoirement dans un tableau de 7 messages personnalisés.</p>
+
+  <!-- ── 10 FLUX ── -->
+  <div class="chapter">
+    <div class="chapter-num">10 — navigation</div>
+    <h2>Flux de navigation</h2>
+  </div>
+
+  <pre style="font-size:9pt;line-height:1.8;">
+  ┌─────────────────────────────────────────────────────────────┐
+  │                                                             │
+  │   <span class="str">[ MENU ]</span> ──────────────→ <span class="kw">[ GACHA ]</span>                        │
+  │      │                        │                            │
+  │      │  start(mode)           │ back                       │
+  │      ↓                        ↓                            │
+  │   <span class="cn">[ PLAYING ]</span>            <span class="str">[ MENU ]</span>                          │
+  │      │                                                      │
+  │      │  game-over(stats)                                    │
+  │      ↓                                                      │
+  │   <span class="fn">[ GAMEOVER ]</span>                                             │
+  │      ├─ play-again → <span class="cn">[ PLAYING ]</span>                           │
+  │      ├─ gacha      → <span class="kw">[ GACHA ]</span>                             │
+  │      └─ menu       → <span class="str">[ MENU ]</span>                              │
+  │                                                             │
+  └─────────────────────────────────────────────────────────────┘</pre>
+
+  <p>La transition entre phases utilise <code>&lt;Transition name="fade" mode="out-in"&gt;</code> (opacity
+  0.3s ease). Le mode <code>out-in</code> garantit que l'ancien composant disparaît entièrement avant
+  l'apparition du nouveau.</p>
+
+  <!-- ── 11 PERF ── -->
+  <div class="chapter">
+    <div class="chapter-num">11 — performance</div>
+    <h2>Performance &amp; Optimisations</h2>
+  </div>
+
+  <h3>Particules hors réactivité Vue</h3>
+
+  <p>Le tableau <code>particles</code> dans <code>GameCanvas.vue</code> est un tableau JS ordinaire
+  (<code>const particles = []</code>), <em>pas</em> une ref Vue. Cela évite que chaque ajout/suppression
+  de particule ne déclenche un cycle de réactivité. À 60 fps avec jusqu'à plusieurs centaines de
+  particules simultanées, cette décision est critique.</p>
+
+  <h3>moveInterval comme computed</h3>
+
+  <pre><code><span class="kw">const</span> moveInterval = <span class="fn">computed</span>(() => {
+  <span class="kw">const</span> base = <span class="fn">speedForLevel</span>(level.value)
+  <span class="kw">const</span> isSlow = activePowerUps.slow &amp;&amp; Date.<span class="fn">now</span>() &lt; activePowerUps.slow.until
+  <span class="kw">return</span> isSlow ? Math.<span class="fn">round</span>(base * <span class="num">1.75</span>) : base
+})</code></pre>
+
+  <p>La vitesse est une valeur dérivée — jamais mutée directement, toujours recalculée. Vue invalide le
+  cache dès que <code>level</code> ou <code>activePowerUps.slow</code> change.</p>
+
+  <h3>Rendu canvas vs DOM</h3>
+
+  <p>Le canvas est redessiné <em>entièrement</em> à chaque frame (pas de dirty-tracking). Cette approche
+  simple fonctionne car le fond, la grille, tous les segments et les particules changent à chaque frame
+  de toute façon. Tenter de ne redessiner que les zones modifiées serait plus complexe sans gain
+  mesurable à cette résolution (720×480).</p>
+
+  <h3>Nettoyage lifecycle</h3>
+
+  <pre><code><span class="fn">onUnmounted</span>(() => {
+  <span class="fn">cancelAnimationFrame</span>(rafId)          <span class="cm">// arrêt du RAF</span>
+  window.<span class="fn">removeEventListener</span>(<span class="str">'keydown'</span>, onKeydown)  <span class="cm">// fuite mémoire évitée</span>
+  <span class="fn">clearTimeout</span>(shakeTimeout)           <span class="cm">// timeout pending annulé</span>
+})</code></pre>
+
+  <h3>Résumé des métriques cibles</h3>
+
+  <table>
+    <thead><tr><th>Métrique</th><th>Valeur</th></tr></thead>
+    <tbody>
+      <tr><td>Framerate cible</td><td>60 fps (RAF natif)</td></tr>
+      <tr><td>Résolution canvas</td><td>720 × 480 px</td></tr>
+      <tr><td>Dépendances runtime</td><td>1 seule (vue 3.4)</td></tr>
+      <tr><td>Taille build estimée</td><td>&lt; 200 Ko (gzip)</td></tr>
+      <tr><td>Requêtes réseau en jeu</td><td>0 (tout local)</td></tr>
+    </tbody>
+  </table>
+
+  <hr />
+
+  <div style="text-align:center;color:#94A3B8;font-family:'JetBrains Mono',monospace;font-size:8.5pt;margin-top:40px;">
+    Super Snake — Édition Allan &nbsp;·&nbsp; Documentation Technique v1.0 &nbsp;·&nbsp; Mai 2026<br>
+    <span style="color:#8B5CF6;">▸ Pour imprimer en PDF : Fichier → Imprimer → Enregistrer en PDF</span>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FocusBrain — Aspect Technique</title>
+  <style>
+    :root {
+      --brand:      #7c3aed;
+      --brand-light:#a855f7;
+      --brand-pale: #faf5ff;
+      --brand-muted:#ede9fe;
+      --dark:       #1e1b4b;
+      --text:       #1a1a2e;
+      --muted:      #6b7280;
+      --border:     #e5e7eb;
+      --radius:     10px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--text);
+      background: #f8f7ff;
+      display: flex;
+    }
+
+    /* ─── SIDEBAR NAV ─────────────────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 240px;
+      height: 100vh;
+      padding-top: 0 !important;
+      background: linear-gradient(180deg, #1e1b4b 0%, #2d1b69 100%);
+      overflow-y: auto;
+      padding: 28px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 100;
+    }
+
+    #sidebar .logo {
+      font-size: 17px;
+      font-weight: 800;
+      color: #fff;
+      padding: 0 8px 20px;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      margin-bottom: 12px;
+      letter-spacing: -.3px;
+    }
+    #sidebar .logo span { color: var(--brand-light); }
+
+    #sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 12px;
+      border-radius: 7px;
+      color: rgba(255,255,255,.65);
+      text-decoration: none;
+      font-size: 12.5px;
+      font-weight: 500;
+      transition: all .15s;
+    }
+    #sidebar a:hover,
+    #sidebar a.active {
+      background: rgba(168,85,247,.25);
+      color: #fff;
+    }
+    #sidebar a .num {
+      margin-left: auto;
+      font-size: 10px;
+      background: rgba(168,85,247,.3);
+      color: var(--brand-light);
+      padding: 1px 6px;
+      border-radius: 20px;
+      font-weight: 700;
+    }
+
+    /* ─── MAIN CONTENT ────────────────────────────────── */
+    #main {
+      margin-left: 240px;
+      flex: 1;
+      padding: 48px 56px;
+      max-width: calc(100% - 240px);
+    }
+
+    /* ─── PAGE HEADER ─────────────────────────────────── */
+    .page-header {
+      background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 50%, #a855f7 100%);
+      border-radius: 16px;
+      padding: 40px 48px;
+      color: #fff;
+      margin-bottom: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 220px; height: 220px;
+      background: rgba(255,255,255,.06);
+      border-radius: 50%;
+    }
+    .page-header::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; right: 80px;
+      width: 160px; height: 160px;
+      background: rgba(255,255,255,.04);
+      border-radius: 50%;
+    }
+    .page-header h1 {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+      margin-bottom: 10px;
+    }
+    .page-header p {
+      color: rgba(255,255,255,.8);
+      font-size: 14px;
+      max-width: 600px;
+    }
+    .page-header .badge-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      background: rgba(255,255,255,.15);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,.2);
+      color: #fff;
+      padding: 4px 13px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* ─── SECTIONS ────────────────────────────────────── */
+    section {
+      margin-bottom: 56px;
+      scroll-margin-top: 24px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .section-title .icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-light));
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .section-title h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -.3px;
+    }
+
+    /* ─── CARDS ───────────────────────────────────────── */
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.05);
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--brand);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title code {
+      font-size: 11px;
+      background: var(--brand-muted);
+      color: var(--brand);
+      padding: 1px 8px;
+      border-radius: 4px;
+    }
+
+    .store-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--brand);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(124,58,237,.06);
+    }
+    .store-card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .store-card h3 .key {
+      font-size: 10.5px;
+      background: var(--dark);
+      color: #c4b5fd;
+      padding: 2px 9px;
+      border-radius: 4px;
+      font-family: 'Cascadia Code', Consolas, monospace;
+      font-weight: 500;
+    }
+    .store-card .desc {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    /* ─── TABLES ──────────────────────────────────────── */
+    .table-wrap { overflow-x: auto; margin: 16px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+    thead tr { background: linear-gradient(90deg, var(--brand), var(--brand-light)); }
+    th {
+      color: #fff;
+      padding: 9px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 11.5px;
+      white-space: nowrap;
+    }
+    td {
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--brand-muted);
+      color: #374151;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: var(--brand-pale); }
+    tr:hover td { background: #f3e8ff; }
+
+    /* ─── CODE ────────────────────────────────────────── */
+    code {
+      font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace;
+      font-size: 12px;
+      background: var(--brand-muted);
+      color: #6b21a8;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    pre {
+      background: var(--dark);
+      color: #c4b5fd;
+      padding: 18px 22px;
+      border-radius: 10px;
+      font-size: 12px;
+      line-height: 1.7;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-left: 4px solid var(--brand-light);
+    }
+    pre code { background: none; color: #c4b5fd; padding: 0; font-size: inherit; }
+
+    /* ─── TAGS / BADGES ───────────────────────────────── */
+    .tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      margin: 2px 3px 2px 0;
+    }
+    .tag-purple  { background: #f3e8ff; color: #6b21a8; }
+    .tag-blue    { background: #dbeafe; color: #1d4ed8; }
+    .tag-green   { background: #dcfce7; color: #166534; }
+    .tag-orange  { background: #ffedd5; color: #9a3412; }
+    .tag-red     { background: #fee2e2; color: #991b1b; }
+    .tag-dark    { background: var(--dark); color: #c4b5fd; }
+
+    /* ─── PILLS GRID ──────────────────────────────────── */
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+    .pill {
+      background: var(--brand-pale);
+      border: 1px solid var(--brand-muted);
+      color: var(--brand);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* ─── GRID LAYOUTS ────────────────────────────────── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    @media (max-width: 900px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    /* ─── STAT CARDS ──────────────────────────────────── */
+    .stat-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,.05);
+    }
+    .stat-card .num {
+      font-size: 36px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--brand), var(--brand-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+    .stat-card .label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* ─── LEVEL CARDS ─────────────────────────────────── */
+    .levels-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    @media (max-width: 800px) { .levels-grid { grid-template-columns: repeat(2, 1fr); } }
+    .level-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      text-align: center;
+    }
+    .level-card .emoji { font-size: 26px; display: block; margin-bottom: 6px; }
+    .level-card .name  { font-size: 11.5px; font-weight: 700; color: var(--text); }
+    .level-card .xp    { font-size: 10.5px; color: var(--muted); }
+
+    /* ─── FLOW DIAGRAM ────────────────────────────────── */
+    .flow {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin: 12px 0;
+    }
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--brand-muted);
+    }
+    .flow-step:last-child { border-bottom: none; }
+    .flow-step .arrow {
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-light));
+      color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .flow-step .content { flex: 1; }
+    .flow-step .content strong { font-size: 12.5px; display: block; margin-bottom: 2px; }
+    .flow-step .content span { font-size: 11.5px; color: var(--muted); }
+
+    /* ─── ACHIEVEMENT GRID ────────────────────────────── */
+    .achiev-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+    @media (max-width: 800px) { .achiev-grid { grid-template-columns: repeat(3, 1fr); } }
+    .achiev-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 8px;
+      text-align: center;
+    }
+    .achiev-card .icon { font-size: 22px; margin-bottom: 5px; }
+    .achiev-card .name { font-size: 10px; font-weight: 600; color: var(--muted); }
+
+    /* ─── DIVIDER ─────────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--brand-muted), transparent);
+      margin: 28px 0;
+    }
+
+    /* ─── INLINE LISTS ────────────────────────────────── */
+    ul.nice { list-style: none; padding: 0; }
+    ul.nice li {
+      padding: 6px 0;
+      border-bottom: 1px solid var(--brand-muted);
+      font-size: 12.5px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    ul.nice li::before {
+      content: '▸';
+      color: var(--brand-light);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    ul.nice li:last-child { border-bottom: none; }
+
+    /* ─── SCROLLBAR ───────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--brand-muted); border-radius: 3px; }
+
+    /* ─── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 768px) {
+      #sidebar { display: none; }
+      #main { margin-left: 0; max-width: 100%; padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════ SIDEBAR ═══════════════════ -->
+<nav id="sidebar">
+  <div class="logo">Focus<span>Brain</span> ⚡</div>
+  <a href="../projects/focus-brain.html" style="margin-bottom:8px; background:rgba(168,85,247,.18); color:#fff; font-weight:700;">← Retour Projet</a>
+  <a href="#stack">📦 Stack</a>
+  <a href="#architecture">🏗️ Architecture</a>
+  <a href="#stores">🗄️ Stores Pinia <span class="num">15</span></a>
+  <a href="#views">📄 Vues principales <span class="num">12</span></a>
+  <a href="#project-views">📁 Espace Projet <span class="num">9</span></a>
+  <a href="#components">🧩 Composants</a>
+  <a href="#tailwind">🎨 Tailwind</a>
+  <a href="#pwa">📱 PWA</a>
+  <a href="#flows">🔄 Flux de données</a>
+  <a href="#patterns">⚙️ Patterns</a>
+  <a href="#summary">📊 Résumé</a>
+</nav>
+
+<!-- ═══════════════════ MAIN ═══════════════════════ -->
+<main id="main">
+
+  <!-- ── HEADER ── -->
+  <div class="page-header">
+    <h1>FocusBrain — Aspect Technique</h1>
+    <p>Application PWA de gestion de tâches conçue spécifiquement pour les cerveaux TDAH. Stack 100 % client-side, aucun backend, aucune base de données distante.</p>
+    <div class="badge-row">
+      <span class="badge">Vue 3</span>
+      <span class="badge">Pinia</span>
+      <span class="badge">TailwindCSS</span>
+      <span class="badge">Vite + PWA</span>
+      <span class="badge">localStorage only</span>
+      <span class="badge">15 stores</span>
+      <span class="badge">12 vues</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       1. STACK
+  ══════════════════════════════════════════════════ -->
+  <section id="stack">
+    <div class="section-title">
+      <div class="icon">📦</div>
+      <h2>1. Stack Technologique</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Couche</th><th>Technologie</th><th>Version</th></tr></thead>
+        <tbody>
+          <tr><td>Framework UI</td><td>Vue 3 — Composition API</td><td><code>3.4.0</code></td></tr>
+          <tr><td>State management</td><td>Pinia</td><td><code>2.1.7</code></td></tr>
+          <tr><td>Routing</td><td>Vue Router 4 — hash history</td><td><code>4.3.0</code></td></tr>
+          <tr><td>Styling</td><td>Tailwind CSS + config custom</td><td><code>3.4.3</code></td></tr>
+          <tr><td>Build</td><td>Vite</td><td><code>5.2.0</code></td></tr>
+          <tr><td>PWA / Service Worker</td><td>vite-plugin-pwa + Workbox</td><td><code>1.3.0</code></td></tr>
+          <tr><td>Icônes</td><td>Lucide Vue Next</td><td><code>0.378.0</code></td></tr>
+          <tr><td>Composables</td><td>@vueuse/core</td><td><code>10.9.0</code></td></tr>
+          <tr><td>Manipulation dates</td><td>date-fns</td><td><code>3.6.0</code></td></tr>
+          <tr><td>Diagrammes UML</td><td>Mermaid.js</td><td><code>11.14.0</code></td></tr>
+          <tr><td>QR Code — génération</td><td>qrcode</td><td><code>1.5.4</code></td></tr>
+          <tr><td>QR Code — lecture</td><td>jsqr</td><td><code>1.4.0</code></td></tr>
+          <tr><td>Compression données</td><td>lz-string</td><td><code>1.5.0</code></td></tr>
+          <tr><td>Traitement images</td><td>sharp</td><td><code>0.34.5</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" style="background:var(--brand-pale); border-color:var(--brand-muted);">
+      <strong>⚠️ Persistance :</strong> 100 % <code>localStorage</code> — pas de backend, pas de base de données distante. Chaque store gère sa propre sérialisation JSON.
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       2. ARCHITECTURE
+  ══════════════════════════════════════════════════ -->
+  <section id="architecture">
+    <div class="section-title">
+      <div class="icon">🏗️</div>
+      <h2>2. Architecture Globale</h2>
+    </div>
+
+    <pre>src/
+├── main.js                   # Point d'entrée : Pinia + Router + montage Vue
+├── App.vue                   # Root : layout, toasts XP, onboarding, import QR, SW
+├── router/index.js           # 12 routes principales + 9 sous-routes /projects/:id/*
+│
+├── stores/                   # 15 stores Pinia (persistance localStorage individuelle)
+│   ├── tasks.js              # Tâches personnelles
+│   ├── gamification.js       # XP, niveaux, achievements, streaks
+│   ├── focus.js              # Timer Pomodoro avec persistance cross-nav
+│   ├── settings.js           # Préférences utilisateur
+│   ├── projects.js           # Projets (conteneurs)
+│   ├── projectTasks.js       # Tâches Kanban par projet
+│   ├── projectChat.js        # Messagerie interne par projet
+│   ├── projectDocs.js        # Arborescence de documents
+│   ├── projectMindmap.js     # Mind maps (graphes canvas SVG)
+│   ├── retroPlanning.js      # Rétrospectives + folders
+│   ├── braindump.js          # Capture rapide d'idées
+│   ├── habits.js             # Habitudes quotidiennes + streaks
+│   ├── notifications.js      # Web Notifications API + scheduling
+│   ├── weeklyReport.js       # Rapport hebdo avec analyse TDAH
+│   └── theme.js              # Dark / Light mode
+│
+├── views/                    # Pages principales
+│   ├── DashboardView.vue
+│   ├── TasksView.vue / FocusView.vue / BrainDumpView.vue
+│   ├── HabitsView.vue / PlannerView.vue / AchievementsView.vue
+│   ├── WeeklyReportView.vue / NotificationsView.vue / ProfileView.vue
+│   ├── ProjectsView.vue / RetroPlanning.vue
+│   └── project/              # Sous-vues imbriquées (/projects/:id/*)
+│       ├── ProjectLayout.vue (shell + sidebar projet)
+│       ├── ProjectHome / ProjectTasks / ProjectChat
+│       ├── ProjectDocs / ProjectCalendar / ProjectSpreadsheet
+│       └── ProjectUMLEditor / ProjectWordEditor / ProjectMindmap
+│
+└── components/
+    ├── layout/               # AppSidebar, AppHeader, MobileNav, MobileDrawer
+    ├── tasks/                # TaskModal
+    ├── planner/              # DailyTab, TasksTab
+    └── QRCodeDisplay.vue</pre>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">🔀 Routing</div>
+        <ul class="nice">
+          <li>Hash history (<code>#/</code>)</li>
+          <li>Lazy-loading sur tous les views</li>
+          <li>Nested routes pour l'espace projet</li>
+          <li>Scroll reset automatique au changement de route</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">⚡ App.vue — Root</div>
+        <ul class="nice">
+          <li>Layout global (Sidebar + Header + router-view)</li>
+          <li>Toast XP / Achievement (auto-close 3.5s)</li>
+          <li>Modal d'onboarding initial</li>
+          <li>Import QR code (scan caméra)</li>
+          <li>Initialisation theme + notifications schedules</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       3. STORES
+  ══════════════════════════════════════════════════ -->
+  <section id="stores">
+    <div class="section-title">
+      <div class="icon">🗄️</div>
+      <h2>3. Stores Pinia</h2>
+    </div>
+    <p style="color:var(--muted); margin-bottom:24px; font-size:13px;">
+      Pattern universel : <code>load()</code> au init depuis localStorage · <code>save()</code> (JSON.stringify) après chaque mutation · pas de plugin persist externe.
+    </p>
+
+    <!-- tasks -->
+    <div class="store-card">
+      <h3>tasks.js <span class="key">focusbrain_tasks</span></h3>
+      <p class="desc">Tâches personnelles de l'utilisateur avec priorités, énergie, sous-tâches et tracking de temps.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Champ</th><th>Type</th><th>Valeurs possibles</th></tr></thead>
+          <tbody>
+            <tr><td><code>priority</code></td><td>string</td><td>low · medium · high · urgent</td></tr>
+            <tr><td><code>energy</code></td><td>string</td><td>low · medium · high</td></tr>
+            <tr><td><code>category</code></td><td>string</td><td>perso · boulot · santé · sport · courses · autre</td></tr>
+            <tr><td><code>estimatedMinutes</code></td><td>number</td><td>5 – 240</td></tr>
+            <tr><td><code>subtasks[]</code></td><td>object[]</td><td>{ id, text, completed }</td></tr>
+            <tr><td><code>fromBrainDump</code></td><td>boolean</td><td>flag origine</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pills">
+        <span class="pill">addTask</span><span class="pill">completeTask → XP</span><span class="pill">uncompleteTask</span>
+        <span class="pill">addSubtask +5XP</span><span class="pill">addTimeSpent</span><span class="pill">deleteTask</span>
+      </div>
+      <p style="font-size:12px; color:var(--muted); margin-top:8px;">
+        <strong>Constante PRIORITY_XP :</strong> low=5 · medium=10 · high=20 · urgent=35 &nbsp;|&nbsp;
+        <strong>Computed :</strong> <code>pending</code> · <code>overdue</code> · <code>todayCompleted</code> · <code>byEnergy(level)</code>
+      </p>
+    </div>
+
+    <!-- gamification -->
+    <div class="store-card">
+      <h3>gamification.js <span class="key">focusbrain_gamification</span></h3>
+      <p class="desc">Système de progression complet — XP, niveaux, achievements, streaks, toasts.</p>
+
+      <p style="font-size:12.5px; font-weight:700; margin-bottom:10px;">8 Niveaux de progression</p>
+      <div class="levels-grid">
+        <div class="level-card"><span class="emoji">🌱</span><div class="name">Débutant</div><div class="xp">0 XP</div></div>
+        <div class="level-card"><span class="emoji">🔵</span><div class="name">Apprenti</div><div class="xp">50 XP</div></div>
+        <div class="level-card"><span class="emoji">🟢</span><div class="name">Concentré</div><div class="xp">150 XP</div></div>
+        <div class="level-card"><span class="emoji">🟡</span><div class="name">Focalisé</div><div class="xp">300 XP</div></div>
+        <div class="level-card"><span class="emoji">🟠</span><div class="name">Maître</div><div class="xp">500 XP</div></div>
+        <div class="level-card"><span class="emoji">🟣</span><div class="name">Ninja</div><div class="xp">800 XP</div></div>
+        <div class="level-card"><span class="emoji">💎</span><div class="name">Légende</div><div class="xp">1200 XP</div></div>
+        <div class="level-card"><span class="emoji">👑</span><div class="name">Dieu TDAH</div><div class="xp">2000 XP</div></div>
+      </div>
+
+      <p style="font-size:12.5px; font-weight:700; margin:16px 0 10px;">10 Achievements</p>
+      <div class="achiev-grid">
+        <div class="achiev-card"><div class="icon">⭐</div><div class="name">first_task</div></div>
+        <div class="achiev-card"><div class="icon">🔥</div><div class="name">streak_3</div></div>
+        <div class="achiev-card"><div class="icon">🏆</div><div class="name">streak_7</div></div>
+        <div class="achiev-card"><div class="icon">🍅</div><div class="name">pomodoro_5</div></div>
+        <div class="achiev-card"><div class="icon">📋</div><div class="name">tasks_10</div></div>
+        <div class="achiev-card"><div class="icon">💪</div><div class="name">tasks_50</div></div>
+        <div class="achiev-card"><div class="icon">🧠</div><div class="name">brain_dump</div></div>
+        <div class="achiev-card"><div class="icon">⚡</div><div class="name">all_energy</div></div>
+        <div class="achiev-card"><div class="icon">🚨</div><div class="name">urgent_done</div></div>
+        <div class="achiev-card"><div class="icon">📅</div><div class="name">planner</div></div>
+      </div>
+
+      <div class="pills" style="margin-top:14px;">
+        <span class="pill">addXP(amount, reason)</span><span class="pill">addPomodoro +15XP</span>
+        <span class="pill">recordTaskComplete</span><span class="pill">unlockAchievement</span>
+        <span class="pill">checkAchievements</span><span class="pill">updateStreak</span>
+      </div>
+    </div>
+
+    <!-- focus -->
+    <div class="store-card">
+      <h3>focus.js <span class="key">focusbrain_focus_state</span></h3>
+      <p class="desc">Pomodoro Timer avec persistance cross-navigation. Sauvegarde toutes les 10s, restauration recalculée au reload (abandon si &gt; 2h).</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Mode</th><th>Durée</th></tr></thead>
+          <tbody>
+            <tr><td>work</td><td>25 min</td></tr>
+            <tr><td>short_break</td><td>5 min</td></tr>
+            <tr><td>long_break</td><td>15 min</td></tr>
+            <tr><td>custom</td><td>Libre (min / h / j)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="nice">
+        <li><strong>Cycle :</strong> 4 work sessions → long_break, sinon → short_break</li>
+        <li><strong>Son fin :</strong> Web Audio API — 3 notes (C5 523 Hz · E5 659 Hz · G5 784 Hz) avec ramp exponentielle</li>
+        <li><strong>Computed :</strong> <code>formattedTime</code> (MM:SS) · <code>progress</code> (% complétion) · <code>activeTask</code></li>
+      </ul>
+    </div>
+
+    <!-- settings -->
+    <div class="store-card">
+      <h3>settings.js <span class="key">focusbrain_settings</span></h3>
+      <p class="desc">Préférences globales. <code>resetPlannerIfNewDay()</code> appelé au montage de l'app pour remettre le planner à zéro chaque jour.</p>
+      <div class="pills">
+        <span class="pill">userName</span><span class="pill">energyLevel</span><span class="pill">soundEnabled</span>
+        <span class="pill">dailyGoal</span><span class="pill">plannerDone</span><span class="pill">plannerDate</span>
+      </div>
+    </div>
+
+    <!-- projects -->
+    <div class="store-card">
+      <h3>projects.js <span class="key">focusbrain_projects</span></h3>
+      <p class="desc">Conteneurs de projets. 8 couleurs et 10 emojis prédéfinis.</p>
+      <div class="pills">
+        <span class="pill">id · name · emoji · color · description · createdAt</span>
+      </div>
+    </div>
+
+    <!-- projectTasks -->
+    <div class="store-card">
+      <h3>projectTasks.js <span class="key">focusbrain_project_tasks</span></h3>
+      <p class="desc">Tâches Kanban liées aux projets avec statuts. Migration auto des anciennes tâches sans champ <code>status</code>.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Statut</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tag-blue">todo</span></td><td>À faire</td></tr>
+            <tr><td><span class="tag tag-orange">in-progress</span></td><td>En cours</td></tr>
+            <tr><td><span class="tag tag-green">done</span></td><td>Terminé</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- projectDocs -->
+    <div class="store-card">
+      <h3>projectDocs.js <span class="key">focusbrain_project_docs</span></h3>
+      <p class="desc">Arborescence de documents par projet avec navigation par dossiers et breadcrumb.</p>
+      <div class="pills">
+        <span class="pill">📄 doc</span><span class="pill">📊 excel</span><span class="pill">📐 uml</span><span class="pill">📁 folder</span>
+      </div>
+      <ul class="nice">
+        <li><code>deleteItem(id)</code> — suppression récursive si folder (cascade sur tous les enfants)</li>
+        <li><code>listIn()</code> — tri : dossiers en premier, puis par <code>updatedAt</code> décroissant</li>
+        <li><code>getBreadcrumb(folderId)</code> — remonte la chaîne de <code>parentId</code></li>
+      </ul>
+    </div>
+
+    <!-- projectMindmap -->
+    <div class="store-card">
+      <h3>projectMindmap.js <span class="key">focusbrain_mindmaps</span></h3>
+      <p class="desc">Cartes mentales sur canvas SVG 2400 × 1600 px. Connexions Bézier, nœuds draggables, double-clic pour renommer. Suppression récursive DFS.</p>
+      <div class="pills">
+        <span class="pill">10 couleurs prédéfinies</span><span class="pill">parentId tree structure</span><span class="pill">initProject</span><span class="pill">addNode / deleteNode (DFS)</span>
+      </div>
+    </div>
+
+    <!-- retroPlanning -->
+    <div class="store-card">
+      <h3>retroPlanning.js <span class="key">focusbrain_retro_plans</span></h3>
+      <p class="desc">Rétrospectives de sprint avec arborescence de dossiers. <code>deleteFolder</code> orphanise les plans (<code>folderId → null</code>) et cascade sur les sous-dossiers.</p>
+      <div class="pills">
+        <span class="pill">wentWell[]</span><span class="pill">toImprove[]</span><span class="pill">actions[]</span><span class="pill">mood 1–5</span><span class="pill">nested folders</span>
+      </div>
+    </div>
+
+    <!-- braindump -->
+    <div class="store-card">
+      <h3>braindump.js <span class="key">focusbrain_braindump</span></h3>
+      <p class="desc">Capture rapide d'idées sans friction. Débloque l'achievement <code>brain_dump</code> à la première utilisation. Les items peuvent être convertis en tâches via TaskModal.</p>
+    </div>
+
+    <!-- habits -->
+    <div class="store-card">
+      <h3>habits.js <span class="key">focusbrain_habits</span></h3>
+      <p class="desc">Habitudes quotidiennes avec tracking de streaks. <code>recalcStreak()</code> compte les jours consécutifs à rebours dans <code>completedDates[]</code>. Toggle = +8 XP.</p>
+      <div class="pills">
+        <span class="pill">completedDates[]</span><span class="pill">streak · bestStreak</span><span class="pill">todayProgress computed</span>
+      </div>
+    </div>
+
+    <!-- notifications -->
+    <div class="store-card">
+      <h3>notifications.js <span class="key">focusbrain_notifs</span></h3>
+      <p class="desc">Notifications système (Web Notifications API) avec scheduling journalier. Max 80 notifications conservées.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Heure</th><th>Message</th></tr></thead>
+          <tbody>
+            <tr><td>08h00</td><td>Rappel planificateur quotidien</td></tr>
+            <tr><td>20h00</td><td>Alerte streak si aucune activité</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- weeklyReport -->
+    <div class="store-card">
+      <h3>weeklyReport.js <span class="key">focusbrain_weekly_reports</span></h3>
+      <p class="desc">Rapport hebdomadaire intelligent avec analyse contextuelle TDAH. Max 12 rapports. Auto-génération si &gt; 7 jours depuis le dernier.</p>
+      <pre>score = min(100, tasks×3 + streak×4 + pomodoros×1.5 + habits×5)
+
+Labels : ≥80 🌟 Excellent · ≥60 ✅ Bien · ≥40 📈 Progrès · &lt;40 🌱 En cours</pre>
+      <p style="font-size:12.5px; font-weight:700; margin:12px 0 8px;">10+ Insights TDAH contextualisés</p>
+      <div class="pills">
+        <span class="pill">Volume tâches</span><span class="pill">Patterns énergie</span><span class="pill">Milestones streak</span>
+        <span class="pill">Mode urgence firefighting</span><span class="pill">Meilleure journée</span>
+        <span class="pill">Automatisation habitudes</span><span class="pill">Surcharge backlog</span>
+      </div>
+    </div>
+
+    <!-- theme -->
+    <div class="store-card">
+      <h3>theme.js <span class="key">focusbrain_theme</span></h3>
+      <p class="desc">Dark / Light mode. Ajoute/retire la classe <code>dark</code> sur <code>&lt;html&gt;</code>. Tailwind class-based. Initialisé dans <code>App.vue</code> avant le premier rendu.</p>
+    </div>
+
+    <!-- projectChat -->
+    <div class="store-card">
+      <h3>projectChat.js <span class="key">focusbrain_project_chat</span></h3>
+      <p class="desc">Messagerie interne par projet.</p>
+      <div class="pills">
+        <span class="pill">type: text</span><span class="pill">type: image</span><span class="pill">type: gif</span><span class="pill">send / deleteMessage / byProject</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       4. VUES
+  ══════════════════════════════════════════════════ -->
+  <section id="views">
+    <div class="section-title">
+      <div class="icon">📄</div>
+      <h2>4. Vues Principales</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Vue</th><th>Route</th><th>Stores utilisés</th><th>Fonctionnalité clé</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>DashboardView</strong></td><td><code>#/</code></td>
+            <td>tasks · gamification · settings · habits · focus</td>
+            <td>Bento grid : tâche suggérée par énergie, stats, habitudes, overdue alert</td>
+          </tr>
+          <tr>
+            <td><strong>TasksView</strong></td><td><code>#/tasks</code></td>
+            <td>tasks · focus</td>
+            <td>Filtres (all/urgentes/overdue/done), sous-tâches inline, actions hover</td>
+          </tr>
+          <tr>
+            <td><strong>FocusView</strong></td><td><code>#/focus</code></td>
+            <td>focus · tasks</td>
+            <td>Timer SVG circulaire, 4 modes, dots Pomodoro, tips TDAH rotatifs</td>
+          </tr>
+          <tr>
+            <td><strong>BrainDumpView</strong></td><td><code>#/braindump</code></td>
+            <td>braindump · tasks</td>
+            <td>Textarea Entrée=submit, conversion → TaskModal, clear converted</td>
+          </tr>
+          <tr>
+            <td><strong>HabitsView</strong></td><td><code>#/habits</code></td>
+            <td>habits</td>
+            <td>Toggle emoji, streak 🔥, mini calendrier 7 jours, suggestions TDAH</td>
+          </tr>
+          <tr>
+            <td><strong>PlannerView</strong></td><td><code>#/planner</code></td>
+            <td>settings · tasks · gamification</td>
+            <td>Wizard 3 étapes (énergie → 3 tâches → intention), unlock achievement planner</td>
+          </tr>
+          <tr>
+            <td><strong>AchievementsView</strong></td><td><code>#/achievements</code></td>
+            <td>gamification</td>
+            <td>Roadmap 8 niveaux, grille 10 achievements, historique XP 20 entrées</td>
+          </tr>
+          <tr>
+            <td><strong>WeeklyReportView</strong></td><td><code>#/weekly-report</code></td>
+            <td>weeklyReport</td>
+            <td>Score card, 10+ insights TDAH, objectifs semaine suivante, historique 12</td>
+          </tr>
+          <tr>
+            <td><strong>NotificationsView</strong></td><td><code>#/notifications</code></td>
+            <td>notifications</td>
+            <td>Filtres par type, banner permission, mark read / delete</td>
+          </tr>
+          <tr>
+            <td><strong>ProfileView</strong></td><td><code>#/profile</code></td>
+            <td>settings · gamification · theme · notifications</td>
+            <td>Avatar picker, préférences, QR export/import, reset complet</td>
+          </tr>
+          <tr>
+            <td><strong>ProjectsView</strong></td><td><code>#/projects</code></td>
+            <td>projects · projectTasks · projectDocs</td>
+            <td>Grille projets avec compteurs, form création (emoji + couleur)</td>
+          </tr>
+          <tr>
+            <td><strong>RetroPlanning</strong></td><td><code>#/retro</code></td>
+            <td>retroPlanning</td>
+            <td>Arborescence folders, plan avec mood + 3 sections, breadcrumb</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="card">
+      <div class="card-title">🎯 Logique de suggestion Dashboard</div>
+      <ul class="nice">
+        <li><strong>Énergie low</strong> → tâches faciles (≤ 30 min, non urgent/high) filtrées par <code>byEnergy('low')</code></li>
+        <li><strong>Énergie medium</strong> → toutes tâches pending, triées par priorité</li>
+        <li><strong>Énergie high</strong> → toutes tâches, priorité aux plus difficiles</li>
+        <li>Fallback : première tâche de la liste pending si filtre vide</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⏱️ FocusView — Timer SVG circulaire</div>
+      <ul class="nice">
+        <li>Arc SVG : 282.6 px de circonférence, <code>stroke-dasharray</code> animé</li>
+        <li>Tips TDAH : <code>tips[Math.floor(Date.now() / 300000) % tips.length]</code> (rotation toutes les 5 min)</li>
+        <li>4 dots Pomodoro visuels (cycle de 4 sessions)</li>
+        <li>Tâches en attente visibles en arrière-plan (blurred), cliquables pour switch</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       5. ESPACE PROJET
+  ══════════════════════════════════════════════════ -->
+  <section id="project-views">
+    <div class="section-title">
+      <div class="icon">📁</div>
+      <h2>5. Espace Projet — Routes Imbriquées</h2>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div class="card-title">🏠 Shell : ProjectLayout.vue</div>
+      Sidebar desktop (nav icônes + labels, lien actif gradient). Top bar mobile avec retour + icônes. La navigation interne au projet est entièrement gérée par les <code>&lt;router-link&gt;</code> du shell.
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Sous-vue</th><th>Subroute</th><th>Stores</th><th>Fonctionnalité</th></tr></thead>
+        <tbody>
+          <tr><td><strong>ProjectHome</strong></td><td>(index)</td><td>projects · projectTasks · projectDocs</td><td>Stats, quick actions, tâches pending, docs récents</td></tr>
+          <tr><td><strong>ProjectTasks</strong></td><td>/tasks</td><td>projectTasks</td><td>Kanban 3 colonnes : À faire · En cours · Fait</td></tr>
+          <tr><td><strong>ProjectDocs</strong></td><td>/docs</td><td>projectDocs</td><td>Arborescence folders/docs, breadcrumb, renommer/supprimer</td></tr>
+          <tr><td><strong>ProjectWordEditor</strong></td><td>/docs/:docId</td><td>projectDocs</td><td>Éditeur de texte riche</td></tr>
+          <tr><td><strong>ProjectSpreadsheet</strong></td><td>/spreadsheet</td><td>projectDocs</td><td>Éditeur type Excel</td></tr>
+          <tr><td><strong>ProjectUMLEditor</strong></td><td>/uml/:docId</td><td>projectDocs</td><td>Éditeur Mermaid.js avec preview live</td></tr>
+          <tr><td><strong>ProjectMindmap</strong></td><td>/mindmap</td><td>projectMindmap</td><td>Canvas 2400×1600, nœuds draggables, connexions Bézier SVG</td></tr>
+          <tr><td><strong>ProjectCalendar</strong></td><td>/calendar</td><td>—</td><td>Calendrier des événements projet</td></tr>
+          <tr><td><strong>ProjectChat</strong></td><td>/chat</td><td>projectChat</td><td>Messagerie (texte + images + GIF)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       6. COMPOSANTS
+  ══════════════════════════════════════════════════ -->
+  <section id="components">
+    <div class="section-title">
+      <div class="icon">🧩</div>
+      <h2>6. Composants Partagés</h2>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">AppSidebar.vue</div>
+        <ul class="nice">
+          <li>Background navy gradient (linear-gradient 180°)</li>
+          <li>Collapsible 256px ↔ 64px</li>
+          <li>Sélecteur énergie (3 boutons → <code>settings.setEnergy</code>)</li>
+          <li>Groupes nav + indicateur actif (barre gauche)</li>
+          <li>Barre XP progression (bottom)</li>
+          <li>Toggle dark mode</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">AppHeader.vue</div>
+        <ul class="nice">
+          <li>Barre sticky top</li>
+          <li>Titre page + salutation personnalisée</li>
+          <li>Badges streak / XP / objectif quotidien</li>
+          <li>Toggle thème + badge notifications</li>
+          <li>Barre de progression quotidienne (%)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">TaskModal.vue</div>
+        <ul class="nice">
+          <li>Formulaire create/edit tâche</li>
+          <li>Priorité : 4 boutons colorés (low/medium/high/urgent)</li>
+          <li>Énergie : 3 boutons</li>
+          <li>Catégorie : 6 emoji-boutons</li>
+          <li>Date d'échéance + durée estimée</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">QRCodeDisplay.vue</div>
+        <ul class="nice">
+          <li>Sérialise tous les stores → JSON</li>
+          <li><code>LZString.compressToBase64()</code></li>
+          <li><code>QRCode.toCanvas()</code></li>
+          <li>Mode "lite" (données essentielles seulement)</li>
+          <li>Import : <code>jsqr</code> decode + decompress + reload</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:4px;">
+      <div class="card-title">DailyTab.vue (planner/)</div>
+      Wizard 3 étapes : <strong>1.</strong> Énergie du jour (😴/😐/⚡) →
+      <strong>2.</strong> Sélection max 3 tâches filtrées par énergie →
+      <strong>3.</strong> Intention libre (optionnel). Finalisation = <code>setPlannerDone()</code> + unlock achievement <code>planner</code> au premier usage.
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       7. TAILWIND
+  ══════════════════════════════════════════════════ -->
+  <section id="tailwind">
+    <div class="section-title">
+      <div class="icon">🎨</div>
+      <h2>7. Configuration Tailwind</h2>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Palette custom</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Groupe</th><th>Usage</th></tr></thead>
+            <tbody>
+              <tr><td><code>brand</code></td><td>Ocean/teal — couleur principale</td></tr>
+              <tr><td><code>jewel</code></td><td>Cramoisi, bordeaux, or, ambre, teal</td></tr>
+              <tr><td><code>surface</code></td><td>Gris clair pour cartes/fonds</td></tr>
+              <tr><td><code>energy</code></td><td>Orange (low) · Ambre (medium) · Vert (high)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Shadows & Animations custom</div>
+        <p style="font-size:12px; font-weight:600; margin-bottom:6px; color:var(--muted);">Shadows</p>
+        <div class="pills">
+          <span class="pill">glow-sm</span><span class="pill">glow</span><span class="pill">glow-lg</span>
+          <span class="pill">card</span><span class="pill">card-md</span><span class="pill">card-lg</span><span class="pill">inner-light</span>
+        </div>
+        <p style="font-size:12px; font-weight:600; margin:10px 0 6px; color:var(--muted);">Animations</p>
+        <div class="pills">
+          <span class="pill">fadeIn</span><span class="pill">slideUp</span><span class="pill">pop</span>
+          <span class="pill">float</span><span class="pill">shimmer</span><span class="pill">pulse-fast</span>
+          <span class="pill">bounce-slow</span><span class="pill">spin-slow</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       8. PWA
+  ══════════════════════════════════════════════════ -->
+  <section id="pwa">
+    <div class="section-title">
+      <div class="icon">📱</div>
+      <h2>8. Configuration PWA</h2>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Manifest</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Paramètre</th><th>Valeur</th></tr></thead>
+            <tbody>
+              <tr><td>Base URL</td><td><code>/GestionnaireTDAH/</code></td></tr>
+              <tr><td>Register type</td><td>autoUpdate (SW silencieux)</td></tr>
+              <tr><td>theme_color</td><td><code>#a855f7</code></td></tr>
+              <tr><td>display</td><td>standalone</td></tr>
+              <tr><td>lang</td><td>fr</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Workbox Cache</div>
+        <ul class="nice">
+          <li><strong>Pre-cache :</strong> JS, CSS, HTML, SVG, PNG, WOFF2</li>
+          <li><strong>Google Fonts :</strong> CacheFirst (1 an, max 10 entrées)</li>
+          <li><strong>Navigate fallback :</strong> <code>index.html</code></li>
+          <li><strong>Shortcuts PWA :</strong> "Focus Now" · "Mes Tâches"</li>
+          <li><strong>Icônes :</strong> PNG 192/512px + SVG</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       9. FLUX DE DONNÉES
+  ══════════════════════════════════════════════════ -->
+  <section id="flows">
+    <div class="section-title">
+      <div class="icon">🔄</div>
+      <h2>9. Flux de Données Typiques</h2>
+    </div>
+
+    <p style="font-size:13px; font-weight:700; margin-bottom:10px; color:var(--brand);">Compléter une tâche</p>
+    <div class="flow">
+      <div class="flow-step"><div class="arrow">1</div><div class="content"><strong>TasksView — clic checkbox</strong><span>tasks.completeTask(id)</span></div></div>
+      <div class="flow-step"><div class="arrow">2</div><div class="content"><strong>tasks store</strong><span>task.completed = true · completedAt = now · save()</span></div></div>
+      <div class="flow-step"><div class="arrow">3</div><div class="content"><strong>gamification.recordTaskComplete()</strong><span>totalTasksCompleted++ · addXP(PRIORITY_XP[priority]) · checkAchievements() · updateStreak()</span></div></div>
+      <div class="flow-step"><div class="arrow">4</div><div class="content"><strong>App.vue (watcher pendingToast)</strong><span>Toast XP affiché 3.5s · disparaît automatiquement</span></div></div>
+    </div>
+
+    <p style="font-size:13px; font-weight:700; margin:20px 0 10px; color:var(--brand);">Session Pomodoro complète</p>
+    <div class="flow">
+      <div class="flow-step"><div class="arrow">1</div><div class="content"><strong>FocusView — timer atteint 0</strong><span>focus.onTimerEnd()</span></div></div>
+      <div class="flow-step"><div class="arrow">2</div><div class="content"><strong>focus store</strong><span>playEndSound() (Web Audio API) · pomodorosThisSession++ · tasks.addTimeSpent(25)</span></div></div>
+      <div class="flow-step"><div class="arrow">3</div><div class="content"><strong>gamification.addPomodoro()</strong><span>+15 XP · updateStreak() · checkAchievements()</span></div></div>
+      <div class="flow-step"><div class="arrow">4</div><div class="content"><strong>Auto-switch mode</strong><span>pomodoros % 4 === 0 → long_break · sinon → short_break</span></div></div>
+    </div>
+
+    <p style="font-size:13px; font-weight:700; margin:20px 0 10px; color:var(--brand);">Export QR Code</p>
+    <div class="flow">
+      <div class="flow-step"><div class="arrow">1</div><div class="content"><strong>ProfileView — clic "Générer QR"</strong><span>QRCodeDisplay monte</span></div></div>
+      <div class="flow-step"><div class="arrow">2</div><div class="content"><strong>QRCodeDisplay</strong><span>Sérialise tous les stores → JSON → LZString.compressToBase64()</span></div></div>
+      <div class="flow-step"><div class="arrow">3</div><div class="content"><strong>QRCode.toCanvas()</strong><span>Canvas affiché, l'utilisateur peut faire un screenshot</span></div></div>
+    </div>
+
+    <p style="font-size:13px; font-weight:700; margin:20px 0 10px; color:var(--brand);">Import QR Code</p>
+    <div class="flow">
+      <div class="flow-step"><div class="arrow">1</div><div class="content"><strong>App.vue — scan caméra</strong><span>jsqr decode frame vidéo → string Base64</span></div></div>
+      <div class="flow-step"><div class="arrow">2</div><div class="content"><strong>Décompression</strong><span>LZString.decompressFromBase64() → JSON → parse</span></div></div>
+      <div class="flow-step"><div class="arrow">3</div><div class="content"><strong>Restauration</strong><span>Écriture dans chaque clé localStorage · location.reload()</span></div></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       10. PATTERNS
+  ══════════════════════════════════════════════════ -->
+  <section id="patterns">
+    <div class="section-title">
+      <div class="icon">⚙️</div>
+      <h2>10. Patterns Architecturaux</h2>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Persistance manuelle</div>
+        Pattern uniforme dans tous les stores : <code>load()</code> à l'init depuis localStorage, <code>save()</code> (JSON.stringify) après chaque mutation. Aucun plugin externe. Limites : notifications max 80 · rapports hebdo max 12 · logs XP max 50.
+      </div>
+      <div class="card">
+        <div class="card-title">Gamification transversale</div>
+        Le scoring XP et les unlocks d'achievements sont centralisés dans <code>gamification.js</code>. Les autres stores (<code>tasks</code>, <code>habits</code>, <code>focus</code>) appellent directement ses actions — aucune logique de scoring locale.
+      </div>
+      <div class="card">
+        <div class="card-title">Focus Timer cross-navigation</div>
+        Sauvegarde toutes les 10s avec un timestamp <code>savedAt</code>. À la restauration, le temps écoulé est recalculé. Si l'écart dépasse 2h, l'état est abandonné proprement.
+      </div>
+      <div class="card">
+        <div class="card-title">Dark mode class-based</div>
+        Classe <code>dark</code> sur <code>&lt;html&gt;</code> (Tailwind class strategy). Initialisé dans <code>App.vue</code> avant le premier rendu pour éviter le flash de couleur.
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:4px;">
+      <div class="card-title">Commandes de développement</div>
+      <pre>npm run dev      # Serveur de développement → http://localhost:5173
+npm run build    # Build production → dist/
+npm run preview  # Preview du build</pre>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       11. RÉSUMÉ
+  ══════════════════════════════════════════════════ -->
+  <section id="summary">
+    <div class="section-title">
+      <div class="icon">📊</div>
+      <h2>11. Résumé Chiffré</h2>
+    </div>
+
+    <div class="grid-3">
+      <div class="stat-card"><div class="num">15</div><div class="label">Stores Pinia</div></div>
+      <div class="stat-card"><div class="num">12</div><div class="label">Vues principales</div></div>
+      <div class="stat-card"><div class="num">9</div><div class="label">Sous-vues projet</div></div>
+      <div class="stat-card"><div class="num">8</div><div class="label">Niveaux de progression</div></div>
+      <div class="stat-card"><div class="num">10</div><div class="label">Achievements</div></div>
+      <div class="stat-card"><div class="num">4</div><div class="label">Modes Pomodoro</div></div>
+      <div class="stat-card"><div class="num">4</div><div class="label">Types de documents</div></div>
+      <div class="stat-card"><div class="num">10+</div><div class="label">Insights TDAH / rapport</div></div>
+      <div class="stat-card"><div class="num">0</div><div class="label">Backend (full client-side)</div></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ─── SIDEBAR ACTIVE LINK SCRIPT ───────────────────── -->
+<script>
+  const links = document.querySelectorAll('#sidebar a')
+  const sections = document.querySelectorAll('section[id]')
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'))
+        const active = document.querySelector(`#sidebar a[href="#${entry.target.id}"]`)
+        if (active) active.classList.add('active')
+      }
+    })
+  }, { threshold: 0.25 })
+
+  sections.forEach(s => observer.observe(s))
+</script>
+
+</body>
+</html>

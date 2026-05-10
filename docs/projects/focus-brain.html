@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Focus Brain — Allan Vitu</title>
-    <meta name="description" content="Focus Brain — Application PWA de gestion du TDAH. Timers Pomodoro, gestion de tâches et interface neuro-adaptée.">
+    <title>FocusBrain — Case Study — Allan Vitu</title>
+    <meta name="description" content="FocusBrain — Suite de productivité TDAH complète. PWA Vue.js 3, Pinia, gamification, Brain Dump, Focus Pomodoro, habits tracker et gestion de projets intégrée.">
     <link rel="icon" type="image/png" href="../assets/branding/favicon.png" sizes="32x32">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,6 +14,181 @@
     <link rel="stylesheet" href="../css/rytiger.css">
     <link rel="stylesheet" href="../css/projects.css">
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
+    <style>
+        .fb-stats-strip {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin: 3rem 0;
+        }
+        .fb-stat-card {
+            padding: 1.4rem 1rem;
+            border-radius: 14px;
+            text-align: center;
+            border: 1px solid rgba(6,182,212,0.18);
+            background: rgba(6,182,212,0.04);
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .fb-stat-card:hover {
+            border-color: rgba(6,182,212,0.45);
+            transform: translateY(-3px);
+        }
+        .fb-stat-num {
+            font-size: 2rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: var(--cyan-500);
+            line-height: 1.1;
+        }
+        .fb-stat-lbl {
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-top: 0.4rem;
+        }
+        .fb-features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+        .fb-feature-card {
+            padding: 1.4rem;
+            border-radius: 14px;
+            border: 1px solid var(--border-glass);
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .fb-feature-card:hover {
+            border-color: rgba(6,182,212,0.35);
+            transform: translateY(-2px);
+        }
+        .fb-feature-header {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 0.6rem;
+        }
+        .fb-feature-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            background: rgba(6,182,212,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .fb-feature-icon i { width: 18px; height: 18px; color: var(--cyan-500); }
+        .fb-feature-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .fb-feature-desc {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .fb-feature-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin-top: 0.75rem;
+        }
+        .fb-feature-tags .tag {
+            font-size: 0.68rem;
+            padding: 0.2rem 0.55rem;
+            border-radius: 20px;
+            background: rgba(6,182,212,0.08);
+            border: 1px solid rgba(6,182,212,0.2);
+            color: var(--cyan-500);
+            font-family: var(--font-mono);
+        }
+        .fb-stack-section {
+            margin: 3rem 0;
+        }
+        .fb-stack-section h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .fb-stack-section h3 span.mono-text {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .fb-stack-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+        .fb-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: var(--font-mono);
+            border: 1px solid rgba(6,182,212,0.25);
+            background: rgba(6,182,212,0.06);
+            color: var(--cyan-500);
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .fb-pill:hover {
+            background: rgba(6,182,212,0.14);
+            border-color: rgba(6,182,212,0.5);
+        }
+        .fb-doc-banner {
+            margin: 2.5rem 0;
+            padding: 2rem 2.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(6,182,212,0.25);
+            background: rgba(6,182,212,0.04);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        .fb-doc-banner-text h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.3rem;
+        }
+        .fb-doc-banner-text p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .fb-section-heading {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 0.3rem;
+        }
+        .fb-section-sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 860px) {
+            .fb-stats-strip { grid-template-columns: repeat(3, 1fr); }
+            .fb-features-grid { grid-template-columns: 1fr; }
+            .fb-doc-banner { flex-direction: column; align-items: flex-start; }
+        }
+        @media (max-width: 540px) {
+            .fb-stats-strip { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
 </head>
 <body>
     <script>
@@ -83,16 +258,18 @@
             <span class="breadcrumb-sep">/</span>
             <a href="../#projects" class="breadcrumb-link">Projets</a>
             <span class="breadcrumb-sep">/</span>
-            <span class="breadcrumb-current">Focus Brain</span>
+            <span class="breadcrumb-current">FocusBrain</span>
         </nav>
 
+        <!-- ── HEADER + CAROUSEL ── -->
         <div class="project-showcase reveal-fade">
             <div class="project-header-block">
                 <span class="section-label mono-text" style="color: var(--cyan-500);">Case Study // 05</span>
                 <h2 class="cyan-gradient">FocusBrain 🧠⚡</h2>
-                <p class="project-tagline cyan">Suite de Productivité TDAH — PWA Vue.js</p>
-                <p>Bien plus qu'un gestionnaire de tâches — une suite de productivité complète et gamifiée, conçue spécifiquement pour les cerveaux TDAH. FocusBrain combine Brain Dump instantané, timers Focus Pomodoro adaptatifs, un vrai gestionnaire de projets (tableur, éditeur UML, chat, calendrier, docs), habits tracker, rapports hebdomadaires et rétro-planning. Tout ce dont un cerveau atypique a besoin pour rester structuré, motivé et productif.</p>
+                <p class="project-tagline cyan">Suite de Productivité TDAH — PWA Vue.js 3</p>
+                <p>Bien plus qu'un gestionnaire de tâches — une suite de productivité complète et gamifiée, conçue spécifiquement pour les cerveaux TDAH. FocusBrain combine Brain Dump instantané, timers Focus Pomodoro adaptatifs, un vrai gestionnaire de projets (tableur, éditeur UML, chat, calendrier, mind maps, docs), habits tracker, rapports hebdomadaires TDAH et rétro-planning. 100&nbsp;% client-side, installable, offline-first.</p>
             </div>
+
             <div class="project-content">
                 <div class="carousel-wrapper carousel-focusbrain">
                     <div class="simple-carousel" id="focusCarousel">
@@ -108,7 +285,7 @@
                             <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain7.png" alt="FocusBrain — Calendrier"></div>
                             <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain8.png" alt="FocusBrain — Rapport Hebdo"></div>
                             <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain9.png" alt="FocusBrain — Rétro-Planning"></div>
-                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain10.png" alt="FocusBrain — Éditeur"></div>
+                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain10.png" alt="FocusBrain — Éditeur UML"></div>
                             <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain11.png" alt="FocusBrain — Profil"></div>
                         </div>
                         <div class="carousel-controls">
@@ -117,31 +294,205 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="project-details glass-panel">
-                    <h3>Architecture & Fonctionnalités</h3>
+                    <h3>Fonctionnalités Clés</h3>
                     <ul class="spec-list">
                         <li>
                             <i data-lucide="brain" class="text-cyan"></i>
-                            <div class="spec-text"><strong>Brain Dump & Focus Pomodoro</strong><span>Capture instantanée des pensées et timers Pomodoro adaptatifs pour les sessions de travail intenses. Mode Focus dédié avec suivi de productivité.</span></div>
+                            <div class="spec-text"><strong>Brain Dump &amp; Focus Pomodoro</strong><span>Capture instantanée des pensées (Entrée = submit) et timer SVG circulaire avec 4 modes adaptatifs. Son de fin via Web Audio API, tips TDAH rotatifs.</span></div>
                         </li>
                         <li>
                             <i data-lucide="layout-dashboard" class="text-cyan"></i>
-                            <div class="spec-text"><strong>Suite Projet Intégrée</strong><span>Dashboard, tâches, calendrier, chat, docs, tableur et éditeur UML — un écosystème complet de gestion de projet dans une seule PWA Vue.js.</span></div>
+                            <div class="spec-text"><strong>Suite Projet Intégrée</strong><span>Dashboard, Kanban, calendrier, chat (texte/images/GIF), docs, tableur type Excel, éditeur Mermaid UML et mind maps canvas — un écosystème entier.</span></div>
                         </li>
                         <li>
                             <i data-lucide="repeat-2" class="text-cyan"></i>
-                            <div class="spec-text"><strong>Habits Tracker & Rétro-Planning</strong><span>Suivi d'habitudes quotidiennes, rapports hebdomadaires automatiques et rétro-planning pour maintenir la progression sur la durée.</span></div>
+                            <div class="spec-text"><strong>Habits Tracker &amp; Rétro-Planning</strong><span>Suivi d'habitudes quotidiennes avec streaks, rapports hebdomadaires TDAH avec score (0–100) et 10+ insights contextualisés.</span></div>
                         </li>
                         <li>
                             <i data-lucide="zap" class="text-cyan"></i>
-                            <div class="spec-text"><strong>PWA Gamifiée & Offline-First</strong><span>Installation native, Service Worker, cache offline et système de récompenses gamifié pour soutenir la motivation des cerveaux TDAH.</span></div>
+                            <div class="spec-text"><strong>Gamification &amp; PWA Offline</strong><span>8 niveaux XP, 10 achievements, système de récompenses. Service Worker Workbox, QR code export/import, aucun backend.</span></div>
                         </li>
                     </ul>
                     <div class="project-links">
                         <a href="https://allanvitu.github.io/GestionnaireTDAH/#/" target="_blank" rel="noopener noreferrer" class="btn-project cyan">Ouvrir FocusBrain <i data-lucide="external-link"></i></a>
+                        <a href="../doc_technique/aspect_technique_FocusBrain.html" class="btn-project cyan" style="background: transparent; border: 1px solid rgba(6,182,212,0.45); color: var(--cyan-500);">Doc Technique <i data-lucide="file-code"></i></a>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- ── STATS STRIP ── -->
+        <div class="fb-stats-strip reveal-fade">
+            <div class="fb-stat-card">
+                <div class="fb-stat-num">15</div>
+                <div class="fb-stat-lbl">Stores Pinia</div>
+            </div>
+            <div class="fb-stat-card">
+                <div class="fb-stat-num">12</div>
+                <div class="fb-stat-lbl">Vues principales</div>
+            </div>
+            <div class="fb-stat-card">
+                <div class="fb-stat-num">9</div>
+                <div class="fb-stat-lbl">Sous-vues Projet</div>
+            </div>
+            <div class="fb-stat-card">
+                <div class="fb-stat-num">4</div>
+                <div class="fb-stat-lbl">Modes Pomodoro</div>
+            </div>
+            <div class="fb-stat-card">
+                <div class="fb-stat-num">0</div>
+                <div class="fb-stat-lbl">Backend (100% offline)</div>
+            </div>
+        </div>
+
+        <!-- ── FEATURES DEEP DIVE ── -->
+        <div class="reveal-fade" style="margin: 2rem 0;">
+            <p class="fb-section-heading">Architecture &amp; Modules</p>
+            <p class="fb-section-sub mono-text">Chaque module est un store Pinia indépendant avec persistance localStorage.</p>
+
+            <div class="fb-features-grid">
+
+                <div class="fb-feature-card">
+                    <div class="fb-feature-header">
+                        <div class="fb-feature-icon"><i data-lucide="brain"></i></div>
+                        <div class="fb-feature-title">Brain Dump</div>
+                    </div>
+                    <p class="fb-feature-desc">Capture rapide d'idées sans friction — une zone de texte où Entrée = submit. Les items sont convertibles en tâches via TaskModal. Débloque l'achievement <code style="font-size:0.75rem; background: rgba(6,182,212,0.1); color: var(--cyan-500); padding: 1px 5px; border-radius: 3px;">brain_dump</code> à la première utilisation.</p>
+                    <div class="fb-feature-tags">
+                        <span class="tag">braindump.js</span>
+                        <span class="tag">TaskModal</span>
+                        <span class="tag">+XP</span>
+                    </div>
+                </div>
+
+                <div class="fb-feature-card">
+                    <div class="fb-feature-header">
+                        <div class="fb-feature-icon"><i data-lucide="timer"></i></div>
+                        <div class="fb-feature-title">Focus Pomodoro</div>
+                    </div>
+                    <p class="fb-feature-desc">Timer SVG circulaire avec 4 modes : work (25 min), short break (5 min), long break (15 min) et custom. Persistance cross-navigation, sauvegarde toutes les 10s, son de fin Web Audio API (notes C5/E5/G5).</p>
+                    <div class="fb-feature-tags">
+                        <span class="tag">focus.js</span>
+                        <span class="tag">Web Audio API</span>
+                        <span class="tag">+15 XP/session</span>
+                    </div>
+                </div>
+
+                <div class="fb-feature-card">
+                    <div class="fb-feature-header">
+                        <div class="fb-feature-icon"><i data-lucide="kanban"></i></div>
+                        <div class="fb-feature-title">Suite Projet Complète</div>
+                    </div>
+                    <p class="fb-feature-desc">Par projet : Kanban 3 colonnes, calendrier d'événements, chat (texte / images / GIF), arborescence de documents avec breadcrumb, tableur Excel, éditeur Mermaid.js UML avec preview live, mind maps sur canvas SVG 2400×1600 avec nœuds draggables.</p>
+                    <div class="fb-feature-tags">
+                        <span class="tag">projectTasks.js</span>
+                        <span class="tag">projectChat.js</span>
+                        <span class="tag">projectDocs.js</span>
+                        <span class="tag">Mermaid.js</span>
+                    </div>
+                </div>
+
+                <div class="fb-feature-card">
+                    <div class="fb-feature-header">
+                        <div class="fb-feature-icon"><i data-lucide="repeat-2"></i></div>
+                        <div class="fb-feature-title">Habits Tracker</div>
+                    </div>
+                    <p class="fb-feature-desc">Habitudes quotidiennes avec toggle emoji, streak 🔥, calcul de la meilleure série, mini calendrier 7 jours et suggestions TDAH. Toggle = +8 XP. <code style="font-size:0.75rem; background: rgba(6,182,212,0.1); color: var(--cyan-500); padding: 1px 5px; border-radius: 3px;">recalcStreak()</code> compte les jours consécutifs à rebours.</p>
+                    <div class="fb-feature-tags">
+                        <span class="tag">habits.js</span>
+                        <span class="tag">completedDates[]</span>
+                        <span class="tag">+8 XP/toggle</span>
+                    </div>
+                </div>
+
+                <div class="fb-feature-card">
+                    <div class="fb-feature-header">
+                        <div class="fb-feature-icon"><i data-lucide="bar-chart-2"></i></div>
+                        <div class="fb-feature-title">Rapport Hebdomadaire TDAH</div>
+                    </div>
+                    <p class="fb-feature-desc">Score calculé automatiquement (tâches × 3 + streak × 4 + pomodoros × 1,5 + habits × 5) avec labels contextuels. 10+ insights TDAH : patterns énergie, mode urgence, milestones streak, meilleure journée. Auto-génération si &gt; 7 jours.</p>
+                    <div class="fb-feature-tags">
+                        <span class="tag">weeklyReport.js</span>
+                        <span class="tag">Score 0–100</span>
+                        <span class="tag">10+ insights</span>
+                    </div>
+                </div>
+
+                <div class="fb-feature-card">
+                    <div class="fb-feature-header">
+                        <div class="fb-feature-icon"><i data-lucide="trophy"></i></div>
+                        <div class="fb-feature-title">Gamification</div>
+                    </div>
+                    <p class="fb-feature-desc">8 niveaux XP (🌱 Débutant → 👑 Dieu TDAH), 10 achievements, streaks journaliers, toasts XP auto-close 3.5s. Scoring par priorité : urgent = 35 XP, high = 20, medium = 10, low = 5. Unlocks déclenchés depuis n'importe quel store.</p>
+                    <div class="fb-feature-tags">
+                        <span class="tag">gamification.js</span>
+                        <span class="tag">8 niveaux</span>
+                        <span class="tag">10 achievements</span>
+                    </div>
+                </div>
+
+                <div class="fb-feature-card">
+                    <div class="fb-feature-header">
+                        <div class="fb-feature-icon"><i data-lucide="smartphone"></i></div>
+                        <div class="fb-feature-title">PWA &amp; Planner Quotidien</div>
+                    </div>
+                    <p class="fb-feature-desc">Installable (standalone), Service Worker Workbox, cache Fonts CacheFirst, shortcuts "Focus Now" et "Mes Tâches". Planner journalier en wizard 3 étapes : énergie → 3 tâches filtrées → intention. Export/import via QR code compressé (LZString).</p>
+                    <div class="fb-feature-tags">
+                        <span class="tag">vite-plugin-pwa</span>
+                        <span class="tag">Workbox</span>
+                        <span class="tag">LZString QR</span>
+                    </div>
+                </div>
+
+                <div class="fb-feature-card">
+                    <div class="fb-feature-header">
+                        <div class="fb-feature-icon"><i data-lucide="layout-dashboard"></i></div>
+                        <div class="fb-feature-title">Dashboard Intelligent</div>
+                    </div>
+                    <p class="fb-feature-desc">Suggestion de tâche adaptée au niveau d'énergie du moment (low → tâches faciles ≤ 30 min, high → priorité maximale). Bento grid : stats, overdue alert, habitudes, timer Pomodoro actif et barre de progression quotidienne.</p>
+                    <div class="fb-feature-tags">
+                        <span class="tag">DashboardView</span>
+                        <span class="tag">byEnergy()</span>
+                        <span class="tag">Bento Grid</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ── TECH STACK ── -->
+        <div class="fb-stack-section reveal-fade">
+            <h3>Stack Technologique <span class="mono-text">// package.json</span></h3>
+            <div class="fb-stack-pills">
+                <span class="fb-pill">Vue 3.4</span>
+                <span class="fb-pill">Pinia 2.1</span>
+                <span class="fb-pill">Vue Router 4.3</span>
+                <span class="fb-pill">TailwindCSS 3.4</span>
+                <span class="fb-pill">Vite 5.2</span>
+                <span class="fb-pill">vite-plugin-pwa</span>
+                <span class="fb-pill">Workbox</span>
+                <span class="fb-pill">Mermaid.js 11</span>
+                <span class="fb-pill">date-fns 3.6</span>
+                <span class="fb-pill">@vueuse/core 10</span>
+                <span class="fb-pill">LZString 1.5</span>
+                <span class="fb-pill">qrcode 1.5</span>
+                <span class="fb-pill">jsqr 1.4</span>
+                <span class="fb-pill">Lucide Vue</span>
+                <span class="fb-pill">localStorage only</span>
+            </div>
+        </div>
+
+        <!-- ── DOC TECHNIQUE BANNER ── -->
+        <div class="fb-doc-banner glass-panel reveal-fade">
+            <div class="fb-doc-banner-text">
+                <h4>📄 Documentation Technique Complète</h4>
+                <p>Architecture détaillée, 15 stores Pinia, flux de données, patterns PWA, configuration Tailwind et résumé chiffré de l'ensemble du projet.</p>
+            </div>
+            <a href="../doc_technique/aspect_technique_FocusBrain.html" class="btn-project cyan" style="white-space: nowrap; flex-shrink: 0;">
+                Voir la doc <i data-lucide="arrow-right"></i>
+            </a>
         </div>
 
         <nav class="project-page-nav-footer" aria-label="Navigation entre projets">
@@ -169,7 +520,7 @@
                 <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
                 <a href="https://www.instagram.com/allan.vitu/" target="_blank" aria-label="Instagram"><i data-lucide="instagram"></i></a>
             </div>
-            <p class="footer-copy">&copy; 2026 Allan Vitu. Développeur Full-Stack & DevOps.</p>
+            <p class="footer-copy">&copy; 2026 Allan Vitu. Développeur Full-Stack &amp; DevOps.</p>
         </div>
     </footer>
 
