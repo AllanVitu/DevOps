@@ -3,7 +3,15 @@
     "allow": [
       "WebFetch(domain:allanvitu.github.io)",
       "WebSearch",
-      "Bash(gh api *)"
+      "Bash(gh api *)",
+      "Bash(curl -s \"https://allanvitu.github.io/QuestFlow/\")",
+      "Bash(curl -s \"https://allanvitu.github.io/LoLFlow/\")",
+      "Bash(curl -s \"https://allanvitu.github.io/DevToolsBox/\")",
+      "Bash(curl -s \"https://allanvitu.github.io/wikialbion/\")",
+      "Bash(curl -s \"https://allanvitu.github.io/QuestFlow/assets/index-CgkA98Gp.js\")",
+      "Bash(curl -s \"https://allanvitu.github.io/LoLFlow/assets/index-CS_VzbGE.js\")",
+      "Bash(curl -s \"https://allanvitu.github.io/DevToolsBox/assets/index-DXyUdI-V.js\")",
+      "Bash(curl -s \"https://allanvitu.github.io/wikialbion/script.js\")"
     ]
   }
 }

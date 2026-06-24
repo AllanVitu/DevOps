@@ -102,6 +102,7 @@ button {
 .text-crimson { color: var(--crimson-500); }
 .text-green { color: #22c55e; }
 .text-cyan { color: var(--cyan-500); }
+.text-gold { color: var(--gold-500); }
 
 .gradient-text {
     background: linear-gradient(135deg, var(--primary), var(--secondary));

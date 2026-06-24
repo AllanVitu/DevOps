@@ -200,6 +200,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initCarousel('regiondexCarousel', 'regionPrev', 'regionNext');
     initCarousel('snakeCarousel', 'snakePrev', 'snakeNext');
     initCarousel('focusCarousel', 'focusPrev', 'focusNext');
+    initCarousel('questflowCarousel', 'questflowPrev', 'questflowNext');
+    initCarousel('lolflowCarousel', 'lolflowPrev', 'lolflowNext');
+    initCarousel('devtoolboxCarousel', 'devtoolboxPrev', 'devtoolboxNext');
+    initCarousel('wikialbionCarousel', 'wikialbionPrev', 'wikialbionNext');
 
     // =============================================
     // PROJECT GRID FILTER
