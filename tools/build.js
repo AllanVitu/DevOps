@@ -46,13 +46,21 @@ const NAV = [
     ['#contact', 'Contact'],
 ];
 
+/* Labels for the filter chips. Derived from the projects themselves below, so
+   removing a project can never leave a chip that matches nothing. */
+const FILTER_LABELS = {
+    vue: 'Vue.js',
+    vanilla: 'Vanilla JS',
+    pwa: 'PWA',
+    api: 'API',
+    game: 'Game',
+};
+
 const FILTERS = [
     ['all', 'Tous'],
-    ['vue', 'Vue.js'],
-    ['vanilla', 'Vanilla JS'],
-    ['pwa', 'PWA'],
-    ['api', 'API'],
-    ['game', 'Game'],
+    ...Object.entries(FILTER_LABELS).filter(([key]) =>
+        PROJECTS.some((p) => p.filters.includes(key))
+    ),
 ];
 
 /* --------------------------------------------------------------------------
@@ -269,41 +277,72 @@ function buildIndex() {
         lime: 'var(--c-lime)',
     };
 
-    const cards = featured
-        .map((p, i) => {
-            const lead = i === 0 ? ' card--lead' : '';
-            return `
-                <a class="card panel panel--lift${lead}" href="./projects/${p.slug}.html" data-tags="${p.filters.join(' ')}">
-                    <div class="card-media">
-                        ${picture(`media/${p.media}/${p.cover}`, `${p.name} — aperçu`, {
-                            lazy: i > 0,
-                            sizes: i === 0 ? '(max-width: 640px) 100vw, 740px' : '(max-width: 640px) 100vw, 370px',
-                        })}
-                        <span class="card-flag" style="--flag: ${themeVar[p.theme]}">${esc(p.flag)}</span>
-                        <span class="card-hover"><span>Voir le projet ${icon('arrow-right')}</span></span>
-                    </div>
-                    <div class="card-body">
-                        <span class="card-num" style="--accent-num: ${themeVar[p.theme]}">${num(p)}</span>
-                        <h3>${esc(p.name)}</h3>
-                        <p>${esc(p.summary)}</p>
-                        <div class="card-foot">
-                            <div class="tag-row">${p.tags.slice(0, 3).map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</div>
-                            <span class="card-arrow">${icon('arrow-right')}</span>
+    /* --- Sticky index --- */
+    const indexLinks = PROJECTS.map((p, i) => {
+        const opener = i === featured.length && archive.length
+            ? `<p class="divider">Aussi</p>\n                        `
+            : '';
+        return `${opener}<a href="#p-${p.slug}"><span class="n">${num(p)}</span><span>${esc(p.name)}</span></a>`;
+    }).join('\n                        ');
+
+    /* --- Full chapter: the four highlighted projects --- */
+    const fullChapters = featured
+        .map(
+            (p, i) => `
+                    <article class="chapter reveal" id="p-${p.slug}" data-theme-accent="${p.theme}">
+                        <a class="chapter-media" href="./projects/${p.slug}.html" tabindex="-1" aria-hidden="true">
+                            ${picture(`media/${p.media}/${p.cover}`, '', {
+                                lazy: i > 0,
+                                sizes: '(max-width: 1000px) 100vw, 880px',
+                            })}
+                            <span class="open-hint"><span>Ouvrir l’étude de cas ${icon('arrow-right')}</span></span>
+                        </a>
+                        <p class="chapter-kicker">
+                            <span class="n">${num(p)}</span>
+                            <span class="sep">/</span>
+                            ${p.tags.map((t) => esc(t)).join(' <span class="sep">·</span> ')}
+                        </p>
+                        <h3><a href="./projects/${p.slug}.html">${esc(p.name)}</a></h3>
+                        <p class="chapter-lead">${esc(p.summary)}</p>
+                        <div class="chapter-story">
+                            <div>
+                                <h4>Le problème</h4>
+                                <p>${esc(p.narrative.problem)}</p>
+                            </div>
+                            <div>
+                                <h4>Le choix technique</h4>
+                                <p>${esc(p.narrative.solution)}</p>
+                            </div>
                         </div>
-                    </div>
-                </a>`;
-        })
+                        <div class="chapter-actions">
+                            <a class="btn btn--chapter" href="./projects/${p.slug}.html">Étude de cas ${icon('arrow-right')}</a>
+                            <a class="btn btn--ghost" href="${p.live}" target="_blank" rel="noopener noreferrer">Ouvrir le projet ${icon('external-link')}</a>
+                        </div>
+                    </article>`
+        )
         .join('');
 
-    const archiveRows = archive
+    /* --- Compact chapter: secondary projects keep a page but not the stage --- */
+    const compactChapters = archive
         .map(
             (p) => `
-                <a class="archive-row" href="./projects/${p.slug}.html" data-tags="${p.filters.join(' ')}">
-                    <span class="num">${num(p)}</span>
-                    <span class="title">${esc(p.name)}<small>${esc(p.tagline)}</small></span>
-                    <span class="archive-tags">${p.tags.slice(0, 2).map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</span>
-                    ${icon('arrow-right')}
-                </a>`
+                    <article class="chapter chapter--compact reveal" id="p-${p.slug}" data-theme-accent="${p.theme}">
+                        <div class="chapter-row">
+                            <a class="chapter-media" href="./projects/${p.slug}.html" tabindex="-1" aria-hidden="true">
+                                ${picture(`media/${p.media}/${p.cover}`, '', { sizes: '200px' })}
+                            </a>
+                            <div>
+                                <p class="chapter-kicker">
+                                    <span class="n">${num(p)}</span>
+                                    <span class="sep">/</span>
+                                    ${p.tags.map((t) => esc(t)).join(' <span class="sep">·</span> ')}
+                                </p>
+                                <h3><a href="./projects/${p.slug}.html">${esc(p.name)}</a></h3>
+                                <p class="chapter-lead">${esc(p.summary)}</p>
+                            </div>
+                            <a class="btn btn--ghost btn--sm" href="./projects/${p.slug}.html">Voir ${icon('arrow-right')}</a>
+                        </div>
+                    </article>`
         )
         .join('');
 
@@ -377,44 +416,36 @@ ${navbar({ depth: 0, icon })}
         <section class="shell section reveal">
             <p class="section-eyebrow">Compétences</p>
             <h2 class="section-title">Stack</h2>
-            <div class="bento">
-                <article class="bento-card bento-card--wide panel panel--lift panel--aurora" data-tilt>
-                    <span class="bento-icon">${icon('layers')}</span>
-                    <h3>Architecture frontend</h3>
+            <div class="caps">
+                <div>
+                    <h3>${icon('layers')} Frontend</h3>
                     <p>Web Components, PWA et rendu côté serveur. Des interfaces réactives, accessibles et tenables dans le temps.</p>
                     <div class="tag-row">
                         <span class="tag tag--accent">Vue 3</span><span class="tag tag--accent">JavaScript ES6+</span>
                         <span class="tag tag--accent">TailwindCSS</span><span class="tag tag--accent">HTML / CSS</span>
                     </div>
-                </article>
-                <article class="bento-card bento-metric panel panel--lift">
-                    <span class="bento-icon">${icon('zap')}</span>
-                    <p class="value">Disponible</p>
-                    <p class="label">freelance &amp; CDI</p>
-                </article>
-                <article class="bento-card panel panel--lift panel--aurora" data-tilt>
-                    <span class="bento-icon">${icon('database')}</span>
-                    <h3>Backend &amp; data</h3>
+                </div>
+                <div>
+                    <h3>${icon('database')} Backend &amp; data</h3>
                     <p>APIs REST sécurisées, bases relationnelles et NoSQL.</p>
                     <div class="tag-row">
                         <span class="tag tag--accent">PHP 8</span><span class="tag tag--accent">MySQL</span>
                         <span class="tag tag--accent">Node.js</span><span class="tag tag--accent">NoSQL</span>
                     </div>
-                </article>
-                <article class="bento-card bento-card--wide panel panel--lift panel--aurora" data-tilt>
-                    <span class="bento-icon">${icon('server')}</span>
-                    <h3>DevOps &amp; infrastructure</h3>
+                </div>
+                <div>
+                    <h3>${icon('server')} DevOps</h3>
                     <p>Automatisation des déploiements, conteneurisation et pipelines CI/CD.</p>
-                    <figure class="gh-chart">
-                        <figcaption>${icon('git-commit')} Activité GitHub</figcaption>
-                        <img src="https://ghchart.rshah.org/8b5cf6/allanvitu" alt="Graphique des contributions GitHub d’Allan Vitu sur l’année écoulée" loading="lazy" decoding="async" width="663" height="104">
-                    </figure>
                     <div class="tag-row">
                         <span class="tag tag--accent">Docker</span><span class="tag tag--accent">CI/CD</span>
                         <span class="tag tag--accent">Linux</span><span class="tag tag--accent">Cloud</span>
                     </div>
-                </article>
+                </div>
             </div>
+            <figure class="gh-chart">
+                <figcaption>${icon('git-commit')} Activité GitHub — 12 derniers mois</figcaption>
+                <img src="https://ghchart.rshah.org/8b5cf6/allanvitu" alt="Graphique des contributions GitHub d’Allan Vitu sur l’année écoulée" loading="lazy" decoding="async" width="663" height="104">
+            </figure>
         </section>
 
         <!-- ── PARCOURS ─────────────────────────────────────────────────── -->
@@ -448,24 +479,17 @@ ${navbar({ depth: 0, icon })}
             <div class="reveal">
                 <p class="section-eyebrow">Projets</p>
                 <h2 class="section-title">Ce que je construis</h2>
-                <p class="section-lead">Cinq projets détaillés en étude de cas, et quatre autres consultables en un clic. Tous sont en ligne et jouables.</p>
-
-                <div class="filters" role="group" aria-label="Filtrer les projets par technologie">
-                    ${FILTERS.map(([v, l]) => `<button class="filter" type="button" data-filter="${v}" aria-pressed="${v === 'all'}">${l}</button>`).join('\n                    ')}
-                </div>
-                <p class="filter-count" id="filterCount" role="status" aria-live="polite"></p>
+                <p class="section-lead">${featured.length} projets détaillés, chacun avec le problème qu'il résout et le choix technique qui en découle. Tous sont en ligne et utilisables.</p>
             </div>
 
-            <div class="cards reveal">${cards}
-                <p class="filter-empty" id="filterEmpty" hidden>Aucun projet ne correspond à ce filtre.</p>
-            </div>
+            <div class="chapters">
+                <nav class="chapter-index" aria-label="Index des projets">
+                    <p class="chapter-index-label">Projets</p>
+                    ${indexLinks}
+                </nav>
 
-            <div class="archive reveal">
-                <div class="archive-head">
-                    <h3>Autres projets</h3>
-                    <p>${archive.length} projets · pages complètes</p>
+                <div class="chapter-flow">${fullChapters}${compactChapters}
                 </div>
-                ${archiveRows}
             </div>
         </section>
 

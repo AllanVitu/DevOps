@@ -11,54 +11,6 @@
 module.exports = [
     /* ------------------------------------------------------------------ 01 */
     {
-        slug: 'forge-ui',
-        tier: 'featured',
-        theme: 'violet',
-        name: 'FORGE UI',
-        title: "FORGE UI — L'écosystème du design system",
-        flag: 'Featured',
-        tagline: 'Marketplace de composants & thèmes premium',
-        summary:
-            "Marketplace e-commerce de composants UI atomiques et de thèmes complets, construite sur Vue 3, Pinia et Vite.",
-        intro:
-            "FORGE UI centralise et distribue des ressources de design prêtes à l'intégration : composants UI atomiques, thèmes complets (Dark Fantasy, Cyberpunk) et animations CSS/JS. Le tout dans un vrai tunnel e-commerce, du catalogue filtrable jusqu'au panier.",
-        tags: ['Vue 3', 'Pinia', 'Vite', 'E-commerce'],
-        filters: ['vue'],
-        meta: [
-            ['Rôle', 'Conception & développement'],
-            ['Type', 'Application e-commerce'],
-            ['Stack', 'Vue 3 · Pinia · Vite'],
-        ],
-        live: 'https://e-commerce-production-53ac.up.railway.app/#/',
-        doc: 'doc_technique_forgeui.html',
-        media: 'forgeui',
-        cover: 'accueil',
-        slides: [
-            ['accueil', "FORGE UI — page d'accueil de la marketplace"],
-            ['packs', 'FORGE UI — catalogue des packs de composants'],
-        ],
-        specs: [
-            ['layers', 'Architecture frontend', "Vue 3 en Composition API, bundlé par Vite pour un hot reload instantané et un build optimisé."],
-            ['database', "Gestion d'état scalable", "Pinia orchestre le catalogue, le panier et les préférences utilisateur dans des stores découplés."],
-            ['shopping-cart', 'Marketplace dynamique', "Filtrage avancé, prévisualisation interactive des composants et tunnel d'achat complet."],
-        ],
-        narrative: {
-            problem:
-                "Les ressources de design que je réutilisais d'un projet à l'autre étaient éparpillées : des composants copiés-collés, des thèmes jamais versionnés, aucune prévisualisation avant intégration.",
-            solution:
-                "Une marketplace où chaque ressource est un produit : fiche, aperçu interactif, variantes de thème et panier. Le catalogue et le panier vivent dans des stores Pinia séparés, ce qui garde le filtrage indépendant de la logique d'achat.",
-            outcome:
-                "Un tunnel e-commerce complet déployé en continu sur Railway, et un design system réellement réutilisable plutôt qu'un dossier de snippets.",
-        },
-        stack: [
-            ['Frontend', ['Vue 3', 'Composition API', 'Vite', 'CSS moderne']],
-            ['État & données', ['Pinia', 'Vue Router', 'LocalStorage']],
-            ['Déploiement', ['Railway', 'Build Vite']],
-        ],
-    },
-
-    /* ------------------------------------------------------------------ 02 */
-    {
         slug: 'focus-brain',
         tier: 'featured',
         theme: 'cyan',
@@ -82,7 +34,7 @@ module.exports = [
         media: 'focusbrain',
         cover: 'accueil-2',
         slides: [
-            ['accueil-1', 'FocusBrain — écran d\'accueil'],
+            ['accueil-1', "FocusBrain — écran d'accueil"],
             ['accueil-2', 'FocusBrain — accueil, seconde vue'],
             ['vue-01', 'FocusBrain — tableau de bord'],
             ['vue-03', 'FocusBrain — vue projet'],
@@ -140,108 +92,7 @@ module.exports = [
         ],
     },
 
-    /* ------------------------------------------------------------------ 03 */
-    {
-        slug: 'rytiger',
-        tier: 'featured',
-        theme: 'amber',
-        name: 'Rytiger RPG',
-        title: "Rytiger RPG — L'éveil de la forge",
-        flag: 'RPG',
-        tagline: 'Dark fantasy, combat ATB et forge de fusion',
-        summary:
-            "RPG dark fantasy en pixel art néo-rétro : combat ATB asynchrone, forge de fusion de héros et Tour de l'Infini.",
-        intro:
-            "Un jeu de rôle qui allie pixel art néo-rétro et mécaniques modernes. On collectionne des héros, on maîtrise la forge de fusion et on gravit les étages de la Tour de l'Infini dans une interface desktop-first pensée pour la fluidité.",
-        tags: ['Vue 3', 'Pinia', 'Game', 'PWA'],
-        filters: ['vue', 'game', 'pwa'],
-        meta: [
-            ['Rôle', 'Game design & développement'],
-            ['Type', 'RPG navigateur'],
-            ['Cible', 'Desktop-first'],
-        ],
-        live: 'https://allanvitu.github.io/Rytiger_RPG/',
-        doc: 'doc_technique_rytiger.html',
-        media: 'rytiger',
-        cover: 'home',
-        slides: [
-            ['home', 'Rytiger — menu principal'],
-            ['equipe', "Rytiger — gestion de l'équipe"],
-            ['forge-fusion', 'Rytiger — forge de fusion'],
-            ['campagne', 'Rytiger — mode campagne'],
-            ['guide', "Rytiger — guide de l'aventurier"],
-        ],
-        video: ['gameplay.mp4', 'home', 'Séquence de gameplay — 35 Mo, chargée à la demande'],
-        specs: [
-            ['monitor', 'Architecture desktop-first', "Interface pensée pour les écrans larges, avec une densité d'information assumée."],
-            ['swords', 'Moteur de combat ATB', "Système ATB asynchrone, animations fluides et gestion fine des états de combat."],
-            ['boxes', 'Écosystème de données', "Inventaire persistant, fusion de héros et progression dynamique via Pinia et LocalStorage."],
-        ],
-        narrative: {
-            problem:
-                "Un combat au tour par tour classique se lit vite comme une suite de menus. Je voulais une tension continue, sans imposer les réflexes d'un jeu d'action.",
-            solution:
-                "Un moteur ATB asynchrone : chaque combattant remplit sa propre jauge en temps réel, et l'interface ne bloque jamais. Les états de combat sont centralisés dans un store, ce qui rend les effets et les enchaînements testables indépendamment du rendu.",
-            outcome:
-                "Un RPG jouable de bout en bout — campagne, équipe, forge de fusion et Tour de l'Infini — entièrement persisté côté navigateur.",
-        },
-        stack: [
-            ['Frontend', ['Vue 3', 'Composition API', 'Vite']],
-            ['Moteur de jeu', ['ATB asynchrone', 'Machine à états de combat']],
-            ['Persistance', ['Pinia', 'LocalStorage']],
-        ],
-    },
-
-    /* ------------------------------------------------------------------ 04 */
-    {
-        slug: 'regiondex',
-        tier: 'featured',
-        theme: 'emerald',
-        name: 'RégionDex',
-        title: 'RégionDex — Pokédex PWA multi-API',
-        flag: 'PWA',
-        tagline: 'Interface Bento Box et agrégation de plusieurs API',
-        summary:
-            "Pokédex installable qui agrège plusieurs API Pokémon derrière une interface Bento Box et un cache local optimisé.",
-        intro:
-            "RégionDex agrège plusieurs sources de données Pokémon dans une interface Bento Box lisible d'un coup d'œil. L'application est installable, met en cache ses réponses et reste rapide même sur une connexion faible.",
-        tags: ['Vue 3', 'PWA', 'REST API'],
-        filters: ['vue', 'pwa', 'api'],
-        meta: [
-            ['Rôle', 'Conception & développement'],
-            ['Type', 'PWA consommatrice d\'API'],
-            ['Sources', 'Plusieurs API Pokémon'],
-        ],
-        live: 'https://allanvitu.github.io/Pokedex/',
-        doc: 'doc_technique_regiondex.html',
-        media: 'regiondex',
-        cover: 'accueil',
-        slides: [
-            ['accueil', 'RégionDex — accueil'],
-            ['card', 'RégionDex — fiche détaillée'],
-            ['menu', 'RégionDex — navigation par région'],
-        ],
-        specs: [
-            ['layout-grid', 'Interface Bento Box', "Une grille modulaire qui hiérarchise les statistiques sans noyer l'utilisateur."],
-            ['plug', 'Agrégation multi-API', "Plusieurs API interrogées et normalisées derrière une couche de données unique."],
-            ['smartphone', 'PWA installable', "Installation locale, cache des réponses et navigation rapide y compris hors-ligne."],
-        ],
-        narrative: {
-            problem:
-                "Aucune API Pokémon ne fournit à elle seule tout ce qu'une fiche complète demande, et les appeler naïvement à chaque navigation rend l'interface poussive.",
-            solution:
-                "Une couche d'agrégation qui interroge les différentes sources, normalise les réponses dans un format unique et met le résultat en cache. Le rendu ne connaît qu'un seul modèle de données, quelle que soit la source.",
-            outcome:
-                "Une PWA installable où la navigation entre régions et fiches reste immédiate après le premier chargement.",
-        },
-        stack: [
-            ['Frontend', ['Vue 3', 'Composition API', 'Vite']],
-            ['Données', ['REST', 'Agrégation multi-source', 'Cache local']],
-            ['PWA', ['Service Worker', 'Manifest installable']],
-        ],
-    },
-
-    /* ------------------------------------------------------------------ 05 */
+    /* ------------------------------------------------------------------ 02 */
     {
         slug: 'devtoolbox',
         tier: 'featured',
@@ -294,58 +145,11 @@ module.exports = [
         ],
     },
 
-    /* ------------------------------------------------------------------ 06 */
-    {
-        slug: 'lolflow',
-        tier: 'archive',
-        theme: 'amber',
-        name: 'LoLFlow',
-        title: 'LoLFlow — Companion multi-jeux Riot',
-        flag: 'API',
-        tagline: 'League of Legends · Valorant · 2XKO',
-        summary:
-            "Companion connecté à l'API Riot Games : analyse de joueurs sur trois jeux, clé API stockée localement, proxy CORS Cloudflare.",
-        intro:
-            "Un companion multi-jeux connecté à l'API Riot Games. On renseigne sa clé, on choisit sa région et on analyse n'importe quel joueur sur League of Legends, Valorant ou 2XKO. La clé reste dans le navigateur et un Cloudflare Worker fait office de proxy CORS en production.",
-        tags: ['Vue 3', 'Riot API', 'Pinia'],
-        filters: ['vue', 'api'],
-        meta: [
-            ['Rôle', 'Conception & développement'],
-            ['Type', 'Client d\'API tierce'],
-            ['Jeux', 'LoL · Valorant · 2XKO'],
-        ],
-        live: 'https://allanvitu.github.io/LoLFlow/',
-        media: 'lolflow',
-        cover: 'lol',
-        slides: [
-            ['lol', 'LoLFlow — League of Legends'],
-            ['valorant', 'LoLFlow — Valorant'],
-            ['2xko', 'LoLFlow — 2XKO'],
-        ],
-        specs: [
-            ['plug', 'API Riot Games', "Recherche et analyse de joueurs en temps réel sur trois jeux."],
-            ['shield', 'Clé stockée localement', "La clé API reste en LocalStorage, elle n'est jamais commitée ni envoyée ailleurs."],
-            ['route', 'Proxy CORS', "Un Cloudflare Worker contourne les restrictions CORS de l'API en production."],
-        ],
-        narrative: {
-            problem:
-                "L'API Riot refuse les appels directs depuis un navigateur, et un site statique n'a pas de backend pour porter une clé secrète.",
-            solution:
-                "La clé reste côté utilisateur, en LocalStorage, et les appels transitent par un Cloudflare Worker qui gère le CORS. Aucun secret n'entre dans le dépôt.",
-            outcome:
-                "Un companion entièrement statique, déployé sur GitHub Pages, qui interroge malgré tout une API tierce authentifiée.",
-        },
-        stack: [
-            ['Frontend', ['Vue 3', 'Pinia', 'Vite']],
-            ['Intégration', ['Riot Games API', 'Cloudflare Worker', 'LocalStorage']],
-        ],
-    },
-
-    /* ------------------------------------------------------------------ 07 */
+    /* ------------------------------------------------------------------ 03 */
     {
         slug: 'questflow',
-        tier: 'archive',
-        theme: 'cyan',
+        tier: 'featured',
+        theme: 'violet',
         name: 'QuestFlow',
         title: 'QuestFlow — Command center gamifié',
         flag: 'Gamification',
@@ -384,14 +188,14 @@ module.exports = [
         },
         stack: [
             ['Frontend', ['Vue 3', 'Pinia', 'Vite']],
-            ['Fonctionnel', ['Kanban', 'Pomodoro', 'Heatmap d\'activité']],
+            ['Fonctionnel', ['Kanban', 'Pomodoro', "Heatmap d'activité"]],
         ],
     },
 
-    /* ------------------------------------------------------------------ 08 */
+    /* ------------------------------------------------------------------ 04 */
     {
         slug: 'wikialbion',
-        tier: 'archive',
+        tier: 'featured',
         theme: 'emerald',
         name: "Atlas d'Albion",
         title: "Atlas d'Albion — Codex de terrain",
@@ -412,7 +216,7 @@ module.exports = [
         media: 'wikialbion',
         cover: 'accueil',
         slides: [
-            ["accueil", "Atlas d'Albion — accueil"],
+            ['accueil', "Atlas d'Albion — accueil"],
             ['campagne', "Atlas d'Albion — suivi de campagne"],
             ['codex', "Atlas d'Albion — codex"],
         ],
@@ -429,58 +233,61 @@ module.exports = [
             outcome:
                 "Un codex consultable en jeu, installable, et maintenu au rythme des patchs.",
         },
+        metrics: [
+            ['40', 'Fiches pratiques'],
+            ['18', 'Anecdotes'],
+            ['0', 'Framework'],
+        ],
         stack: [
             ['Frontend', ['Vanilla JS', 'HTML', 'CSS éditorial']],
             ['PWA', ['Service Worker', 'Manifest installable']],
         ],
     },
 
-    /* ------------------------------------------------------------------ 09 */
+    /* ------------------------------------------------------------------ 05 */
     {
-        slug: 'super-snake',
+        slug: 'lolflow',
         tier: 'archive',
-        theme: 'lime',
-        name: 'Super Snake',
-        title: 'Super Snake — Arcade et gacha',
-        flag: 'Arcade',
-        tagline: 'Snake moderne, skins déblocables et multi-modes',
+        theme: 'amber',
+        name: 'LoLFlow',
+        title: 'LoLFlow — Companion multi-jeux Riot',
+        flag: 'API',
+        tagline: 'League of Legends · Valorant · 2XKO',
         summary:
-            "Réinvention arcade du Snake : système gacha, plusieurs modes de jeu et skins déblocables, en Vanilla JS.",
+            "Companion connecté à l'API Riot Games : analyse de joueurs sur trois jeux, clé API stockée localement, proxy CORS Cloudflare.",
         intro:
-            "Une réinvention moderne du Snake classique : mécaniques fluides, plusieurs modes de jeu aux règles distinctes et un système d'invocations gacha pour débloquer skins et personnages.",
-        tags: ['Vanilla JS', 'Game', 'Arcade'],
-        filters: ['vanilla', 'game'],
+            "Un companion multi-jeux connecté à l'API Riot Games. On renseigne sa clé, on choisit sa région et on analyse n'importe quel joueur sur League of Legends, Valorant ou 2XKO. La clé reste dans le navigateur et un Cloudflare Worker fait office de proxy CORS en production.",
+        tags: ['Vue 3', 'Riot API', 'Pinia'],
+        filters: ['vue', 'api'],
         meta: [
-            ['Rôle', 'Game design & développement'],
-            ['Type', 'Jeu arcade navigateur'],
-            ['Dépendances', 'Aucune — Vanilla JS'],
+            ['Rôle', 'Conception & développement'],
+            ['Type', "Client d'API tierce"],
+            ['Jeux', 'LoL · Valorant · 2XKO'],
         ],
-        live: 'https://allanvitu.github.io/Ultimate_Snake/',
-        doc: 'doc_technique_super_snake.html',
-        media: 'supersnake',
-        cover: 'accueil',
+        live: 'https://allanvitu.github.io/LoLFlow/',
+        media: 'lolflow',
+        cover: 'lol',
         slides: [
-            ['accueil', 'Super Snake — écran d\'accueil'],
-            ['gacha', 'Super Snake — système gacha'],
-            ['modes', 'Super Snake — modes de jeu'],
+            ['lol', 'LoLFlow — League of Legends'],
+            ['valorant', 'LoLFlow — Valorant'],
+            ['2xko', 'LoLFlow — 2XKO'],
         ],
-        video: ['gameplay.mp4', 'accueil', 'Séquence de gameplay — 27 Mo, chargée à la demande'],
         specs: [
-            ['sparkles', 'Système gacha', "Skins et personnages exclusifs débloqués via un système d'invocations."],
-            ['gamepad-2', 'Multi-modes', "Plusieurs modes aux règles et défis distincts, pour la rejouabilité."],
-            ['zap', 'Gameplay arcade', "Mécaniques fluides et progression pensée pour les sessions courtes."],
+            ['plug', 'API Riot Games', "Recherche et analyse de joueurs en temps réel sur trois jeux."],
+            ['shield', 'Clé stockée localement', "La clé API reste en LocalStorage, elle n'est jamais commitée ni envoyée ailleurs."],
+            ['route', 'Proxy CORS', "Un Cloudflare Worker contourne les restrictions CORS de l'API en production."],
         ],
         narrative: {
             problem:
-                "Le Snake original se joue trois minutes : la boucle est parfaite mais il n'y a aucune raison d'y revenir.",
+                "L'API Riot refuse les appels directs depuis un navigateur, et un site statique n'a pas de backend pour porter une clé secrète.",
             solution:
-                "Ajouter une progression méta par-dessus la boucle arcade — un gacha qui débloque skins et personnages, et plusieurs modes qui changent les règles plutôt que la difficulté.",
+                "La clé reste côté utilisateur, en LocalStorage, et les appels transitent par un Cloudflare Worker qui gère le CORS. Aucun secret n'entre dans le dépôt.",
             outcome:
-                "Un arcade sans dépendance où chaque partie alimente une progression persistante.",
+                "Un companion entièrement statique, déployé sur GitHub Pages, qui interroge malgré tout une API tierce authentifiée.",
         },
         stack: [
-            ['Frontend', ['Vanilla JS', 'Canvas', 'CSS']],
-            ['Systèmes', ['Gacha', 'Multi-modes', 'Persistance locale']],
+            ['Frontend', ['Vue 3', 'Pinia', 'Vite']],
+            ['Intégration', ['Riot Games API', 'Cloudflare Worker', 'LocalStorage']],
         ],
     },
 ];

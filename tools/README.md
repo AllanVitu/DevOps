@@ -27,10 +27,19 @@ GitHub Pages serves it directly with no build step.
    `.avif` and `.webp` (see below).
 2. Add the dimensions to `dimensions.json` (key = path under `assets/`, without
    the extension).
-3. Add an entry to `projects.js`. `tier: 'featured'` puts it in the main grid
-   with a full case study; `tier: 'archive'` puts it in the compact list.
-   Array order drives numbering, grid order and prev/next paging.
+3. Add an entry to `projects.js`. `tier: 'featured'` gives it a full-width
+   chapter on the homepage (large screenshot, problem/solution columns, own
+   case-study page); `tier: 'archive'` gives it a compact one-line chapter and
+   still builds its page. Array order drives numbering, chapter order, the
+   sticky index and prev/next paging.
 4. Run `node tools/build.js`.
+
+`narrative.problem` and `narrative.solution` are required for featured
+projects — they are what the homepage chapter shows under the title.
+
+The technology chips come from each project's `filters` array; the homepage
+only renders a chip if at least one project carries it, so removing a project
+can never leave a filter that matches nothing.
 
 ## Re-encoding images
 

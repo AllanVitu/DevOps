@@ -155,42 +155,44 @@
     }
 
     /* ----------------------------------------------------------------------
-       PROJECT FILTER
+       CHAPTER INDEX
+       Marks the chapter currently occupying the middle of the viewport. The
+       index is decorative-but-useful: without JS every link still jumps to its
+       chapter, only the active highlight is lost.
        ---------------------------------------------------------------------- */
-    function initFilter() {
-        const buttons = $$('.filter');
-        const cards = $$('.card[data-tags]');
-        const rows = $$('.archive-row[data-tags]');
-        const archive = $('.archive');
-        const count = $('#filterCount');
-        const empty = $('#filterEmpty');
-        if (!buttons.length || !cards.length) return;
+    function initChapterIndex() {
+        const links = $$('.chapter-index a');
+        const chapters = $$('.chapter');
+        if (!links.length || !chapters.length) return;
 
-        const apply = (filter) => {
-            const show = (el) => {
-                const match = filter === 'all' || el.dataset.tags.split(' ').includes(filter);
-                el.hidden = !match;
-                return match;
-            };
+        const linkFor = new Map();
+        links.forEach((a) => {
+            const target = document.getElementById(a.hash.slice(1));
+            if (target) linkFor.set(target, a);
+        });
 
-            const shownCards = cards.filter(show).length;
-            const shownRows = rows.filter(show).length;
-            const total = shownCards + shownRows;
+        // Several chapters can straddle the band at once; the topmost visible
+        // one wins, so the highlight never flickers between two entries.
+        const visible = new Set();
 
-            buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === filter)));
-
-            // Hide the archive heading too, otherwise it dangles over nothing.
-            if (archive) archive.hidden = shownRows === 0;
-            if (empty) empty.hidden = total > 0;
-            if (count) {
-                count.textContent = total === 0
-                    ? 'aucun projet'
-                    : `${total} projet${total > 1 ? 's' : ''} affiché${total > 1 ? 's' : ''}`;
-            }
+        const paint = () => {
+            if (!visible.size) return;
+            const top = [...visible].sort(
+                (a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top
+            )[0];
+            links.forEach((a) => a.removeAttribute('aria-current'));
+            linkFor.get(top)?.setAttribute('aria-current', 'true');
         };
 
-        buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.filter)));
-        apply('all');
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) visible.add(entry.target);
+                else visible.delete(entry.target);
+            });
+            paint();
+        }, { rootMargin: '-20% 0px -55% 0px' });
+
+        chapters.forEach((c) => io.observe(c));
     }
 
     /* ----------------------------------------------------------------------
@@ -330,7 +332,7 @@
         initDrawer();
         initScrollSpy();
         initReveal();
-        initFilter();
+        initChapterIndex();
         initVideo();
         initPointerEffects();
         $$('[data-carousel]').forEach(initCarousel);

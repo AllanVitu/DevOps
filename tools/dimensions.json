@@ -63,14 +63,6 @@
     "w": 1600,
     "h": 821
   },
-  "media/forgeui/accueil": {
-    "w": 1600,
-    "h": 805
-  },
-  "media/forgeui/packs": {
-    "w": 1600,
-    "h": 771
-  },
   "media/lolflow/2xko": {
     "w": 1600,
     "h": 956
@@ -94,50 +86,6 @@
   "media/questflow/stats": {
     "w": 1600,
     "h": 956
-  },
-  "media/regiondex/accueil": {
-    "w": 1600,
-    "h": 792
-  },
-  "media/regiondex/card": {
-    "w": 1600,
-    "h": 777
-  },
-  "media/regiondex/menu": {
-    "w": 1600,
-    "h": 801
-  },
-  "media/rytiger/campagne": {
-    "w": 1600,
-    "h": 771
-  },
-  "media/rytiger/equipe": {
-    "w": 1600,
-    "h": 775
-  },
-  "media/rytiger/forge-fusion": {
-    "w": 1600,
-    "h": 768
-  },
-  "media/rytiger/guide": {
-    "w": 1600,
-    "h": 772
-  },
-  "media/rytiger/home": {
-    "w": 1600,
-    "h": 791
-  },
-  "media/supersnake/accueil": {
-    "w": 1600,
-    "h": 773
-  },
-  "media/supersnake/gacha": {
-    "w": 1600,
-    "h": 777
-  },
-  "media/supersnake/modes": {
-    "w": 402,
-    "h": 220
   },
   "media/wikialbion/accueil": {
     "w": 1600,
