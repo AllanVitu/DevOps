@@ -1,525 +1,372 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Allan Vitu | Développeur Full-Stack & DevOps</title>
-    <meta name="description" content="Portfolio d'Allan Vitu — Développeur Full-Stack & DevOps. Applications web performantes, interfaces premium et architectures cloud résilientes.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://allanvitu.github.io/DevOps/docs/">
-    <meta property="og:title" content="Allan Vitu | Développeur Full-Stack & DevOps">
-    <meta property="og:description" content="Applications web performantes, interfaces premium et architectures cloud résilientes.">
-    <meta property="og:image" content="https://allanvitu.github.io/DevOps/docs/assets/imgs/imgs_carousel/Rytiger/Rytiger_Home.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="icon" type="image/png" href="./assets/branding/favicon.png" sizes="32x32">
-    <link rel="apple-touch-icon" href="./assets/branding/logo-main.png">
-    <link rel="manifest" href="./site.webmanifest">
-    <meta name="theme-color" content="#06060a">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/base.css">
-    <link rel="stylesheet" href="./css/devops.css">
-    <link rel="stylesheet" href="./css/rytiger.css">
-    <link rel="stylesheet" href="./css/projects.css">
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
-</head>
-<body>
-    <!-- Dark mode : applied before paint to prevent flash -->
-    <script>
-    (function(){
-        const t = localStorage.getItem('theme');
-        const dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (dark) document.body.classList.add('dark');
-    })();
-    </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Allan Vitu — Développeur Full-Stack &amp; DevOps</title>
+<meta name="description" content="Portfolio d'Allan Vitu, développeur Full-Stack &amp; DevOps. Applications web performantes, PWA offline-first et infrastructures cloud.">
+<meta name="author" content="Allan Vitu">
+<link rel="canonical" href="https://allanvitu.github.io/DevOps/docs/">
 
-    <!-- Loader -->
-    <div id="page-loader"><span class="loader-logo">AV</span></div>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Allan Vitu — Portfolio">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://allanvitu.github.io/DevOps/docs/">
+<meta property="og:title" content="Allan Vitu — Développeur Full-Stack &amp; DevOps">
+<meta property="og:description" content="Portfolio d'Allan Vitu, développeur Full-Stack &amp; DevOps. Applications web performantes, PWA offline-first et infrastructures cloud.">
+<meta property="og:image" content="https://allanvitu.github.io/DevOps/docs/assets/media/forgeui/accueil.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Allan Vitu — Développeur Full-Stack &amp; DevOps">
+<meta name="twitter:description" content="Portfolio d'Allan Vitu, développeur Full-Stack &amp; DevOps. Applications web performantes, PWA offline-first et infrastructures cloud.">
+<meta name="twitter:image" content="https://allanvitu.github.io/DevOps/docs/assets/media/forgeui/accueil.webp">
 
-    <!-- Custom Cursor -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+<link rel="icon" href="./assets/brand/icon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="./assets/brand/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./assets/brand/icon-180.png">
+<link rel="manifest" href="./site.webmanifest">
+<meta name="theme-color" content="#f7f7fb">
 
-    <!-- Background -->
-    <div class="animated-bg"></div>
-    <div id="rain-container"></div>
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
+<script>
+/* Resolve the theme before first paint so the page never flashes, and flag
+   that scripting is on — reveal animations only hide content when it can be
+   revealed again. */
+(function(){document.documentElement.classList.add('js');
+try{var s=localStorage.getItem('theme');
+document.documentElement.dataset.theme=s||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+}catch(e){document.documentElement.dataset.theme='light';}})();
+</script>
 
-    <!-- Navbar -->
-    <nav class="glass-navbar" id="navbar">
-        <div class="scroll-tracker"></div>
-        <a href="#" class="nav-brand magnetic-btn">
-            <img src="./assets/branding/logo.svg" alt="Logo" class="nav-logo">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;500&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;500&display=swap"></noscript>
+
+<link rel="stylesheet" href="./css/site.css">
+</head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="i-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></symbol><symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol><symbol id="i-database" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></symbol><symbol id="i-git-commit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><line x1="3" x2="9" y1="12" y2="12"/><line x1="15" x2="21" y1="12" y2="12"/></symbol><symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></symbol><symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></symbol><symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></symbol><symbol id="i-server" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></symbol><symbol id="i-smartphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></symbol><symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol><symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"/></symbol></svg>
+
+    <a class="skip-link" href="#main">Aller au contenu</a>
+
+    <div class="backdrop" aria-hidden="true"></div>
+
+    <header class="nav" id="nav">
+        <div class="nav-progress" aria-hidden="true"></div>
+        <a class="nav-brand" href="#" aria-label="Allan Vitu — accueil">
+            <img src="./assets/brand/logo.svg" alt="" width="28" height="28">
             Allan<span class="gradient-text">/</span>Vitu
         </a>
-        <div class="nav-center">
+        <nav class="nav-links" aria-label="Navigation principale">
             <a href="#about">À propos</a>
             <a href="#experience">Parcours</a>
             <a href="#projects">Projets</a>
             <a href="#contact">Contact</a>
-        </div>
-        <div class="nav-right">
-            <div class="social-icons">
-                <a href="https://github.com/allanvitu" target="_blank" rel="noopener" aria-label="GitHub"><i data-lucide="github"></i></a>
-                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-                <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+        </nav>
+        <div class="nav-actions">
+            <div class="nav-social">
+                <a href="https://github.com/allanvitu" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12c0 3.259.014 3.668.072 4.948.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.668-.014 4.948-.072c1.277-.06 2.148-.261 2.913-.558.788-.306 1.459-.717 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
             </div>
-            <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
-                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-                </svg>
-                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Changer de thème">
+                <svg class="icon icon-sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
             </button>
-            <a href="mailto:allan.vitu90@gmail.com" class="btn-cv magnetic-btn"><i data-lucide="mail"></i> Contact</a>
-            <button class="hamburger" id="hamburgerBtn" aria-label="Ouvrir le menu">
+            <a class="btn btn--ghost btn--sm" href="mailto:allan.vitu90@gmail.com" data-magnetic><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg> Contact</a>
+            <button class="nav-burger" id="navBurger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navDrawer">
                 <span></span><span></span><span></span>
             </button>
         </div>
-    </nav>
+    </header>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
+    <div class="nav-drawer" id="navDrawer">
         <a href="#about">À propos</a>
         <a href="#experience">Parcours</a>
         <a href="#projects">Projets</a>
         <a href="#contact">Contact</a>
-        <div class="mobile-socials">
-            <a href="https://github.com/allanvitu" target="_blank" aria-label="GitHub"><i data-lucide="github"></i></a>
-            <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-            <a href="https://www.instagram.com/allan.vitu/" target="_blank" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+        <div class="nav-drawer-social">
+            <a href="https://github.com/allanvitu" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12c0 3.259.014 3.668.072 4.948.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.668-.014 4.948-.072c1.277-.06 2.148-.261 2.913-.558.788-.306 1.459-.717 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
         </div>
     </div>
 
-    <main class="main-container">
-        <!-- Hero -->
-        <header class="hero-section reveal-fade">
-            <div class="hero-badge">
-                <i data-lucide="zap" class="icon-sm"></i>
-                <span class="mono-text typewriter-text">disponible : freelance & CDI</span>
-            </div>
-            <h1 class="hero-title">
-                Je construis des apps web<br>
-                <span class="gradient-text glitch-text" data-text="robustes & premium.">robustes & premium.</span>
-            </h1>
-            <p class="hero-subtitle">Développeur Full-Stack & DevOps. Du design system au pipeline CI/CD, je crée des expériences digitales complètes, performantes et esthétiques.</p>
+    <main id="main">
+        <!-- ── HERO ─────────────────────────────────────────────────────── -->
+        <section class="shell hero">
+            <p class="hero-badge"><span class="dot" aria-hidden="true"></span> Disponible — freelance &amp; CDI</p>
+            <h1>Je construis des apps web<br><span class="gradient-text">robustes &amp; premium.</span></h1>
+            <p class="hero-sub">Développeur Full-Stack &amp; DevOps. Du design system au pipeline CI/CD, je conçois des applications complètes, performantes et durables.</p>
             <div class="hero-cta">
-                <a href="#contact" class="btn-primary magnetic-btn">Me contacter <i data-lucide="arrow-right"></i></a>
-                <a href="#projects" class="btn-outline magnetic-btn">Voir les projets <i data-lucide="arrow-down"></i></a>
+                <a class="btn btn--primary" href="#projects" data-magnetic>Voir les projets <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"/></svg></a>
+                <a class="btn btn--ghost" href="#contact" data-magnetic>Me contacter <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
             </div>
-        </header>
+            <p class="hero-meta">
+                <span><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg> Vue 3 · PHP 8</span>
+                <span><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg> Docker · CI/CD</span>
+                <span><svg class="icon" aria-hidden="true"><use href="#i-smartphone"/></svg> PWA offline-first</span>
+            </p>
+        </section>
 
-        <!-- About -->
-        <section id="about" class="about-section reveal-fade">
+        <!-- ── À PROPOS ─────────────────────────────────────────────────── -->
+        <section class="shell section reveal" id="about">
             <div class="about-grid">
-                <div class="about-content">
-                    <span class="section-label mono-text">À propos // who_am_i</span>
+                <div class="about-copy">
+                    <p class="section-eyebrow">À propos</p>
                     <h2 class="section-title">Allan Vitu</h2>
-                    <p>Diplômé du titre professionnel DWWM au CRM, je suis un développeur passionné par la création d'expériences web complètes — du design pixel-perfect à l'infrastructure cloud.</p>
-                    <p>Spécialisé en Vue.js 3, PHP et DevOps (Docker, CI/CD), je conçois des applications qui allient esthétique premium et robustesse technique. Chaque projet est une occasion d'aller plus loin.</p>
-                    <div class="about-stats">
-                        <div class="stat"><span class="stat-number">5+</span><span class="stat-label">Projets majeurs</span></div>
-                        <div class="stat"><span class="stat-number">PWA</span><span class="stat-label">Spécialité</span></div>
-                        <div class="stat"><span class="stat-number">Full</span><span class="stat-label">Stack & DevOps</span></div>
-                    </div>
+                    <p>Diplômé du titre professionnel <strong>DWWM</strong> au Centre de Réadaptation de Mulhouse, je conçois des applications web de bout en bout — de la maquette au déploiement.</p>
+                    <p>Je travaille principalement en <strong>Vue 3</strong> et <strong>PHP 8</strong>, avec un intérêt marqué pour les <strong>PWA offline-first</strong> et l'outillage DevOps qui rend un déploiement ennuyeux. Chaque projet ci-dessous est parti d'un besoin réel, pas d'un tutoriel.</p>
+                    <dl class="about-stats">
+                        <div><dt>9</dt><dd>Projets en ligne</dd></div>
+                        <div><dt>PWA</dt><dd>Spécialité</dd></div>
+                        <div><dt>Full</dt><dd>Stack &amp; DevOps</dd></div>
+                    </dl>
                 </div>
-                <div class="about-visual glass-panel">
-                    <div class="avatar-ring"><img src="./assets/imgs/AvatarKward.jpg" alt="Allan Vitu" class="avatar-img"></div>
+                <div class="about-card panel">
+                    <div class="about-avatar"><picture><source type="image/avif" srcset="./assets/media/avatar.avif" sizes="104px"><img src="./assets/media/avatar.webp" alt="Portrait d’Allan Vitu" width="400" height="492" loading="lazy" decoding="async"></picture></div>
                     <div class="about-code">
-<pre><code>const allan = {
-  role: "Full-Stack & DevOps",
-  stack: ["Vue.js 3", "PHP 8", "Docker"],
-  passion: "Premium UX & Cloud",
-  status: "available",
-};</code></pre>
+<pre><code><span class="k">const</span> allan = {
+  role:    <span class="s">"Full-Stack &amp; DevOps"</span>,
+  stack:   [<span class="s">"Vue 3"</span>, <span class="s">"PHP 8"</span>, <span class="s">"Docker"</span>],
+  focus:   <span class="s">"PWA &amp; CI/CD"</span>,
+  status:  <span class="s">"available"</span>,
+}<span class="p">;</span></code></pre>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Tech Stack -->
-        <section class="tech-stack-section reveal-fade">
-            <h2 class="section-title">Core <span class="mono-text text-muted">/ stack</span></h2>
-            <div class="bento-grid">
-                <div class="bento-card bento-large glass-panel aurora-card tilt-card">
-                    <div class="bento-icon-top"><i data-lucide="layers" class="text-blue"></i></div>
-                    <h3>Frontend Architecture</h3>
-                    <p>Développement de Web Components, PWA et SSR. Interfaces modernes, réactives et accessibles.</p>
-                    <div class="tags-container">
-                        <span class="tag neon-tag">Vue.js 3</span>
-                        <span class="tag neon-tag">JavaScript ES6+</span>
-                        <span class="tag neon-tag">TailwindCSS</span>
-                        <span class="tag neon-tag">HTML / CSS</span>
+        <!-- ── STACK ────────────────────────────────────────────────────── -->
+        <section class="shell section reveal">
+            <p class="section-eyebrow">Compétences</p>
+            <h2 class="section-title">Stack</h2>
+            <div class="bento">
+                <article class="bento-card bento-card--wide panel panel--lift panel--aurora" data-tilt>
+                    <span class="bento-icon"><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg></span>
+                    <h3>Architecture frontend</h3>
+                    <p>Web Components, PWA et rendu côté serveur. Des interfaces réactives, accessibles et tenables dans le temps.</p>
+                    <div class="tag-row">
+                        <span class="tag tag--accent">Vue 3</span><span class="tag tag--accent">JavaScript ES6+</span>
+                        <span class="tag tag--accent">TailwindCSS</span><span class="tag tag--accent">HTML / CSS</span>
                     </div>
-                    <div class="bento-glow"></div>
-                </div>
-                <div class="bento-card bento-stat glass-panel aurora-card tilt-card">
-                    <span class="bento-label mono-text">Status</span>
-                    <div class="bento-status-dot"></div>
-                    <p class="bento-stat-title">Disponible</p>
-                    <p class="bento-stat-sub mono-text">pour missions freelance</p>
-                    <div class="bento-glow"></div>
-                </div>
-                <div class="bento-card bento-medium glass-panel aurora-card tilt-card">
-                    <div class="bento-icon-top"><i data-lucide="database" class="text-emerald"></i></div>
-                    <h3>Backend &amp; Data</h3>
-                    <p>APIs RESTful sécurisées et gestion de bases de données relationnelles &amp; NoSQL.</p>
-                    <div class="tags-container">
-                        <span class="tag neon-tag">PHP 8</span>
-                        <span class="tag neon-tag">MySQL</span>
-                        <span class="tag neon-tag">Node.js</span>
-                        <span class="tag neon-tag">NoSQL</span>
+                </article>
+                <article class="bento-card bento-metric panel panel--lift">
+                    <span class="bento-icon"><svg class="icon" aria-hidden="true"><use href="#i-zap"/></svg></span>
+                    <p class="value">Disponible</p>
+                    <p class="label">freelance &amp; CDI</p>
+                </article>
+                <article class="bento-card panel panel--lift panel--aurora" data-tilt>
+                    <span class="bento-icon"><svg class="icon" aria-hidden="true"><use href="#i-database"/></svg></span>
+                    <h3>Backend &amp; data</h3>
+                    <p>APIs REST sécurisées, bases relationnelles et NoSQL.</p>
+                    <div class="tag-row">
+                        <span class="tag tag--accent">PHP 8</span><span class="tag tag--accent">MySQL</span>
+                        <span class="tag tag--accent">Node.js</span><span class="tag tag--accent">NoSQL</span>
                     </div>
-                    <div class="bento-glow"></div>
-                </div>
-                <div class="bento-card bento-wide glass-panel aurora-card tilt-card">
-                    <div class="bento-icon-top"><i data-lucide="server" class="text-crimson"></i></div>
-                    <h3>DevOps &amp; Infrastructure</h3>
-                    <p>Automatisation des déploiements, infrastructures résilientes et pipelines CI/CD.</p>
-                    <div class="github-chart">
-                        <h4 class="github-chart-label mono-text"><i data-lucide="git-commit"></i> Commit Timeline</h4>
-                        <img src="https://ghchart.rshah.org/10B981/allanvitu" alt="GitHub Contributions" loading="lazy">
+                </article>
+                <article class="bento-card bento-card--wide panel panel--lift panel--aurora" data-tilt>
+                    <span class="bento-icon"><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg></span>
+                    <h3>DevOps &amp; infrastructure</h3>
+                    <p>Automatisation des déploiements, conteneurisation et pipelines CI/CD.</p>
+                    <figure class="gh-chart">
+                        <figcaption><svg class="icon" aria-hidden="true"><use href="#i-git-commit"/></svg> Activité GitHub</figcaption>
+                        <img src="https://ghchart.rshah.org/8b5cf6/allanvitu" alt="Graphique des contributions GitHub d’Allan Vitu sur l’année écoulée" loading="lazy" decoding="async" width="663" height="104">
+                    </figure>
+                    <div class="tag-row">
+                        <span class="tag tag--accent">Docker</span><span class="tag tag--accent">CI/CD</span>
+                        <span class="tag tag--accent">Linux</span><span class="tag tag--accent">Cloud</span>
                     </div>
-                    <div class="tags-container">
-                        <span class="tag neon-tag">Docker</span>
-                        <span class="tag neon-tag">CI/CD</span>
-                        <span class="tag neon-tag">Linux</span>
-                        <span class="tag neon-tag">Cloud</span>
-                    </div>
-                    <div class="bento-glow"></div>
-                </div>
-                <div class="bento-card bento-stat glass-panel aurora-card tilt-card">
-                    <span class="bento-label mono-text">Spécialité</span>
-                    <p class="bento-stat-title">PWA</p>
-                    <p class="bento-stat-sub mono-text">Mobile-First &bull; Offline</p>
-                    <div class="bento-glow"></div>
-                </div>
+                </article>
             </div>
         </section>
 
-        <!-- Experience -->
-        <section id="experience" class="experience-section reveal-fade">
-            <span class="section-label mono-text">Parcours // timeline</span>
+        <!-- ── PARCOURS ─────────────────────────────────────────────────── -->
+        <section class="shell section reveal" id="experience">
+            <p class="section-eyebrow">Parcours</p>
             <h2 class="section-title">Expérience</h2>
-            <div class="timeline">
-                <div class="timeline-item">
+            <ol class="timeline">
+                <li>
                     <span class="timeline-date">2024 — 2025</span>
-                    <div class="timeline-content">
-                        <h3>Titre Professionnel DWWM</h3>
-                        <h4>CRM — Centre de Réadaptation de Mulhouse</h4>
-                        <p>Formation intensive en développement web & web mobile. Conception de projets full-stack, apprentissage des méthodologies agiles et des architectures modernes.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
+                    <h3>Titre professionnel DWWM</h3>
+                    <p class="org">Centre de Réadaptation de Mulhouse</p>
+                    <p>Formation intensive en développement web &amp; web mobile : projets full-stack, méthodologies agiles et architectures modernes.</p>
+                </li>
+                <li>
                     <span class="timeline-date">2025 — 2026</span>
-                    <div class="timeline-content">
-                        <h3>Développement de Projets Personnels</h3>
-                        <h4>Full-Stack & DevOps — Autodidacte</h4>
-                        <p>Création de FORGE UI (e-commerce), Rytiger RPG (PWA gaming) et RégionDex (Pokédex). Exploration approfondie de Vue.js 3, Docker et des architectures CI/CD.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <span class="timeline-date">2026 — Présent</span>
-                    <div class="timeline-content">
-                        <h3>Disponible pour Nouvelles Opportunités</h3>
-                        <h4>Freelance & CDI</h4>
-                        <p>Ouvert aux missions freelance et aux postes en CDI. Spécialisé en création d'applications web performantes, PWA mobile-first et infrastructures cloud.</p>
-                    </div>
-                </div>
-            </div>
+                    <h3>Projets personnels — Full-Stack &amp; DevOps</h3>
+                    <p class="org">Autodidacte</p>
+                    <p>Conception de FORGE UI, FocusBrain, Rytiger RPG et RégionDex. Approfondissement de Vue 3, Docker et des chaînes de déploiement continu.</p>
+                </li>
+                <li>
+                    <span class="timeline-date">2026 — Aujourd’hui</span>
+                    <h3>Ouvert aux opportunités</h3>
+                    <p class="org">Freelance &amp; CDI</p>
+                    <p>Disponible pour des missions en applications web performantes, PWA mobile-first et infrastructures cloud.</p>
+                </li>
+            </ol>
         </section>
 
-        <!-- Projects -->
-        <section id="projects" class="projects-section">
-            <div class="projects-header reveal-fade">
-                <span class="section-label mono-text">Projets // portfolio</span>
+        <!-- ── PROJETS ──────────────────────────────────────────────────── -->
+        <section class="shell section" id="projects">
+            <div class="reveal">
+                <p class="section-eyebrow">Projets</p>
                 <h2 class="section-title">Ce que je construis</h2>
+                <p class="section-lead">Cinq projets détaillés en étude de cas, et quatre autres consultables en un clic. Tous sont en ligne et jouables.</p>
+
+                <div class="filters" role="group" aria-label="Filtrer les projets par technologie">
+                    <button class="filter" type="button" data-filter="all" aria-pressed="true">Tous</button>
+                    <button class="filter" type="button" data-filter="vue" aria-pressed="false">Vue.js</button>
+                    <button class="filter" type="button" data-filter="vanilla" aria-pressed="false">Vanilla JS</button>
+                    <button class="filter" type="button" data-filter="pwa" aria-pressed="false">PWA</button>
+                    <button class="filter" type="button" data-filter="api" aria-pressed="false">API</button>
+                    <button class="filter" type="button" data-filter="game" aria-pressed="false">Game</button>
+                </div>
+                <p class="filter-count" id="filterCount" role="status" aria-live="polite"></p>
             </div>
 
-            <!-- Filter bar -->
-            <div class="projects-filter reveal-fade">
-                <button class="filter-btn active" data-filter="all">Tous</button>
-                <button class="filter-btn" data-filter="vue">Vue.js</button>
-                <button class="filter-btn" data-filter="game">Game</button>
-                <button class="filter-btn" data-filter="pwa">PWA</button>
-                <button class="filter-btn" data-filter="tdah">TDAH</button>
-                <button class="filter-btn" data-filter="vanilla">Vanilla JS</button>
-            </div>
-
-            <!-- Grid -->
-            <div class="projects-grid reveal-fade">
-
-                <!-- FORGE UI — Featured -->
-                <a href="./projects/forge-ui.html" class="project-card project-card--featured glass-panel" data-tags="vue,ecommerce,ui">
-                    <div class="project-card-thumb">
-                        <img src="./assets/imgs/imgs_carousel/ForgeUI/forge_accueil.png" alt="FORGE UI — Page d'accueil" loading="lazy">
-                        <div class="project-card-overlay">
-                            <span class="card-cta-label">Voir le projet <i data-lucide="arrow-right"></i></span>
-                        </div>
-                        <span class="project-card-badge badge-featured">Featured</span>
+            <div class="cards reveal">
+                <a class="card panel panel--lift card--lead" href="./projects/forge-ui.html" data-tags="vue">
+                    <div class="card-media">
+                        <picture><source type="image/avif" srcset="./assets/media/forgeui/accueil.avif" sizes="(max-width: 640px) 100vw, 740px"><img src="./assets/media/forgeui/accueil.webp" alt="FORGE UI — aperçu" width="1600" height="805" loading="eager" decoding="async" fetchpriority="high"></picture>
+                        <span class="card-flag" style="--flag: var(--accent)">Featured</span>
+                        <span class="card-hover"><span>Voir le projet <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></span></span>
                     </div>
-                    <div class="project-card-body">
-                        <span class="project-card-num mono-text" style="color: var(--violet-500);">01</span>
+                    <div class="card-body">
+                        <span class="card-num" style="--accent-num: var(--accent)">01</span>
                         <h3>FORGE UI</h3>
-                        <p class="project-card-desc">Marketplace de composants UI atomiques & thèmes premium — Vue.js 3, Pinia, Vite, e-commerce complet.</p>
-                        <div class="project-card-footer">
-                            <div class="project-card-tags">
-                                <span class="tag neon-tag">Vue.js</span>
-                                <span class="tag neon-tag">Pinia</span>
-                                <span class="tag neon-tag">E-commerce</span>
-                            </div>
-                            <div class="project-card-arrow"><i data-lucide="arrow-right"></i></div>
+                        <p>Marketplace e-commerce de composants UI atomiques et de thèmes complets, construite sur Vue 3, Pinia et Vite.</p>
+                        <div class="card-foot">
+                            <div class="tag-row"><span class="tag">Vue 3</span><span class="tag">Pinia</span><span class="tag">Vite</span></div>
+                            <span class="card-arrow"><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
                         </div>
                     </div>
                 </a>
-
-                <!-- Focus Brain -->
-                <a href="./projects/focus-brain.html" class="project-card glass-panel" data-tags="vue,pwa,tdah">
-                    <div class="project-card-thumb">
-                        <img src="./assets/imgs/imgs_carousel/Focus%20Brain/focus_brain_acceuil2.png" alt="FocusBrain" loading="lazy">
-                        <div class="project-card-overlay">
-                            <span class="card-cta-label">Voir le projet <i data-lucide="arrow-right"></i></span>
-                        </div>
-                        <span class="project-card-badge badge-new">Nouveau</span>
+                <a class="card panel panel--lift" href="./projects/focus-brain.html" data-tags="vue pwa">
+                    <div class="card-media">
+                        <picture><source type="image/avif" srcset="./assets/media/focusbrain/accueil-2.avif" sizes="(max-width: 640px) 100vw, 370px"><img src="./assets/media/focusbrain/accueil-2.webp" alt="FocusBrain — aperçu" width="1600" height="841" loading="lazy" decoding="async"></picture>
+                        <span class="card-flag" style="--flag: var(--c-cyan)">Case study</span>
+                        <span class="card-hover"><span>Voir le projet <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></span></span>
                     </div>
-                    <div class="project-card-body">
-                        <span class="project-card-num mono-text" style="color: var(--cyan-500);">02</span>
-                        <h3>FocusBrain 🧠⚡</h3>
-                        <p class="project-card-desc">Suite de productivité TDAH complète — Brain Dump, Focus Pomodoro, gestion de projets intégrée (tableur, UML, chat), habits tracker et gamification.</p>
-                        <div class="project-card-footer">
-                            <div class="project-card-tags">
-                                <span class="tag neon-tag" style="border-color: rgba(6,182,212,0.3); color: var(--cyan-500);">Vue.js</span>
-                                <span class="tag neon-tag" style="border-color: rgba(6,182,212,0.3); color: var(--cyan-500);">PWA</span>
-                                <span class="tag neon-tag" style="border-color: rgba(6,182,212,0.3); color: var(--cyan-500);">TDAH</span>
-                            </div>
-                            <div class="project-card-arrow"><i data-lucide="arrow-right"></i></div>
+                    <div class="card-body">
+                        <span class="card-num" style="--accent-num: var(--c-cyan)">02</span>
+                        <h3>FocusBrain</h3>
+                        <p>Bien plus qu'un gestionnaire de tâches : Brain Dump, Pomodoro adaptatif, suite projet complète, habits tracker et gamification. 100 % client-side.</p>
+                        <div class="card-foot">
+                            <div class="tag-row"><span class="tag">Vue 3</span><span class="tag">Pinia</span><span class="tag">PWA</span></div>
+                            <span class="card-arrow"><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
                         </div>
                     </div>
                 </a>
-
-                <!-- Rytiger RPG -->
-                <a href="./projects/rytiger.html" class="project-card glass-panel" data-tags="vue,game,pwa">
-                    <div class="project-card-thumb">
-                        <img src="./assets/imgs/imgs_carousel/Rytiger/Rytiger_Home.png" alt="Rytiger RPG" loading="lazy">
-                        <div class="project-card-overlay">
-                            <span class="card-cta-label">Voir le projet <i data-lucide="arrow-right"></i></span>
-                        </div>
-                        <span class="project-card-badge badge-game">RPG</span>
+                <a class="card panel panel--lift" href="./projects/rytiger.html" data-tags="vue game pwa">
+                    <div class="card-media">
+                        <picture><source type="image/avif" srcset="./assets/media/rytiger/home.avif" sizes="(max-width: 640px) 100vw, 370px"><img src="./assets/media/rytiger/home.webp" alt="Rytiger RPG — aperçu" width="1600" height="791" loading="lazy" decoding="async"></picture>
+                        <span class="card-flag" style="--flag: var(--c-amber)">RPG</span>
+                        <span class="card-hover"><span>Voir le projet <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></span></span>
                     </div>
-                    <div class="project-card-body">
-                        <span class="project-card-num mono-text" style="color: var(--gold-500);">03</span>
-                        <h3>Rytiger RPG 🐯</h3>
-                        <p class="project-card-desc">RPG Dark Fantasy — système ATB, forge de fusion et Tour de l'Infini.</p>
-                        <div class="project-card-footer">
-                            <div class="project-card-tags">
-                                <span class="tag">Vue.js</span>
-                                <span class="tag">Game</span>
-                                <span class="tag">PWA</span>
-                            </div>
-                            <div class="project-card-arrow"><i data-lucide="arrow-right"></i></div>
+                    <div class="card-body">
+                        <span class="card-num" style="--accent-num: var(--c-amber)">03</span>
+                        <h3>Rytiger RPG</h3>
+                        <p>RPG dark fantasy en pixel art néo-rétro : combat ATB asynchrone, forge de fusion de héros et Tour de l'Infini.</p>
+                        <div class="card-foot">
+                            <div class="tag-row"><span class="tag">Vue 3</span><span class="tag">Pinia</span><span class="tag">Game</span></div>
+                            <span class="card-arrow"><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
                         </div>
                     </div>
                 </a>
-
-                <!-- RégionDex -->
-                <a href="./projects/regiondex.html" class="project-card glass-panel" data-tags="vue,pwa,api">
-                    <div class="project-card-thumb">
-                        <img src="./assets/imgs/imgs_carousel/regiondex/regiondex_accueil.webp" alt="RégionDex" loading="lazy">
-                        <div class="project-card-overlay">
-                            <span class="card-cta-label">Voir le projet <i data-lucide="arrow-right"></i></span>
-                        </div>
-                        <span class="project-card-badge badge-pwa">PWA</span>
+                <a class="card panel panel--lift" href="./projects/regiondex.html" data-tags="vue pwa api">
+                    <div class="card-media">
+                        <picture><source type="image/avif" srcset="./assets/media/regiondex/accueil.avif" sizes="(max-width: 640px) 100vw, 370px"><img src="./assets/media/regiondex/accueil.webp" alt="RégionDex — aperçu" width="1600" height="792" loading="lazy" decoding="async"></picture>
+                        <span class="card-flag" style="--flag: var(--c-emerald)">PWA</span>
+                        <span class="card-hover"><span>Voir le projet <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></span></span>
                     </div>
-                    <div class="project-card-body">
-                        <span class="project-card-num mono-text" style="color: var(--emerald-500);">04</span>
-                        <h3>RégionDex 📱</h3>
-                        <p class="project-card-desc">Pokédex PWA — UI Bento Box, multi-API Pokémon et cache optimisé.</p>
-                        <div class="project-card-footer">
-                            <div class="project-card-tags">
-                                <span class="tag">Vue.js</span>
-                                <span class="tag">PWA</span>
-                                <span class="tag">REST API</span>
-                            </div>
-                            <div class="project-card-arrow"><i data-lucide="arrow-right"></i></div>
+                    <div class="card-body">
+                        <span class="card-num" style="--accent-num: var(--c-emerald)">04</span>
+                        <h3>RégionDex</h3>
+                        <p>Pokédex installable qui agrège plusieurs API Pokémon derrière une interface Bento Box et un cache local optimisé.</p>
+                        <div class="card-foot">
+                            <div class="tag-row"><span class="tag">Vue 3</span><span class="tag">PWA</span><span class="tag">REST API</span></div>
+                            <span class="card-arrow"><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
                         </div>
                     </div>
                 </a>
-
-                <!-- Super Snake -->
-                <a href="./projects/super-snake.html" class="project-card glass-panel" data-tags="vanilla,game">
-                    <div class="project-card-thumb">
-                        <img src="./assets/imgs/imgs_carousel/SuperSnake/super_snake_acceuil.png" alt="Super Snake" loading="lazy">
-                        <div class="project-card-overlay">
-                            <span class="card-cta-label">Voir le projet <i data-lucide="arrow-right"></i></span>
-                        </div>
-                        <span class="project-card-badge badge-vanilla">Arcade</span>
+                <a class="card panel panel--lift" href="./projects/devtoolbox.html" data-tags="vanilla pwa">
+                    <div class="card-media">
+                        <picture><source type="image/avif" srcset="./assets/media/devtoolbox/outils.avif" sizes="(max-width: 640px) 100vw, 370px"><img src="./assets/media/devtoolbox/outils.webp" alt="DevToolbox — aperçu" width="1600" height="956" loading="lazy" decoding="async"></picture>
+                        <span class="card-flag" style="--flag: var(--c-indigo)">Offline</span>
+                        <span class="card-hover"><span>Voir le projet <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></span></span>
                     </div>
-                    <div class="project-card-body">
-                        <span class="project-card-num mono-text" style="color: #22c55e;">05</span>
-                        <h3>Super Snake 🐍</h3>
-                        <p class="project-card-desc">Snake arcade moderne — Gacha System, multi-modes et skins déblocables.</p>
-                        <div class="project-card-footer">
-                            <div class="project-card-tags">
-                                <span class="tag">Vanilla JS</span>
-                                <span class="tag">Game</span>
-                                <span class="tag">Arcade</span>
-                            </div>
-                            <div class="project-card-arrow"><i data-lucide="arrow-right"></i></div>
+                    <div class="card-body">
+                        <span class="card-num" style="--accent-num: var(--c-indigo)">05</span>
+                        <h3>DevToolbox</h3>
+                        <p>29 outils développeur (JSON, Base64, JWT, QR…) et 11 leçons illustrées, entièrement hors-ligne et sans framework.</p>
+                        <div class="card-foot">
+                            <div class="tag-row"><span class="tag">Vanilla JS</span><span class="tag">PWA</span><span class="tag">Offline</span></div>
+                            <span class="card-arrow"><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
                         </div>
                     </div>
                 </a>
+                <p class="filter-empty" id="filterEmpty" hidden>Aucun projet ne correspond à ce filtre.</p>
+            </div>
 
-                <!-- QuestFlow -->
-                <a href="./projects/questflow.html" class="project-card glass-panel" data-tags="vue,game,pwa">
-                    <div class="project-card-thumb">
-                        <img src="./assets/imgs/projects/questflow/questflow-dashboard.png" alt="QuestFlow — Dashboard" loading="lazy">
-                        <div class="project-card-overlay">
-                            <span class="card-cta-label">Voir le projet <i data-lucide="arrow-right"></i></span>
-                        </div>
-                        <span class="project-card-badge badge-new">Nouveau</span>
-                    </div>
-                    <div class="project-card-body">
-                        <span class="project-card-num mono-text" style="color: var(--cyan-500);">06</span>
-                        <h3>QuestFlow ⚔️</h3>
-                        <p class="project-card-desc">Command Center gamifié pour devs & gamers — tâches transformées en quêtes, XP, niveaux, Mode Focus Pomodoro et statistiques d'activité.</p>
-                        <div class="project-card-footer">
-                            <div class="project-card-tags">
-                                <span class="tag neon-tag" style="border-color: rgba(6,182,212,0.3); color: var(--cyan-500);">Vue.js</span>
-                                <span class="tag neon-tag" style="border-color: rgba(6,182,212,0.3); color: var(--cyan-500);">Gamification</span>
-                                <span class="tag neon-tag" style="border-color: rgba(6,182,212,0.3); color: var(--cyan-500);">PWA</span>
-                            </div>
-                            <div class="project-card-arrow"><i data-lucide="arrow-right"></i></div>
-                        </div>
-                    </div>
+            <div class="archive reveal">
+                <div class="archive-head">
+                    <h3>Autres projets</h3>
+                    <p>4 projets · pages complètes</p>
+                </div>
+                
+                <a class="archive-row" href="./projects/lolflow.html" data-tags="vue api">
+                    <span class="num">06</span>
+                    <span class="title">LoLFlow<small>League of Legends · Valorant · 2XKO</small></span>
+                    <span class="archive-tags"><span class="tag">Vue 3</span><span class="tag">Riot API</span></span>
+                    <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg>
                 </a>
-
-                <!-- LoLFlow -->
-                <a href="./projects/lolflow.html" class="project-card glass-panel" data-tags="vue,game">
-                    <div class="project-card-thumb">
-                        <img src="./assets/imgs/projects/lolflow/lolflow-lol.png" alt="LoLFlow — League of Legends" loading="lazy">
-                        <div class="project-card-overlay">
-                            <span class="card-cta-label">Voir le projet <i data-lucide="arrow-right"></i></span>
-                        </div>
-                        <span class="project-card-badge badge-new">Nouveau</span>
-                    </div>
-                    <div class="project-card-body">
-                        <span class="project-card-num mono-text" style="color: var(--gold-500);">07</span>
-                        <h3>LoLFlow 🎮</h3>
-                        <p class="project-card-desc">Game companion multi-jeux connecté à l'API Riot — analyse de joueurs sur League of Legends, Valorant et 2XKO.</p>
-                        <div class="project-card-footer">
-                            <div class="project-card-tags">
-                                <span class="tag">Vue.js</span>
-                                <span class="tag">Riot API</span>
-                                <span class="tag">Pinia</span>
-                            </div>
-                            <div class="project-card-arrow"><i data-lucide="arrow-right"></i></div>
-                        </div>
-                    </div>
+                <a class="archive-row" href="./projects/questflow.html" data-tags="vue pwa">
+                    <span class="num">07</span>
+                    <span class="title">QuestFlow<small>Les tâches deviennent des quêtes</small></span>
+                    <span class="archive-tags"><span class="tag">Vue 3</span><span class="tag">Gamification</span></span>
+                    <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg>
                 </a>
-
-                <!-- DevToolbox -->
-                <a href="./projects/devtoolbox.html" class="project-card glass-panel" data-tags="vanilla,pwa">
-                    <div class="project-card-thumb">
-                        <img src="./assets/imgs/projects/devtoolsbox/devtoolsbox-outils.png" alt="DevToolbox — Outils" loading="lazy">
-                        <div class="project-card-overlay">
-                            <span class="card-cta-label">Voir le projet <i data-lucide="arrow-right"></i></span>
-                        </div>
-                        <span class="project-card-badge badge-pwa">Offline</span>
-                    </div>
-                    <div class="project-card-body">
-                        <span class="project-card-num mono-text" style="color: var(--indigo-500);">08</span>
-                        <h3>DevToolbox 🧰</h3>
-                        <p class="project-card-desc">Boîte à outils développeur 100% offline — 29 outils (JSON, Base64, JWT, QR…) et 11 leçons illustrées, directement dans le navigateur.</p>
-                        <div class="project-card-footer">
-                            <div class="project-card-tags">
-                                <span class="tag">Vanilla JS</span>
-                                <span class="tag">PWA</span>
-                                <span class="tag">Offline</span>
-                            </div>
-                            <div class="project-card-arrow"><i data-lucide="arrow-right"></i></div>
-                        </div>
-                    </div>
+                <a class="archive-row" href="./projects/wikialbion.html" data-tags="vanilla pwa">
+                    <span class="num">08</span>
+                    <span class="title">Atlas d'Albion<small>Albion Online — 40 fiches pratiques</small></span>
+                    <span class="archive-tags"><span class="tag">Vanilla JS</span><span class="tag">PWA</span></span>
+                    <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg>
                 </a>
-
-                <!-- Atlas d'Albion -->
-                <a href="./projects/wikialbion.html" class="project-card glass-panel" data-tags="vanilla,pwa">
-                    <div class="project-card-thumb">
-                        <img src="./assets/imgs/projects/wikialbion/wikialbion-accueil.png" alt="Atlas d'Albion — Accueil" loading="lazy">
-                        <div class="project-card-overlay">
-                            <span class="card-cta-label">Voir le projet <i data-lucide="arrow-right"></i></span>
-                        </div>
-                        <span class="project-card-badge badge-pwa">PWA</span>
-                    </div>
-                    <div class="project-card-body">
-                        <span class="project-card-num mono-text" style="color: var(--emerald-500);">09</span>
-                        <h3>Atlas d'Albion 🗺️</h3>
-                        <p class="project-card-desc">Codex de terrain pour Albion Online — 40 fiches pratiques, anecdotes et suivi de campagne dans une interface éditoriale premium.</p>
-                        <div class="project-card-footer">
-                            <div class="project-card-tags">
-                                <span class="tag">Vanilla JS</span>
-                                <span class="tag">PWA</span>
-                                <span class="tag">Wiki</span>
-                            </div>
-                            <div class="project-card-arrow"><i data-lucide="arrow-right"></i></div>
-                        </div>
-                    </div>
+                <a class="archive-row" href="./projects/super-snake.html" data-tags="vanilla game">
+                    <span class="num">09</span>
+                    <span class="title">Super Snake<small>Snake moderne, skins déblocables et multi-modes</small></span>
+                    <span class="archive-tags"><span class="tag">Vanilla JS</span><span class="tag">Game</span></span>
+                    <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg>
                 </a>
-
             </div>
         </section>
 
-        <!-- Contact -->
-        <section id="contact" class="contact-section reveal-fade">
-            <div class="contact-center">
-                <span class="section-label mono-text">Contact // ping</span>
-                <h2 class="section-title">Travaillons ensemble</h2>
-                <p class="contact-lead">Diplômé DWWM, disponible pour toute mission freelance ou CDI.<br>Parlons architecture cloud, PWA ou CI/CD !</p>
-                <div class="contact-socials">
-                    <!-- Gmail -->
-                    <a href="mailto:allan.vitu90@gmail.com" class="social-icon-btn social-gmail" aria-label="Gmail">
-                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.907 1.528-1.148C21.69 2.28 24 3.434 24 5.457z"/>
-                        </svg>
-                    </a>
-                    <!-- GitHub -->
-                    <a href="https://github.com/allanvitu" target="_blank" rel="noopener" class="social-icon-btn social-github" aria-label="GitHub">
-                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-                        </svg>
-                    </a>
-                    <!-- LinkedIn -->
-                    <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener" class="social-icon-btn social-linkedin" aria-label="LinkedIn">
-                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
-                    </a>
-                    <!-- Instagram -->
-                    <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener" class="social-icon-btn social-instagram" aria-label="Instagram">
-                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12c0 3.259.014 3.668.072 4.948.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.668-.014 4.948-.072c1.277-.06 2.148-.261 2.913-.558.788-.306 1.459-.717 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
-                    </a>
-                </div>
-                <p class="contact-email-hint mono-text">allan.vitu90@gmail.com</p>
+        <!-- ── CONTACT ──────────────────────────────────────────────────── -->
+        <section class="shell section contact reveal" id="contact">
+            <p class="section-eyebrow">Contact</p>
+            <h2 class="section-title">Travaillons ensemble</h2>
+            <p class="contact-lead">Diplômé DWWM, disponible en freelance comme en CDI. Architecture cloud, PWA ou CI/CD — écrivez-moi.</p>
+            <div class="contact-links">
+                <a class="contact-link" data-brand="mail" href="mailto:allan.vitu90@gmail.com" aria-label="Envoyer un e-mail"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.907 1.528-1.148C21.69 2.28 24 3.434 24 5.457z"/></svg></a>
+                <a class="contact-link" data-brand="github" href="https://github.com/allanvitu" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                <a class="contact-link" data-brand="linkedin" href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                <a class="contact-link" data-brand="instagram" href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12c0 3.259.014 3.668.072 4.948.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.668-.014 4.948-.072c1.277-.06 2.148-.261 2.913-.558.788-.306 1.459-.717 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
             </div>
+            <p class="contact-mail"><a href="mailto:allan.vitu90@gmail.com">allan.vitu90@gmail.com</a></p>
         </section>
     </main>
 
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="footer-socials">
-                <a href="https://github.com/allanvitu" target="_blank" aria-label="GitHub"><i data-lucide="github"></i></a>
-                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-                <a href="https://www.instagram.com/allan.vitu/" target="_blank" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+    <footer class="footer">
+        <div class="shell footer-inner">
+            <p>&copy; 2026 Allan Vitu — Développeur Full-Stack & DevOps</p>
+            <div class="footer-social">
+                <a href="https://github.com/allanvitu" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12c0 3.259.014 3.668.072 4.948.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.668-.014 4.948-.072c1.277-.06 2.148-.261 2.913-.558.788-.306 1.459-.717 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
             </div>
-            <p class="footer-copy">&copy; 2026 Allan Vitu. Développeur Full-Stack & DevOps.</p>
         </div>
     </footer>
 
-    <script src="./js/app.js"></script>
+    <script src="./js/app.js" defer></script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Allan Vitu","jobTitle":"Développeur Full-Stack & DevOps","email":"mailto:allan.vitu90@gmail.com","url":"https://allanvitu.github.io/DevOps/docs/","image":"https://allanvitu.github.io/DevOps/docs/assets/media/avatar.webp","sameAs":["https://github.com/allanvitu","https://www.linkedin.com/in/allan-vitu-74a11039a/","https://www.instagram.com/allan.vitu/"],"knowsAbout":["Vue.js","PHP","Docker","CI/CD","Progressive Web Apps","DevOps"],"alumniOf":{"@type":"EducationalOrganization","name":"Centre de Réadaptation de Mulhouse"},"makesOffer":[{"@type":"Offer","itemOffered":{"@type":"SoftwareApplication","name":"FORGE UI","description":"Marketplace e-commerce de composants UI atomiques et de thèmes complets, construite sur Vue 3, Pinia et Vite.","url":"https://e-commerce-production-53ac.up.railway.app/#/"}},{"@type":"Offer","itemOffered":{"@type":"SoftwareApplication","name":"FocusBrain","description":"Bien plus qu'un gestionnaire de tâches : Brain Dump, Pomodoro adaptatif, suite projet complète, habits tracker et gamification. 100 % client-side.","url":"https://allanvitu.github.io/GestionnaireTDAH/#/"}},{"@type":"Offer","itemOffered":{"@type":"SoftwareApplication","name":"Rytiger RPG","description":"RPG dark fantasy en pixel art néo-rétro : combat ATB asynchrone, forge de fusion de héros et Tour de l'Infini.","url":"https://allanvitu.github.io/Rytiger_RPG/"}},{"@type":"Offer","itemOffered":{"@type":"SoftwareApplication","name":"RégionDex","description":"Pokédex installable qui agrège plusieurs API Pokémon derrière une interface Bento Box et un cache local optimisé.","url":"https://allanvitu.github.io/Pokedex/"}},{"@type":"Offer","itemOffered":{"@type":"SoftwareApplication","name":"DevToolbox","description":"29 outils développeur (JSON, Base64, JWT, QR…) et 11 leçons illustrées, entièrement hors-ligne et sans framework.","url":"https://allanvitu.github.io/DevToolsBox/"}},{"@type":"Offer","itemOffered":{"@type":"SoftwareApplication","name":"LoLFlow","description":"Companion connecté à l'API Riot Games : analyse de joueurs sur trois jeux, clé API stockée localement, proxy CORS Cloudflare.","url":"https://allanvitu.github.io/LoLFlow/"}},{"@type":"Offer","itemOffered":{"@type":"SoftwareApplication","name":"QuestFlow","description":"Gestionnaire de productivité gamifié : XP, niveaux, streaks, Kanban, mode Focus et heatmap d'activité.","url":"https://allanvitu.github.io/QuestFlow/"}},{"@type":"Offer","itemOffered":{"@type":"SoftwareApplication","name":"Atlas d'Albion","description":"Codex éditorial pour Albion Online : 40 fiches pratiques, 18 anecdotes et un suivi de campagne, en Vanilla JS.","url":"https://allanvitu.github.io/wikialbion/"}},{"@type":"Offer","itemOffered":{"@type":"SoftwareApplication","name":"Super Snake","description":"Réinvention arcade du Snake : système gacha, plusieurs modes de jeu et skins déblocables, en Vanilla JS.","url":"https://allanvitu.github.io/Ultimate_Snake/"}}]}</script>
 </body>
 </html>

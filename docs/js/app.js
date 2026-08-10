@@ -1,309 +1,344 @@
-// =============================================
-// DARK MODE — early toggle (before DOMContentLoaded)
-// =============================================
-(function () {
-    const saved = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (saved ? saved === 'dark' : prefersDark) document.body.classList.add('dark');
-})();
+/* ==========================================================================
+   APP.JS — Progressive enhancement only. Every section of the site renders
+   and reads correctly with this file disabled.
+   ========================================================================== */
+(() => {
+    'use strict';
 
-document.addEventListener('DOMContentLoaded', () => {
-    // =============================================
-    // ICON INIT
-    // =============================================
-    if (typeof lucide !== 'undefined') lucide.createIcons();
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-    // =============================================
-    // DARK MODE TOGGLE
-    // =============================================
-    const themeToggle = document.getElementById('themeToggle');
+    /* ----------------------------------------------------------------------
+       THEME
+       The initial class is set by an inline snippet in <head> to avoid a
+       flash; here we only handle the toggle and OS-preference changes.
+       ---------------------------------------------------------------------- */
+    function initTheme() {
+        const toggle = $('#themeToggle');
+        const os = window.matchMedia('(prefers-color-scheme: dark)');
 
-    function applyTheme(dark) {
-        document.body.classList.toggle('dark', dark);
-        localStorage.setItem('theme', dark ? 'dark' : 'light');
-    }
+        const apply = (theme, persist) => {
+            document.documentElement.dataset.theme = theme;
+            document.querySelector('meta[name="theme-color"]')
+                ?.setAttribute('content', theme === 'dark' ? '#07090f' : '#f7f7fb');
+            if (persist) localStorage.setItem('theme', theme);
+            toggle?.setAttribute('aria-label',
+                theme === 'dark' ? 'Passer en thème clair' : 'Passer en thème sombre');
+        };
 
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            applyTheme(!document.body.classList.contains('dark'));
+        apply(document.documentElement.dataset.theme || 'light', false);
+
+        toggle?.addEventListener('click', () => {
+            apply(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark', true);
+        });
+
+        os.addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) apply(e.matches ? 'dark' : 'light', false);
         });
     }
 
-    // Sync with OS-level preference changes (if no manual preference saved)
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (!localStorage.getItem('theme')) applyTheme(e.matches);
-    });
+    /* ----------------------------------------------------------------------
+       NAVBAR — scroll progress + stuck state, batched into one rAF per frame.
+       ---------------------------------------------------------------------- */
+    function initNav() {
+        const nav = $('.nav');
+        if (!nav) return;
 
-    // =============================================
-    // PAGE LOADER
-    // =============================================
-    const loader = document.getElementById('page-loader');
-    if (loader) {
-        setTimeout(() => loader.classList.add('hidden'), 1200);
-        setTimeout(() => { if (loader.parentNode) loader.remove(); }, 2000);
+        // scrollHeight is only re-measured on resize, never inside the scroll
+        // handler, so scrolling never forces a synchronous layout.
+        let limit = 0;
+        const measure = () => {
+            limit = document.documentElement.scrollHeight - window.innerHeight;
+        };
+
+        let ticking = false;
+        const update = () => {
+            ticking = false;
+            const y = window.scrollY;
+            nav.style.setProperty('--progress', limit > 0 ? `${(y / limit) * 100}%` : '0%');
+            nav.classList.toggle('is-stuck', y > 8);
+        };
+
+        const onScroll = () => {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(update);
+        };
+
+        measure();
+        update();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', () => { measure(); update(); }, { passive: true });
+        window.addEventListener('load', measure);
     }
 
-    // =============================================
-    // CUSTOM CURSOR (desktop only)
-    // =============================================
-    const dot = document.querySelector('.cursor-dot');
-    const outline = document.querySelector('.cursor-outline');
+    /* ----------------------------------------------------------------------
+       MOBILE DRAWER — focus stays inside while open, Escape closes.
+       ---------------------------------------------------------------------- */
+    function initDrawer() {
+        const burger = $('#navBurger');
+        const drawer = $('#navDrawer');
+        if (!burger || !drawer) return;
 
-    if (dot && outline && window.matchMedia('(pointer: fine)').matches) {
-        let mouseX = 0, mouseY = 0;
-        let outlineX = 0, outlineY = 0;
+        const setOpen = (open) => {
+            burger.setAttribute('aria-expanded', String(open));
+            drawer.classList.toggle('is-open', open);
+            drawer.toggleAttribute('inert', !open);
+            document.body.style.overflow = open ? 'hidden' : '';
+            if (open) $('a', drawer)?.focus();
+            else burger.focus();
+        };
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            dot.style.left = mouseX + 'px';
-            dot.style.top = mouseY + 'px';
+        drawer.toggleAttribute('inert', true);
+        burger.addEventListener('click', () => {
+            setOpen(burger.getAttribute('aria-expanded') !== 'true');
+        });
+        $$('a', drawer).forEach((a) => a.addEventListener('click', () => setOpen(false)));
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') setOpen(false);
         });
 
-        function animateOutline() {
-            outlineX += (mouseX - outlineX) * 0.12;
-            outlineY += (mouseY - outlineY) * 0.12;
-            outline.style.left = outlineX + 'px';
-            outline.style.top = outlineY + 'px';
-            requestAnimationFrame(animateOutline);
-        }
-        animateOutline();
-
-        // Enlarge on interactive elements
-        const interactives = document.querySelectorAll('a, button, .magnetic-btn, .tilt-card');
-        interactives.forEach(el => {
-            el.addEventListener('mouseenter', () => outline.classList.add('hover-active'));
-            el.addEventListener('mouseleave', () => outline.classList.remove('hover-active'));
+        // A resize past the breakpoint must not leave the page scroll-locked.
+        window.matchMedia('(min-width: 861px)').addEventListener('change', (e) => {
+            if (e.matches && burger.getAttribute('aria-expanded') === 'true') setOpen(false);
         });
-    } else {
-        if (dot) dot.style.display = 'none';
-        if (outline) outline.style.display = 'none';
     }
 
-    // =============================================
-    // HAMBURGER MENU
-    // =============================================
-    const hamburger = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
+    /* ----------------------------------------------------------------------
+       SCROLL SPY — highlights the section currently in view.
+       ---------------------------------------------------------------------- */
+    function initScrollSpy() {
+        const links = $$('.nav-links a[href^="#"]');
+        if (!links.length) return;
 
-    if (hamburger && mobileMenu) {
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        const byId = new Map();
+        links.forEach((a) => {
+            const section = document.getElementById(a.hash.slice(1));
+            if (section) byId.set(section, a);
         });
+        if (!byId.size) return;
 
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                document.body.style.overflow = '';
+        const spy = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                links.forEach((a) => a.removeAttribute('aria-current'));
+                byId.get(entry.target)?.setAttribute('aria-current', 'true');
             });
+        }, { rootMargin: '-45% 0px -50% 0px' });
+
+        byId.forEach((_, section) => spy.observe(section));
+    }
+
+    /* ----------------------------------------------------------------------
+       REVEAL ON SCROLL
+       ---------------------------------------------------------------------- */
+    function initReveal() {
+        const targets = $$('.reveal');
+        if (!targets.length) return;
+
+        if (reduceMotion.matches) {
+            targets.forEach((el) => el.classList.add('is-visible'));
+            return;
+        }
+
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
+
+        targets.forEach((el) => io.observe(el));
+    }
+
+    /* ----------------------------------------------------------------------
+       PROJECT FILTER
+       ---------------------------------------------------------------------- */
+    function initFilter() {
+        const buttons = $$('.filter');
+        const cards = $$('.card[data-tags]');
+        const rows = $$('.archive-row[data-tags]');
+        const archive = $('.archive');
+        const count = $('#filterCount');
+        const empty = $('#filterEmpty');
+        if (!buttons.length || !cards.length) return;
+
+        const apply = (filter) => {
+            const show = (el) => {
+                const match = filter === 'all' || el.dataset.tags.split(' ').includes(filter);
+                el.hidden = !match;
+                return match;
+            };
+
+            const shownCards = cards.filter(show).length;
+            const shownRows = rows.filter(show).length;
+            const total = shownCards + shownRows;
+
+            buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === filter)));
+
+            // Hide the archive heading too, otherwise it dangles over nothing.
+            if (archive) archive.hidden = shownRows === 0;
+            if (empty) empty.hidden = total > 0;
+            if (count) {
+                count.textContent = total === 0
+                    ? 'aucun projet'
+                    : `${total} projet${total > 1 ? 's' : ''} affiché${total > 1 ? 's' : ''}`;
+            }
+        };
+
+        buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.filter)));
+        apply('all');
+    }
+
+    /* ----------------------------------------------------------------------
+       CAROUSEL
+       Autoplay pauses on hover, on focus, when the tab is hidden, when the
+       carousel scrolls out of view, and permanently after a manual input.
+       ---------------------------------------------------------------------- */
+    function initCarousel(root) {
+        const slides = $$('.carousel-slide', root);
+        if (slides.length < 2) return;
+
+        const dots = $$('.carousel-dot', root);
+        const status = root.parentElement?.querySelector('.carousel-status');
+        const DELAY = 6000;
+
+        let index = slides.findIndex((s) => s.getAttribute('aria-hidden') === 'false');
+        if (index < 0) index = 0;
+
+        let timer = null;
+        let manual = false;
+        let visible = true;
+
+        const render = () => {
+            slides.forEach((s, i) => s.setAttribute('aria-hidden', String(i !== index)));
+            dots.forEach((d, i) => d.setAttribute('aria-current', String(i === index)));
+            if (status) status.textContent = `${index + 1} / ${slides.length}`;
+        };
+
+        const stop = () => { clearInterval(timer); timer = null; };
+        const start = () => {
+            stop();
+            if (manual || !visible || reduceMotion.matches) return;
+            timer = setInterval(() => { index = (index + 1) % slides.length; render(); }, DELAY);
+        };
+
+        const go = (next) => {
+            manual = true;
+            stop();
+            index = (next + slides.length) % slides.length;
+            render();
+        };
+
+        $('.carousel-arrow.prev', root)?.addEventListener('click', () => go(index - 1));
+        $('.carousel-arrow.next', root)?.addEventListener('click', () => go(index + 1));
+        dots.forEach((dot, i) => dot.addEventListener('click', () => go(i)));
+
+        root.addEventListener('mouseenter', stop);
+        root.addEventListener('mouseleave', start);
+        root.addEventListener('focusin', stop);
+        root.addEventListener('focusout', start);
+
+        root.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') { e.preventDefault(); go(index - 1); }
+            if (e.key === 'ArrowRight') { e.preventDefault(); go(index + 1); }
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            document.hidden ? stop() : start();
+        });
+
+        new IntersectionObserver(([entry]) => {
+            visible = entry.isIntersecting;
+            visible ? start() : stop();
+        }, { threshold: 0.25 }).observe(root);
+
+        render();
+        start();
+    }
+
+    /* ----------------------------------------------------------------------
+       DEFERRED VIDEO
+       <source> carries data-src, so nothing is fetched until the user asks.
+       ---------------------------------------------------------------------- */
+    function initVideo() {
+        $$('[data-video]').forEach((frame) => {
+            const video = $('video', frame);
+            const button = $('.video-play', frame);
+            if (!video || !button) return;
+
+            button.addEventListener('click', () => {
+                $$('source[data-src]', video).forEach((s) => {
+                    s.src = s.dataset.src;
+                    s.removeAttribute('data-src');
+                });
+                video.load();
+                video.play().catch(() => { /* user can still hit the native control */ });
+                video.controls = true;
+                button.hidden = true;
+            }, { once: true });
         });
     }
 
-    // =============================================
-    // RAIN EFFECT (40 drops — optimized)
-    // =============================================
-    const rainContainer = document.getElementById('rain-container');
-    if (rainContainer) {
-        const count = 40;
-        for (let i = 0; i < count; i++) {
-            const drop = document.createElement('div');
-            drop.classList.add('rain-drop');
-            drop.style.left = Math.random() * 100 + 'vw';
-            drop.style.animation = `rainFall ${Math.random() * 0.5 + 0.4}s linear infinite`;
-            drop.style.animationDelay = Math.random() * 3 + 's';
-            drop.style.opacity = Math.random() * 0.15 + 0.05;
-            rainContainer.appendChild(drop);
-        }
-    }
+    /* ----------------------------------------------------------------------
+       POINTER FLOURISHES — desktop, fine pointer, motion allowed.
+       Reads are batched in rAF so a mousemove never thrashes layout.
+       ---------------------------------------------------------------------- */
+    function initPointerEffects() {
+        if (reduceMotion.matches || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
-    // =============================================
-    // SCROLL TRACKER
-    // =============================================
-    const scrollTracker = document.querySelector('.scroll-tracker');
-    if (scrollTracker) {
-        window.addEventListener('scroll', () => {
-            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            scrollTracker.style.width = (scrollTop / scrollHeight) * 100 + '%';
-        }, { passive: true });
-    }
-
-    // =============================================
-    // CAROUSEL LOGIC (with auto-play pause)
-    // =============================================
-    function initCarousel(carouselId, prevId, nextId) {
-        const carousel = document.getElementById(carouselId);
-        if (!carousel) return;
-
-        const slides = carousel.querySelectorAll('.carousel-slide');
-        const nextBtn = document.getElementById(nextId);
-        const prevBtn = document.getElementById(prevId);
-        let current = 0;
-        let autoInterval = null;
-        let userInteracted = false;
-
-        function show(index) {
-            slides.forEach(s => s.classList.remove('active'));
-            if (slides[index]) slides[index].classList.add('active');
-        }
-
-        function next() {
-            current = (current + 1) % slides.length;
-            show(current);
-        }
-
-        function prev() {
-            current = (current - 1 + slides.length) % slides.length;
-            show(current);
-        }
-
-        function startAuto() {
-            stopAuto();
-            autoInterval = setInterval(next, 6000);
-        }
-
-        function stopAuto() {
-            if (autoInterval) clearInterval(autoInterval);
-        }
-
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                userInteracted = true;
-                stopAuto();
-                next();
-                // Resume after 10s idle
-                setTimeout(() => { if (userInteracted) startAuto(); }, 10000);
-            });
-        }
-
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                userInteracted = true;
-                stopAuto();
-                prev();
-                setTimeout(() => { if (userInteracted) startAuto(); }, 10000);
-            });
-        }
-
-        // Pause on hover
-        carousel.addEventListener('mouseenter', stopAuto);
-        carousel.addEventListener('mouseleave', startAuto);
-
-        startAuto();
-    }
-
-    initCarousel('forgeCarousel', 'forgePrev', 'forgeNext');
-    initCarousel('rytigerCarousel', 'rytigerPrev', 'rytigerNext');
-    initCarousel('regiondexCarousel', 'regionPrev', 'regionNext');
-    initCarousel('snakeCarousel', 'snakePrev', 'snakeNext');
-    initCarousel('focusCarousel', 'focusPrev', 'focusNext');
-    initCarousel('questflowCarousel', 'questflowPrev', 'questflowNext');
-    initCarousel('lolflowCarousel', 'lolflowPrev', 'lolflowNext');
-    initCarousel('devtoolboxCarousel', 'devtoolboxPrev', 'devtoolboxNext');
-    initCarousel('wikialbionCarousel', 'wikialbionPrev', 'wikialbionNext');
-
-    // =============================================
-    // PROJECT GRID FILTER
-    // =============================================
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const projectCards = document.querySelectorAll('.project-card[data-tags]');
-
-    if (filterBtns.length > 0 && projectCards.length > 0) {
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const filter = btn.dataset.filter;
-
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                projectCards.forEach(card => {
-                    const tags = (card.dataset.tags || '').split(',');
-                    const match = filter === 'all' || tags.includes(filter);
-                    card.style.display = match ? '' : 'none';
+        $$('[data-magnetic]').forEach((el) => {
+            let frame = null;
+            el.addEventListener('mousemove', (e) => {
+                if (frame) return;
+                frame = requestAnimationFrame(() => {
+                    frame = null;
+                    const r = el.getBoundingClientRect();
+                    const x = (e.clientX - r.left - r.width / 2) * 0.16;
+                    const y = (e.clientY - r.top - r.height / 2) * 0.16;
+                    el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
                 });
             });
+            el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+        });
+
+        $$('[data-tilt]').forEach((el) => {
+            let frame = null;
+            el.addEventListener('mousemove', (e) => {
+                if (frame) return;
+                frame = requestAnimationFrame(() => {
+                    frame = null;
+                    const r = el.getBoundingClientRect();
+                    const rx = ((e.clientY - r.top) / r.height - 0.5) * -5;
+                    const ry = ((e.clientX - r.left) / r.width - 0.5) * 5;
+                    el.style.transform = `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+                });
+            });
+            el.addEventListener('mouseleave', () => { el.style.transform = ''; });
         });
     }
 
-    // =============================================
-    // SPOTLIGHT HOVER ON GLASS PANELS
-    // =============================================
-    document.querySelectorAll('.glass-panel').forEach(panel => {
-        panel.addEventListener('mousemove', (e) => {
-            const rect = panel.getBoundingClientRect();
-            panel.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-            panel.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-        });
-    });
-
-    // =============================================
-    // MAGNETIC BUTTONS
-    // =============================================
-    document.querySelectorAll('.magnetic-btn').forEach(btn => {
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            btn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
-        });
-        btn.addEventListener('mouseleave', () => {
-            btn.style.transform = 'translate(0, 0)';
-        });
-    });
-
-    // =============================================
-    // 3D TILT + AURORA CARDS
-    // =============================================
-    document.querySelectorAll('.tilt-card').forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const cx = rect.width / 2;
-            const cy = rect.height / 2;
-            const rotateX = ((y - cy) / cy) * -10;
-            const rotateY = ((x - cx) / cx) * 10;
-
-            card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-            card.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
-            card.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-            card.style.setProperty('--mouse-x', '50%');
-            card.style.setProperty('--mouse-y', '50%');
-        });
-    });
-
-    // =============================================
-    // GLITCH RANDOMIZER
-    // =============================================
-    const glitchTexts = document.querySelectorAll('.glitch-text');
-    if (glitchTexts.length > 0) {
-        setInterval(() => {
-            if (Math.random() > 0.6) {
-                const el = glitchTexts[Math.floor(Math.random() * glitchTexts.length)];
-                el.classList.add('is-glitching');
-                setTimeout(() => el.classList.remove('is-glitching'), 100 + Math.random() * 200);
-            }
-        }, 4000);
+    /* ----------------------------------------------------------------------
+       BOOT
+       ---------------------------------------------------------------------- */
+    function boot() {
+        initTheme();
+        initNav();
+        initDrawer();
+        initScrollSpy();
+        initReveal();
+        initFilter();
+        initVideo();
+        initPointerEffects();
+        $$('[data-carousel]').forEach(initCarousel);
     }
 
-    // =============================================
-    // SCROLL REVEAL
-    // =============================================
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                revealObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-    document.querySelectorAll('.reveal-fade').forEach(el => revealObserver.observe(el));
-});
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', boot, { once: true });
+    } else {
+        boot();
+    }
+})();

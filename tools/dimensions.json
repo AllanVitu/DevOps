@@ -1,0 +1,154 @@
+{
+  "media/avatar": {
+    "w": 400,
+    "h": 492
+  },
+  "media/devtoolbox/apprendre": {
+    "w": 1600,
+    "h": 956
+  },
+  "media/devtoolbox/outils": {
+    "w": 1600,
+    "h": 956
+  },
+  "media/focusbrain/accueil-1": {
+    "w": 1600,
+    "h": 824
+  },
+  "media/focusbrain/accueil-2": {
+    "w": 1600,
+    "h": 841
+  },
+  "media/focusbrain/vue-01": {
+    "w": 1600,
+    "h": 825
+  },
+  "media/focusbrain/vue-02": {
+    "w": 1600,
+    "h": 827
+  },
+  "media/focusbrain/vue-03": {
+    "w": 1600,
+    "h": 826
+  },
+  "media/focusbrain/vue-04": {
+    "w": 1600,
+    "h": 824
+  },
+  "media/focusbrain/vue-05": {
+    "w": 1600,
+    "h": 826
+  },
+  "media/focusbrain/vue-06": {
+    "w": 1600,
+    "h": 823
+  },
+  "media/focusbrain/vue-07": {
+    "w": 1600,
+    "h": 841
+  },
+  "media/focusbrain/vue-08": {
+    "w": 1600,
+    "h": 821
+  },
+  "media/focusbrain/vue-09": {
+    "w": 1600,
+    "h": 823
+  },
+  "media/focusbrain/vue-10": {
+    "w": 1600,
+    "h": 820
+  },
+  "media/focusbrain/vue-11": {
+    "w": 1600,
+    "h": 821
+  },
+  "media/forgeui/accueil": {
+    "w": 1600,
+    "h": 805
+  },
+  "media/forgeui/packs": {
+    "w": 1600,
+    "h": 771
+  },
+  "media/lolflow/2xko": {
+    "w": 1600,
+    "h": 956
+  },
+  "media/lolflow/lol": {
+    "w": 1600,
+    "h": 956
+  },
+  "media/lolflow/valorant": {
+    "w": 1600,
+    "h": 956
+  },
+  "media/questflow/dashboard": {
+    "w": 1600,
+    "h": 956
+  },
+  "media/questflow/focus": {
+    "w": 1600,
+    "h": 956
+  },
+  "media/questflow/stats": {
+    "w": 1600,
+    "h": 956
+  },
+  "media/regiondex/accueil": {
+    "w": 1600,
+    "h": 792
+  },
+  "media/regiondex/card": {
+    "w": 1600,
+    "h": 777
+  },
+  "media/regiondex/menu": {
+    "w": 1600,
+    "h": 801
+  },
+  "media/rytiger/campagne": {
+    "w": 1600,
+    "h": 771
+  },
+  "media/rytiger/equipe": {
+    "w": 1600,
+    "h": 775
+  },
+  "media/rytiger/forge-fusion": {
+    "w": 1600,
+    "h": 768
+  },
+  "media/rytiger/guide": {
+    "w": 1600,
+    "h": 772
+  },
+  "media/rytiger/home": {
+    "w": 1600,
+    "h": 791
+  },
+  "media/supersnake/accueil": {
+    "w": 1600,
+    "h": 773
+  },
+  "media/supersnake/gacha": {
+    "w": 1600,
+    "h": 777
+  },
+  "media/supersnake/modes": {
+    "w": 402,
+    "h": 220
+  },
+  "media/wikialbion/accueil": {
+    "w": 1600,
+    "h": 956
+  },
+  "media/wikialbion/campagne": {
+    "w": 1600,
+    "h": 956
+  },
+  "media/wikialbion/codex": {
+    "w": 1600,
+    "h": 956
+  }
+}

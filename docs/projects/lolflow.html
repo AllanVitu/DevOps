@@ -1,164 +1,204 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LoLFlow — Allan Vitu</title>
-    <meta name="description" content="LoLFlow (MyGameCompanion) — companion multi-jeux League of Legends, Valorant & 2XKO connecté à l'API Riot.">
-    <link rel="icon" type="image/png" href="../assets/branding/favicon.png" sizes="32x32">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/base.css">
-    <link rel="stylesheet" href="../css/devops.css">
-    <link rel="stylesheet" href="../css/rytiger.css">
-    <link rel="stylesheet" href="../css/projects.css">
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
-</head>
-<body>
-    <script>
-    (function(){
-        const t = localStorage.getItem('theme');
-        const dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (dark) document.body.classList.add('dark');
-    })();
-    </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LoLFlow — Allan Vitu</title>
+<meta name="description" content="Companion connecté à l'API Riot Games : analyse de joueurs sur trois jeux, clé API stockée localement, proxy CORS Cloudflare.">
+<meta name="author" content="Allan Vitu">
+<link rel="canonical" href="https://allanvitu.github.io/DevOps/docs/projects/lolflow.html">
 
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
-    <div class="animated-bg"></div>
-    <div id="rain-container"></div>
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Allan Vitu — Portfolio">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://allanvitu.github.io/DevOps/docs/projects/lolflow.html">
+<meta property="og:title" content="LoLFlow — Allan Vitu">
+<meta property="og:description" content="Companion connecté à l'API Riot Games : analyse de joueurs sur trois jeux, clé API stockée localement, proxy CORS Cloudflare.">
+<meta property="og:image" content="https://allanvitu.github.io/DevOps/docs/assets/media/lolflow/lol.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LoLFlow — Allan Vitu">
+<meta name="twitter:description" content="Companion connecté à l'API Riot Games : analyse de joueurs sur trois jeux, clé API stockée localement, proxy CORS Cloudflare.">
+<meta name="twitter:image" content="https://allanvitu.github.io/DevOps/docs/assets/media/lolflow/lol.webp">
 
-    <nav class="glass-navbar" id="navbar">
-        <div class="scroll-tracker"></div>
-        <a href="../" class="nav-brand magnetic-btn">
-            <img src="../assets/branding/logo.svg" alt="Logo" class="nav-logo">
+<link rel="icon" href="../assets/brand/icon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="../assets/brand/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/brand/icon-180.png">
+<link rel="manifest" href="../site.webmanifest">
+<meta name="theme-color" content="#f7f7fb">
+
+<script>
+/* Resolve the theme before first paint so the page never flashes, and flag
+   that scripting is on — reveal animations only hide content when it can be
+   revealed again. */
+(function(){document.documentElement.classList.add('js');
+try{var s=localStorage.getItem('theme');
+document.documentElement.dataset.theme=s||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+}catch(e){document.documentElement.dataset.theme='light';}})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;500&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;500&display=swap"></noscript>
+
+<link rel="stylesheet" href="../css/site.css">
+<link rel="stylesheet" href="../css/project.css">
+</head><body data-project="amber">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol><symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol><symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol><symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol><symbol id="i-circle-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></symbol><symbol id="i-external-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol><symbol id="i-lightbulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></symbol><symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></symbol><symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></symbol><symbol id="i-plug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M15 8V2"/><path d="M17 8a1 1 0 0 1 1 1v4a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1z"/><path d="M9 8V2"/></symbol><symbol id="i-route" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol><symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol><symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol><symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol></svg>
+
+    <a class="skip-link" href="#main">Aller au contenu</a>
+
+    <div class="backdrop" aria-hidden="true"></div>
+
+    <header class="nav" id="nav">
+        <div class="nav-progress" aria-hidden="true"></div>
+        <a class="nav-brand" href="../" aria-label="Allan Vitu — accueil">
+            <img src="../assets/brand/logo.svg" alt="" width="28" height="28">
             Allan<span class="gradient-text">/</span>Vitu
         </a>
-        <div class="nav-center">
+        <nav class="nav-links" aria-label="Navigation principale">
             <a href="../#about">À propos</a>
             <a href="../#experience">Parcours</a>
             <a href="../#projects">Projets</a>
             <a href="../#contact">Contact</a>
-        </div>
-        <div class="nav-right">
-            <div class="social-icons">
-                <a href="https://github.com/allanvitu" target="_blank" rel="noopener" aria-label="GitHub"><i data-lucide="github"></i></a>
-                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-                <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+        </nav>
+        <div class="nav-actions">
+            <div class="nav-social">
+                <a href="https://github.com/allanvitu" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12c0 3.259.014 3.668.072 4.948.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.668-.014 4.948-.072c1.277-.06 2.148-.261 2.913-.558.788-.306 1.459-.717 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
             </div>
-            <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
-                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-                </svg>
-                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Changer de thème">
+                <svg class="icon icon-sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
             </button>
-            <a href="mailto:allan.vitu90@gmail.com" class="btn-cv magnetic-btn"><i data-lucide="mail"></i> Contact</a>
-            <button class="hamburger" id="hamburgerBtn" aria-label="Ouvrir le menu">
+            <a class="btn btn--ghost btn--sm" href="mailto:allan.vitu90@gmail.com" data-magnetic><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg> Contact</a>
+            <button class="nav-burger" id="navBurger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navDrawer">
                 <span></span><span></span><span></span>
             </button>
         </div>
-    </nav>
+    </header>
 
-    <div class="mobile-menu" id="mobileMenu">
+    <div class="nav-drawer" id="navDrawer">
         <a href="../#about">À propos</a>
         <a href="../#experience">Parcours</a>
         <a href="../#projects">Projets</a>
         <a href="../#contact">Contact</a>
-        <div class="mobile-socials">
-            <a href="https://github.com/allanvitu" target="_blank" aria-label="GitHub"><i data-lucide="github"></i></a>
-            <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-            <a href="https://www.instagram.com/allan.vitu/" target="_blank" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+        <div class="nav-drawer-social">
+            <a href="https://github.com/allanvitu" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12c0 3.259.014 3.668.072 4.948.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.668-.014 4.948-.072c1.277-.06 2.148-.261 2.913-.558.788-.306 1.459-.717 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
         </div>
     </div>
 
-    <main class="main-container">
-        <nav class="project-breadcrumb" aria-label="Fil d'Ariane">
-            <a href="../" class="breadcrumb-link">Home</a>
-            <span class="breadcrumb-sep">/</span>
-            <a href="../#projects" class="breadcrumb-link">Projets</a>
-            <span class="breadcrumb-sep">/</span>
-            <span class="breadcrumb-current">LoLFlow</span>
+    <main id="main" class="shell">
+        <nav class="crumbs" aria-label="Fil d’Ariane">
+            <a href="../">Accueil</a><span class="sep" aria-hidden="true">/</span>
+            <a href="../#projects">Projets</a><span class="sep" aria-hidden="true">/</span>
+            <span aria-current="page">LoLFlow</span>
         </nav>
 
-        <div class="project-showcase reveal-fade">
-            <div class="project-header-block align-right">
-                <span class="section-label mono-text" style="color: var(--gold-500);">Case Study // 07</span>
-                <h2 class="gold-gradient">LoLFlow 🎮</h2>
-                <p class="project-tagline gold">Game Companion — LoL · Valorant · 2XKO</p>
-                <p>Un companion multi-jeux connecté à l'API Riot Games. Renseigne ta clé API, choisis ta région et analyse n'importe quel joueur sur League of Legends, Valorant ou 2XKO. La clé reste stockée localement (LocalStorage) et un proxy CORS gère les appels en production.</p>
-            </div>
-            <div class="project-content reversed">
-                <div class="carousel-wrapper carousel-lolflow">
-                    <div class="simple-carousel" id="lolflowCarousel">
-                        <div class="carousel-track">
-                            <div class="carousel-slide active"><img src="../assets/imgs/projects/lolflow/lolflow-lol.png" alt="LoLFlow — League of Legends & TFT"></div>
-                            <div class="carousel-slide"><img src="../assets/imgs/projects/lolflow/lolflow-valorant.png" alt="LoLFlow — Valorant"></div>
-                            <div class="carousel-slide"><img src="../assets/imgs/projects/lolflow/lolflow-2xko.png" alt="LoLFlow — 2XKO"></div>
-                        </div>
-                        <div class="carousel-controls">
-                            <button class="nav-arrow prev" id="lolflowPrev" aria-label="Précédent"><i data-lucide="chevron-left"></i></button>
-                            <button class="nav-arrow next" id="lolflowNext" aria-label="Suivant"><i data-lucide="chevron-right"></i></button>
-                        </div>
+        <header class="p-head reveal">
+            <p class="p-eyebrow">Projet // 06</p>
+            <h1>LoLFlow — Companion multi-jeux Riot</h1>
+            <p class="p-tagline">League of Legends · Valorant · 2XKO</p>
+            <p>Un companion multi-jeux connecté à l'API Riot Games. On renseigne sa clé, on choisit sa région et on analyse n'importe quel joueur sur League of Legends, Valorant ou 2XKO. La clé reste dans le navigateur et un Cloudflare Worker fait office de proxy CORS en production.</p>
+            <dl class="p-meta">
+                <span>Rôle — <b>Conception &amp; développement</b></span>
+                <span>Type — <b>Client d'API tierce</b></span>
+                <span>Jeux — <b>LoL · Valorant · 2XKO</b></span>
+            </dl>
+        </header>
+
+        <div class="p-body reveal">
+            <div>
+                <div class="carousel" data-carousel tabindex="0" role="group" aria-roledescription="carrousel" aria-label="Captures de LoLFlow">
+                    <div class="carousel-viewport">
+                    <div class="carousel-slide" aria-hidden="false"><picture><source type="image/avif" srcset="../assets/media/lolflow/lol.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/lolflow/lol.webp" alt="LoLFlow — League of Legends" width="1600" height="956" loading="eager" decoding="async" fetchpriority="high"></picture></div>
+                    <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/lolflow/valorant.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/lolflow/valorant.webp" alt="LoLFlow — Valorant" width="1600" height="956" loading="lazy" decoding="async"></picture></div>
+                    <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/lolflow/2xko.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/lolflow/2xko.webp" alt="LoLFlow — 2XKO" width="1600" height="956" loading="lazy" decoding="async"></picture></div>
+                        <button class="carousel-arrow prev" type="button" aria-label="Vue précédente"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+                        <button class="carousel-arrow next" type="button" aria-label="Vue suivante"><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
                     </div>
+                    <div class="carousel-dots"><button class="carousel-dot" type="button" aria-current="true" aria-label="Vue 1 sur 3"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 2 sur 3"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 3 sur 3"></button></div>
                 </div>
-                <div class="project-details glass-panel">
-                    <h3>Architecture Technique</h3>
-                    <ul class="spec-list">
-                        <li>
-                            <i data-lucide="plug" class="text-gold"></i>
-                            <div class="spec-text"><strong>API Riot Games</strong><span>Recherche et analyse de joueurs en temps réel sur 3 jeux.</span></div>
-                        </li>
-                        <li>
-                            <i data-lucide="shield" class="text-gold"></i>
-                            <div class="spec-text"><strong>Clé locale</strong><span>Clé API stockée côté navigateur, jamais envoyée sur GitHub.</span></div>
-                        </li>
-                        <li>
-                            <i data-lucide="git-merge" class="text-gold"></i>
-                            <div class="spec-text"><strong>Proxy CORS</strong><span>Cloudflare Worker pour contourner le CORS de l'API en production.</span></div>
-                        </li>
-                    </ul>
-                    <div class="project-links">
-                        <a href="https://allanvitu.github.io/LoLFlow/" target="_blank" rel="noopener noreferrer" class="btn-project gold">Ouvrir LoLFlow <i data-lucide="external-link"></i></a>
-                    </div>
+                <p class="carousel-status" role="status" aria-live="polite"></p>
+            </div>
+
+            <div class="p-specs panel">
+                <h2>Points techniques</h2>
+                <ul class="spec-list">
+                    <li>
+                        <span class="spec-icon"><svg class="icon" aria-hidden="true"><use href="#i-plug"/></svg></span>
+                        <div><strong>API Riot Games</strong><span>Recherche et analyse de joueurs en temps réel sur trois jeux.</span></div>
+                    </li>
+                    <li>
+                        <span class="spec-icon"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg></span>
+                        <div><strong>Clé stockée localement</strong><span>La clé API reste en LocalStorage, elle n'est jamais commitée ni envoyée ailleurs.</span></div>
+                    </li>
+                    <li>
+                        <span class="spec-icon"><svg class="icon" aria-hidden="true"><use href="#i-route"/></svg></span>
+                        <div><strong>Proxy CORS</strong><span>Un Cloudflare Worker contourne les restrictions CORS de l'API en production.</span></div>
+                    </li>
+                </ul>
+                <div class="p-actions">
+                    <a class="btn btn--project" href="https://allanvitu.github.io/LoLFlow/" target="_blank" rel="noopener noreferrer">Ouvrir LoLFlow <svg class="icon" aria-hidden="true"><use href="#i-external-link"/></svg></a>
+                    
                 </div>
             </div>
         </div>
 
-        <nav class="project-page-nav-footer" aria-label="Navigation entre projets">
-            <a href="./questflow.html" class="prev-next-link">
-                <i data-lucide="arrow-left"></i>
+        <section class="p-section reveal">
+            <h2>Le raisonnement</h2>
+            <p class="sub">Problème → Solution → Résultat</p>
+            <div class="narrative">
+                <article class="panel">
+                    <h3><svg class="icon" aria-hidden="true"><use href="#i-circle-alert"/></svg> Le problème</h3>
+                    <p>L'API Riot refuse les appels directs depuis un navigateur, et un site statique n'a pas de backend pour porter une clé secrète.</p>
+                </article>
+                <article class="panel">
+                    <h3><svg class="icon" aria-hidden="true"><use href="#i-lightbulb"/></svg> La solution</h3>
+                    <p>La clé reste côté utilisateur, en LocalStorage, et les appels transitent par un Cloudflare Worker qui gère le CORS. Aucun secret n'entre dans le dépôt.</p>
+                </article>
+                <article class="panel">
+                    <h3><svg class="icon" aria-hidden="true"><use href="#i-target"/></svg> Le résultat</h3>
+                    <p>Un companion entièrement statique, déployé sur GitHub Pages, qui interroge malgré tout une API tierce authentifiée.</p>
+                </article>
+            </div>
+        </section>
+        <section class="p-section reveal">
+            <h2>Stack technique</h2>
+            <p class="sub">Ce qui fait tourner le projet</p>
+            <div class="stack-groups">
                 <div>
-                    <span class="prev-next-label">Projet précédent</span>
-                    <strong class="prev-next-title">QuestFlow ⚔️</strong>
+                    <h3>Frontend</h3>
+                    <div class="tag-row"><span class="pill">Vue 3</span><span class="pill">Pinia</span><span class="pill">Vite</span></div>
                 </div>
-            </a>
-            <a href="./devtoolbox.html" class="prev-next-link next">
                 <div>
-                    <span class="prev-next-label">Projet suivant</span>
-                    <strong class="prev-next-title">DevToolbox 🧰</strong>
+                    <h3>Intégration</h3>
+                    <div class="tag-row"><span class="pill">Riot Games API</span><span class="pill">Cloudflare Worker</span><span class="pill">LocalStorage</span></div>
                 </div>
-                <i data-lucide="arrow-right"></i>
-            </a>
+            </div>
+        </section>
+
+        <nav class="p-pager" aria-label="Navigation entre les projets">
+            <a class="pager-link prev" href="./devtoolbox.html"><svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg><span><span class="lbl">Projet précédent</span><span class="ttl">DevToolbox</span></span></a>
+            <a class="pager-link next" href="./questflow.html"><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg><span><span class="lbl">Projet suivant</span><span class="ttl">QuestFlow</span></span></a>
         </nav>
     </main>
 
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="footer-socials">
-                <a href="https://github.com/allanvitu" target="_blank" aria-label="GitHub"><i data-lucide="github"></i></a>
-                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-                <a href="https://www.instagram.com/allan.vitu/" target="_blank" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+    <footer class="footer">
+        <div class="shell footer-inner">
+            <p>&copy; 2026 Allan Vitu — Développeur Full-Stack & DevOps</p>
+            <div class="footer-social">
+                <a href="https://github.com/allanvitu" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12c0 3.259.014 3.668.072 4.948.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.668-.014 4.948-.072c1.277-.06 2.148-.261 2.913-.558.788-.306 1.459-.717 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
             </div>
-            <p class="footer-copy">&copy; 2026 Allan Vitu. Développeur Full-Stack & DevOps.</p>
         </div>
     </footer>
 
-    <script src="../js/app.js"></script>
+    <script src="../js/app.js" defer></script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"LoLFlow","description":"Companion connecté à l'API Riot Games : analyse de joueurs sur trois jeux, clé API stockée localement, proxy CORS Cloudflare.","url":"https://allanvitu.github.io/LoLFlow/","applicationCategory":"WebApplication","operatingSystem":"Web","author":{"@type":"Person","name":"Allan Vitu","url":"https://allanvitu.github.io/DevOps/docs/"},"image":"https://allanvitu.github.io/DevOps/docs/assets/media/lolflow/lol.webp"}</script>
 </body>
 </html>

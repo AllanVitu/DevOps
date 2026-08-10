@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://allanvitu.github.io/DevOps/docs/sitemap.xml

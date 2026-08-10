@@ -1,529 +1,275 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FocusBrain — Case Study — Allan Vitu</title>
-    <meta name="description" content="FocusBrain — Suite de productivité TDAH complète. PWA Vue.js 3, Pinia, gamification, Brain Dump, Focus Pomodoro, habits tracker et gestion de projets intégrée.">
-    <link rel="icon" type="image/png" href="../assets/branding/favicon.png" sizes="32x32">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/base.css">
-    <link rel="stylesheet" href="../css/devops.css">
-    <link rel="stylesheet" href="../css/rytiger.css">
-    <link rel="stylesheet" href="../css/projects.css">
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
-    <style>
-        .fb-stats-strip {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 1rem;
-            margin: 3rem 0;
-        }
-        .fb-stat-card {
-            padding: 1.4rem 1rem;
-            border-radius: 14px;
-            text-align: center;
-            border: 1px solid rgba(6,182,212,0.18);
-            background: rgba(6,182,212,0.04);
-            transition: border-color 0.2s, transform 0.2s;
-        }
-        .fb-stat-card:hover {
-            border-color: rgba(6,182,212,0.45);
-            transform: translateY(-3px);
-        }
-        .fb-stat-num {
-            font-size: 2rem;
-            font-weight: 800;
-            font-family: var(--font-mono);
-            color: var(--cyan-500);
-            line-height: 1.1;
-        }
-        .fb-stat-lbl {
-            font-size: 0.72rem;
-            font-family: var(--font-mono);
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin-top: 0.4rem;
-        }
-        .fb-features-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.25rem;
-            margin-top: 1.5rem;
-        }
-        .fb-feature-card {
-            padding: 1.4rem;
-            border-radius: 14px;
-            border: 1px solid var(--border-glass);
-            background: var(--bg-glass);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: border-color 0.2s, transform 0.2s;
-        }
-        .fb-feature-card:hover {
-            border-color: rgba(6,182,212,0.35);
-            transform: translateY(-2px);
-        }
-        .fb-feature-header {
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-            margin-bottom: 0.6rem;
-        }
-        .fb-feature-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 9px;
-            background: rgba(6,182,212,0.12);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        .fb-feature-icon i { width: 18px; height: 18px; color: var(--cyan-500); }
-        .fb-feature-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-        .fb-feature-desc {
-            font-size: 0.84rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-        .fb-feature-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.35rem;
-            margin-top: 0.75rem;
-        }
-        .fb-feature-tags .tag {
-            font-size: 0.68rem;
-            padding: 0.2rem 0.55rem;
-            border-radius: 20px;
-            background: rgba(6,182,212,0.08);
-            border: 1px solid rgba(6,182,212,0.2);
-            color: var(--cyan-500);
-            font-family: var(--font-mono);
-        }
-        .fb-stack-section {
-            margin: 3rem 0;
-        }
-        .fb-stack-section h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .fb-stack-section h3 span.mono-text {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-        .fb-stack-pills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-        }
-        .fb-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.4rem 0.9rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            font-family: var(--font-mono);
-            border: 1px solid rgba(6,182,212,0.25);
-            background: rgba(6,182,212,0.06);
-            color: var(--cyan-500);
-            transition: border-color 0.2s, background 0.2s;
-        }
-        .fb-pill:hover {
-            background: rgba(6,182,212,0.14);
-            border-color: rgba(6,182,212,0.5);
-        }
-        .fb-doc-banner {
-            margin: 2.5rem 0;
-            padding: 2rem 2.5rem;
-            border-radius: 16px;
-            border: 1px solid rgba(6,182,212,0.25);
-            background: rgba(6,182,212,0.04);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 2rem;
-        }
-        .fb-doc-banner-text h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 0.3rem;
-        }
-        .fb-doc-banner-text p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-        .fb-section-heading {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--text-main);
-            margin-bottom: 0.3rem;
-        }
-        .fb-section-sub {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
-        @media (max-width: 860px) {
-            .fb-stats-strip { grid-template-columns: repeat(3, 1fr); }
-            .fb-features-grid { grid-template-columns: 1fr; }
-            .fb-doc-banner { flex-direction: column; align-items: flex-start; }
-        }
-        @media (max-width: 540px) {
-            .fb-stats-strip { grid-template-columns: repeat(2, 1fr); }
-        }
-    </style>
-</head>
-<body>
-    <script>
-    (function(){
-        const t = localStorage.getItem('theme');
-        const dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (dark) document.body.classList.add('dark');
-    })();
-    </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FocusBrain — Allan Vitu</title>
+<meta name="description" content="Bien plus qu'un gestionnaire de tâches : Brain Dump, Pomodoro adaptatif, suite projet complète, habits tracker et gamification. 100 % client-side.">
+<meta name="author" content="Allan Vitu">
+<link rel="canonical" href="https://allanvitu.github.io/DevOps/docs/projects/focus-brain.html">
 
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
-    <div class="animated-bg"></div>
-    <div id="rain-container"></div>
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Allan Vitu — Portfolio">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://allanvitu.github.io/DevOps/docs/projects/focus-brain.html">
+<meta property="og:title" content="FocusBrain — Allan Vitu">
+<meta property="og:description" content="Bien plus qu'un gestionnaire de tâches : Brain Dump, Pomodoro adaptatif, suite projet complète, habits tracker et gamification. 100 % client-side.">
+<meta property="og:image" content="https://allanvitu.github.io/DevOps/docs/assets/media/focusbrain/accueil-2.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FocusBrain — Allan Vitu">
+<meta name="twitter:description" content="Bien plus qu'un gestionnaire de tâches : Brain Dump, Pomodoro adaptatif, suite projet complète, habits tracker et gamification. 100 % client-side.">
+<meta name="twitter:image" content="https://allanvitu.github.io/DevOps/docs/assets/media/focusbrain/accueil-2.webp">
 
-    <nav class="glass-navbar" id="navbar">
-        <div class="scroll-tracker"></div>
-        <a href="../" class="nav-brand magnetic-btn">
-            <img src="../assets/branding/logo.svg" alt="Logo" class="nav-logo">
+<link rel="icon" href="../assets/brand/icon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="../assets/brand/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/brand/icon-180.png">
+<link rel="manifest" href="../site.webmanifest">
+<meta name="theme-color" content="#f7f7fb">
+
+<script>
+/* Resolve the theme before first paint so the page never flashes, and flag
+   that scripting is on — reveal animations only hide content when it can be
+   revealed again. */
+(function(){document.documentElement.classList.add('js');
+try{var s=localStorage.getItem('theme');
+document.documentElement.dataset.theme=s||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+}catch(e){document.documentElement.dataset.theme='light';}})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;500&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;500&display=swap"></noscript>
+
+<link rel="stylesheet" href="../css/site.css">
+<link rel="stylesheet" href="../css/project.css">
+</head><body data-project="cyan">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol><symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol><symbol id="i-bar-chart-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21v-6"/><path d="M12 21V3"/><path d="M19 21V9"/></symbol><symbol id="i-brain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18V5"/><path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4"/><path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5"/><path d="M17.997 5.125a4 4 0 0 1 2.526 5.77"/><path d="M18 18a4 4 0 0 0 2-7.464"/><path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517"/><path d="M6 18a4 4 0 0 1-2-7.464"/><path d="M6.003 5.125a4 4 0 0 0-2.526 5.77"/></symbol><symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol><symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol><symbol id="i-circle-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></symbol><symbol id="i-external-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol><symbol id="i-file-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 12.5 8 15l2 2.5"/><path d="m14 12.5 2 2.5-2 2.5"/></symbol><symbol id="i-kanban" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v14"/><path d="M12 3v8"/><path d="M19 3v18"/></symbol><symbol id="i-layout-dashboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol><symbol id="i-lightbulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></symbol><symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></symbol><symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></symbol><symbol id="i-repeat-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 3-3 3 3"/><path d="M13 18H7a2 2 0 0 1-2-2V6"/><path d="m22 15-3 3-3-3"/><path d="M11 6h6a2 2 0 0 1 2 2v10"/></symbol><symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol><symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol><symbol id="i-timer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" x2="14" y1="2" y2="2"/><line x1="12" x2="15" y1="14" y2="11"/><circle cx="12" cy="14" r="8"/></symbol><symbol id="i-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2"/><path d="M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2"/><path d="M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3"/><path d="M4 22h16"/><path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"/><path d="M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3"/></symbol><symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"/></symbol></svg>
+
+    <a class="skip-link" href="#main">Aller au contenu</a>
+
+    <div class="backdrop" aria-hidden="true"></div>
+
+    <header class="nav" id="nav">
+        <div class="nav-progress" aria-hidden="true"></div>
+        <a class="nav-brand" href="../" aria-label="Allan Vitu — accueil">
+            <img src="../assets/brand/logo.svg" alt="" width="28" height="28">
             Allan<span class="gradient-text">/</span>Vitu
         </a>
-        <div class="nav-center">
+        <nav class="nav-links" aria-label="Navigation principale">
             <a href="../#about">À propos</a>
             <a href="../#experience">Parcours</a>
             <a href="../#projects">Projets</a>
             <a href="../#contact">Contact</a>
-        </div>
-        <div class="nav-right">
-            <div class="social-icons">
-                <a href="https://github.com/allanvitu" target="_blank" rel="noopener" aria-label="GitHub"><i data-lucide="github"></i></a>
-                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-                <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+        </nav>
+        <div class="nav-actions">
+            <div class="nav-social">
+                <a href="https://github.com/allanvitu" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12c0 3.259.014 3.668.072 4.948.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.668-.014 4.948-.072c1.277-.06 2.148-.261 2.913-.558.788-.306 1.459-.717 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
             </div>
-            <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
-                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-                </svg>
-                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Changer de thème">
+                <svg class="icon icon-sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
             </button>
-            <a href="mailto:allan.vitu90@gmail.com" class="btn-cv magnetic-btn"><i data-lucide="mail"></i> Contact</a>
-            <button class="hamburger" id="hamburgerBtn" aria-label="Ouvrir le menu">
+            <a class="btn btn--ghost btn--sm" href="mailto:allan.vitu90@gmail.com" data-magnetic><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg> Contact</a>
+            <button class="nav-burger" id="navBurger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navDrawer">
                 <span></span><span></span><span></span>
             </button>
         </div>
-    </nav>
+    </header>
 
-    <div class="mobile-menu" id="mobileMenu">
+    <div class="nav-drawer" id="navDrawer">
         <a href="../#about">À propos</a>
         <a href="../#experience">Parcours</a>
         <a href="../#projects">Projets</a>
         <a href="../#contact">Contact</a>
-        <div class="mobile-socials">
-            <a href="https://github.com/allanvitu" target="_blank" aria-label="GitHub"><i data-lucide="github"></i></a>
-            <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-            <a href="https://www.instagram.com/allan.vitu/" target="_blank" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+        <div class="nav-drawer-social">
+            <a href="https://github.com/allanvitu" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12c0 3.259.014 3.668.072 4.948.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.668-.014 4.948-.072c1.277-.06 2.148-.261 2.913-.558.788-.306 1.459-.717 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
         </div>
     </div>
 
-    <main class="main-container">
-        <nav class="project-breadcrumb" aria-label="Fil d'Ariane">
-            <a href="../" class="breadcrumb-link">Home</a>
-            <span class="breadcrumb-sep">/</span>
-            <a href="../#projects" class="breadcrumb-link">Projets</a>
-            <span class="breadcrumb-sep">/</span>
-            <span class="breadcrumb-current">FocusBrain</span>
+    <main id="main" class="shell">
+        <nav class="crumbs" aria-label="Fil d’Ariane">
+            <a href="../">Accueil</a><span class="sep" aria-hidden="true">/</span>
+            <a href="../#projects">Projets</a><span class="sep" aria-hidden="true">/</span>
+            <span aria-current="page">FocusBrain</span>
         </nav>
 
-        <!-- ── HEADER + CAROUSEL ── -->
-        <div class="project-showcase reveal-fade">
-            <div class="project-header-block">
-                <span class="section-label mono-text" style="color: var(--cyan-500);">Case Study // 05</span>
-                <h2 class="cyan-gradient">FocusBrain 🧠⚡</h2>
-                <p class="project-tagline cyan">Suite de Productivité TDAH — PWA Vue.js 3</p>
-                <p>Bien plus qu'un gestionnaire de tâches — une suite de productivité complète et gamifiée, conçue spécifiquement pour les cerveaux TDAH. FocusBrain combine Brain Dump instantané, timers Focus Pomodoro adaptatifs, un vrai gestionnaire de projets (tableur, éditeur UML, chat, calendrier, mind maps, docs), habits tracker, rapports hebdomadaires TDAH et rétro-planning. 100&nbsp;% client-side, installable, offline-first.</p>
+        <header class="p-head reveal">
+            <p class="p-eyebrow">Étude de cas // 02</p>
+            <h1>FocusBrain — Suite de productivité TDAH</h1>
+            <p class="p-tagline">PWA Vue 3 offline-first, pensée pour les cerveaux TDAH</p>
+            <p>FocusBrain combine capture instantanée des pensées, timers Focus adaptatifs, un vrai gestionnaire de projets (Kanban, tableur, UML, chat, mind maps), un habits tracker et des rapports hebdomadaires TDAH. Aucun backend : tout vit dans le navigateur, l'application est installable et fonctionne hors-ligne.</p>
+            <dl class="p-meta">
+                <span>Rôle — <b>Conception produit &amp; développement</b></span>
+                <span>Type — <b>PWA offline-first</b></span>
+                <span>Backend — <b>Aucun — 100 % client-side</b></span>
+            </dl>
+        </header>
+
+        <div class="p-body reveal">
+            <div>
+                <div class="carousel" data-carousel tabindex="0" role="group" aria-roledescription="carrousel" aria-label="Captures de FocusBrain">
+                    <div class="carousel-viewport">
+                    <div class="carousel-slide" aria-hidden="false"><picture><source type="image/avif" srcset="../assets/media/focusbrain/accueil-1.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/focusbrain/accueil-1.webp" alt="FocusBrain — écran d'accueil" width="1600" height="824" loading="eager" decoding="async" fetchpriority="high"></picture></div>
+                    <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/focusbrain/accueil-2.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/focusbrain/accueil-2.webp" alt="FocusBrain — accueil, seconde vue" width="1600" height="841" loading="lazy" decoding="async"></picture></div>
+                    <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/focusbrain/vue-01.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/focusbrain/vue-01.webp" alt="FocusBrain — tableau de bord" width="1600" height="825" loading="lazy" decoding="async"></picture></div>
+                    <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/focusbrain/vue-03.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/focusbrain/vue-03.webp" alt="FocusBrain — vue projet" width="1600" height="826" loading="lazy" decoding="async"></picture></div>
+                    <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/focusbrain/vue-05.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/focusbrain/vue-05.webp" alt="FocusBrain — planification" width="1600" height="826" loading="lazy" decoding="async"></picture></div>
+                    <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/focusbrain/vue-07.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/focusbrain/vue-07.webp" alt="FocusBrain — suivi des habitudes" width="1600" height="841" loading="lazy" decoding="async"></picture></div>
+                    <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/focusbrain/vue-09.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/focusbrain/vue-09.webp" alt="FocusBrain — statistiques" width="1600" height="823" loading="lazy" decoding="async"></picture></div>
+                    <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/focusbrain/vue-11.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/focusbrain/vue-11.webp" alt="FocusBrain — paramètres" width="1600" height="821" loading="lazy" decoding="async"></picture></div>
+                        <button class="carousel-arrow prev" type="button" aria-label="Vue précédente"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+                        <button class="carousel-arrow next" type="button" aria-label="Vue suivante"><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+                    </div>
+                    <div class="carousel-dots"><button class="carousel-dot" type="button" aria-current="true" aria-label="Vue 1 sur 8"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 2 sur 8"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 3 sur 8"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 4 sur 8"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 5 sur 8"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 6 sur 8"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 7 sur 8"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 8 sur 8"></button></div>
+                </div>
+                <p class="carousel-status" role="status" aria-live="polite"></p>
             </div>
 
-            <div class="project-content">
-                <div class="carousel-wrapper carousel-focusbrain">
-                    <div class="simple-carousel" id="focusCarousel">
-                        <div class="carousel-track">
-                            <div class="carousel-slide active"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain_acceuil1.png" alt="FocusBrain — Accueil"></div>
-                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain_acceuil2.png" alt="FocusBrain — Accueil 2"></div>
-                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain1.png" alt="FocusBrain — Dashboard"></div>
-                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain2.png" alt="FocusBrain — Tâches"></div>
-                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain3.png" alt="FocusBrain — Focus Mode"></div>
-                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain4.png" alt="FocusBrain — Brain Dump"></div>
-                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain5.png" alt="FocusBrain — Habits"></div>
-                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain6.png" alt="FocusBrain — Projets"></div>
-                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain7.png" alt="FocusBrain — Calendrier"></div>
-                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain8.png" alt="FocusBrain — Rapport Hebdo"></div>
-                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain9.png" alt="FocusBrain — Rétro-Planning"></div>
-                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain10.png" alt="FocusBrain — Éditeur UML"></div>
-                            <div class="carousel-slide"><img src="../assets/imgs/imgs_carousel/Focus%20Brain/focus_brain11.png" alt="FocusBrain — Profil"></div>
-                        </div>
-                        <div class="carousel-controls">
-                            <button class="nav-arrow prev" id="focusPrev" aria-label="Précédent"><i data-lucide="chevron-left"></i></button>
-                            <button class="nav-arrow next" id="focusNext" aria-label="Suivant"><i data-lucide="chevron-right"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-details glass-panel">
-                    <h3>Fonctionnalités Clés</h3>
-                    <ul class="spec-list">
-                        <li>
-                            <i data-lucide="brain" class="text-cyan"></i>
-                            <div class="spec-text"><strong>Brain Dump &amp; Focus Pomodoro</strong><span>Capture instantanée des pensées (Entrée = submit) et timer SVG circulaire avec 4 modes adaptatifs. Son de fin via Web Audio API, tips TDAH rotatifs.</span></div>
-                        </li>
-                        <li>
-                            <i data-lucide="layout-dashboard" class="text-cyan"></i>
-                            <div class="spec-text"><strong>Suite Projet Intégrée</strong><span>Dashboard, Kanban, calendrier, chat (texte/images/GIF), docs, tableur type Excel, éditeur Mermaid UML et mind maps canvas — un écosystème entier.</span></div>
-                        </li>
-                        <li>
-                            <i data-lucide="repeat-2" class="text-cyan"></i>
-                            <div class="spec-text"><strong>Habits Tracker &amp; Rétro-Planning</strong><span>Suivi d'habitudes quotidiennes avec streaks, rapports hebdomadaires TDAH avec score (0–100) et 10+ insights contextualisés.</span></div>
-                        </li>
-                        <li>
-                            <i data-lucide="zap" class="text-cyan"></i>
-                            <div class="spec-text"><strong>Gamification &amp; PWA Offline</strong><span>8 niveaux XP, 10 achievements, système de récompenses. Service Worker Workbox, QR code export/import, aucun backend.</span></div>
-                        </li>
-                    </ul>
-                    <div class="project-links">
-                        <a href="https://allanvitu.github.io/GestionnaireTDAH/#/" target="_blank" rel="noopener noreferrer" class="btn-project cyan">Ouvrir FocusBrain <i data-lucide="external-link"></i></a>
-                        <a href="../doc_technique/aspect_technique_FocusBrain.html" class="btn-project cyan" style="background: transparent; border: 1px solid rgba(6,182,212,0.45); color: var(--cyan-500);">Doc Technique <i data-lucide="file-code"></i></a>
-                    </div>
+            <div class="p-specs panel">
+                <h2>Points techniques</h2>
+                <ul class="spec-list">
+                    <li>
+                        <span class="spec-icon"><svg class="icon" aria-hidden="true"><use href="#i-brain"/></svg></span>
+                        <div><strong>Brain Dump &amp; Focus Pomodoro</strong><span>Capture sans friction (Entrée = valider) et timer SVG circulaire à 4 modes, son de fin en Web Audio API.</span></div>
+                    </li>
+                    <li>
+                        <span class="spec-icon"><svg class="icon" aria-hidden="true"><use href="#i-layout-dashboard"/></svg></span>
+                        <div><strong>Suite projet intégrée</strong><span>Dashboard, Kanban, calendrier, chat, docs, tableur, éditeur Mermaid UML et mind maps sur canvas.</span></div>
+                    </li>
+                    <li>
+                        <span class="spec-icon"><svg class="icon" aria-hidden="true"><use href="#i-repeat-2"/></svg></span>
+                        <div><strong>Habits tracker &amp; rapports</strong><span>Streaks quotidiens et rapport hebdomadaire TDAH scoré de 0 à 100 avec insights contextualisés.</span></div>
+                    </li>
+                    <li>
+                        <span class="spec-icon"><svg class="icon" aria-hidden="true"><use href="#i-zap"/></svg></span>
+                        <div><strong>Gamification &amp; offline</strong><span>8 niveaux d'XP, 10 achievements, Service Worker Workbox, export/import par QR code.</span></div>
+                    </li>
+                </ul>
+                <div class="p-actions">
+                    <a class="btn btn--project" href="https://allanvitu.github.io/GestionnaireTDAH/#/" target="_blank" rel="noopener noreferrer">Ouvrir FocusBrain <svg class="icon" aria-hidden="true"><use href="#i-external-link"/></svg></a>
+                    <a class="btn btn--project-ghost" href="../doc_technique/aspect_technique_FocusBrain.html">Documentation technique <svg class="icon" aria-hidden="true"><use href="#i-file-code"/></svg></a>
                 </div>
             </div>
         </div>
 
-        <!-- ── STATS STRIP ── -->
-        <div class="fb-stats-strip reveal-fade">
-            <div class="fb-stat-card">
-                <div class="fb-stat-num">15</div>
-                <div class="fb-stat-lbl">Stores Pinia</div>
+        <section class="p-section reveal">
+            <h2>Le raisonnement</h2>
+            <p class="sub">Problème → Solution → Résultat</p>
+            <div class="narrative">
+                <article class="panel">
+                    <h3><svg class="icon" aria-hidden="true"><use href="#i-circle-alert"/></svg> Le problème</h3>
+                    <p>Les outils de productivité classiques supposent une attention linéaire : ils demandent de ranger avant de capturer. Pour un cerveau TDAH, cette friction suffit à faire perdre l'idée.</p>
+                </article>
+                <article class="panel">
+                    <h3><svg class="icon" aria-hidden="true"><use href="#i-lightbulb"/></svg> La solution</h3>
+                    <p>Séparer radicalement la capture du rangement. Le Brain Dump avale tout sans structure, et le tri se fait plus tard. Chaque module est un store Pinia indépendant persisté en localStorage, ce qui permet d'ajouter une brique sans toucher aux autres.</p>
+                </article>
+                <article class="panel">
+                    <h3><svg class="icon" aria-hidden="true"><use href="#i-target"/></svg> Le résultat</h3>
+                    <p>Une suite de 12 vues principales et 9 sous-vues projet portées par 15 stores, installable et pleinement fonctionnelle hors-ligne, sans une ligne de backend.</p>
+                </article>
             </div>
-            <div class="fb-stat-card">
-                <div class="fb-stat-num">12</div>
-                <div class="fb-stat-lbl">Vues principales</div>
+        </section>
+        <section class="p-section reveal">
+            <h2>En chiffres</h2>
+            <p class="sub">Périmètre réel du projet</p>
+            <dl class="metrics">
+                <div><dt>15</dt><dd>Stores Pinia</dd></div>
+                <div><dt>12</dt><dd>Vues principales</dd></div>
+                <div><dt>9</dt><dd>Sous-vues projet</dd></div>
+                <div><dt>4</dt><dd>Modes Pomodoro</dd></div>
+                <div><dt>0</dt><dd>Backend</dd></div>
+            </dl>
+        </section>
+        <section class="p-section reveal">
+            <h2>Architecture &amp; modules</h2>
+            <p class="sub">Chaque module est un store indépendant, persisté localement.</p>
+            <div class="features">
+                <article class="panel panel--lift">
+                    <header><span class="f-icon"><svg class="icon" aria-hidden="true"><use href="#i-brain"/></svg></span><h3>Brain Dump</h3></header>
+                    <p>Capture rapide d'idées sans friction — une zone de texte où Entrée valide. Les items sont convertibles en tâches via <code class="inline">TaskModal</code>. Débloque l'achievement <code class="inline">brain_dump</code> à la première utilisation.</p>
+                    <div class="tag-row"><span class="tag">braindump.js</span><span class="tag">TaskModal</span><span class="tag">+XP</span></div>
+                </article>
+                <article class="panel panel--lift">
+                    <header><span class="f-icon"><svg class="icon" aria-hidden="true"><use href="#i-timer"/></svg></span><h3>Focus Pomodoro</h3></header>
+                    <p>Timer SVG circulaire à 4 modes : work (25 min), short break (5 min), long break (15 min) et custom. Persistance cross-navigation, sauvegarde toutes les 10 s, son de fin en Web Audio API (C5/E5/G5).</p>
+                    <div class="tag-row"><span class="tag">focus.js</span><span class="tag">Web Audio API</span><span class="tag">+15 XP/session</span></div>
+                </article>
+                <article class="panel panel--lift">
+                    <header><span class="f-icon"><svg class="icon" aria-hidden="true"><use href="#i-kanban"/></svg></span><h3>Suite projet complète</h3></header>
+                    <p>Par projet : Kanban 3 colonnes, calendrier d'événements, chat (texte / images / GIF), arborescence de documents avec breadcrumb, tableur type Excel, éditeur Mermaid.js avec preview live et mind maps sur canvas SVG 2400×1600 à nœuds draggables.</p>
+                    <div class="tag-row"><span class="tag">projectTasks.js</span><span class="tag">projectChat.js</span><span class="tag">Mermaid.js</span></div>
+                </article>
+                <article class="panel panel--lift">
+                    <header><span class="f-icon"><svg class="icon" aria-hidden="true"><use href="#i-repeat-2"/></svg></span><h3>Habits tracker</h3></header>
+                    <p>Habitudes quotidiennes avec toggle emoji, streak, calcul de la meilleure série, mini calendrier 7 jours et suggestions TDAH. <code class="inline">recalcStreak()</code> compte les jours consécutifs à rebours.</p>
+                    <div class="tag-row"><span class="tag">habits.js</span><span class="tag">completedDates[]</span><span class="tag">+8 XP/toggle</span></div>
+                </article>
+                <article class="panel panel--lift">
+                    <header><span class="f-icon"><svg class="icon" aria-hidden="true"><use href="#i-bar-chart-2"/></svg></span><h3>Rapport hebdomadaire TDAH</h3></header>
+                    <p>Score calculé automatiquement (tâches × 3 + streak × 4 + pomodoros × 1,5 + habits × 5) avec labels contextuels. Plus de 10 insights : patterns d'énergie, mode urgence, milestones de streak, meilleure journée.</p>
+                    <div class="tag-row"><span class="tag">weeklyReport.js</span><span class="tag">Score 0–100</span><span class="tag">10+ insights</span></div>
+                </article>
+                <article class="panel panel--lift">
+                    <header><span class="f-icon"><svg class="icon" aria-hidden="true"><use href="#i-trophy"/></svg></span><h3>Gamification</h3></header>
+                    <p>8 niveaux d'XP, 10 achievements, streaks journaliers et toasts auto-fermants. Scoring par priorité : urgent = 35 XP, high = 20, medium = 10, low = 5. Les unlocks se déclenchent depuis n'importe quel store.</p>
+                    <div class="tag-row"><span class="tag">gamification.js</span><span class="tag">8 niveaux</span><span class="tag">10 achievements</span></div>
+                </article>
             </div>
-            <div class="fb-stat-card">
-                <div class="fb-stat-num">9</div>
-                <div class="fb-stat-lbl">Sous-vues Projet</div>
-            </div>
-            <div class="fb-stat-card">
-                <div class="fb-stat-num">4</div>
-                <div class="fb-stat-lbl">Modes Pomodoro</div>
-            </div>
-            <div class="fb-stat-card">
-                <div class="fb-stat-num">0</div>
-                <div class="fb-stat-lbl">Backend (100% offline)</div>
-            </div>
-        </div>
-
-        <!-- ── FEATURES DEEP DIVE ── -->
-        <div class="reveal-fade" style="margin: 2rem 0;">
-            <p class="fb-section-heading">Architecture &amp; Modules</p>
-            <p class="fb-section-sub mono-text">Chaque module est un store Pinia indépendant avec persistance localStorage.</p>
-
-            <div class="fb-features-grid">
-
-                <div class="fb-feature-card">
-                    <div class="fb-feature-header">
-                        <div class="fb-feature-icon"><i data-lucide="brain"></i></div>
-                        <div class="fb-feature-title">Brain Dump</div>
-                    </div>
-                    <p class="fb-feature-desc">Capture rapide d'idées sans friction — une zone de texte où Entrée = submit. Les items sont convertibles en tâches via TaskModal. Débloque l'achievement <code style="font-size:0.75rem; background: rgba(6,182,212,0.1); color: var(--cyan-500); padding: 1px 5px; border-radius: 3px;">brain_dump</code> à la première utilisation.</p>
-                    <div class="fb-feature-tags">
-                        <span class="tag">braindump.js</span>
-                        <span class="tag">TaskModal</span>
-                        <span class="tag">+XP</span>
-                    </div>
-                </div>
-
-                <div class="fb-feature-card">
-                    <div class="fb-feature-header">
-                        <div class="fb-feature-icon"><i data-lucide="timer"></i></div>
-                        <div class="fb-feature-title">Focus Pomodoro</div>
-                    </div>
-                    <p class="fb-feature-desc">Timer SVG circulaire avec 4 modes : work (25 min), short break (5 min), long break (15 min) et custom. Persistance cross-navigation, sauvegarde toutes les 10s, son de fin Web Audio API (notes C5/E5/G5).</p>
-                    <div class="fb-feature-tags">
-                        <span class="tag">focus.js</span>
-                        <span class="tag">Web Audio API</span>
-                        <span class="tag">+15 XP/session</span>
-                    </div>
-                </div>
-
-                <div class="fb-feature-card">
-                    <div class="fb-feature-header">
-                        <div class="fb-feature-icon"><i data-lucide="kanban"></i></div>
-                        <div class="fb-feature-title">Suite Projet Complète</div>
-                    </div>
-                    <p class="fb-feature-desc">Par projet : Kanban 3 colonnes, calendrier d'événements, chat (texte / images / GIF), arborescence de documents avec breadcrumb, tableur Excel, éditeur Mermaid.js UML avec preview live, mind maps sur canvas SVG 2400×1600 avec nœuds draggables.</p>
-                    <div class="fb-feature-tags">
-                        <span class="tag">projectTasks.js</span>
-                        <span class="tag">projectChat.js</span>
-                        <span class="tag">projectDocs.js</span>
-                        <span class="tag">Mermaid.js</span>
-                    </div>
-                </div>
-
-                <div class="fb-feature-card">
-                    <div class="fb-feature-header">
-                        <div class="fb-feature-icon"><i data-lucide="repeat-2"></i></div>
-                        <div class="fb-feature-title">Habits Tracker</div>
-                    </div>
-                    <p class="fb-feature-desc">Habitudes quotidiennes avec toggle emoji, streak 🔥, calcul de la meilleure série, mini calendrier 7 jours et suggestions TDAH. Toggle = +8 XP. <code style="font-size:0.75rem; background: rgba(6,182,212,0.1); color: var(--cyan-500); padding: 1px 5px; border-radius: 3px;">recalcStreak()</code> compte les jours consécutifs à rebours.</p>
-                    <div class="fb-feature-tags">
-                        <span class="tag">habits.js</span>
-                        <span class="tag">completedDates[]</span>
-                        <span class="tag">+8 XP/toggle</span>
-                    </div>
-                </div>
-
-                <div class="fb-feature-card">
-                    <div class="fb-feature-header">
-                        <div class="fb-feature-icon"><i data-lucide="bar-chart-2"></i></div>
-                        <div class="fb-feature-title">Rapport Hebdomadaire TDAH</div>
-                    </div>
-                    <p class="fb-feature-desc">Score calculé automatiquement (tâches × 3 + streak × 4 + pomodoros × 1,5 + habits × 5) avec labels contextuels. 10+ insights TDAH : patterns énergie, mode urgence, milestones streak, meilleure journée. Auto-génération si &gt; 7 jours.</p>
-                    <div class="fb-feature-tags">
-                        <span class="tag">weeklyReport.js</span>
-                        <span class="tag">Score 0–100</span>
-                        <span class="tag">10+ insights</span>
-                    </div>
-                </div>
-
-                <div class="fb-feature-card">
-                    <div class="fb-feature-header">
-                        <div class="fb-feature-icon"><i data-lucide="trophy"></i></div>
-                        <div class="fb-feature-title">Gamification</div>
-                    </div>
-                    <p class="fb-feature-desc">8 niveaux XP (🌱 Débutant → 👑 Dieu TDAH), 10 achievements, streaks journaliers, toasts XP auto-close 3.5s. Scoring par priorité : urgent = 35 XP, high = 20, medium = 10, low = 5. Unlocks déclenchés depuis n'importe quel store.</p>
-                    <div class="fb-feature-tags">
-                        <span class="tag">gamification.js</span>
-                        <span class="tag">8 niveaux</span>
-                        <span class="tag">10 achievements</span>
-                    </div>
-                </div>
-
-                <div class="fb-feature-card">
-                    <div class="fb-feature-header">
-                        <div class="fb-feature-icon"><i data-lucide="smartphone"></i></div>
-                        <div class="fb-feature-title">PWA &amp; Planner Quotidien</div>
-                    </div>
-                    <p class="fb-feature-desc">Installable (standalone), Service Worker Workbox, cache Fonts CacheFirst, shortcuts "Focus Now" et "Mes Tâches". Planner journalier en wizard 3 étapes : énergie → 3 tâches filtrées → intention. Export/import via QR code compressé (LZString).</p>
-                    <div class="fb-feature-tags">
-                        <span class="tag">vite-plugin-pwa</span>
-                        <span class="tag">Workbox</span>
-                        <span class="tag">LZString QR</span>
-                    </div>
-                </div>
-
-                <div class="fb-feature-card">
-                    <div class="fb-feature-header">
-                        <div class="fb-feature-icon"><i data-lucide="layout-dashboard"></i></div>
-                        <div class="fb-feature-title">Dashboard Intelligent</div>
-                    </div>
-                    <p class="fb-feature-desc">Suggestion de tâche adaptée au niveau d'énergie du moment (low → tâches faciles ≤ 30 min, high → priorité maximale). Bento grid : stats, overdue alert, habitudes, timer Pomodoro actif et barre de progression quotidienne.</p>
-                    <div class="fb-feature-tags">
-                        <span class="tag">DashboardView</span>
-                        <span class="tag">byEnergy()</span>
-                        <span class="tag">Bento Grid</span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- ── TECH STACK ── -->
-        <div class="fb-stack-section reveal-fade">
-            <h3>Stack Technologique <span class="mono-text">// package.json</span></h3>
-            <div class="fb-stack-pills">
-                <span class="fb-pill">Vue 3.4</span>
-                <span class="fb-pill">Pinia 2.1</span>
-                <span class="fb-pill">Vue Router 4.3</span>
-                <span class="fb-pill">TailwindCSS 3.4</span>
-                <span class="fb-pill">Vite 5.2</span>
-                <span class="fb-pill">vite-plugin-pwa</span>
-                <span class="fb-pill">Workbox</span>
-                <span class="fb-pill">Mermaid.js 11</span>
-                <span class="fb-pill">date-fns 3.6</span>
-                <span class="fb-pill">@vueuse/core 10</span>
-                <span class="fb-pill">LZString 1.5</span>
-                <span class="fb-pill">qrcode 1.5</span>
-                <span class="fb-pill">jsqr 1.4</span>
-                <span class="fb-pill">Lucide Vue</span>
-                <span class="fb-pill">localStorage only</span>
-            </div>
-        </div>
-
-        <!-- ── DOC TECHNIQUE BANNER ── -->
-        <div class="fb-doc-banner glass-panel reveal-fade">
-            <div class="fb-doc-banner-text">
-                <h4>📄 Documentation Technique Complète</h4>
-                <p>Architecture détaillée, 15 stores Pinia, flux de données, patterns PWA, configuration Tailwind et résumé chiffré de l'ensemble du projet.</p>
-            </div>
-            <a href="../doc_technique/aspect_technique_FocusBrain.html" class="btn-project cyan" style="white-space: nowrap; flex-shrink: 0;">
-                Voir la doc <i data-lucide="arrow-right"></i>
-            </a>
-        </div>
-
-        <nav class="project-page-nav-footer" aria-label="Navigation entre projets">
-            <a href="./super-snake.html" class="prev-next-link">
-                <i data-lucide="arrow-left"></i>
+        </section>
+        <section class="p-section reveal">
+            <h2>Stack technique</h2>
+            <p class="sub">Ce qui fait tourner le projet</p>
+            <div class="stack-groups">
                 <div>
-                    <span class="prev-next-label">Projet précédent</span>
-                    <strong class="prev-next-title">Super Snake 🐍</strong>
+                    <h3>Frontend</h3>
+                    <div class="tag-row"><span class="pill">Vue 3</span><span class="pill">Composition API</span><span class="pill">Vue Router</span><span class="pill">Vite</span></div>
                 </div>
-            </a>
-            <a href="./questflow.html" class="prev-next-link next">
                 <div>
-                    <span class="prev-next-label">Projet suivant</span>
-                    <strong class="prev-next-title">QuestFlow ⚔️</strong>
+                    <h3>État &amp; persistance</h3>
+                    <div class="tag-row"><span class="pill">Pinia</span><span class="pill">LocalStorage</span><span class="pill">15 stores découplés</span></div>
                 </div>
-                <i data-lucide="arrow-right"></i>
-            </a>
+                <div>
+                    <h3>PWA</h3>
+                    <div class="tag-row"><span class="pill">Workbox</span><span class="pill">Service Worker</span><span class="pill">Manifest installable</span></div>
+                </div>
+                <div>
+                    <h3>Rendu spécialisé</h3>
+                    <div class="tag-row"><span class="pill">Mermaid.js</span><span class="pill">Canvas SVG</span><span class="pill">Web Audio API</span></div>
+                </div>
+            </div>
+        </section>
+        <aside class="doc-banner reveal">
+            <div>
+                <h2>Documentation technique</h2>
+                <p>Architecture détaillée, choix d’implémentation et schémas.</p>
+            </div>
+            <a class="btn btn--project" href="../doc_technique/aspect_technique_FocusBrain.html">Lire la doc <svg class="icon" aria-hidden="true"><use href="#i-file-code"/></svg></a>
+        </aside>
+
+        <nav class="p-pager" aria-label="Navigation entre les projets">
+            <a class="pager-link prev" href="./forge-ui.html"><svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg><span><span class="lbl">Projet précédent</span><span class="ttl">FORGE UI</span></span></a>
+            <a class="pager-link next" href="./rytiger.html"><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg><span><span class="lbl">Projet suivant</span><span class="ttl">Rytiger RPG</span></span></a>
         </nav>
     </main>
 
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="footer-socials">
-                <a href="https://github.com/allanvitu" target="_blank" aria-label="GitHub"><i data-lucide="github"></i></a>
-                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-                <a href="https://www.instagram.com/allan.vitu/" target="_blank" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+    <footer class="footer">
+        <div class="shell footer-inner">
+            <p>&copy; 2026 Allan Vitu — Développeur Full-Stack & DevOps</p>
+            <div class="footer-social">
+                <a href="https://github.com/allanvitu" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12c0 3.259.014 3.668.072 4.948.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.668-.014 4.948-.072c1.277-.06 2.148-.261 2.913-.558.788-.306 1.459-.717 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
             </div>
-            <p class="footer-copy">&copy; 2026 Allan Vitu. Développeur Full-Stack &amp; DevOps.</p>
         </div>
     </footer>
 
-    <script src="../js/app.js"></script>
+    <script src="../js/app.js" defer></script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"FocusBrain","description":"Bien plus qu'un gestionnaire de tâches : Brain Dump, Pomodoro adaptatif, suite projet complète, habits tracker et gamification. 100 % client-side.","url":"https://allanvitu.github.io/GestionnaireTDAH/#/","applicationCategory":"WebApplication","operatingSystem":"Web","author":{"@type":"Person","name":"Allan Vitu","url":"https://allanvitu.github.io/DevOps/docs/"},"image":"https://allanvitu.github.io/DevOps/docs/assets/media/focusbrain/accueil-2.webp"}</script>
 </body>
 </html>
