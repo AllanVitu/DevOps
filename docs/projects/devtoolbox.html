@@ -49,7 +49,10 @@ document.documentElement.dataset.theme=s||(matchMedia('(prefers-color-scheme: da
 
     <a class="skip-link" href="#main">Aller au contenu</a>
 
-    <div class="backdrop" aria-hidden="true"></div>
+    <div class="backdrop" aria-hidden="true">
+        <canvas class="backdrop-canvas"></canvas>
+        <div class="backdrop-veil"></div>
+    </div>
 
     <header class="nav" id="nav">
         <div class="nav-progress" aria-hidden="true"></div>
@@ -211,6 +214,7 @@ document.documentElement.dataset.theme=s||(matchMedia('(prefers-color-scheme: da
         </div>
     </footer>
 
+    <script src="../js/shader-bg.js" defer></script>
     <script src="../js/app.js" defer></script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"DevToolbox","description":"29 outils développeur (JSON, Base64, JWT, QR…) et 11 leçons illustrées, entièrement hors-ligne et sans framework.","url":"https://allanvitu.github.io/DevToolsBox/","applicationCategory":"WebApplication","operatingSystem":"Web","author":{"@type":"Person","name":"Allan Vitu","url":"https://allanvitu.github.io/DevOps/docs/"},"image":"https://allanvitu.github.io/DevOps/docs/assets/media/devtoolbox/outils.webp"}</script>
 </body>

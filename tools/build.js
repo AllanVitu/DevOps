@@ -208,7 +208,10 @@ function navbar({ depth, icon }) {
     return `
     <a class="skip-link" href="#main">Aller au contenu</a>
 
-    <div class="backdrop" aria-hidden="true"></div>
+    <div class="backdrop" aria-hidden="true">
+        <canvas class="backdrop-canvas"></canvas>
+        <div class="backdrop-veil"></div>
+    </div>
 
     <header class="nav" id="nav">
         <div class="nav-progress" aria-hidden="true"></div>
@@ -256,6 +259,7 @@ function footer({ depth }) {
         </div>
     </footer>
 
+    <script src="${up(depth)}js/shader-bg.js" defer></script>
     <script src="${up(depth)}js/app.js" defer></script>`;
 }
 

@@ -88,6 +88,13 @@
     --halo-1: rgba(124, 58, 237, 0.10);
     --halo-2: rgba(6, 182, 212, 0.07);
 
+    /* Veil over the shader backdrop. It thickens down the viewport: the hero
+       gets the colour, the text-dense sections below get the contrast. */
+    --veil: linear-gradient(180deg,
+        rgba(247, 247, 251, 0.60) 0%,
+        rgba(247, 247, 251, 0.84) 42%,
+        rgba(247, 247, 251, 0.94) 100%);
+
     --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
     --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.07);
     --shadow-lg: 0 24px 56px rgba(15, 23, 42, 0.10);
@@ -125,6 +132,11 @@ html[data-theme='dark'] {
 
     --halo-1: rgba(124, 58, 237, 0.20);
     --halo-2: rgba(6, 182, 212, 0.11);
+
+    --veil: linear-gradient(180deg,
+        rgba(7, 9, 15, 0.64) 0%,
+        rgba(7, 9, 15, 0.87) 42%,
+        rgba(7, 9, 15, 0.96) 100%);
 
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
@@ -263,14 +275,24 @@ ul { list-style: none; }
 
 /* --------------------------------------------------------------------------
    4. BACKDROP
-   Two fixed layers only: a static grid + two slow halos. No per-frame JS.
+   A ShaderGradient sphere on a WebGL canvas (js/shader-bg.js), read through a
+   veil that keeps body text legible over it in both themes. The pseudo-element
+   grid and halos below are the no-JS / no-WebGL fallback: the canvas only
+   fades in once it has painted, and covers them from that point on.
    -------------------------------------------------------------------------- */
 .backdrop {
     position: fixed;
     inset: 0;
     z-index: -1;
     pointer-events: none;
+    overflow: hidden;
     background-color: var(--bg);
+}
+
+.backdrop::before {
+    content: '';
+    position: absolute;
+    inset: 0;
     background-image:
         linear-gradient(var(--bg-grid) 1px, transparent 1px),
         linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
@@ -286,6 +308,8 @@ ul { list-style: none; }
     background:
         radial-gradient(ellipse 70vw 50vh at 12% -5%, var(--halo-1), transparent 65%),
         radial-gradient(ellipse 55vw 45vh at 88% 40%, var(--halo-2), transparent 65%);
+    mask-image: radial-gradient(ellipse 100% 80% at 50% 0%, #000 30%, transparent 85%);
+    -webkit-mask-image: radial-gradient(ellipse 100% 80% at 50% 0%, #000 30%, transparent 85%);
     animation: haloDrift 30s ease-in-out infinite alternate;
 }
 
@@ -293,6 +317,36 @@ ul { list-style: none; }
     from { transform: translate3d(0, 0, 0) scale(1); }
     to   { transform: translate3d(0, 2.5%, 0) scale(1.06); }
 }
+
+/* z-index puts these two above the pseudo-elements, which have none. */
+.backdrop-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: block;
+    /* Painted behind the drawing buffer, so the sphere's own silhouette reads
+       as page colour instead of letting the fallback layers bleed through. */
+    background: var(--bg);
+    opacity: 0;
+    transition: opacity 0.8s var(--ease-out);
+}
+
+.backdrop-canvas.is-live { opacity: 1; }
+
+/* The veil exists to tame the shader, so it rides in with it — the fallback
+   grid and halos are already quiet enough and keep their original strength. */
+.backdrop-veil {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: var(--veil);
+    opacity: 0;
+    transition: opacity 0.8s var(--ease-out);
+}
+
+.backdrop-canvas.is-live ~ .backdrop-veil { opacity: 1; }
 
 /* --------------------------------------------------------------------------
    5. SURFACES
