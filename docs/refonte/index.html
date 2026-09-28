@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Refonte — 5 pistes</title>
+<meta name="description" content="Les cinq prototypes de la refonte du portfolio d'Allan Vitu, à comparer avant de choisir.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/brand/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+:root {
+    --bg: #f6f6f4; --card: #ffffff; --ink: #141518; --muted: #5f636d; --line: #e3e3df; --soft: #efefec;
+    --accent: #4f46e5; --good: #047857; --warn: #b45309;
+    color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+        --bg: #0f1013; --card: #17181c; --ink: #eceef2; --muted: #9ba0ab; --line: #2a2c33; --soft: #1e2025;
+        --accent: #a5b4fc; --good: #34d399; --warn: #fbbf24; color-scheme: dark;
+    }
+}
+:root[data-theme='dark'] {
+    --bg: #0f1013; --card: #17181c; --ink: #eceef2; --muted: #9ba0ab; --line: #2a2c33; --soft: #1e2025;
+    --accent: #a5b4fc; --good: #34d399; --warn: #fbbf24; color-scheme: dark;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; line-height: 1.55; }
+a { color: inherit; }
+img { display: block; max-width: 100%; height: auto; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+main { max-width: 1180px; margin: 0 auto; padding: 56px 16px 80px; }
+
+header.intro { max-width: 70ch; }
+.eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+h1 { font-size: clamp(34px, 5vw, 56px); line-height: 1.02; letter-spacing: -0.035em; font-weight: 800; margin: 10px 0 14px; }
+.intro p { color: var(--muted); font-size: 17px; }
+.intro .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; text-decoration: none; padding: 9px 14px; border-radius: 99px; background: var(--soft); border: 1px solid var(--line); }
+.pill:hover { border-color: var(--accent); }
+
+/* ---------------------------------------------------------------- options */
+.options { display: grid; gap: 28px; margin-top: 48px; }
+.opt { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 32px; background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 24px; }
+.opt .shots { position: relative; padding-right: 70px; padding-bottom: 30px; }
+.opt .desk { display: block; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 16px 40px rgba(0,0,0,0.12); }
+.opt .phone { position: absolute; right: 0; bottom: 0; width: 26%; border-radius: 18px; overflow: hidden; border: 5px solid var(--ink); box-shadow: 0 16px 40px rgba(0,0,0,0.25); background: var(--ink); }
+.opt .num { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; }
+.opt h2 { font-size: 30px; letter-spacing: -0.03em; line-height: 1.1; margin: 4px 0 8px; }
+.opt .concept { color: var(--muted); }
+.opt h3 { font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin: 18px 0 6px; }
+.opt h3.pro { color: var(--good); }
+.opt h3.con { color: var(--warn); }
+.opt ul { list-style: none; display: grid; gap: 4px; }
+.opt li { font-size: 14.5px; padding-left: 18px; position: relative; }
+.opt li::before { position: absolute; left: 0; font-weight: 700; }
+.opt ul.pro li::before { content: '+'; color: var(--good); }
+.opt ul.con li::before { content: '−'; color: var(--warn); }
+.opt .go { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; text-decoration: none; padding: 12px 18px; border-radius: 12px; background: var(--ink); color: var(--bg); }
+.btn:hover { opacity: 0.88; }
+.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+
+/* ---------------------------------------------------------------- comparison */
+section.compare { margin-top: 64px; }
+section.compare h2, section.reco h2 { font-size: 30px; letter-spacing: -0.03em; }
+section.compare > p { color: var(--muted); margin-top: 6px; }
+.table-wrap { overflow-x: auto; margin-top: 18px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; }
+table { width: 100%; border-collapse: collapse; min-width: 720px; font-size: 14.5px; }
+th, td { padding: 13px 16px; text-align: left; border-bottom: 1px solid var(--line); }
+tbody tr:last-child td { border-bottom: 0; }
+th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; }
+td.dots { white-space: nowrap; letter-spacing: 2px; color: var(--accent); }
+td.dots span { color: var(--line); }
+td.dots b { font-weight: 400; }
+
+section.reco { margin-top: 56px; background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 18px; padding: 26px; }
+section.reco p { margin-top: 10px; max-width: 75ch; }
+section.reco p + p { color: var(--muted); }
+
+footer { margin-top: 56px; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 860px) {
+    .opt { grid-template-columns: 1fr; }
+    .opt .shots { padding-right: 50px; }
+}
+</style>
+</head>
+<body>
+<main>
+    <header class="intro">
+        <p class="eyebrow">Refonte du portfolio · septembre 2026</p>
+        <h1>5 pistes graphiques, un seul contenu</h1>
+        <p>Les cinq prototypes affichent exactement le même contenu : DevToolbox, BoxCraft et App, le parcours, la stack et le contact. Ils le lisent dans un seul fichier, <code>refonte/data.js</code>. Chacun fonctionne réellement, sur ordinateur comme sur mobile : clique, fais glisser, défile.</p>
+        <div class="links">
+            <a class="pill" href="../">Site actuel (contenu déjà mis à jour) ↗</a>
+            <a class="pill" href="../doc_technique/fiche-technique.html">Fiche technique ↗</a>
+        </div>
+    </header>
+
+    <div class="options">
+        <article class="opt">
+            <div class="shots">
+                <a class="desk" href="./1-os/" aria-label="Ouvrir le prototype allan.os"><img src="thumbs/1-os.webp" alt="Aperçu du prototype allan.os : un bureau avec fenêtres, dock et widget" width="1200" height="750"></a>
+                <img class="phone" src="thumbs/1-os-mob.webp" alt="Version mobile : écran d’accueil façon téléphone" width="390" height="844" loading="lazy">
+            </div>
+            <div>
+                <p class="num">PISTE 1</p>
+                <h2>allan.os — le bureau</h2>
+                <p class="concept">Le portfolio est un système d’exploitation : icônes, fenêtres déplaçables, dock, et un terminal qui répond vraiment.</p>
+                <h3 class="pro">Points forts</h3>
+                <ul class="pro">
+                    <li>Mémorable, ludique, démontre la gestion d’état, le glisser-déposer et le z-index</li>
+                    <li>Terminal interactif : <code>help</code>, <code>ls</code>, <code>open devtoolbox</code>…</li>
+                    <li>Inventaire façon Minecraft pour BoxCraft</li>
+                </ul>
+                <h3 class="con">Risques</h3>
+                <ul class="con">
+                    <li>Un recruteur pressé doit cliquer pour trouver l’info</li>
+                    <li>Sur mobile, les fenêtres deviennent des écrans plein cadre : moins spectaculaire</li>
+                </ul>
+                <div class="go"><a class="btn" href="./1-os/">Ouvrir la piste 1 →</a><a class="btn ghost" href="./1-os/#terminal">Directement le terminal</a></div>
+            </div>
+        </article>
+
+        <article class="opt">
+            <div class="shots">
+                <a class="desk" href="./2-bento/" aria-label="Ouvrir le prototype Bento"><img src="thumbs/2-bento.webp" alt="Aperçu du prototype Bento : grille de tuiles arrondies" width="1200" height="750" loading="lazy"></a>
+                <img class="phone" src="thumbs/2-bento-mob.webp" alt="Version mobile : tuiles empilées" width="390" height="844" loading="lazy">
+            </div>
+            <div>
+                <p class="num">PISTE 2</p>
+                <h2>Bento Box</h2>
+                <p class="concept">Une grille asymétrique qui tient sur un écran d’ordinateur portable, sans défiler. Les tuiles projet s’ouvrent en fiche détaillée.</p>
+                <h3 class="pro">Points forts</h3>
+                <ul class="pro">
+                    <li>Tout se lit en 10 secondes, idéal pour un recruteur</li>
+                    <li>Clair / sombre automatique, très propre sur mobile</li>
+                    <li>La plus simple à intégrer au générateur actuel et à maintenir</li>
+                </ul>
+                <h3 class="con">Risques</h3>
+                <ul class="con">
+                    <li>Style très répandu en 2026 : moins d’effet « wow »</li>
+                </ul>
+                <div class="go"><a class="btn" href="./2-bento/">Ouvrir la piste 2 →</a><a class="btn ghost" href="./2-bento/#devtoolbox">Fiche DevToolbox</a></div>
+            </div>
+        </article>
+
+        <article class="opt">
+            <div class="shots">
+                <a class="desk" href="./3-hud/" aria-label="Ouvrir le prototype HUD"><img src="thumbs/3-hud.webp" alt="Aperçu du prototype HUD : interface sombre et néon" width="1200" height="750" loading="lazy"></a>
+                <img class="phone" src="thumbs/3-hud-mob.webp" alt="Version mobile du HUD" width="390" height="844" loading="lazy">
+            </div>
+            <div>
+                <p class="num">PISTE 3</p>
+                <h2>HUD — assistant IA</h2>
+                <p class="concept">Une console d’ingénieur : séquence de démarrage tapée, nom qui se décode, cartes de données qui s’illuminent au survol.</p>
+                <h3 class="pro">Points forts</h3>
+                <ul class="pro">
+                    <li>Ambiance forte, cohérente avec DevToolbox (IA) et le profil DevOps</li>
+                    <li>Lecture verticale classique : bon référencement, navigation au clavier 1-4</li>
+                </ul>
+                <h3 class="con">Risques</h3>
+                <ul class="con">
+                    <li>Sombre uniquement ; les effets (scanlines, halos) doivent rester discrets</li>
+                    <li>Les captures claires de DevToolbox tranchent sur le fond sombre</li>
+                </ul>
+                <div class="go"><a class="btn" href="./3-hud/">Ouvrir la piste 3 →</a><a class="btn ghost" href="./3-hud/#boxcraft">Fiche BoxCraft</a></div>
+            </div>
+        </article>
+
+        <article class="opt">
+            <div class="shots">
+                <a class="desk" href="./4-hex/" aria-label="Ouvrir le prototype carte hexagonale"><img src="thumbs/4-hex.webp" alt="Aperçu du prototype carte : grille hexagonale et chemin entre les bases" width="1200" height="750" loading="lazy"></a>
+                <img class="phone" src="thumbs/4-hex-mob.webp" alt="Version mobile de la carte" width="390" height="844" loading="lazy">
+            </div>
+            <div>
+                <p class="num">PISTE 4</p>
+                <h2>Carte de campagne</h2>
+                <p class="concept">Le parcours est un chemin sur une carte de stratégie : chaque projet est une base, App reste sous le brouillard de guerre.</p>
+                <h3 class="pro">Points forts</h3>
+                <ul class="pro">
+                    <li>La plus spectaculaire, casse les codes du portfolio classique</li>
+                    <li>Fait écho à BoxCraft et au jeu ; carte générée, glisser + zoom</li>
+                    <li>Frise en bas pour naviguer au clavier et sur mobile</li>
+                </ul>
+                <h3 class="con">Risques</h3>
+                <ul class="con">
+                    <li>La plus complexe à faire évoluer (placement des bases à chaque nouveau projet)</li>
+                    <li>Contenu dans des panneaux : moins lisible pour les moteurs de recherche</li>
+                </ul>
+                <div class="go"><a class="btn" href="./4-hex/">Ouvrir la piste 4 →</a><a class="btn ghost" href="./4-hex/#devtoolbox">Base DevToolbox</a></div>
+            </div>
+        </article>
+
+        <article class="opt">
+            <div class="shots">
+                <a class="desk" href="./5-scroll/" aria-label="Ouvrir le prototype scrollytelling"><img src="thumbs/5-scroll.webp" alt="Aperçu du prototype scrollytelling : typographie géante" width="1200" height="750" loading="lazy"></a>
+                <img class="phone" src="thumbs/5-scroll-mob.webp" alt="Version mobile du scrollytelling" width="390" height="844" loading="lazy">
+            </div>
+            <div>
+                <p class="num">PISTE 5</p>
+                <h2>Scrollytelling</h2>
+                <p class="concept">Une histoire au fil du défilement : manifeste mot à mot, parcours en plein écran, projets en galerie horizontale, contact en final.</p>
+                <h3 class="pro">Points forts</h3>
+                <ul class="pro">
+                    <li>La narration la plus forte, typographie éditoriale très affirmée</li>
+                    <li>Avec « mouvements réduits » activé, tout redevient une page verticale simple</li>
+                </ul>
+                <h3 class="con">Risques</h3>
+                <ul class="con">
+                    <li>Page longue ; bloquer le défilement le temps d’une séquence peut agacer certains visiteurs</li>
+                    <li>Les performances sur petits téléphones sont à surveiller</li>
+                </ul>
+                <div class="go"><a class="btn" href="./5-scroll/">Ouvrir la piste 5 →</a></div>
+            </div>
+        </article>
+    </div>
+
+    <section class="compare" aria-labelledby="cmp">
+        <h2 id="cmp">Comparatif</h2>
+        <p>Mon évaluation, de 1 à 5, pour aider à trancher.</p>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr><th>Critère</th><th>1 · allan.os</th><th>2 · Bento</th><th>3 · HUD</th><th>4 · Carte</th><th>5 · Scroll</th></tr>
+                </thead>
+                <tbody id="rows"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="reco" aria-labelledby="reco">
+        <h2 id="reco">Ma recommandation</h2>
+        <p><strong>Piste 2, le Bento</strong>, si l’objectif premier est de décrocher des entretiens : c’est la plus lisible, la plus solide sur mobile et la plus simple à brancher sur le générateur existant.</p>
+        <p>Les pistes se combinent aussi : le Bento pour l’accueil, avec le terminal d’allan.os en easter egg (touche <code>~</code>), ou la carte hexagonale comme page « Parcours ». Dis-moi ce qui te parle, et j’intègre la version retenue dans <code>tools/build.js</code> pour qu’elle soit générée comme le reste du site.</p>
+    </section>
+
+    <footer>Prototypes vanilla JS, sans dépendance, comme le site actuel. Contenu commun : <code>docs/refonte/data.js</code>.</footer>
+</main>
+
+<script>
+    // Scores kept as data so the table stays consistent with itself.
+    const rows = [
+        ['Impact visuel', [5, 3, 4, 5, 4]],
+        ['Lisibilité en 10 secondes', [2, 5, 4, 3, 3]],
+        ['Expérience mobile', [3, 5, 4, 3, 4]],
+        ['Accessibilité', [3, 5, 4, 3, 4]],
+        ['Facilité d’intégration', [2, 5, 4, 2, 3]],
+        ['Évolution (ajouter un projet)', [4, 5, 5, 2, 4]],
+    ];
+    const dots = (n) => `<b>${'●'.repeat(n)}</b><span>${'●'.repeat(5 - n)}</span>`;
+    document.getElementById('rows').innerHTML = rows.map(([label, s]) =>
+        `<tr><td>${label}</td>${s.map((n) => `<td class="dots" aria-label="${n} sur 5">${dots(n)}</td>`).join('')}</tr>`).join('');
+</script>
+</body>
+</html>

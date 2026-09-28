@@ -23,6 +23,9 @@ const PROJECTS = require('./projects');
 const ROOT = path.join(__dirname, '..');
 const DOCS = path.join(ROOT, 'docs');
 
+/* Repositories with published work get a case-study page; 'soon' ones do not. */
+const PAGES = PROJECTS.filter((p) => p.tier !== 'soon');
+
 /* --------------------------------------------------------------------------
    SITE CONSTANTS
    BASE must match the URL GitHub Pages actually serves docs/ from. It only
@@ -266,10 +269,20 @@ function footer({ depth }) {
 /* --------------------------------------------------------------------------
    HOMEPAGE
    -------------------------------------------------------------------------- */
+/** Open-live + source buttons. A resource pack has no live URL, only a repo. */
+function projectLinks(p, icon, { liveClass, repoClass }) {
+    return [
+        p.live
+            ? `<a class="${liveClass}" href="${p.live}" target="_blank" rel="noopener noreferrer">Ouvrir ${esc(p.name)} ${icon('external-link')}</a>`
+            : '',
+        `<a class="${repoClass}" href="${p.repo}" target="_blank" rel="noopener noreferrer">${brandIcon('github')} Code source</a>`,
+    ].filter(Boolean).join('\n                            ');
+}
+
 function buildIndex() {
     const { icon, resolve } = makeIconSet();
     const featured = PROJECTS.filter((p) => p.tier === 'featured');
-    const archive = PROJECTS.filter((p) => p.tier === 'archive');
+    const archive = PROJECTS.filter((p) => p.tier === 'soon');
     const num = (p) => String(PROJECTS.indexOf(p) + 1).padStart(2, '0');
 
     const themeVar = {
@@ -284,7 +297,7 @@ function buildIndex() {
     /* --- Sticky index --- */
     const indexLinks = PROJECTS.map((p, i) => {
         const opener = i === featured.length && archive.length
-            ? `<p class="divider">Aussi</p>\n                        `
+            ? `<p class="divider">Bientôt</p>\n                        `
             : '';
         return `${opener}<a href="#p-${p.slug}"><span class="n">${num(p)}</span><span>${esc(p.name)}</span></a>`;
     }).join('\n                        ');
@@ -320,31 +333,30 @@ function buildIndex() {
                         </div>
                         <div class="chapter-actions">
                             <a class="btn btn--chapter" href="./projects/${p.slug}.html">Étude de cas ${icon('arrow-right')}</a>
-                            <a class="btn btn--ghost" href="${p.live}" target="_blank" rel="noopener noreferrer">Ouvrir le projet ${icon('external-link')}</a>
+                            ${projectLinks(p, icon, { liveClass: 'btn btn--ghost', repoClass: 'btn btn--ghost' })}
                         </div>
                     </article>`
         )
         .join('');
 
-    /* --- Compact chapter: secondary projects keep a page but not the stage --- */
+    /* --- Compact chapter: a repository with no published code yet. No page,
+           no screenshot — just what exists: the repo and its state. --- */
     const compactChapters = archive
         .map(
             (p) => `
                     <article class="chapter chapter--compact reveal" id="p-${p.slug}" data-theme-accent="${p.theme}">
                         <div class="chapter-row">
-                            <a class="chapter-media" href="./projects/${p.slug}.html" tabindex="-1" aria-hidden="true">
-                                ${picture(`media/${p.media}/${p.cover}`, '', { sizes: '200px' })}
-                            </a>
+                            <div class="chapter-media chapter-media--soon" aria-hidden="true">${icon('rocket', 'icon icon-lg')}</div>
                             <div>
                                 <p class="chapter-kicker">
                                     <span class="n">${num(p)}</span>
                                     <span class="sep">/</span>
-                                    ${p.tags.map((t) => esc(t)).join(' <span class="sep">·</span> ')}
+                                    ${esc(p.flag)}
                                 </p>
-                                <h3><a href="./projects/${p.slug}.html">${esc(p.name)}</a></h3>
+                                <h3>${esc(p.name)}</h3>
                                 <p class="chapter-lead">${esc(p.summary)}</p>
                             </div>
-                            <a class="btn btn--ghost btn--sm" href="./projects/${p.slug}.html">Voir ${icon('arrow-right')}</a>
+                            <a class="btn btn--ghost btn--sm" href="${p.repo}" target="_blank" rel="noopener noreferrer">${brandIcon('github')} Dépôt</a>
                         </div>
                     </article>`
         )
@@ -359,11 +371,11 @@ function buildIndex() {
         url: SITE.base,
         image: `${SITE.base}assets/media/avatar.webp`,
         sameAs: [SITE.github, SITE.linkedin, SITE.instagram],
-        knowsAbout: ['Vue.js', 'PHP', 'Docker', 'CI/CD', 'Progressive Web Apps', 'DevOps'],
+        knowsAbout: ['Vue.js', 'Vite', 'PHP', 'Docker', 'CI/CD', 'Progressive Web Apps', 'Claude API', 'DevOps'],
         alumniOf: { '@type': 'EducationalOrganization', name: 'Centre de Réadaptation de Mulhouse' },
-        makesOffer: PROJECTS.map((p) => ({
+        makesOffer: PAGES.map((p) => ({
             '@type': 'Offer',
-            itemOffered: { '@type': 'SoftwareApplication', name: p.name, description: p.summary, url: p.live },
+            itemOffered: { '@type': 'SoftwareApplication', name: p.name, description: p.summary, url: p.live || p.repo },
         })),
     });
 
@@ -397,7 +409,7 @@ ${navbar({ depth: 0, icon })}
                     <p>Diplômé du titre professionnel <strong>DWWM</strong> au Centre de Réadaptation de Mulhouse, je conçois des applications web de bout en bout — de la maquette au déploiement.</p>
                     <p>Je travaille principalement en <strong>Vue 3</strong> et <strong>PHP 8</strong>, avec un intérêt marqué pour les <strong>PWA offline-first</strong> et l'outillage DevOps qui rend un déploiement ennuyeux. Chaque projet ci-dessous est parti d'un besoin réel, pas d'un tutoriel.</p>
                     <dl class="about-stats">
-                        <div><dt>${PROJECTS.length}</dt><dd>Projets en ligne</dd></div>
+                        <div><dt>${PAGES.length}</dt><dd>Projets publiés</dd></div>
                         <div><dt>PWA</dt><dd>Spécialité</dd></div>
                         <div><dt>Full</dt><dd>Stack &amp; DevOps</dd></div>
                     </dl>
@@ -467,7 +479,7 @@ ${navbar({ depth: 0, icon })}
                     <span class="timeline-date">2025 — 2026</span>
                     <h3>Projets personnels — Full-Stack &amp; DevOps</h3>
                     <p class="org">Autodidacte</p>
-                    <p>Conception de FORGE UI, FocusBrain, Rytiger RPG et RégionDex. Approfondissement de Vue 3, Docker et des chaînes de déploiement continu.</p>
+                    <p>DevToolbox en juin 2026 (Vue 3, Vite, PWA, API Claude), puis le resource pack du serveur Minecraft BoxCraft en août. Approfondissement de Vue 3, Docker et des chaînes de déploiement continu.</p>
                 </li>
                 <li>
                     <span class="timeline-date">2026 — Aujourd’hui</span>
@@ -483,7 +495,7 @@ ${navbar({ depth: 0, icon })}
             <div class="reveal">
                 <p class="section-eyebrow">Projets</p>
                 <h2 class="section-title">Ce que je construis</h2>
-                <p class="section-lead">${featured.length} projets détaillés, chacun avec le problème qu'il résout et le choix technique qui en découle. Tous sont en ligne et utilisables.</p>
+                <p class="section-lead">${featured.length} projets détaillés, chacun avec le problème qu'il résout et le choix technique qui en découle. Le code source de chacun est public sur GitHub.</p>
             </div>
 
             <div class="chapters">
@@ -523,7 +535,7 @@ ${footer({ depth: 0 })}
             description:
                 "Portfolio d'Allan Vitu, développeur Full-Stack & DevOps. Applications web performantes, PWA offline-first et infrastructures cloud.",
             canonical: SITE.base,
-            ogImage: `${SITE.base}assets/media/forgeui/accueil.webp`,
+            ogImage: `${SITE.base}assets/media/devtoolbox/dashboard.webp`,
             depth: 0,
         }) + body
     );
@@ -535,9 +547,9 @@ ${footer({ depth: 0 })}
 function buildProject(project, index) {
     const { icon, resolve } = makeIconSet();
     const p = project;
-    const num = String(index + 1).padStart(2, '0');
-    const prev = PROJECTS[index - 1];
-    const next = PROJECTS[index + 1];
+    const num = String(PROJECTS.indexOf(p) + 1).padStart(2, '0');
+    const prev = PAGES[index - 1];
+    const next = PAGES[index + 1];
 
     const slides = p.slides
         .map(
@@ -604,7 +616,7 @@ function buildProject(project, index) {
         ? `
         <section class="p-section reveal">
             <h2>Architecture &amp; modules</h2>
-            <p class="sub">Chaque module est un store indépendant, persisté localement.</p>
+            <p class="sub">${esc(p.featuresSub || '')}</p>
             <div class="features">
                 ${p.features
                     .map(
@@ -661,10 +673,10 @@ function buildProject(project, index) {
         ? `
         <aside class="doc-banner reveal">
             <div>
-                <h2>Documentation technique</h2>
-                <p>Architecture détaillée, choix d’implémentation et schémas.</p>
+                <h2>Fiche technique</h2>
+                <p>Contenu, langages, technologies et évolution du dépôt, sur une page.</p>
             </div>
-            <a class="btn btn--project" href="../doc_technique/${p.doc}">Lire la doc ${icon('file-code')}</a>
+            <a class="btn btn--project" href="../doc_technique/${p.doc}">Lire la fiche ${icon('file-code')}</a>
         </aside>`
         : '';
 
@@ -687,8 +699,8 @@ function buildProject(project, index) {
         '@type': 'SoftwareApplication',
         name: p.name,
         description: p.summary,
-        url: p.live,
-        applicationCategory: 'WebApplication',
+        url: p.live || p.repo,
+        applicationCategory: p.live ? 'WebApplication' : 'GameApplication',
         operatingSystem: 'Web',
         author: { '@type': 'Person', name: SITE.name, url: SITE.base },
         image: `${SITE.base}assets/media/${p.media}/${p.cover}.webp`,
@@ -733,8 +745,8 @@ ${slides}
                 <ul class="spec-list">${specs}
                 </ul>
                 <div class="p-actions">
-                    <a class="btn btn--project" href="${p.live}" target="_blank" rel="noopener noreferrer">Ouvrir ${esc(p.name)} ${icon('external-link')}</a>
-                    ${p.doc ? `<a class="btn btn--project-ghost" href="../doc_technique/${p.doc}">Documentation technique ${icon('file-code')}</a>` : ''}
+                    ${projectLinks(p, icon, { liveClass: 'btn btn--project', repoClass: p.live ? 'btn btn--project-ghost' : 'btn btn--project' })}
+                    ${p.doc ? `<a class="btn btn--project-ghost" href="../doc_technique/${p.doc}">Fiche technique ${icon('file-code')}</a>` : ''}
                 </div>
             </div>
         </div>
@@ -789,7 +801,8 @@ function buildSitemap() {
     const today = new Date().toISOString().slice(0, 10);
     const urls = [
         { loc: SITE.base, priority: '1.0' },
-        ...PROJECTS.map((p) => ({ loc: `${SITE.base}projects/${p.slug}.html`, priority: '0.8' })),
+        ...PAGES.map((p) => ({ loc: `${SITE.base}projects/${p.slug}.html`, priority: '0.8' })),
+        { loc: `${SITE.base}doc_technique/fiche-technique.html`, priority: '0.6' },
     ];
     return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -826,8 +839,8 @@ function write(rel, content) {
 
 console.log('building docs/\n');
 write('index.html', buildIndex());
-PROJECTS.forEach((p, i) => write(`projects/${p.slug}.html`, buildProject(p, i)));
+PAGES.forEach((p, i) => write(`projects/${p.slug}.html`, buildProject(p, i)));
 write('site.webmanifest', buildManifest());
 write('sitemap.xml', buildSitemap());
 write('robots.txt', ROBOTS);
-console.log(`\ndone — ${PROJECTS.length} projects (${PROJECTS.filter((p) => p.tier === 'featured').length} featured)`);
+console.log(`\ndone — ${PROJECTS.length} projects (${PAGES.length} with a page)`);

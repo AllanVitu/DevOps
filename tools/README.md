@@ -29,13 +29,16 @@ GitHub Pages serves it directly with no build step.
    the extension).
 3. Add an entry to `projects.js`. `tier: 'featured'` gives it a full-width
    chapter on the homepage (large screenshot, problem/solution columns, own
-   case-study page); `tier: 'archive'` gives it a compact one-line chapter and
-   still builds its page. Array order drives numbering, chapter order, the
-   sticky index and prev/next paging.
+   case-study page); `tier: 'soon'` is a repository with no published code
+   yet: a compact "en préparation" chapter, no page, no screenshot. Array
+   order drives numbering, chapter order, the sticky index and prev/next
+   paging.
 4. Run `node tools/build.js`.
 
 `narrative.problem` and `narrative.solution` are required for featured
 projects — they are what the homepage chapter shows under the title.
+`repo` is required; `live` is optional (a resource pack has nothing to open
+in a browser) and only adds the "Ouvrir" button when set.
 
 The technology chips come from each project's `filters` array; the homepage
 only renders a chip if at least one project carries it, so removing a project

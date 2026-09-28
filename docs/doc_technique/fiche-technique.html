@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fiche technique — DevToolbox, BoxCraft, App</title>
+<meta name="description" content="Fiche technique des dépôts DevToolsBox, serveur (BoxCraft) et App d'Allan Vitu : contenu, langages, technologies et évolution.">
+<meta name="author" content="Allan Vitu">
+<link rel="icon" href="../assets/brand/logo.svg" type="image/svg+xml">
+<style>
+    /* Volontairement minimal : une page lisible, imprimable, sans script. */
+    :root {
+        --bg: #ffffff; --text: #16181d; --muted: #5b6272; --line: #e2e5eb;
+        --soft: #f5f6f8; --accent: #4338ca; --ok: #047857; --warn: #b45309;
+        color-scheme: light dark;
+    }
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bg: #0f1115; --text: #e6e8ee; --muted: #9aa2b4; --line: #262a33;
+            --soft: #171a21; --accent: #a5b4fc; --ok: #34d399; --warn: #fbbf24;
+        }
+    }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0; background: var(--bg); color: var(--text);
+        font: 16px/1.6 system-ui, -apple-system, 'Segoe UI', sans-serif;
+    }
+    main { max-width: 860px; margin: 0 auto; padding: 48px 20px 80px; }
+    h1 { font-size: 2rem; line-height: 1.15; margin: 0 0 8px; letter-spacing: -0.02em; }
+    h2 { font-size: 1.45rem; margin: 56px 0 4px; padding-top: 16px; border-top: 2px solid var(--text); }
+    h3 { font-size: 1.05rem; margin: 28px 0 8px; }
+    p, li { max-width: 72ch; }
+    a { color: var(--accent); }
+    code { font: 0.88em ui-monospace, 'Cascadia Code', Consolas, monospace; background: var(--soft); padding: 1px 5px; border-radius: 4px; }
+    pre { font: 0.85rem/1.5 ui-monospace, 'Cascadia Code', Consolas, monospace; background: var(--soft); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; overflow-x: auto; }
+    .lead { color: var(--muted); margin: 0; }
+    .meta { font-size: 0.9rem; color: var(--muted); margin-top: 16px; }
+    .sub { color: var(--muted); margin: 0 0 16px; }
+    .toc { background: var(--soft); border: 1px solid var(--line); border-radius: 8px; padding: 12px 20px; margin-top: 28px; }
+    .toc ol { margin: 6px 0; padding-left: 20px; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin: 8px 0 16px; }
+    th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+    th { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; }
+    td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .tag { display: inline-block; font-size: 0.78rem; padding: 1px 8px; border-radius: 99px; border: 1px solid var(--line); margin: 0 4px 4px 0; white-space: nowrap; }
+    .ok { color: var(--ok); font-weight: 600; }
+    .warn { color: var(--warn); font-weight: 600; }
+    ol.timeline { list-style: none; padding: 0; margin: 8px 0 16px; border-left: 2px solid var(--line); }
+    ol.timeline li { position: relative; padding: 0 0 12px 18px; }
+    ol.timeline li::before { content: ''; position: absolute; left: -6px; top: 8px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); }
+    ol.timeline time { font: 0.82rem ui-monospace, Consolas, monospace; color: var(--muted); margin-right: 8px; }
+    .note { border-left: 3px solid var(--warn); background: var(--soft); padding: 10px 14px; border-radius: 0 6px 6px 0; margin: 12px 0; }
+    footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.88rem; }
+    @media print {
+        :root { --bg: #fff; --text: #000; --muted: #444; --line: #ccc; --soft: #f4f4f4; --accent: #000; }
+        main { padding: 0; max-width: none; }
+        h2 { break-before: page; }
+        h2:first-of-type { break-before: auto; }
+        a { text-decoration: none; }
+    }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+    <p class="lead"><a href="../">← Retour au portfolio</a></p>
+    <h1>Fiche technique des dépôts</h1>
+    <p class="lead">Allan Vitu — DevToolsBox, serveur (BoxCraft) et App.</p>
+    <p class="meta">Établie le 28 septembre 2026 à partir du contenu des dépôts GitHub publics (<a href="https://github.com/AllanVitu">github.com/AllanVitu</a>). Tous sont sous licence GPL-3.0.</p>
+
+    <nav class="toc" aria-label="Sommaire">
+        <strong>Sommaire</strong>
+        <ol>
+            <li><a href="#synthese">Vue d'ensemble</a></li>
+            <li><a href="#devtoolbox">DevToolsBox — DevToolbox</a></li>
+            <li><a href="#boxcraft">serveur — BoxCraft</a></li>
+            <li><a href="#app">App</a></li>
+            <li><a href="#evolution">Procédés d'évolution</a></li>
+        </ol>
+    </nav>
+</header>
+
+<!-- ================================================================== -->
+<section id="synthese">
+    <h2>1. Vue d'ensemble</h2>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Dépôt</th><th>Contenu</th><th>Langages</th><th>Technologies clés</th><th>État</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="https://github.com/AllanVitu/DevToolsBox">DevToolsBox</a></td>
+                <td>DevToolbox : 49 outils développeur, 18 leçons, 9 aide-mémoire, assistant IA</td>
+                <td>JavaScript, HTML, CSS</td>
+                <td>Vue 3, Vue Router, Vite, service worker, SDK Anthropic</td>
+                <td class="ok">En ligne</td>
+            </tr>
+            <tr>
+                <td><a href="https://github.com/AllanVitu/serveur">serveur</a></td>
+                <td>BoxCraft : resource pack du serveur Minecraft (11 objets personnalisés)</td>
+                <td>JSON, PNG</td>
+                <td>Resource pack Minecraft Java, format de pack 88</td>
+                <td class="ok">Publié (ZIP)</td>
+            </tr>
+            <tr>
+                <td><a href="https://github.com/AllanVitu/App">App</a></td>
+                <td>Dépôt initialisé, pas encore de code</td>
+                <td>—</td>
+                <td>—</td>
+                <td class="warn">En préparation</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</section>
+
+<!-- ================================================================== -->
+<section id="devtoolbox">
+    <h2>2. DevToolsBox — DevToolbox</h2>
+    <p class="sub">Boîte à outils développeur installable, hors-ligne, avec une IA optionnelle. <a href="https://allanvitu.github.io/DevToolsBox/">Ouvrir l'application</a></p>
+
+    <h3>Contenu</h3>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Famille</th><th class="num">Outils</th><th>Détail</th></tr></thead>
+        <tbody>
+            <tr><td>Données &amp; SQL</td><td class="num">13</td><td>JSON Formatter, JSON Diff, JSON ⇄ CSV, JSON ⇄ YAML, JSON → TypeScript, .env ⇄ JSON, données factices, XML, SQL Formatter, schéma SQL, migrations SQL, visualiseur ERD, Query Builder</td></tr>
+            <tr><td>Texte</td><td class="num">8</td><td>Outils texte, Markdown, casse de code, inspecteur Unicode, regex, diff, outils de lignes, Lorem Ipsum</td></tr>
+            <tr><td>Encodage</td><td class="num">7</td><td>Base64, URL, entités HTML, JWT Decoder, QR code, image → Base64, hex ⇄ texte</td></tr>
+            <tr><td>Design</td><td class="num">6</td><td>Couleurs, palette, contraste WCAG, dégradés, box-shadow, px ⇄ rem</td></tr>
+            <tr><td>Crypto</td><td class="num">5</td><td>Hash SHA-1/256/384/512, UUID v4, mots de passe, ULID / UUID v7, force de mot de passe</td></tr>
+            <tr><td>Référence</td><td class="num">4</td><td>Codes HTTP, types MIME, ports réseau, table ASCII</td></tr>
+            <tr><td>Temps</td><td class="num">2</td><td>Timestamp Unix, expressions cron</td></tr>
+            <tr><td>Nombres</td><td class="num">2</td><td>Bases numériques, unités</td></tr>
+            <tr><td>Système &amp; réseau</td><td class="num">2</td><td>Permissions chmod, sous-réseau CIDR</td></tr>
+            <tr><th>Total</th><th class="num">49</th><th></th></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>Autour des outils :</p>
+    <ul>
+        <li><strong>Apprendre</strong> — 18 leçons de code commenté avec quiz (architecture, Vue 3, PHP, Vue + PHP, JavaScript, Git, Flexbox, Grid, SQL, CLI, chmod, IP &amp; CIDR, unités CSS, HTTP &amp; REST, async, npm &amp; .env, app complète Vue 3 + PHP + PostgreSQL).</li>
+        <li><strong>Aide-mémoire</strong> — 9 fiches : Git, terminal, regex, Flexbox, Grid, SQL, Markdown, raccourcis VS Code, en-têtes HTTP.</li>
+        <li><strong>Snippets</strong> — bibliothèque de fragments de code enregistrée localement.</li>
+        <li><strong>AI Assistant</strong> — chat avec Claude via la clé API de l'utilisateur, et un panneau « Analyse IA » dans chaque outil.</li>
+        <li><strong>Tableau de bord</strong> — favoris réordonnables, outils récents, progression des leçons ; palette de commandes <code>Ctrl + K</code>.</li>
+    </ul>
+
+    <h3>Langages</h3>
+    <p>JavaScript (modules ES), HTML et CSS, écrits sous forme de composants Vue monofichiers compilés par Vite. Le dépôt ne contient que le résultat de la compilation (<code>docs/</code>), pas les sources.</p>
+
+    <h3>Technologies</h3>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Couche</th><th>Choix</th><th>Rôle</th></tr></thead>
+        <tbody>
+            <tr><td>Interface</td><td>Vue 3 (Composition API, <code>&lt;script setup&gt;</code>), styles scopés</td><td>Un composant par outil</td></tr>
+            <tr><td>Navigation</td><td>Vue Router</td><td>Sections, outils, leçons (<code>/apprendre/:id</code>), fiches (<code>/aide-memoire/:id</code>)</td></tr>
+            <tr><td>Build</td><td>Vite</td><td>Un fichier JS par outil, chargé à la demande ; noms de fichiers hashés</td></tr>
+            <tr><td>État</td><td>Composables maison (<code>usePersistentRef</code>, <code>useProgress</code>)</td><td>État réactif sauvegardé en <code>localStorage</code> sous le préfixe <code>devtoolbox:</code></td></tr>
+            <tr><td>Hors-ligne</td><td>Service worker écrit à la main (<code>sw.js</code>), manifest</td><td>Pré-cache du shell, réseau d'abord pour la navigation, cache d'abord pour les assets</td></tr>
+            <tr><td>IA</td><td>SDK Anthropic, streaming</td><td>Chargé seulement à la première requête IA ; 4 modèles au choix (Opus 4.8, Opus 4.7, Sonnet 4.6, Haiku 4.5)</td></tr>
+            <tr><td>API navigateur</td><td>Web Crypto, Clipboard, TextEncoder / TextDecoder</td><td>Hash, copie, encodages sans bibliothèque</td></tr>
+            <tr><td>Bibliothèques</td><td>js-yaml, génération de QR code</td><td>Isolées dans le fichier de leur outil</td></tr>
+        </tbody>
+    </table>
+    </div>
+
+    <h3>Architecture</h3>
+<pre>docs/
+├── index.html            thème appliqué avant le rendu (pas de flash)
+├── manifest.webmanifest  PWA installable
+├── sw.js                 service worker (cache devtoolbox-v2)
+└── assets/               ~130 fichiers produits par Vite
+    ├── index-*.js        noyau : routeur, registre des outils, leçons (198 Ko)
+    ├── index-*.js        SDK Anthropic, chargé à la demande (164 Ko)
+    ├── JsonFormatter-*.js, JwtDecoder-*.js, …   un fichier par outil
+    └── use*.js           composables partagés</pre>
+    <p>Chaque outil est déclaré dans un registre (<code>id</code>, nom, catégorie, mots-clés, <code>accepts</code>, composant). Les champs <code>keywords</code> alimentent la palette de recherche ; <code>accepts</code> dit quels types de données l'outil sait recevoir d'un autre outil.</p>
+    <ul>
+        <li><strong>Pipeline</strong> (<code>usePipeline</code>) — un outil dépose son résultat, l'outil cible le consomme s'il accepte ce type.</li>
+        <li><strong>Partage</strong> (<code>useShareLink</code>) — la saisie est sérialisée en JSON puis en Base64 URL-safe dans le paramètre <code>?d=</code>.</li>
+        <li><strong>IA</strong> (<code>useClaude</code>, <code>useToolAI</code>) — streaming, arrêt en cours de réponse, erreurs de clé et de débit traduites.</li>
+    </ul>
+    <p class="note"><strong>Sécurité.</strong> La clé API est conservée dans le <code>localStorage</code> du navigateur et envoyée directement à l'API Anthropic. L'application le signale : le chat est la seule fonction qui n'est pas hors-ligne.</p>
+
+    <h3>Historique</h3>
+    <ol class="timeline">
+        <li><time datetime="2026-06-22">22/06/2026</time>Initial commit, puis premier commit de l'application (54 fichiers).</li>
+        <li><time datetime="2026-06-22">22/06/2026</time><em>App preprod</em> — version de pré-production.</li>
+        <li><time datetime="2026-06-23">23/06/2026</time>3 leçons et 3 outils liés aux leçons, avec conseils d'intégration.</li>
+        <li><time datetime="2026-06-24">24/06/2026</time><em>Big Commit</em>, puis mise à jour graphique.</li>
+        <li><time datetime="2026-06-25">25/06/2026</time>Ajout des statistiques (tableau de bord).</li>
+        <li><time datetime="2026-06-30">30/06/2026</time>Patch correctif.</li>
+    </ol>
+    <p>8 commits en 9 jours. Le catalogue est passé de 29 outils et 11 leçons (première version présentée sur le portfolio) à 49 outils et 18 leçons.</p>
+</section>
+
+<!-- ================================================================== -->
+<section id="boxcraft">
+    <h2>3. serveur — BoxCraft</h2>
+    <p class="sub">Resource pack du serveur Minecraft BoxCraft — « PvP / Survie / Quêtes ».</p>
+
+    <h3>Contenu</h3>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Objet</th><th>Type</th><th>Modèle</th></tr></thead>
+        <tbody>
+            <tr><td>Fusil, Pistolet, Plasma, Fusil à pompe, Sniper</td><td>Armes à feu</td><td>Modèles 3D de 5 à 7 éléments cubiques, 8 vues d'affichage réglées</td></tr>
+            <tr><td>Lame Éternelle</td><td>Arme blanche</td><td>Objet tenu en main (<code>item/handheld</code>), texture 16×16</td></tr>
+            <tr><td>Grappin d'Abordage</td><td>Outil</td><td>Objet tenu en main (<code>item/handheld</code>), texture 16×16</td></tr>
+            <tr><td>Égide d'Émeraude</td><td>Armure (4 pièces)</td><td>Icônes 16×16 + asset d'équipement (couches humanoid, leggings, baby)</td></tr>
+            <tr><td>Logo BoxCraft</td><td>Glyphe de police</td><td>Bitmap sur le caractère privé <code>U+E000</code> de la police par défaut</td></tr>
+        </tbody>
+    </table>
+    </div>
+
+    <h3>Langages</h3>
+    <p>JSON pour toutes les définitions (métadonnées du pack, objets, modèles, équipement, police) et PNG pour les textures. Le pack est livré sous forme d'archive <code>BoxCraft_ResourcePack.zip</code> (25 Ko).</p>
+
+    <h3>Technologies</h3>
+    <ul>
+        <li><strong>Resource pack Minecraft Java</strong>, format de pack 88 (<code>min_format</code> / <code>max_format</code> dans <code>pack.mcmeta</code>), passage au format 26.2 le 14/08/2026.</li>
+        <li><strong>Définitions d'objets</strong> (<code>assets/boxcraft/items/</code>) : chaque objet pointe vers son modèle ; le serveur l'attribue via les composants d'objet, sans écraser d'objet du jeu de base.</li>
+        <li><strong>Modèles</strong> (<code>assets/boxcraft/models/item/</code>) : éléments cubiques texturés et transformations d'affichage (main, sol, inventaire, cadre, tête).</li>
+        <li><strong>Équipement</strong> (<code>assets/boxcraft/equipment/emeraude.json</code>) : texture de l'armure portée.</li>
+        <li><strong>Police</strong> (<code>assets/minecraft/font/default.json</code>) : fournisseur bitmap pour le logo.</li>
+    </ul>
+
+    <h3>Architecture</h3>
+<pre>BoxCraft_ResourcePack.zip
+├── pack.mcmeta             format 88, description du serveur
+├── pack.png                icône du pack
+└── assets/
+    ├── boxcraft/
+    │   ├── items/          11 définitions d'objets
+    │   ├── models/item/    11 modèles (5 en 3D)
+    │   ├── equipment/      emeraude.json
+    │   └── textures/       item/ (11) + entity/equipment/ (3 couches)
+    └── minecraft/
+        ├── font/default.json
+        └── textures/font/boxcraft_logo.png</pre>
+
+    <h3>Historique</h3>
+    <ol class="timeline">
+        <li><time datetime="2026-08-06">06/08/2026</time>Initial commit, puis premier pack (11,5 Ko).</li>
+        <li><time datetime="2026-08-09">09/08/2026</time>Nouvelles armes à feu (17,3 Ko).</li>
+        <li><time datetime="2026-08-14">14/08/2026</time>Passage au format 26.2, puis ajout de la Lame Éternelle.</li>
+        <li><time datetime="2026-08-15">15/08/2026</time>Égide d'Émeraude (armure complète) et nettoyage des BOM UTF-8 dans les JSON.</li>
+        <li><time datetime="2026-08-15">15/08/2026</time>Grappin d'Abordage (25,3 Ko).</li>
+    </ol>
+    <p>7 commits en 10 jours. Le nettoyage des BOM est une correction typique : le lecteur JSON du jeu refuse un fichier qui commence par un BOM, et l'objet s'affiche alors sans texture.</p>
+</section>
+
+<!-- ================================================================== -->
+<section id="app">
+    <h2>4. App</h2>
+    <p class="sub">Dépôt créé le 28/08/2026.</p>
+    <p>Le dépôt contient uniquement la licence GPL-3.0 et un README d'une ligne. Aucun langage ni aucune technologie n'est encore engagé : cette section sera remplie au premier commit de code.</p>
+</section>
+
+<!-- ================================================================== -->
+<section id="evolution">
+    <h2>5. Procédés d'évolution</h2>
+
+    <h3>Comment les projets avancent aujourd'hui</h3>
+    <ul>
+        <li><strong>Itérations courtes</strong> : chaque dépôt a été construit en une à deux semaines, un commit par fonctionnalité visible (un outil, une leçon, un objet).</li>
+        <li><strong>Déploiement statique</strong> : DevToolbox est compilé en local puis publié par GitHub Pages depuis <code>docs/</code>. BoxCraft est publié sous forme de ZIP.</li>
+        <li><strong>Hors-ligne d'abord</strong> : les fonctions qui dépendent du réseau (l'IA) sont isolées, chargées à la demande et signalées.</li>
+    </ul>
+
+    <h3>Limites constatées</h3>
+    <ul>
+        <li><strong>Sources absentes</strong> (DevToolsBox) — seul le build est versionné. Chaque modification régénère des fichiers aux noms hashés : les commits touchent 48 à 132 fichiers et l'historique ne montre pas ce qui a changé dans le code.</li>
+        <li><strong>Langage non détecté</strong> — GitHub n'affiche aucun langage pour les trois dépôts : DevToolsBox ne contient que <code>docs/</code>, classé comme documentation ; serveur ne contient qu'un ZIP binaire ; App est vide.</li>
+        <li><strong>ZIP binaire</strong> (serveur) — les 6 commits de contenu ne remplacent qu'un seul fichier binaire : impossible de voir quel modèle ou quelle texture a changé.</li>
+        <li><strong>README vides</strong> — une ligne par dépôt, sans instructions d'installation ni capture.</li>
+    </ul>
+
+    <h3>Évolutions proposées</h3>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Priorité</th><th>Dépôt</th><th>Action</th><th>Bénéfice</th></tr></thead>
+        <tbody>
+            <tr><td class="warn">1</td><td>DevToolsBox</td><td>Versionner les sources (<code>src/</code>, <code>package.json</code>, <code>vite.config</code>) et laisser GitHub Actions compiler et publier sur Pages</td><td>Historique lisible, build reproductible</td></tr>
+            <tr><td class="warn">1</td><td>serveur</td><td>Versionner le pack décompressé ; générer le ZIP et son empreinte SHA-1 en CI (release GitHub)</td><td>Diffs par objet, lien stable pour <code>resource-pack</code> et <code>resource-pack-sha1</code></td></tr>
+            <tr><td>2</td><td>Tous</td><td>README : but, capture, installation, licence</td><td>Premier contact clair sur GitHub</td></tr>
+            <tr><td>2</td><td>DevToolsBox</td><td>Tests unitaires sur les convertisseurs purs (Base64, CIDR, cron, JSON ⇄ YAML…) avec Vitest</td><td>Régressions détectées avant publication</td></tr>
+            <tr><td>3</td><td>Tous</td><td>Tags de version et notes de version</td><td>Suivi des versions publiées</td></tr>
+            <tr><td>3</td><td>App</td><td>Définir le périmètre et publier un premier squelette</td><td>Le projet peut rejoindre le portfolio</td></tr>
+        </tbody>
+    </table>
+    </div>
+</section>
+
+<footer>
+    <p>Allan Vitu — Développeur Full-Stack &amp; DevOps · <a href="mailto:allan.vitu90@gmail.com">allan.vitu90@gmail.com</a> · <a href="https://github.com/AllanVitu">GitHub</a></p>
+</footer>
+
+</main>
+</body>
+</html>
