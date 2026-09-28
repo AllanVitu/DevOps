@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /* ==========================================================================
-   BUILD.JS — Renders docs/ from tools/projects.js.
+   BUILD.JS — Renders docs/ from tools/projects.js and tools/profile.js.
 
-   The shell (head, nav, drawer, footer) was previously copy-pasted across ten
-   files, which is how the project numbering drifted out of sync. It now lives
-   here once. Output is committed, so GitHub Pages needs no build step.
+   The homepage is a bento grid of tiles; each published project gets a
+   case-study page built from the same tiles. Output is committed, so GitHub
+   Pages needs no build step.
 
        node tools/build.js
 
@@ -19,12 +19,14 @@ const path = require('path');
 const ICONS = require('./icons');
 const DIMS = require('./dimensions.json');
 const PROJECTS = require('./projects');
+const PROFILE = require('./profile');
 
 const ROOT = path.join(__dirname, '..');
 const DOCS = path.join(ROOT, 'docs');
 
 /* Repositories with published work get a case-study page; 'soon' ones do not. */
 const PAGES = PROJECTS.filter((p) => p.tier !== 'soon');
+const SOON = PROJECTS.filter((p) => p.tier === 'soon');
 
 /* --------------------------------------------------------------------------
    SITE CONSTANTS
@@ -40,31 +42,10 @@ const SITE = {
     github: 'https://github.com/allanvitu',
     linkedin: 'https://www.linkedin.com/in/allan-vitu-74a11039a/',
     instagram: 'https://www.instagram.com/allan.vitu/',
+    doc: 'doc_technique/fiche-technique.html',
 };
 
-const NAV = [
-    ['#about', 'À propos'],
-    ['#experience', 'Parcours'],
-    ['#projects', 'Projets'],
-    ['#contact', 'Contact'],
-];
-
-/* Labels for the filter chips. Derived from the projects themselves below, so
-   removing a project can never leave a chip that matches nothing. */
-const FILTER_LABELS = {
-    vue: 'Vue.js',
-    vanilla: 'Vanilla JS',
-    pwa: 'PWA',
-    api: 'API',
-    game: 'Game',
-};
-
-const FILTERS = [
-    ['all', 'Tous'],
-    ...Object.entries(FILTER_LABELS).filter(([key]) =>
-        PROJECTS.some((p) => p.filters.includes(key))
-    ),
-];
+const FONTS = 'https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap';
 
 /* --------------------------------------------------------------------------
    HELPERS
@@ -73,6 +54,8 @@ const esc = (s) =>
     String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const up = (depth) => (depth === 0 ? './' : '../');
+const repoName = (p) => p.repo.split('/').pop();
+const num = (p) => String(PROJECTS.indexOf(p) + 1).padStart(2, '0');
 
 /**
  * Collects every icon id a page requests, so each page ships only its own sprite.
@@ -142,10 +125,13 @@ const brandIcon = (name, cls = 'icon') =>
     `<svg class="${cls}" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="${BRAND[name]}"/></svg>`;
 
 const SOCIALS = [
+    ['mail', `mailto:${SITE.email}`, 'E-mail'],
     ['github', SITE.github, 'GitHub'],
     ['linkedin', SITE.linkedin, 'LinkedIn'],
     ['instagram', SITE.instagram, 'Instagram'],
 ];
+
+const ext = (href) => (href.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : '');
 
 /* --------------------------------------------------------------------------
    SHELL
@@ -178,189 +164,150 @@ function head({ title, description, canonical, ogImage, depth, extraCss }) {
 <link rel="icon" href="${u}assets/brand/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="${u}assets/brand/icon-180.png">
 <link rel="manifest" href="${u}site.webmanifest">
-<meta name="theme-color" content="#f7f7fb">
+<meta name="theme-color" content="#eeeef1">
 
 <script>
-/* Resolve the theme before first paint so the page never flashes, and flag
-   that scripting is on — reveal animations only hide content when it can be
-   revealed again. */
-(function(){document.documentElement.classList.add('js');
-try{var s=localStorage.getItem('theme');
+/* Resolve the theme before first paint so the page never flashes. */
+(function(){try{var s=localStorage.getItem('theme');
 document.documentElement.dataset.theme=s||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
 }catch(e){document.documentElement.dataset.theme='light';}})();
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;500&display=swap">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;500&display=swap"></noscript>
+<link rel="preload" as="style" href="${FONTS}">
+<link rel="stylesheet" media="print" onload="this.media='all'" href="${FONTS}">
+<noscript><link rel="stylesheet" href="${FONTS}"></noscript>
 
 <link rel="stylesheet" href="${u}css/site.css">${extraCss ? `\n<link rel="stylesheet" href="${u}css/project.css">` : ''}
 </head>`;
 }
 
-function navbar({ depth, icon }) {
-    const u = up(depth);
-    const home = depth === 0 ? '' : u;
-    const links = NAV.map(([h, l]) => `<a href="${home}${h}">${l}</a>`).join('\n            ');
-    const social = SOCIALS.map(
-        ([n, href, label]) => `<a href="${href}" target="_blank" rel="noopener noreferrer" aria-label="${label}">${brandIcon(n)}</a>`
-    ).join('\n                ');
-
-    return `
-    <a class="skip-link" href="#main">Aller au contenu</a>
-
-    <div class="backdrop" aria-hidden="true">
-        <canvas class="backdrop-canvas"></canvas>
-        <div class="backdrop-veil"></div>
-    </div>
-
-    <header class="nav" id="nav">
-        <div class="nav-progress" aria-hidden="true"></div>
-        <a class="nav-brand" href="${depth === 0 ? '#' : u}" aria-label="${SITE.name} — accueil">
-            <img src="${u}assets/brand/logo.svg" alt="" width="28" height="28">
-            Allan<span class="gradient-text">/</span>Vitu
-        </a>
-        <nav class="nav-links" aria-label="Navigation principale">
-            ${links}
-        </nav>
-        <div class="nav-actions">
-            <div class="nav-social">
-                ${social}
-            </div>
-            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Changer de thème">
-                ${icon('sun', 'icon icon-sun')}${icon('moon', 'icon icon-moon')}
-            </button>
-            <a class="btn btn--ghost btn--sm" href="mailto:${SITE.email}" data-magnetic>${icon('mail')} Contact</a>
-            <button class="nav-burger" id="navBurger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navDrawer">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </header>
-
-    <div class="nav-drawer" id="navDrawer">
-        ${NAV.map(([h, l]) => `<a href="${home}${h}">${l}</a>`).join('\n        ')}
-        <div class="nav-drawer-social">
-            ${social}
-        </div>
-    </div>`;
-}
+const themeToggle = (icon) =>
+    `<button class="theme-toggle" id="themeToggle" type="button" aria-label="Changer de thème">${icon('sun', 'icon icon-sun')}${icon('moon', 'icon icon-moon')}</button>`;
 
 function footer({ depth }) {
-    const social = SOCIALS.map(
-        ([n, href, label]) => `<a href="${href}" target="_blank" rel="noopener noreferrer" aria-label="${label}">${brandIcon(n)}</a>`
-    ).join('\n                ');
-
+    const u = up(depth);
     return `
     <footer class="footer">
-        <div class="shell footer-inner">
-            <p>&copy; ${SITE.year} ${SITE.name} — ${SITE.role}</p>
-            <div class="footer-social">
-                ${social}
-            </div>
-        </div>
+        <p>&copy; ${SITE.year} ${SITE.name} — ${SITE.role}</p>
+        <nav aria-label="Liens">
+            <a href="${u}${SITE.doc}">Fiche technique</a>
+            <a href="${SITE.github}" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="${SITE.linkedin}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="mailto:${SITE.email}">${SITE.email}</a>
+        </nav>
     </footer>
 
-    <script src="${up(depth)}js/shader-bg.js" defer></script>
-    <script src="${up(depth)}js/app.js" defer></script>`;
+    <script src="${u}js/app.js" defer></script>`;
 }
 
 /* --------------------------------------------------------------------------
-   HOMEPAGE
+   HOMEPAGE — BENTO
    -------------------------------------------------------------------------- */
-/** Open-live + source buttons. A resource pack has no live URL, only a repo. */
-function projectLinks(p, icon, { liveClass, repoClass }) {
-    return [
-        p.live
-            ? `<a class="${liveClass}" href="${p.live}" target="_blank" rel="noopener noreferrer">Ouvrir ${esc(p.name)} ${icon('external-link')}</a>`
-            : '',
-        `<a class="${repoClass}" href="${p.repo}" target="_blank" rel="noopener noreferrer">${brandIcon('github')} Code source</a>`,
-    ].filter(Boolean).join('\n                            ');
-}
-
 function buildIndex() {
     const { icon, resolve } = makeIconSet();
     const featured = PROJECTS.filter((p) => p.tier === 'featured');
-    const archive = PROJECTS.filter((p) => p.tier === 'soon');
-    const num = (p) => String(PROJECTS.indexOf(p) + 1).padStart(2, '0');
+    let i = 0; // stagger index for the entrance animation
+    const arrow = `<span class="arrow" aria-hidden="true">${icon('arrow-right')}</span>`;
 
-    const themeVar = {
-        violet: 'var(--accent)',
-        cyan: 'var(--c-cyan)',
-        amber: 'var(--c-amber)',
-        emerald: 'var(--c-emerald)',
-        indigo: 'var(--c-indigo)',
-        lime: 'var(--c-lime)',
+    /* A featured project, in the tile style its entry asks for. The first two
+       take the named areas p1 / p2; any further one is auto-placed. */
+    const featuredTile = (p, n) => {
+        const area = n < 2 ? `grid-area:p${n + 1};` : '';
+        const attrs = `class="tile tile--link t-${p.tile.style}" href="./projects/${p.slug}.html" data-accent="${p.theme}" style="${area}--i:${++i}" aria-label="Étude de cas ${esc(p.name)} — ${esc(p.kind)}"`;
+
+        if (p.tile.style === 'rack') {
+            return `
+            <a ${attrs}>
+                ${arrow}
+                <p class="eyebrow">${esc(p.kind)} · ${esc(p.period)}</p>
+                <h2><img class="logo" src="ASSETS${p.tile.logo}" alt="${esc(p.name)}" width="448" height="96"></h2>
+                <p>${esc(p.tagline)}</p>
+                <span class="rack">${p.tile.rack
+                    .map(([file, label]) => `<span title="${esc(label)}"><img src="ASSETSmedia/${p.media}/render/${file}.webp" alt="${esc(label)}" width="512" height="512" loading="lazy" decoding="async"></span>`)
+                    .join('')}</span>
+            </a>`;
+        }
+
+        return `
+            <a ${attrs}>
+                ${arrow}
+                <p class="eyebrow">${esc(p.kind)}</p>
+                <h2>${esc(p.name)}</h2>
+                <dl class="nums">${p.metrics
+                    .slice(0, 3)
+                    .map(([v, l]) => `<div><dt>${esc(v)}</dt><dd>${esc(l)}</dd></div>`)
+                    .join('')}</dl>
+                <span class="shot">${picture(`media/${p.media}/${p.cover}`, p.slides[0][1], {
+                    lazy: false,
+                    sizes: '(max-width: 700px) 92vw, (max-width: 1180px) 60vw, 560px',
+                })}</span>
+            </a>`;
     };
 
-    /* --- Sticky index --- */
-    const indexLinks = PROJECTS.map((p, i) => {
-        const opener = i === featured.length && archive.length
-            ? `<p class="divider">Bientôt</p>\n                        `
-            : '';
-        return `${opener}<a href="#p-${p.slug}"><span class="n">${num(p)}</span><span>${esc(p.name)}</span></a>`;
-    }).join('\n                        ');
+    const soonTile = (p, n) => `
+            <a class="tile tile--link t-soon" href="${p.repo}" target="_blank" rel="noopener noreferrer" data-accent="${p.theme}" style="${n === 0 ? 'grid-area:soon;' : ''}--i:${++i}" aria-label="Dépôt ${esc(p.name)} sur GitHub — ${esc(p.kind)}">
+                ${arrow}
+                <p class="eyebrow">${esc(p.kind)}</p>
+                <div><h2>${esc(p.name)}</h2><p>${esc(p.tagline)}</p></div>
+            </a>`;
 
-    /* --- Full chapter: the four highlighted projects --- */
-    const fullChapters = featured
-        .map(
-            (p, i) => `
-                    <article class="chapter reveal" id="p-${p.slug}" data-theme-accent="${p.theme}">
-                        <a class="chapter-media" href="./projects/${p.slug}.html" tabindex="-1" aria-hidden="true">
-                            ${picture(`media/${p.media}/${p.cover}`, '', {
-                                lazy: i > 0,
-                                sizes: '(max-width: 1000px) 100vw, 880px',
-                            })}
-                            <span class="open-hint"><span>Ouvrir l’étude de cas ${icon('arrow-right')}</span></span>
-                        </a>
-                        <p class="chapter-kicker">
-                            <span class="n">${num(p)}</span>
-                            <span class="sep">/</span>
-                            ${p.tags.map((t) => esc(t)).join(' <span class="sep">·</span> ')}
-                        </p>
-                        <h3><a href="./projects/${p.slug}.html">${esc(p.name)}</a></h3>
-                        <p class="chapter-lead">${esc(p.summary)}</p>
-                        <div class="chapter-story">
-                            <div>
-                                <h4>Le problème</h4>
-                                <p>${esc(p.narrative.problem)}</p>
-                            </div>
-                            <div>
-                                <h4>Le choix technique</h4>
-                                <p>${esc(p.narrative.solution)}</p>
-                            </div>
-                        </div>
-                        <div class="chapter-actions">
-                            <a class="btn btn--chapter" href="./projects/${p.slug}.html">Étude de cas ${icon('arrow-right')}</a>
-                            ${projectLinks(p, icon, { liveClass: 'btn btn--ghost', repoClass: 'btn btn--ghost' })}
-                        </div>
-                    </article>`
-        )
-        .join('');
+    const parcours = PROFILE.parcours
+        .map((s) => {
+            const p = s.project && PROJECTS.find((x) => x.slug === s.project);
+            const title = p && p.tier !== 'soon' ? `<a href="./projects/${p.slug}.html">${esc(s.title)}</a>` : esc(s.title);
+            return `<li${p ? ` data-accent="${p.theme}"` : ''}><time>${esc(s.date)}</time><div><b>${title}</b><span>${esc(s.org)}</span></div></li>`;
+        })
+        .join('\n                    ');
 
-    /* --- Compact chapter: a repository with no published code yet. No page,
-           no screenshot — just what exists: the repo and its state. --- */
-    const compactChapters = archive
-        .map(
-            (p) => `
-                    <article class="chapter chapter--compact reveal" id="p-${p.slug}" data-theme-accent="${p.theme}">
-                        <div class="chapter-row">
-                            <div class="chapter-media chapter-media--soon" aria-hidden="true">${icon('rocket', 'icon icon-lg')}</div>
-                            <div>
-                                <p class="chapter-kicker">
-                                    <span class="n">${num(p)}</span>
-                                    <span class="sep">/</span>
-                                    ${esc(p.flag)}
-                                </p>
-                                <h3>${esc(p.name)}</h3>
-                                <p class="chapter-lead">${esc(p.summary)}</p>
-                            </div>
-                            <a class="btn btn--ghost btn--sm" href="${p.repo}" target="_blank" rel="noopener noreferrer">${brandIcon('github')} Dépôt</a>
-                        </div>
-                    </article>`
-        )
-        .join('');
+    const tiles = `
+            <section class="tile t-intro" style="--i:0" aria-labelledby="name">
+                <div class="top">
+                    <p class="status">${esc(PROFILE.status)}</p>
+                    ${themeToggle(icon)}
+                </div>
+                <h1 id="name">${esc(PROFILE.first)}<br>${esc(PROFILE.last)}</h1>
+                <p class="role">${esc(SITE.role)}</p>
+                <p class="pitch">${esc(PROFILE.pitch)} ${PAGES.length} projets publiés, ${SOON.length} en préparation.</p>
+                <div class="ctas">
+                    <a class="btn btn--ink" href="mailto:${SITE.email}">${icon('mail')} Me contacter</a>
+                    <a class="btn btn--soft" href="./${SITE.doc}">${icon('file-code')} Fiche technique</a>
+                </div>
+            </section>
+${featured.map(featuredTile).join('')}
+
+            <figure class="tile t-photo" style="--i:${++i}">
+                ${picture(PROFILE.avatar, 'Portrait d’Allan Vitu', { sizes: '(max-width: 700px) 92vw, 240px' })}
+                <figcaption>${icon('map')} ${esc(PROFILE.location)}</figcaption>
+            </figure>
+
+            <section class="tile t-git" style="--i:${++i}" aria-labelledby="gh">
+                <h2 class="eyebrow" id="gh">GitHub</h2>
+                <p class="count"><b>${PROJECTS.length}</b> dépôts publics</p>
+                <ul>${PROJECTS.map((p) => `<li><a href="${p.repo}" target="_blank" rel="noopener noreferrer">${esc(repoName(p))} ${icon('arrow-right')}</a></li>`).join('')}</ul>
+            </section>
+
+            <section class="tile t-path" style="--i:${++i}" aria-labelledby="path">
+                <h2 class="eyebrow" id="path">Parcours</h2>
+                <ol>
+                    ${parcours}
+                </ol>
+            </section>
+
+            <section class="tile t-stack" style="--i:${++i}" aria-labelledby="stack">
+                <h2 class="eyebrow" id="stack">Stack</h2>
+                <ul>${PROFILE.stack
+                    .flatMap((g, gi) => g.items.map((it) => `<li class="chip${gi === 0 ? ' chip--accent' : ''}">${esc(it)}</li>`))
+                    .join('')}</ul>
+            </section>
+${SOON.map(soonTile).join('')}
+
+            <section class="tile t-contact" id="contact" style="--i:${++i}" aria-labelledby="contact-t">
+                <h2 class="eyebrow" id="contact-t">Contact</h2>
+                <p class="big">Travaillons<br>ensemble.</p>
+                <div class="soc">${SOCIALS.map(([n, href, label]) => `<a href="${href}"${ext(href)} aria-label="${label}">${brandIcon(n)}</a>`).join('')}</div>
+            </section>`;
 
     const jsonLd = JSON.stringify({
         '@context': 'https://schema.org',
@@ -379,149 +326,11 @@ function buildIndex() {
         })),
     });
 
-    const body = `<body>
+    const body = `<body class="home">
 ${SPRITE_SLOT}
-${navbar({ depth: 0, icon })}
+    <a class="skip-link" href="#main">Aller au contenu</a>
 
-    <main id="main">
-        <!-- ── HERO ─────────────────────────────────────────────────────── -->
-        <section class="shell hero">
-            <p class="hero-badge"><span class="dot" aria-hidden="true"></span> Disponible — freelance &amp; CDI</p>
-            <h1>Je construis des apps web<br><span class="gradient-text">robustes &amp; premium.</span></h1>
-            <p class="hero-sub">Développeur Full-Stack &amp; DevOps. Du design system au pipeline CI/CD, je conçois des applications complètes, performantes et durables.</p>
-            <div class="hero-cta">
-                <a class="btn btn--primary" href="#projects" data-magnetic>Voir les projets ${icon('arrow-down')}</a>
-                <a class="btn btn--ghost" href="#contact" data-magnetic>Me contacter ${icon('arrow-right')}</a>
-            </div>
-            <p class="hero-meta">
-                <span>${icon('layers')} Vue 3 · PHP 8</span>
-                <span>${icon('server')} Docker · CI/CD</span>
-                <span>${icon('smartphone')} PWA offline-first</span>
-            </p>
-        </section>
-
-        <!-- ── À PROPOS ─────────────────────────────────────────────────── -->
-        <section class="shell section reveal" id="about">
-            <div class="about-grid">
-                <div class="about-copy">
-                    <p class="section-eyebrow">À propos</p>
-                    <h2 class="section-title">Allan Vitu</h2>
-                    <p>Diplômé du titre professionnel <strong>DWWM</strong> au Centre de Réadaptation de Mulhouse, je conçois des applications web de bout en bout — de la maquette au déploiement.</p>
-                    <p>Je travaille principalement en <strong>Vue 3</strong> et <strong>PHP 8</strong>, avec un intérêt marqué pour les <strong>PWA offline-first</strong> et l'outillage DevOps qui rend un déploiement ennuyeux. Chaque projet ci-dessous est parti d'un besoin réel, pas d'un tutoriel.</p>
-                    <dl class="about-stats">
-                        <div><dt>${PAGES.length}</dt><dd>Projets publiés</dd></div>
-                        <div><dt>PWA</dt><dd>Spécialité</dd></div>
-                        <div><dt>Full</dt><dd>Stack &amp; DevOps</dd></div>
-                    </dl>
-                </div>
-                <div class="about-card panel">
-                    <div class="about-avatar">${picture('media/avatar', 'Portrait d’Allan Vitu', { sizes: '104px' })}</div>
-                    <div class="about-code">
-<pre><code><span class="k">const</span> allan = {
-  role:    <span class="s">"Full-Stack &amp; DevOps"</span>,
-  stack:   [<span class="s">"Vue 3"</span>, <span class="s">"PHP 8"</span>, <span class="s">"Docker"</span>],
-  focus:   <span class="s">"PWA &amp; CI/CD"</span>,
-  status:  <span class="s">"available"</span>,
-}<span class="p">;</span></code></pre>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ── STACK ────────────────────────────────────────────────────── -->
-        <section class="shell section reveal">
-            <p class="section-eyebrow">Compétences</p>
-            <h2 class="section-title">Stack</h2>
-            <div class="caps">
-                <div>
-                    <h3>${icon('layers')} Frontend</h3>
-                    <p>Web Components, PWA et rendu côté serveur. Des interfaces réactives, accessibles et tenables dans le temps.</p>
-                    <div class="tag-row">
-                        <span class="tag tag--accent">Vue 3</span><span class="tag tag--accent">JavaScript ES6+</span>
-                        <span class="tag tag--accent">TailwindCSS</span><span class="tag tag--accent">HTML / CSS</span>
-                    </div>
-                </div>
-                <div>
-                    <h3>${icon('database')} Backend &amp; data</h3>
-                    <p>APIs REST sécurisées, bases relationnelles et NoSQL.</p>
-                    <div class="tag-row">
-                        <span class="tag tag--accent">PHP 8</span><span class="tag tag--accent">MySQL</span>
-                        <span class="tag tag--accent">Node.js</span><span class="tag tag--accent">NoSQL</span>
-                    </div>
-                </div>
-                <div>
-                    <h3>${icon('server')} DevOps</h3>
-                    <p>Automatisation des déploiements, conteneurisation et pipelines CI/CD.</p>
-                    <div class="tag-row">
-                        <span class="tag tag--accent">Docker</span><span class="tag tag--accent">CI/CD</span>
-                        <span class="tag tag--accent">Linux</span><span class="tag tag--accent">Cloud</span>
-                    </div>
-                </div>
-            </div>
-            <figure class="gh-chart">
-                <figcaption>${icon('git-commit')} Activité GitHub — 12 derniers mois</figcaption>
-                <img src="https://ghchart.rshah.org/8b5cf6/allanvitu" alt="Graphique des contributions GitHub d’Allan Vitu sur l’année écoulée" loading="lazy" decoding="async" width="663" height="104">
-            </figure>
-        </section>
-
-        <!-- ── PARCOURS ─────────────────────────────────────────────────── -->
-        <section class="shell section reveal" id="experience">
-            <p class="section-eyebrow">Parcours</p>
-            <h2 class="section-title">Expérience</h2>
-            <ol class="timeline">
-                <li>
-                    <span class="timeline-date">2024 — 2025</span>
-                    <h3>Titre professionnel DWWM</h3>
-                    <p class="org">Centre de Réadaptation de Mulhouse</p>
-                    <p>Formation intensive en développement web &amp; web mobile : projets full-stack, méthodologies agiles et architectures modernes.</p>
-                </li>
-                <li>
-                    <span class="timeline-date">2025 — 2026</span>
-                    <h3>Projets personnels — Full-Stack &amp; DevOps</h3>
-                    <p class="org">Autodidacte</p>
-                    <p>DevToolbox en juin 2026 (Vue 3, Vite, PWA, API Claude), puis le resource pack du serveur Minecraft BoxCraft en août. Approfondissement de Vue 3, Docker et des chaînes de déploiement continu.</p>
-                </li>
-                <li>
-                    <span class="timeline-date">2026 — Aujourd’hui</span>
-                    <h3>Ouvert aux opportunités</h3>
-                    <p class="org">Freelance &amp; CDI</p>
-                    <p>Disponible pour des missions en applications web performantes, PWA mobile-first et infrastructures cloud.</p>
-                </li>
-            </ol>
-        </section>
-
-        <!-- ── PROJETS ──────────────────────────────────────────────────── -->
-        <section class="shell section" id="projects">
-            <div class="reveal">
-                <p class="section-eyebrow">Projets</p>
-                <h2 class="section-title">Ce que je construis</h2>
-                <p class="section-lead">${featured.length} projets détaillés, chacun avec le problème qu'il résout et le choix technique qui en découle. Le code source de chacun est public sur GitHub.</p>
-            </div>
-
-            <div class="chapters">
-                <nav class="chapter-index" aria-label="Index des projets">
-                    <p class="chapter-index-label">Projets</p>
-                    ${indexLinks}
-                </nav>
-
-                <div class="chapter-flow">${fullChapters}${compactChapters}
-                </div>
-            </div>
-        </section>
-
-        <!-- ── CONTACT ──────────────────────────────────────────────────── -->
-        <section class="shell section contact reveal" id="contact">
-            <p class="section-eyebrow">Contact</p>
-            <h2 class="section-title">Travaillons ensemble</h2>
-            <p class="contact-lead">Diplômé DWWM, disponible en freelance comme en CDI. Architecture cloud, PWA ou CI/CD — écrivez-moi.</p>
-            <div class="contact-links">
-                <a class="contact-link" data-brand="mail" href="mailto:${SITE.email}" aria-label="Envoyer un e-mail">${brandIcon('mail')}</a>
-                <a class="contact-link" data-brand="github" href="${SITE.github}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">${brandIcon('github')}</a>
-                <a class="contact-link" data-brand="linkedin" href="${SITE.linkedin}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">${brandIcon('linkedin')}</a>
-                <a class="contact-link" data-brand="instagram" href="${SITE.instagram}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">${brandIcon('instagram')}</a>
-            </div>
-            <p class="contact-mail"><a href="mailto:${SITE.email}">${SITE.email}</a></p>
-        </section>
+    <main id="main" class="bento">${tiles}
     </main>
 ${footer({ depth: 0 })}
     <script type="application/ld+json">${jsonLd}</script>
@@ -533,7 +342,7 @@ ${footer({ depth: 0 })}
         head({
             title: `${SITE.name} — ${SITE.role}`,
             description:
-                "Portfolio d'Allan Vitu, développeur Full-Stack & DevOps. Applications web performantes, PWA offline-first et infrastructures cloud.",
+                "Portfolio d'Allan Vitu, développeur Full-Stack & DevOps : DevToolbox (PWA Vue 3 avec IA intégrée), BoxCraft (resource pack Minecraft) et les projets à venir.",
             canonical: SITE.base,
             ogImage: `${SITE.base}assets/media/devtoolbox/dashboard.webp`,
             depth: 0,
@@ -544,155 +353,96 @@ ${footer({ depth: 0 })}
 /* --------------------------------------------------------------------------
    PROJECT PAGE
    -------------------------------------------------------------------------- */
-function buildProject(project, index) {
+function buildProject(p, index) {
     const { icon, resolve } = makeIconSet();
-    const p = project;
-    const num = String(PROJECTS.indexOf(p) + 1).padStart(2, '0');
     const prev = PAGES[index - 1];
     const next = PAGES[index + 1];
+
+    const actions = [
+        p.live ? `<a class="btn btn--accent" href="${p.live}" target="_blank" rel="noopener noreferrer">Ouvrir ${esc(p.name)} ${icon('external-link')}</a>` : '',
+        `<a class="btn ${p.live ? 'btn--soft' : 'btn--accent'}" href="${p.repo}" target="_blank" rel="noopener noreferrer">${brandIcon('github')} Code source</a>`,
+        p.doc ? `<a class="btn btn--soft" href="../doc_technique/${p.doc}">${icon('file-code')} Fiche technique</a>` : '',
+    ].filter(Boolean).join('\n                        ');
 
     const slides = p.slides
         .map(
             ([file, alt], i) =>
-                `                    <div class="carousel-slide" aria-hidden="${i !== 0}">${picture(
-                    `media/${p.media}/${file}`,
-                    alt,
-                    { lazy: i > 0, sizes: '(max-width: 940px) 100vw, 700px' }
-                )}</div>`
+                `<div class="carousel-slide" aria-hidden="${i !== 0}">${picture(`media/${p.media}/${file}`, alt, {
+                    lazy: i > 0,
+                    sizes: '(max-width: 1100px) 100vw, 920px',
+                })}</div>`
         )
-        .join('\n');
+        .join('\n                        ');
 
     const dots = p.slides
-        .map(
-            (_, i) =>
-                `<button class="carousel-dot" type="button" aria-current="${i === 0}" aria-label="Vue ${i + 1} sur ${p.slides.length}"></button>`
-        )
+        .map((_, i) => `<button class="carousel-dot" type="button" aria-current="${i === 0}" aria-label="Vue ${i + 1} sur ${p.slides.length}"></button>`)
         .join('');
 
     const specs = p.specs
         .map(
             ([ic, title, text]) => `
-                    <li>
-                        <span class="spec-icon">${icon(ic)}</span>
-                        <div><strong>${esc(title)}</strong><span>${esc(text)}</span></div>
-                    </li>`
+                <li class="tile"><span class="c-icon">${icon(ic)}</span><div><strong>${esc(title)}</strong><span>${esc(text)}</span></div></li>`
         )
         .join('');
 
-    const narrative = p.narrative
+    const story = p.narrative
         ? `
-        <section class="p-section reveal">
-            <h2>Le raisonnement</h2>
-            <p class="sub">Problème → Solution → Résultat</p>
-            <div class="narrative">
-                <article class="panel">
-                    <h3>${icon('circle-alert')} Le problème</h3>
-                    <p>${esc(p.narrative.problem)}</p>
-                </article>
-                <article class="panel">
-                    <h3>${icon('lightbulb')} La solution</h3>
-                    <p>${esc(p.narrative.solution)}</p>
-                </article>
-                <article class="panel">
-                    <h3>${icon('target')} Le résultat</h3>
-                    <p>${esc(p.narrative.outcome)}</p>
-                </article>
-            </div>
-        </section>`
+        <div class="c-title"><h2>Le raisonnement</h2><p>Problème → Solution → Résultat</p></div>
+        <div class="c-row c-3 c-story">
+            <article class="tile"><h3 class="eyebrow">${icon('circle-alert')} Le problème</h3><p>${esc(p.narrative.problem)}</p></article>
+            <article class="tile"><h3 class="eyebrow">${icon('lightbulb')} La solution</h3><p>${esc(p.narrative.solution)}</p></article>
+            <article class="tile is-outcome"><h3 class="eyebrow">${icon('target')} Le résultat</h3><p>${esc(p.narrative.outcome)}</p></article>
+        </div>`
         : '';
 
     const metrics = p.metrics
         ? `
-        <section class="p-section reveal">
-            <h2>En chiffres</h2>
-            <p class="sub">Périmètre réel du projet</p>
-            <dl class="metrics">
-                ${p.metrics.map(([v, l]) => `<div><dt>${esc(v)}</dt><dd>${esc(l)}</dd></div>`).join('\n                ')}
-            </dl>
-        </section>`
+        <div class="c-title"><h2>En chiffres</h2><p>Périmètre réel du projet</p></div>
+        <dl class="tile c-metrics">
+            ${p.metrics.map(([v, l]) => `<div><dt>${esc(v)}</dt><dd>${esc(l)}</dd></div>`).join('\n            ')}
+        </dl>`
         : '';
 
     const features = p.features
         ? `
-        <section class="p-section reveal">
-            <h2>Architecture &amp; modules</h2>
-            <p class="sub">${esc(p.featuresSub || '')}</p>
-            <div class="features">
-                ${p.features
-                    .map(
-                        ([ic, title, html, tags]) => `<article class="panel panel--lift">
-                    <header><span class="f-icon">${icon(ic)}</span><h3>${esc(title)}</h3></header>
-                    <p>${html}</p>
-                    <div class="tag-row">${tags.map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</div>
-                </article>`
-                    )
-                    .join('\n                ')}
-            </div>
-        </section>`
+        <div class="c-title"><h2>Architecture &amp; modules</h2><p>${esc(p.featuresSub || '')}</p></div>
+        <div class="c-row ${p.features.length % 3 === 0 ? 'c-3' : 'c-2'}">
+            ${p.features
+                .map(
+                    ([ic, title, html, tags]) => `<article class="tile c-feature">
+                <header><span class="c-icon">${icon(ic)}</span><h3>${esc(title)}</h3></header>
+                <p>${html}</p>
+                <ul class="chips">${tags.map((t) => `<li class="chip">${esc(t)}</li>`).join('')}</ul>
+            </article>`
+                )
+                .join('\n            ')}
+        </div>`
         : '';
 
-    const stack = `
-        <section class="p-section reveal">
-            <h2>Stack technique</h2>
-            <p class="sub">Ce qui fait tourner le projet</p>
-            <div class="stack-groups">
+    const end = `
+        <div class="c-row c-end">
+            <section class="tile c-stack" aria-labelledby="stack-t">
+                <h2 class="eyebrow" id="stack-t" style="color:var(--accent)">Stack technique</h2>
                 ${p.stack
-                    .map(
-                        ([group, items]) => `<div>
-                    <h3>${esc(group)}</h3>
-                    <div class="tag-row">${items.map((i) => `<span class="pill">${esc(i)}</span>`).join('')}</div>
-                </div>`
-                    )
+                    .map(([group, items]) => `<div><h3 class="eyebrow">${esc(group)}</h3><ul>${items.map((it) => `<li class="chip chip--accent">${esc(it)}</li>`).join('')}</ul></div>`)
                     .join('\n                ')}
-            </div>
-        </section>`;
-
-    const video = p.video
-        ? (() => {
-              const [file, posterKey, label] = p.video;
-              const poster = DIMS[`media/${p.media}/${posterKey}`];
-              return `
-        <section class="p-section p-video reveal">
-            <h2>Gameplay</h2>
-            <p class="sub">${esc(label)}</p>
-            <div class="video-frame" data-video>
-                <video preload="none" playsinline poster="../assets/media/${p.media}/${posterKey}.webp" width="${poster.w}" height="${poster.h}">
-                    <source data-src="../assets/media/${p.media}/${file}" type="video/mp4">
-                    Votre navigateur ne prend pas en charge la lecture vidéo.
-                </video>
-                <button class="video-play" type="button" aria-label="Lancer la vidéo de gameplay">
-                    <span class="disc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
-                    <small>${esc(label)}</small>
-                </button>
-            </div>
-        </section>`;
-          })()
-        : '';
-
-    const docBanner = p.doc
-        ? `
-        <aside class="doc-banner reveal">
-            <div>
-                <h2>Fiche technique</h2>
-                <p>Contenu, langages, technologies et évolution du dépôt, sur une page.</p>
-            </div>
-            <a class="btn btn--project" href="../doc_technique/${p.doc}">Lire la fiche ${icon('file-code')}</a>
-        </aside>`
-        : '';
-
-    const pager = `
-        <nav class="p-pager" aria-label="Navigation entre les projets">
+            </section>
             ${
-                prev
-                    ? `<a class="pager-link prev" href="./${prev.slug}.html">${icon('arrow-left')}<span><span class="lbl">Projet précédent</span><span class="ttl">${esc(prev.name)}</span></span></a>`
-                    : `<a class="pager-link prev" href="../#projects">${icon('arrow-left')}<span><span class="lbl">Retour</span><span class="ttl">Tous les projets</span></span></a>`
+                p.doc
+                    ? `<aside class="tile c-doc">
+                <div><p class="eyebrow">Documentation</p><h2>Fiche technique</h2><p>Contenu, langages, technologies et évolution du dépôt, sur une page.</p></div>
+                <a class="btn" href="../doc_technique/${p.doc}">Lire la fiche ${icon('arrow-right')}</a>
+            </aside>`
+                    : ''
             }
-            ${
-                next
-                    ? `<a class="pager-link next" href="./${next.slug}.html">${icon('arrow-right')}<span><span class="lbl">Projet suivant</span><span class="ttl">${esc(next.name)}</span></span></a>`
-                    : `<a class="pager-link next" href="../#projects">${icon('arrow-right')}<span><span class="lbl">Retour</span><span class="ttl">Tous les projets</span></span></a>`
-            }
-        </nav>`;
+        </div>`;
+
+    const pagerLink = (target, dir) => {
+        const [cls, ic, lbl] = dir === 'prev' ? ['prev', 'arrow-left', 'Projet précédent'] : ['next', 'arrow-right', 'Projet suivant'];
+        return target
+            ? `<a class="tile tile--link ${cls}" href="./${target.slug}.html" data-accent="${target.theme}">${icon(ic)}<span><span class="lbl">${lbl}</span><span class="ttl">${esc(target.name)}</span></span></a>`
+            : `<a class="tile tile--link ${cls}" href="../">${icon(ic)}<span><span class="lbl">Retour</span><span class="ttl">Accueil</span></span></a>`;
+    };
 
     const jsonLd = JSON.stringify({
         '@context': 'https://schema.org',
@@ -701,57 +451,68 @@ function buildProject(project, index) {
         description: p.summary,
         url: p.live || p.repo,
         applicationCategory: p.live ? 'WebApplication' : 'GameApplication',
-        operatingSystem: 'Web',
+        operatingSystem: p.live ? 'Web' : 'Minecraft Java Edition',
         author: { '@type': 'Person', name: SITE.name, url: SITE.base },
         image: `${SITE.base}assets/media/${p.media}/${p.cover}.webp`,
     });
 
-    const body = `<body data-project="${p.theme}">
+    const body = `<body data-accent="${p.theme}">
 ${SPRITE_SLOT}
-${navbar({ depth: 1, icon })}
+    <a class="skip-link" href="#main">Aller au contenu</a>
 
-    <main id="main" class="shell">
+    <header class="topbar">
+        <a class="brand" href="../">${picture(PROFILE.avatar, '', { sizes: '34px' })} ${SITE.name}</a>
+        <nav aria-label="Navigation">
+            <a href="../">Accueil</a>
+            <a href="../#contact">Contact</a>
+        </nav>
+        ${themeToggle(icon)}
+    </header>
+
+    <main id="main" class="case">
         <nav class="crumbs" aria-label="Fil d’Ariane">
-            <a href="../">Accueil</a><span class="sep" aria-hidden="true">/</span>
-            <a href="../#projects">Projets</a><span class="sep" aria-hidden="true">/</span>
-            <span aria-current="page">${esc(p.name)}</span>
+            <a href="../">Accueil</a><span aria-hidden="true">/</span><span aria-current="page">${esc(p.name)}</span>
         </nav>
 
-        <header class="p-head reveal">
-            <p class="p-eyebrow">${p.tier === 'featured' ? 'Étude de cas' : 'Projet'} // ${num}</p>
-            <h1>${esc(p.title)}</h1>
-            <p class="p-tagline">${esc(p.tagline)}</p>
-            <p>${esc(p.intro)}</p>
-            <dl class="p-meta">
-                ${p.meta.map(([k, v]) => `<span>${esc(k)} — <b>${esc(v)}</b></span>`).join('\n                ')}
-            </dl>
-        </header>
+        <div class="c-grid">
+            <header class="tile c-head" style="--i:0">
+                <div>
+                    <p class="eyebrow">Étude de cas ${num(p)} · ${esc(p.kind)} · ${esc(p.period)}</p>
+                    <h1>${esc(p.title)}</h1>
+                    <p class="tagline">${esc(p.tagline)}</p>
+                    <div class="actions">
+                        ${actions}
+                    </div>
+                </div>
+                <div>
+                    <p class="intro">${esc(p.intro)}</p>
+                    <ul class="meta">${p.meta.map(([k, v]) => `<li class="chip">${esc(k)} · <b>${esc(v)}</b></li>`).join('')}</ul>
+                </div>
+            </header>
 
-        <div class="p-body reveal">
-            <div>
+            <div class="tile c-gallery" style="--i:1">
                 <div class="carousel" data-carousel tabindex="0" role="group" aria-roledescription="carrousel" aria-label="Captures de ${esc(p.name)}">
                     <div class="carousel-viewport">
-${slides}
+                        ${slides}
                         <button class="carousel-arrow prev" type="button" aria-label="Vue précédente">${icon('chevron-left')}</button>
                         <button class="carousel-arrow next" type="button" aria-label="Vue suivante">${icon('chevron-right')}</button>
                     </div>
-                    <div class="carousel-dots">${dots}</div>
+                    <div class="carousel-foot">
+                        <p class="carousel-caption" aria-live="polite">${esc(p.slides[0][1])}</p>
+                        <div class="carousel-dots">${dots}</div>
+                    </div>
                 </div>
-                <p class="carousel-status" role="status" aria-live="polite"></p>
             </div>
 
-            <div class="p-specs panel">
-                <h2>Points techniques</h2>
-                <ul class="spec-list">${specs}
-                </ul>
-                <div class="p-actions">
-                    ${projectLinks(p, icon, { liveClass: 'btn btn--project', repoClass: p.live ? 'btn btn--project-ghost' : 'btn btn--project' })}
-                    ${p.doc ? `<a class="btn btn--project-ghost" href="../doc_technique/${p.doc}">Fiche technique ${icon('file-code')}</a>` : ''}
-                </div>
-            </div>
+            <ul class="c-specs" aria-label="Points techniques">${specs}
+            </ul>
         </div>
-${narrative}${metrics}${features}${stack}${video}${docBanner}
-${pager}
+${story}${metrics}${features}${end}
+
+        <nav class="c-row c-pager" aria-label="Navigation entre les projets">
+            ${pagerLink(prev, 'prev')}
+            ${pagerLink(next, 'next')}
+        </nav>
     </main>
 ${footer({ depth: 1 })}
     <script type="application/ld+json">${jsonLd}</script>
@@ -784,8 +545,8 @@ function buildManifest() {
             start_url: './',
             scope: './',
             display: 'standalone',
-            background_color: '#f7f7fb',
-            theme_color: '#f7f7fb',
+            background_color: '#eeeef1',
+            theme_color: '#eeeef1',
             icons: [
                 { src: './assets/brand/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
                 { src: './assets/brand/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
@@ -802,7 +563,7 @@ function buildSitemap() {
     const urls = [
         { loc: SITE.base, priority: '1.0' },
         ...PAGES.map((p) => ({ loc: `${SITE.base}projects/${p.slug}.html`, priority: '0.8' })),
-        { loc: `${SITE.base}doc_technique/fiche-technique.html`, priority: '0.6' },
+        { loc: `${SITE.base}${SITE.doc}`, priority: '0.6' },
     ];
     return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

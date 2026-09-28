@@ -24,259 +24,165 @@
 <link rel="icon" href="../assets/brand/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/brand/icon-180.png">
 <link rel="manifest" href="../site.webmanifest">
-<meta name="theme-color" content="#f7f7fb">
+<meta name="theme-color" content="#eeeef1">
 
 <script>
-/* Resolve the theme before first paint so the page never flashes, and flag
-   that scripting is on — reveal animations only hide content when it can be
-   revealed again. */
-(function(){document.documentElement.classList.add('js');
-try{var s=localStorage.getItem('theme');
+/* Resolve the theme before first paint so the page never flashes. */
+(function(){try{var s=localStorage.getItem('theme');
 document.documentElement.dataset.theme=s||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
 }catch(e){document.documentElement.dataset.theme='light';}})();
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;500&display=swap">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@400;500&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 
 <link rel="stylesheet" href="../css/site.css">
 <link rel="stylesheet" href="../css/project.css">
-</head><body data-project="indigo">
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol><symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol><symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol><symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol><symbol id="i-circle-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></symbol><symbol id="i-external-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol><symbol id="i-file-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 12.5 8 15l2 2.5"/><path d="m14 12.5 2 2.5-2 2.5"/></symbol><symbol id="i-git-merge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></symbol><symbol id="i-graduation-cap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></symbol><symbol id="i-layout-dashboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol><symbol id="i-lightbulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></symbol><symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></symbol><symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></symbol><symbol id="i-route" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol><symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></symbol><symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol><symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol><symbol id="i-wifi-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="M2 8.82a15 15 0 0 1 4.177-2.643"/><path d="M22 8.82a15 15 0 0 0-11.288-3.764"/><path d="m2 2 20 20"/></symbol><symbol id="i-wrench" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></symbol></svg>
-
+</head><body data-accent="indigo">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol><symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol><symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol><symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol><symbol id="i-circle-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></symbol><symbol id="i-external-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol><symbol id="i-file-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 12.5 8 15l2 2.5"/><path d="m14 12.5 2 2.5-2 2.5"/></symbol><symbol id="i-git-merge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></symbol><symbol id="i-graduation-cap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></symbol><symbol id="i-layout-dashboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol><symbol id="i-lightbulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></symbol><symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></symbol><symbol id="i-route" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol><symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></symbol><symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol><symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol><symbol id="i-wifi-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="M2 8.82a15 15 0 0 1 4.177-2.643"/><path d="M22 8.82a15 15 0 0 0-11.288-3.764"/><path d="m2 2 20 20"/></symbol><symbol id="i-wrench" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></symbol></svg>
     <a class="skip-link" href="#main">Aller au contenu</a>
 
-    <div class="backdrop" aria-hidden="true">
-        <canvas class="backdrop-canvas"></canvas>
-        <div class="backdrop-veil"></div>
-    </div>
-
-    <header class="nav" id="nav">
-        <div class="nav-progress" aria-hidden="true"></div>
-        <a class="nav-brand" href="../" aria-label="Allan Vitu — accueil">
-            <img src="../assets/brand/logo.svg" alt="" width="28" height="28">
-            Allan<span class="gradient-text">/</span>Vitu
-        </a>
-        <nav class="nav-links" aria-label="Navigation principale">
-            <a href="../#about">À propos</a>
-            <a href="../#experience">Parcours</a>
-            <a href="../#projects">Projets</a>
+    <header class="topbar">
+        <a class="brand" href="../"><picture><source type="image/avif" srcset="../assets/media/avatar.avif" sizes="34px"><img src="../assets/media/avatar.webp" alt="" width="400" height="492" loading="lazy" decoding="async"></picture> Allan Vitu</a>
+        <nav aria-label="Navigation">
+            <a href="../">Accueil</a>
             <a href="../#contact">Contact</a>
         </nav>
-        <div class="nav-actions">
-            <div class="nav-social">
-                <a href="https://github.com/allanvitu" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
-                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12c0 3.259.014 3.668.072 4.948.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.668-.014 4.948-.072c1.277-.06 2.148-.261 2.913-.558.788-.306 1.459-.717 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
-            </div>
-            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Changer de thème">
-                <svg class="icon icon-sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
-            </button>
-            <a class="btn btn--ghost btn--sm" href="mailto:allan.vitu90@gmail.com" data-magnetic><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg> Contact</a>
-            <button class="nav-burger" id="navBurger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navDrawer">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Changer de thème"><svg class="icon icon-sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon"/></svg></button>
     </header>
 
-    <div class="nav-drawer" id="navDrawer">
-        <a href="../#about">À propos</a>
-        <a href="../#experience">Parcours</a>
-        <a href="../#projects">Projets</a>
-        <a href="../#contact">Contact</a>
-        <div class="nav-drawer-social">
-            <a href="https://github.com/allanvitu" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
-                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12c0 3.259.014 3.668.072 4.948.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.668-.014 4.948-.072c1.277-.06 2.148-.261 2.913-.558.788-.306 1.459-.717 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
-        </div>
-    </div>
-
-    <main id="main" class="shell">
+    <main id="main" class="case">
         <nav class="crumbs" aria-label="Fil d’Ariane">
-            <a href="../">Accueil</a><span class="sep" aria-hidden="true">/</span>
-            <a href="../#projects">Projets</a><span class="sep" aria-hidden="true">/</span>
-            <span aria-current="page">DevToolbox</span>
+            <a href="../">Accueil</a><span aria-hidden="true">/</span><span aria-current="page">DevToolbox</span>
         </nav>
 
-        <header class="p-head reveal">
-            <p class="p-eyebrow">Étude de cas // 01</p>
-            <h1>DevToolbox — 49 outils développeur, IA intégrée</h1>
-            <p class="p-tagline">Application Vue 3 hors-ligne, avec Claude branché dans chaque outil</p>
-            <p>DevToolbox rassemble les utilitaires du quotidien — JSON, SQL, encodage, hash, regex, cron, couleurs, réseau — dans une seule application installable. Autour des outils : un tableau de bord avec favoris et historique, une palette de commandes au clavier, 18 leçons illustrées avec quiz et suivi de progression, 9 aide-mémoire, et un assistant Claude qui peut analyser la saisie de n'importe quel outil.</p>
-            <dl class="p-meta">
-                <span>Rôle — <b>Conception &amp; développement</b></span>
-                <span>Type — <b>PWA Vue 3 hors-ligne</b></span>
-                <span>Période — <b>Juin 2026 · 8 commits</b></span>
-            </dl>
-        </header>
+        <div class="c-grid">
+            <header class="tile c-head" style="--i:0">
+                <div>
+                    <p class="eyebrow">Étude de cas 01 · PWA Vue 3 · IA intégrée · Juin 2026</p>
+                    <h1>DevToolbox — 49 outils développeur, IA intégrée</h1>
+                    <p class="tagline">Application Vue 3 hors-ligne, avec Claude branché dans chaque outil</p>
+                    <div class="actions">
+                        <a class="btn btn--accent" href="https://allanvitu.github.io/DevToolsBox/" target="_blank" rel="noopener noreferrer">Ouvrir DevToolbox <svg class="icon" aria-hidden="true"><use href="#i-external-link"/></svg></a>
+                        <a class="btn btn--soft" href="https://github.com/AllanVitu/DevToolsBox" target="_blank" rel="noopener noreferrer"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg> Code source</a>
+                        <a class="btn btn--soft" href="../doc_technique/fiche-technique.html#devtoolbox"><svg class="icon" aria-hidden="true"><use href="#i-file-code"/></svg> Fiche technique</a>
+                    </div>
+                </div>
+                <div>
+                    <p class="intro">DevToolbox rassemble les utilitaires du quotidien — JSON, SQL, encodage, hash, regex, cron, couleurs, réseau — dans une seule application installable. Autour des outils : un tableau de bord avec favoris et historique, une palette de commandes au clavier, 18 leçons illustrées avec quiz et suivi de progression, 9 aide-mémoire, et un assistant Claude qui peut analyser la saisie de n'importe quel outil.</p>
+                    <ul class="meta"><li class="chip">Rôle · <b>Conception &amp; développement</b></li><li class="chip">Type · <b>PWA Vue 3 hors-ligne</b></li><li class="chip">Période · <b>Juin 2026 · 8 commits</b></li></ul>
+                </div>
+            </header>
 
-        <div class="p-body reveal">
-            <div>
+            <div class="tile c-gallery" style="--i:1">
                 <div class="carousel" data-carousel tabindex="0" role="group" aria-roledescription="carrousel" aria-label="Captures de DevToolbox">
                     <div class="carousel-viewport">
-                    <div class="carousel-slide" aria-hidden="false"><picture><source type="image/avif" srcset="../assets/media/devtoolbox/dashboard.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/devtoolbox/dashboard.webp" alt="DevToolbox — tableau de bord : 49 outils, 18 leçons, 9 fiches" width="1600" height="956" loading="eager" decoding="async" fetchpriority="high"></picture></div>
-                    <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/devtoolbox/code.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/devtoolbox/code.webp" alt="DevToolbox — section Code Tools, outils classés par famille" width="1600" height="956" loading="lazy" decoding="async"></picture></div>
-                    <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/devtoolbox/erd.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/devtoolbox/erd.webp" alt="DevToolbox — visualiseur ERD généré depuis des CREATE TABLE" width="1600" height="956" loading="lazy" decoding="async"></picture></div>
-                    <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/devtoolbox/apprendre.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/devtoolbox/apprendre.webp" alt="DevToolbox — les 18 leçons avec suivi de progression" width="1600" height="956" loading="lazy" decoding="async"></picture></div>
-                    <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/devtoolbox/lecon.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/devtoolbox/lecon.webp" alt="DevToolbox — leçon « Vue + PHP : comment ils se parlent »" width="1600" height="956" loading="lazy" decoding="async"></picture></div>
-                    <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/devtoolbox/ai.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/devtoolbox/ai.webp" alt="DevToolbox — connexion de l’assistant à l’API Claude" width="1600" height="956" loading="lazy" decoding="async"></picture></div>
-                    <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/devtoolbox/landing.avif" sizes="(max-width: 940px) 100vw, 700px"><img src="../assets/media/devtoolbox/landing.webp" alt="DevToolbox — écran d’accueil" width="1600" height="956" loading="lazy" decoding="async"></picture></div>
+                        <div class="carousel-slide" aria-hidden="false"><picture><source type="image/avif" srcset="../assets/media/devtoolbox/dashboard.avif" sizes="(max-width: 1100px) 100vw, 920px"><img src="../assets/media/devtoolbox/dashboard.webp" alt="DevToolbox — tableau de bord : 49 outils, 18 leçons, 9 fiches" width="1600" height="956" loading="eager" decoding="async" fetchpriority="high"></picture></div>
+                        <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/devtoolbox/code.avif" sizes="(max-width: 1100px) 100vw, 920px"><img src="../assets/media/devtoolbox/code.webp" alt="DevToolbox — section Code Tools, outils classés par famille" width="1600" height="956" loading="lazy" decoding="async"></picture></div>
+                        <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/devtoolbox/erd.avif" sizes="(max-width: 1100px) 100vw, 920px"><img src="../assets/media/devtoolbox/erd.webp" alt="DevToolbox — visualiseur ERD généré depuis des CREATE TABLE" width="1600" height="956" loading="lazy" decoding="async"></picture></div>
+                        <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/devtoolbox/apprendre.avif" sizes="(max-width: 1100px) 100vw, 920px"><img src="../assets/media/devtoolbox/apprendre.webp" alt="DevToolbox — les 18 leçons avec suivi de progression" width="1600" height="956" loading="lazy" decoding="async"></picture></div>
+                        <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/devtoolbox/lecon.avif" sizes="(max-width: 1100px) 100vw, 920px"><img src="../assets/media/devtoolbox/lecon.webp" alt="DevToolbox — leçon « Vue + PHP : comment ils se parlent »" width="1600" height="956" loading="lazy" decoding="async"></picture></div>
+                        <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/devtoolbox/ai.avif" sizes="(max-width: 1100px) 100vw, 920px"><img src="../assets/media/devtoolbox/ai.webp" alt="DevToolbox — connexion de l’assistant à l’API Claude" width="1600" height="956" loading="lazy" decoding="async"></picture></div>
+                        <div class="carousel-slide" aria-hidden="true"><picture><source type="image/avif" srcset="../assets/media/devtoolbox/landing.avif" sizes="(max-width: 1100px) 100vw, 920px"><img src="../assets/media/devtoolbox/landing.webp" alt="DevToolbox — écran d’accueil" width="1600" height="956" loading="lazy" decoding="async"></picture></div>
                         <button class="carousel-arrow prev" type="button" aria-label="Vue précédente"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
                         <button class="carousel-arrow next" type="button" aria-label="Vue suivante"><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
                     </div>
-                    <div class="carousel-dots"><button class="carousel-dot" type="button" aria-current="true" aria-label="Vue 1 sur 7"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 2 sur 7"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 3 sur 7"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 4 sur 7"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 5 sur 7"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 6 sur 7"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 7 sur 7"></button></div>
+                    <div class="carousel-foot">
+                        <p class="carousel-caption" aria-live="polite">DevToolbox — tableau de bord : 49 outils, 18 leçons, 9 fiches</p>
+                        <div class="carousel-dots"><button class="carousel-dot" type="button" aria-current="true" aria-label="Vue 1 sur 7"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 2 sur 7"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 3 sur 7"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 4 sur 7"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 5 sur 7"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 6 sur 7"></button><button class="carousel-dot" type="button" aria-current="false" aria-label="Vue 7 sur 7"></button></div>
+                    </div>
                 </div>
-                <p class="carousel-status" role="status" aria-live="polite"></p>
             </div>
 
-            <div class="p-specs panel">
-                <h2>Points techniques</h2>
-                <ul class="spec-list">
-                    <li>
-                        <span class="spec-icon"><svg class="icon" aria-hidden="true"><use href="#i-wrench"/></svg></span>
-                        <div><strong>49 outils, 9 familles</strong><span>Données &amp; SQL, texte, encodage, design, crypto, référence, temps, nombres, système &amp; réseau.</span></div>
-                    </li>
-                    <li>
-                        <span class="spec-icon"><svg class="icon" aria-hidden="true"><use href="#i-wifi-off"/></svg></span>
-                        <div><strong>Hors-ligne</strong><span>Service worker maison : le shell est pré-caché, chaque outil chargé une fois reste disponible sans réseau.</span></div>
-                    </li>
-                    <li>
-                        <span class="spec-icon"><svg class="icon" aria-hidden="true"><use href="#i-sparkles"/></svg></span>
-                        <div><strong>IA à la demande</strong><span>Panneau « Analyse IA » dans chaque outil, réponse en streaming, 4 modèles Claude au choix.</span></div>
-                    </li>
-                    <li>
-                        <span class="spec-icon"><svg class="icon" aria-hidden="true"><use href="#i-graduation-cap"/></svg></span>
-                        <div><strong>Apprendre</strong><span>18 leçons de code commenté avec quiz, 9 aide-mémoire, progression sauvegardée.</span></div>
-                    </li>
-                </ul>
-                <div class="p-actions">
-                    <a class="btn btn--project" href="https://allanvitu.github.io/DevToolsBox/" target="_blank" rel="noopener noreferrer">Ouvrir DevToolbox <svg class="icon" aria-hidden="true"><use href="#i-external-link"/></svg></a>
-                            <a class="btn btn--project-ghost" href="https://github.com/AllanVitu/DevToolsBox" target="_blank" rel="noopener noreferrer"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg> Code source</a>
-                    <a class="btn btn--project-ghost" href="../doc_technique/fiche-technique.html#devtoolbox">Fiche technique <svg class="icon" aria-hidden="true"><use href="#i-file-code"/></svg></a>
-                </div>
-            </div>
+            <ul class="c-specs" aria-label="Points techniques">
+                <li class="tile"><span class="c-icon"><svg class="icon" aria-hidden="true"><use href="#i-wrench"/></svg></span><div><strong>49 outils, 9 familles</strong><span>Données &amp; SQL, texte, encodage, design, crypto, référence, temps, nombres, système &amp; réseau.</span></div></li>
+                <li class="tile"><span class="c-icon"><svg class="icon" aria-hidden="true"><use href="#i-wifi-off"/></svg></span><div><strong>Hors-ligne</strong><span>Service worker maison : le shell est pré-caché, chaque outil chargé une fois reste disponible sans réseau.</span></div></li>
+                <li class="tile"><span class="c-icon"><svg class="icon" aria-hidden="true"><use href="#i-sparkles"/></svg></span><div><strong>IA à la demande</strong><span>Panneau « Analyse IA » dans chaque outil, réponse en streaming, 4 modèles Claude au choix.</span></div></li>
+                <li class="tile"><span class="c-icon"><svg class="icon" aria-hidden="true"><use href="#i-graduation-cap"/></svg></span><div><strong>Apprendre</strong><span>18 leçons de code commenté avec quiz, 9 aide-mémoire, progression sauvegardée.</span></div></li>
+            </ul>
         </div>
 
-        <section class="p-section reveal">
-            <h2>Le raisonnement</h2>
-            <p class="sub">Problème → Solution → Résultat</p>
-            <div class="narrative">
-                <article class="panel">
-                    <h3><svg class="icon" aria-hidden="true"><use href="#i-circle-alert"/></svg> Le problème</h3>
-                    <p>Les outils en ligne équivalents obligent à coller un JWT, un .env ou un schéma SQL sur un serveur tiers, et chacun vit dans un onglet différent.</p>
-                </article>
-                <article class="panel">
-                    <h3><svg class="icon" aria-hidden="true"><use href="#i-lightbulb"/></svg> La solution</h3>
-                    <p>Tout exécuter dans le navigateur : chaque outil est un composant Vue chargé à la demande, l'état est persisté en localStorage, et un service worker rend l'application utilisable hors-ligne. L'IA est la seule exception, clairement signalée : elle part vers l'API Anthropic avec la clé de l'utilisateur, jamais par défaut.</p>
-                </article>
-                <article class="panel">
-                    <h3><svg class="icon" aria-hidden="true"><use href="#i-target"/></svg> Le résultat</h3>
-                    <p>Une boîte à outils installable où la saisie ne quitte pas la machine, sauf demande explicite d'analyse IA.</p>
-                </article>
-            </div>
-        </section>
-        <section class="p-section reveal">
-            <h2>En chiffres</h2>
-            <p class="sub">Périmètre réel du projet</p>
-            <dl class="metrics">
-                <div><dt>49</dt><dd>Outils</dd></div>
-                <div><dt>18</dt><dd>Leçons</dd></div>
-                <div><dt>9</dt><dd>Aide-mémoire</dd></div>
-                <div><dt>4</dt><dd>Modèles Claude</dd></div>
-                <div><dt>0</dt><dd>Serveur</dd></div>
-            </dl>
-        </section>
-        <section class="p-section reveal">
-            <h2>Architecture &amp; modules</h2>
-            <p class="sub">Ce qui relie les 49 outils entre eux.</p>
-            <div class="features">
-                <article class="panel panel--lift">
-                    <header><span class="f-icon"><svg class="icon" aria-hidden="true"><use href="#i-layout-dashboard"/></svg></span><h3>Tableau de bord &amp; palette</h3></header>
-                    <p>Favoris réordonnables, outils récemment utilisés, progression des leçons. Une palette <code class="inline">Ctrl + K</code> cherche parmi les outils et les actions (thème, réglages, export / import).</p>
-                    <div class="tag-row"><span class="tag">Dashboard</span><span class="tag">Ctrl + K</span><span class="tag">Favoris</span></div>
-                </article>
-                <article class="panel panel--lift">
-                    <header><span class="f-icon"><svg class="icon" aria-hidden="true"><use href="#i-git-merge"/></svg></span><h3>Pipeline entre outils</h3></header>
-                    <p>Le résultat d'un outil s'envoie dans un autre en un clic : un composable partagé garde le contenu en attente et l'outil cible ne l'accepte que s'il sait lire ce type de donnée.</p>
-                    <div class="tag-row"><span class="tag">usePipeline</span><span class="tag">Typage des entrées</span></div>
-                </article>
-                <article class="panel panel--lift">
-                    <header><span class="f-icon"><svg class="icon" aria-hidden="true"><use href="#i-route"/></svg></span><h3>Liens de partage</h3></header>
-                    <p>La saisie d'un outil est sérialisée en JSON, encodée en Base64 URL-safe et placée dans l'URL : un lien suffit pour rouvrir l'outil dans le même état.</p>
-                    <div class="tag-row"><span class="tag">useShareLink</span><span class="tag">Base64url</span></div>
-                </article>
-                <article class="panel panel--lift">
-                    <header><span class="f-icon"><svg class="icon" aria-hidden="true"><use href="#i-sparkles"/></svg></span><h3>Analyse IA par outil</h3></header>
-                    <p>Chaque outil peut ouvrir un panneau « Analyse IA » : le SDK Anthropic n'est chargé qu'à la première demande, la réponse arrive en streaming et peut être interrompue. Erreurs de clé et de débit traduites en français.</p>
-                    <div class="tag-row"><span class="tag">useClaude</span><span class="tag">Streaming</span><span class="tag">Import dynamique</span></div>
-                </article>
-                <article class="panel panel--lift">
-                    <header><span class="f-icon"><svg class="icon" aria-hidden="true"><use href="#i-graduation-cap"/></svg></span><h3>Apprendre &amp; quiz</h3></header>
-                    <p>18 leçons, de l'architecture d'un projet jusqu'à une app complète Vue 3 + PHP + PostgreSQL. Le meilleur score de chaque quiz est conservé localement.</p>
-                    <div class="tag-row"><span class="tag">useProgress</span><span class="tag">18 leçons</span><span class="tag">9 fiches</span></div>
-                </article>
-                <article class="panel panel--lift">
-                    <header><span class="f-icon"><svg class="icon" aria-hidden="true"><use href="#i-wifi-off"/></svg></span><h3>Service worker maison</h3></header>
-                    <p>Pré-cache du shell, réseau d'abord pour la navigation avec repli sur l'index en cache, cache d'abord pour les assets — cohérent puisque Vite hashe leurs noms.</p>
-                    <div class="tag-row"><span class="tag">sw.js</span><span class="tag">Cache-first</span><span class="tag">Sans dépendance</span></div>
-                </article>
-            </div>
-        </section>
-        <section class="p-section reveal">
-            <h2>Stack technique</h2>
-            <p class="sub">Ce qui fait tourner le projet</p>
-            <div class="stack-groups">
-                <div>
-                    <h3>Frontend</h3>
-                    <div class="tag-row"><span class="pill">Vue 3</span><span class="pill">Composition API</span><span class="pill">Vue Router</span><span class="pill">Vite</span></div>
-                </div>
-                <div>
-                    <h3>État &amp; persistance</h3>
-                    <div class="tag-row"><span class="pill">Composables</span><span class="pill">localStorage</span><span class="pill">usePersistentRef</span></div>
-                </div>
-                <div>
-                    <h3>PWA</h3>
-                    <div class="tag-row"><span class="pill">Service worker maison</span><span class="pill">Manifest installable</span></div>
-                </div>
-                <div>
-                    <h3>IA</h3>
-                    <div class="tag-row"><span class="pill">SDK Anthropic</span><span class="pill">Streaming</span><span class="pill">Clé côté client</span></div>
-                </div>
-                <div>
-                    <h3>Navigateur</h3>
-                    <div class="tag-row"><span class="pill">Web Crypto</span><span class="pill">Clipboard API</span><span class="pill">TextEncoder</span></div>
-                </div>
-            </div>
-        </section>
-        <aside class="doc-banner reveal">
-            <div>
-                <h2>Fiche technique</h2>
-                <p>Contenu, langages, technologies et évolution du dépôt, sur une page.</p>
-            </div>
-            <a class="btn btn--project" href="../doc_technique/fiche-technique.html#devtoolbox">Lire la fiche <svg class="icon" aria-hidden="true"><use href="#i-file-code"/></svg></a>
-        </aside>
+        <div class="c-title"><h2>Le raisonnement</h2><p>Problème → Solution → Résultat</p></div>
+        <div class="c-row c-3 c-story">
+            <article class="tile"><h3 class="eyebrow"><svg class="icon" aria-hidden="true"><use href="#i-circle-alert"/></svg> Le problème</h3><p>Les outils en ligne équivalents obligent à coller un JWT, un .env ou un schéma SQL sur un serveur tiers, et chacun vit dans un onglet différent.</p></article>
+            <article class="tile"><h3 class="eyebrow"><svg class="icon" aria-hidden="true"><use href="#i-lightbulb"/></svg> La solution</h3><p>Tout exécuter dans le navigateur : chaque outil est un composant Vue chargé à la demande, l'état est persisté en localStorage, et un service worker rend l'application utilisable hors-ligne. L'IA est la seule exception, clairement signalée : elle part vers l'API Anthropic avec la clé de l'utilisateur, jamais par défaut.</p></article>
+            <article class="tile is-outcome"><h3 class="eyebrow"><svg class="icon" aria-hidden="true"><use href="#i-target"/></svg> Le résultat</h3><p>Une boîte à outils installable où la saisie ne quitte pas la machine, sauf demande explicite d'analyse IA.</p></article>
+        </div>
+        <div class="c-title"><h2>En chiffres</h2><p>Périmètre réel du projet</p></div>
+        <dl class="tile c-metrics">
+            <div><dt>49</dt><dd>Outils</dd></div>
+            <div><dt>18</dt><dd>Leçons</dd></div>
+            <div><dt>9</dt><dd>Aide-mémoire</dd></div>
+            <div><dt>4</dt><dd>Modèles Claude</dd></div>
+            <div><dt>0</dt><dd>Serveur</dd></div>
+        </dl>
+        <div class="c-title"><h2>Architecture &amp; modules</h2><p>Ce qui relie les 49 outils entre eux.</p></div>
+        <div class="c-row c-3">
+            <article class="tile c-feature">
+                <header><span class="c-icon"><svg class="icon" aria-hidden="true"><use href="#i-layout-dashboard"/></svg></span><h3>Tableau de bord &amp; palette</h3></header>
+                <p>Favoris réordonnables, outils récemment utilisés, progression des leçons. Une palette <code class="inline">Ctrl + K</code> cherche parmi les outils et les actions (thème, réglages, export / import).</p>
+                <ul class="chips"><li class="chip">Dashboard</li><li class="chip">Ctrl + K</li><li class="chip">Favoris</li></ul>
+            </article>
+            <article class="tile c-feature">
+                <header><span class="c-icon"><svg class="icon" aria-hidden="true"><use href="#i-git-merge"/></svg></span><h3>Pipeline entre outils</h3></header>
+                <p>Le résultat d'un outil s'envoie dans un autre en un clic : un composable partagé garde le contenu en attente et l'outil cible ne l'accepte que s'il sait lire ce type de donnée.</p>
+                <ul class="chips"><li class="chip">usePipeline</li><li class="chip">Typage des entrées</li></ul>
+            </article>
+            <article class="tile c-feature">
+                <header><span class="c-icon"><svg class="icon" aria-hidden="true"><use href="#i-route"/></svg></span><h3>Liens de partage</h3></header>
+                <p>La saisie d'un outil est sérialisée en JSON, encodée en Base64 URL-safe et placée dans l'URL : un lien suffit pour rouvrir l'outil dans le même état.</p>
+                <ul class="chips"><li class="chip">useShareLink</li><li class="chip">Base64url</li></ul>
+            </article>
+            <article class="tile c-feature">
+                <header><span class="c-icon"><svg class="icon" aria-hidden="true"><use href="#i-sparkles"/></svg></span><h3>Analyse IA par outil</h3></header>
+                <p>Chaque outil peut ouvrir un panneau « Analyse IA » : le SDK Anthropic n'est chargé qu'à la première demande, la réponse arrive en streaming et peut être interrompue. Erreurs de clé et de débit traduites en français.</p>
+                <ul class="chips"><li class="chip">useClaude</li><li class="chip">Streaming</li><li class="chip">Import dynamique</li></ul>
+            </article>
+            <article class="tile c-feature">
+                <header><span class="c-icon"><svg class="icon" aria-hidden="true"><use href="#i-graduation-cap"/></svg></span><h3>Apprendre &amp; quiz</h3></header>
+                <p>18 leçons, de l'architecture d'un projet jusqu'à une app complète Vue 3 + PHP + PostgreSQL. Le meilleur score de chaque quiz est conservé localement.</p>
+                <ul class="chips"><li class="chip">useProgress</li><li class="chip">18 leçons</li><li class="chip">9 fiches</li></ul>
+            </article>
+            <article class="tile c-feature">
+                <header><span class="c-icon"><svg class="icon" aria-hidden="true"><use href="#i-wifi-off"/></svg></span><h3>Service worker maison</h3></header>
+                <p>Pré-cache du shell, réseau d'abord pour la navigation avec repli sur l'index en cache, cache d'abord pour les assets — cohérent puisque Vite hashe leurs noms.</p>
+                <ul class="chips"><li class="chip">sw.js</li><li class="chip">Cache-first</li><li class="chip">Sans dépendance</li></ul>
+            </article>
+        </div>
+        <div class="c-row c-end">
+            <section class="tile c-stack" aria-labelledby="stack-t">
+                <h2 class="eyebrow" id="stack-t" style="color:var(--accent)">Stack technique</h2>
+                <div><h3 class="eyebrow">Frontend</h3><ul><li class="chip chip--accent">Vue 3</li><li class="chip chip--accent">Composition API</li><li class="chip chip--accent">Vue Router</li><li class="chip chip--accent">Vite</li></ul></div>
+                <div><h3 class="eyebrow">État &amp; persistance</h3><ul><li class="chip chip--accent">Composables</li><li class="chip chip--accent">localStorage</li><li class="chip chip--accent">usePersistentRef</li></ul></div>
+                <div><h3 class="eyebrow">PWA</h3><ul><li class="chip chip--accent">Service worker maison</li><li class="chip chip--accent">Manifest installable</li></ul></div>
+                <div><h3 class="eyebrow">IA</h3><ul><li class="chip chip--accent">SDK Anthropic</li><li class="chip chip--accent">Streaming</li><li class="chip chip--accent">Clé côté client</li></ul></div>
+                <div><h3 class="eyebrow">Navigateur</h3><ul><li class="chip chip--accent">Web Crypto</li><li class="chip chip--accent">Clipboard API</li><li class="chip chip--accent">TextEncoder</li></ul></div>
+            </section>
+            <aside class="tile c-doc">
+                <div><p class="eyebrow">Documentation</p><h2>Fiche technique</h2><p>Contenu, langages, technologies et évolution du dépôt, sur une page.</p></div>
+                <a class="btn" href="../doc_technique/fiche-technique.html#devtoolbox">Lire la fiche <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+            </aside>
+        </div>
 
-        <nav class="p-pager" aria-label="Navigation entre les projets">
-            <a class="pager-link prev" href="../#projects"><svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg><span><span class="lbl">Retour</span><span class="ttl">Tous les projets</span></span></a>
-            <a class="pager-link next" href="./boxcraft.html"><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg><span><span class="lbl">Projet suivant</span><span class="ttl">BoxCraft</span></span></a>
+        <nav class="c-row c-pager" aria-label="Navigation entre les projets">
+            <a class="tile tile--link prev" href="../"><svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg><span><span class="lbl">Retour</span><span class="ttl">Accueil</span></span></a>
+            <a class="tile tile--link next" href="./boxcraft.html" data-accent="amber"><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg><span><span class="lbl">Projet suivant</span><span class="ttl">BoxCraft</span></span></a>
         </nav>
     </main>
 
     <footer class="footer">
-        <div class="shell footer-inner">
-            <p>&copy; 2026 Allan Vitu — Développeur Full-Stack & DevOps</p>
-            <div class="footer-social">
-                <a href="https://github.com/allanvitu" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
-                <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                <a href="https://www.instagram.com/allan.vitu/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12c0 3.259.014 3.668.072 4.948.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.668-.014 4.948-.072c1.277-.06 2.148-.261 2.913-.558.788-.306 1.459-.717 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
-            </div>
-        </div>
+        <p>&copy; 2026 Allan Vitu — Développeur Full-Stack & DevOps</p>
+        <nav aria-label="Liens">
+            <a href="../doc_technique/fiche-technique.html">Fiche technique</a>
+            <a href="https://github.com/allanvitu" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://www.linkedin.com/in/allan-vitu-74a11039a/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="mailto:allan.vitu90@gmail.com">allan.vitu90@gmail.com</a>
+        </nav>
     </footer>
 
-    <script src="../js/shader-bg.js" defer></script>
     <script src="../js/app.js" defer></script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"DevToolbox","description":"49 outils développeur, 18 leçons et 9 aide-mémoire dans une PWA Vue 3 qui fonctionne hors-ligne. Chaque outil peut demander une analyse à Claude, avec la clé API de l'utilisateur.","url":"https://allanvitu.github.io/DevToolsBox/","applicationCategory":"WebApplication","operatingSystem":"Web","author":{"@type":"Person","name":"Allan Vitu","url":"https://allanvitu.github.io/DevOps/docs/"},"image":"https://allanvitu.github.io/DevOps/docs/assets/media/devtoolbox/dashboard.webp"}</script>
 </body>

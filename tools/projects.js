@@ -9,7 +9,10 @@
    never presents work that has not been published.
 
    `live` is optional (a resource pack has nothing to open in a browser);
-   `repo` is always set. Order drives numbering, chapter order and paging.
+   `repo` is always set. Order drives numbering, tile order and paging.
+
+   `tile` picks the homepage bento tile: 'shot' shows the cover screenshot,
+   'rack' shows a logo over a row of item renders (dark tile).
    ========================================================================== */
 
 module.exports = [
@@ -20,14 +23,15 @@ module.exports = [
         theme: 'indigo',
         name: 'DevToolbox',
         title: 'DevToolbox — 49 outils développeur, IA intégrée',
-        flag: 'PWA · IA',
+        kind: 'PWA Vue 3 · IA intégrée',
+        period: 'Juin 2026',
+        tile: { style: 'shot' },
         tagline: 'Application Vue 3 hors-ligne, avec Claude branché dans chaque outil',
         summary:
             "49 outils développeur, 18 leçons et 9 aide-mémoire dans une PWA Vue 3 qui fonctionne hors-ligne. Chaque outil peut demander une analyse à Claude, avec la clé API de l'utilisateur.",
         intro:
             "DevToolbox rassemble les utilitaires du quotidien — JSON, SQL, encodage, hash, regex, cron, couleurs, réseau — dans une seule application installable. Autour des outils : un tableau de bord avec favoris et historique, une palette de commandes au clavier, 18 leçons illustrées avec quiz et suivi de progression, 9 aide-mémoire, et un assistant Claude qui peut analyser la saisie de n'importe quel outil.",
         tags: ['Vue 3', 'Vite', 'PWA', 'Claude API'],
-        filters: ['vue', 'pwa', 'api'],
         meta: [
             ['Rôle', 'Conception & développement'],
             ['Type', 'PWA Vue 3 hors-ligne'],
@@ -105,14 +109,19 @@ module.exports = [
         theme: 'amber',
         name: 'BoxCraft',
         title: 'BoxCraft — Resource pack pour serveur Minecraft',
-        flag: 'Minecraft',
+        kind: 'Resource pack Minecraft',
+        period: 'Août 2026',
+        tile: {
+            style: 'rack',
+            logo: 'media/boxcraft/logo.png',
+            rack: [['fusil', 'Fusil'], ['pistolet', 'Pistolet'], ['plasma', 'Plasma'], ['pompe', 'Fusil à pompe'], ['sniper', 'Sniper']],
+        },
         tagline: 'PvP · Survie · Quêtes — armes, armure et identité visuelle du serveur',
         summary:
             "Le resource pack du serveur Minecraft BoxCraft : 5 armes à feu modélisées en 3D, une lame, un grappin, une armure complète et le logo du serveur intégré à la police du jeu.",
         intro:
             "BoxCraft est un serveur Minecraft orienté PvP, survie et quêtes. Ce dépôt en contient le resource pack : chaque objet personnalisé a sa définition, son modèle et sa texture sous un namespace dédié, sans remplacer aucun objet du jeu de base. Les armes à feu sont de vrais modèles 3D en éléments cubiques, l'armure a ses couches d'équipement, et le logo du serveur est un glyphe de police utilisable dans le chat.",
         tags: ['Minecraft Java', 'JSON', 'Pixel art'],
-        filters: ['game'],
         meta: [
             ['Rôle', 'Modélisation, textures & packaging'],
             ['Type', 'Resource pack Minecraft Java'],
@@ -177,9 +186,10 @@ module.exports = [
         tier: 'soon',
         theme: 'emerald',
         name: 'App',
-        flag: 'En préparation',
+        kind: 'En préparation',
+        period: 'Août 2026',
         tags: ['Nouveau dépôt'],
-        filters: [],
+        tagline: 'Le prochain projet. Dépôt ouvert, premier commit de code à venir.',
         summary:
             "Dépôt ouvert le 28 août 2026, pas encore de code publié. Cette fiche se remplira au premier commit.",
         repo: 'https://github.com/AllanVitu/App',

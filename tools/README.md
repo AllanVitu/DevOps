@@ -16,8 +16,9 @@ GitHub Pages serves it directly with no build step.
 
 | File | Role |
 |------|------|
-| `build.js` | Renders every page. Holds the shared shell (head, nav, drawer, footer) that used to be copy-pasted across ten HTML files. |
-| `projects.js` | **The only file you normally edit.** One entry per project: copy, media, specs, case-study blocks, stack. |
+| `build.js` | Renders every page: the bento homepage, one case study per published project, and the shared head / footer. |
+| `projects.js` | **The file you normally edit.** One entry per public repository: copy, media, tile style, specs, case-study blocks, stack. |
+| `profile.js` | Everything on the homepage that is not a project: status, pitch, location, parcours, stack. |
 | `icons.js` | Inner markup of the Lucide icons used by the site. Each page inlines a sprite containing only the icons it actually renders — no icon CDN, no runtime JS to draw them. |
 | `dimensions.json` | Intrinsic width/height of every image, so `<img>` always carries dimensions and nothing shifts while loading. |
 
@@ -27,22 +28,23 @@ GitHub Pages serves it directly with no build step.
    `.avif` and `.webp` (see below).
 2. Add the dimensions to `dimensions.json` (key = path under `assets/`, without
    the extension).
-3. Add an entry to `projects.js`. `tier: 'featured'` gives it a full-width
-   chapter on the homepage (large screenshot, problem/solution columns, own
-   case-study page); `tier: 'soon'` is a repository with no published code
-   yet: a compact "en préparation" chapter, no page, no screenshot. Array
-   order drives numbering, chapter order, the sticky index and prev/next
-   paging.
+3. Add an entry to `projects.js`. `tier: 'featured'` gives it a homepage tile
+   and its own case-study page; `tier: 'soon'` is a repository with no
+   published code yet: a dashed "en préparation" tile linking to the repo, no
+   page. Array order drives numbering, tile order and prev/next paging.
 4. Run `node tools/build.js`.
 
-`narrative.problem` and `narrative.solution` are required for featured
-projects — they are what the homepage chapter shows under the title.
-`repo` is required; `live` is optional (a resource pack has nothing to open
-in a browser) and only adds the "Ouvrir" button when set.
+`tile.style` picks the homepage tile: `'shot'` shows the cover screenshot
+under the first three metrics; `'rack'` is a dark tile with a logo over a row
+of item renders (`tile.logo`, `tile.rack`). `repo` is required; `live` is
+optional (a resource pack has nothing to open in a browser) and only adds the
+"Ouvrir" button when set.
 
-The technology chips come from each project's `filters` array; the homepage
-only renders a chip if at least one project carries it, so removing a project
-can never leave a filter that matches nothing.
+The homepage grid (`.bento` in `site.css`) names its areas for **two featured
+projects and one "soon" repository** (`p1`, `p2`, `soon`), so the page fits a
+laptop screen without scrolling. A third featured project is still rendered,
+auto-placed after the grid; to give it a proper slot, add an area to the
+three `grid-template-areas` blocks (desktop, tablet, mobile).
 
 ## Re-encoding images
 
@@ -73,9 +75,13 @@ under its kebab-case name, then reference it as `icon('my-icon')` in `build.js`.
 
 Styling is **not** generated — edit the CSS directly:
 
-- `docs/css/site.css` — tokens, shell, homepage. Loaded everywhere.
+- `docs/css/site.css` — tokens (light + dark), tiles, buttons, bento homepage. Loaded everywhere.
 - `docs/css/project.css` — case-study pages only.
 
-A project page is themed by a single `data-project` value on `<body>`
-(`violet`, `cyan`, `amber`, `emerald`, `indigo`, `lime`); every component reads
-the resulting `--p` variable.
+Accents come from a `data-accent` attribute (`indigo`, `amber`, `emerald`,
+taken from each project's `theme`) on a tile or on a case study's `<body>`.
+It resolves `--accent` (text), `--accent-fill` (buttons, filled tiles) and
+`--on-accent` (text on that fill), which every component reads.
+
+`docs/js/app.js` is progressive enhancement only: theme toggle, tile
+spotlight and the case-study carousel. Every page reads fine without it.
