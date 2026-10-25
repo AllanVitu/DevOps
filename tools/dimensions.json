@@ -54,5 +54,57 @@
   "media/boxcraft/armor-layer": {
     "w": 64,
     "h": 32
+  },
+  "media/desktopoptimise/dashboard": {
+    "w": 1242,
+    "h": 801
+  },
+  "media/desktopoptimise/modes": {
+    "w": 1242,
+    "h": 801
+  },
+  "media/desktopoptimise/systeme": {
+    "w": 1242,
+    "h": 801
+  },
+  "media/desktopoptimise/journal": {
+    "w": 1242,
+    "h": 801
+  },
+  "media/desktopoptimise/icon": {
+    "w": 256,
+    "h": 256
+  },
+  "media/eclipsecraft/en-jeu": {
+    "w": 1600,
+    "h": 1000
+  },
+  "media/eclipsecraft/aventure": {
+    "w": 1600,
+    "h": 1000
+  },
+  "media/eclipsecraft/historique": {
+    "w": 1600,
+    "h": 1000
+  },
+  "media/eclipsecraft/wiki": {
+    "w": 1600,
+    "h": 1000
+  },
+  "media/eclipsecraft/crafts": {
+    "w": 1600,
+    "h": 1000
+  },
+  "media/eclipsecraft/reglages-themes": {
+    "w": 1600,
+    "h": 1000
+  },
+  "media/eclipsecraft/en-jeu-overworld": {
+    "w": 1600,
+    "h": 1000
+  },
+  "media/eclipsecraft/icon": {
+    "w": 256,
+    "h": 256
   }
 }

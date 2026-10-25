@@ -8,7 +8,7 @@ Static-site generator for `docs/`. Zero runtime dependencies — plain Node.
 node tools/build.js
 ```
 
-This regenerates `docs/index.html`, `docs/projects/*.html`, `docs/sitemap.xml`,
+This regenerates `docs/index.html`, `docs/projects/*.html`, `docs/apps/index.html`, `docs/sitemap.xml`,
 `docs/robots.txt` and `docs/site.webmanifest`. The output is committed, so
 GitHub Pages serves it directly with no build step.
 
@@ -19,6 +19,8 @@ GitHub Pages serves it directly with no build step.
 | `build.js` | Renders every page: the bento homepage, one case study per published project, and the shared head / footer. |
 | `projects.js` | **The file you normally edit.** One entry per public repository: copy, media, tile style, specs, case-study blocks, stack. |
 | `profile.js` | Everything on the homepage that is not a project: status, pitch, location, parcours, stack. |
+| `apps.js` | The downloadable Windows apps: copy, colours ("flavor"), screenshots, install steps, notes, download file and SHA-256, plus the shared FAQ. Drives `docs/apps/` and the homepage banner. |
+| `sprites.js` | Small original pixel-art sprites drawn as text, rendered as inline SVG floaters on the apps page. |
 | `icons.js` | Inner markup of the Lucide icons used by the site. Each page inlines a sprite containing only the icons it actually renders — no icon CDN, no runtime JS to draw them. |
 | `dimensions.json` | Intrinsic width/height of every image, so `<img>` always carries dimensions and nothing shifts while loading. |
 
@@ -45,6 +47,27 @@ projects and one "soon" repository** (`p1`, `p2`, `soon`), so the page fits a
 laptop screen without scrolling. A third featured project is still rendered,
 auto-placed after the grid; to give it a proper slot, add an area to the
 three `grid-template-areas` blocks (desktop, tablet, mobile).
+
+## The apps page
+
+`docs/apps/` presents the downloadable Windows apps listed in `apps.js`, one
+colour world ("flavor") per app, and the homepage gets a full-width banner
+tile (`t-apps`, grid area `apps`) linking to it. Styles live in
+`docs/css/apps.css` (the 3D `.box` packshot is in `site.css`, shared with the
+banner), motion in `docs/js/apps.js`.
+
+The ZIPs are too large for the repository, so they are **GitHub release
+assets of this repository**. For each app, create a release whose tag is
+`download.tag` and attach the ZIP named exactly `download.file`:
+
+```text
+https://github.com/AllanVitu/DevOps/releases/download/<download.tag>/<download.file>
+```
+
+When shipping a new version: rebuild the app, zip it with a single root
+folder, update `version`, `download.tag`, `download.file`, `download.size`
+(as Windows shows it, 1 Mo = 1 048 576 octets) and `download.sha256`
+(`Get-FileHash file.zip`), publish the release, then `node tools/build.js`.
 
 ## Re-encoding images
 
@@ -77,6 +100,7 @@ Styling is **not** generated — edit the CSS directly:
 
 - `docs/css/site.css` — tokens (light + dark), tiles, buttons, bento homepage. Loaded everywhere.
 - `docs/css/project.css` — case-study pages only.
+- `docs/css/apps.css` — the apps download page only.
 
 Accents come from a `data-accent` attribute (`indigo`, `amber`, `emerald`,
 taken from each project's `theme`) on a tile or on a case study's `<body>`.

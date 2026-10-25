@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 /* ==========================================================================
-   BUILD.JS — Renders docs/ from tools/projects.js and tools/profile.js.
+   BUILD.JS — Renders docs/ from tools/projects.js, tools/profile.js and
+   tools/apps.js.
 
    The homepage is a bento grid of tiles; each published project gets a
-   case-study page built from the same tiles. Output is committed, so GitHub
-   Pages needs no build step.
+   case-study page built from the same tiles, and the downloadable Windows
+   apps share one launch page (apps/). Output is committed, so GitHub Pages
+   needs no build step.
 
        node tools/build.js
 
@@ -17,9 +19,11 @@ const fs = require('fs');
 const path = require('path');
 
 const ICONS = require('./icons');
+const SPRITES = require('./sprites');
 const DIMS = require('./dimensions.json');
 const PROJECTS = require('./projects');
 const PROFILE = require('./profile');
+const { apps: APPS, faq: FAQ } = require('./apps');
 
 const ROOT = path.join(__dirname, '..');
 const DOCS = path.join(ROOT, 'docs');
@@ -46,6 +50,11 @@ const SITE = {
 };
 
 const FONTS = 'https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap';
+/* Display faces of the apps page only: condensed headings and the pixel font of TheEclipseCraft. */
+const APP_FONTS = 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,600..800&family=Pixelify+Sans:wght@500;700&display=swap';
+
+/* Downloads are GitHub release assets: the builds are too large for the repository. */
+const RELEASES = 'https://github.com/AllanVitu/DevOps/releases';
 
 /* --------------------------------------------------------------------------
    HELPERS
@@ -109,6 +118,53 @@ function picture(key, alt, { lazy = true, sizes = null, cls = '' } = {}) {
     );
 }
 
+/** Inline SVG of a pixel sprite from sprites.js: one <rect> per horizontal run of one colour. */
+function pixelArt(name) {
+    const sprite = SPRITES[name];
+    if (!sprite) throw new Error(`unknown sprite: ${name}`);
+    const { rows, colors } = sprite;
+    const rects = [];
+    rows.forEach((row, y) => {
+        for (let x = 0; x < row.length; ) {
+            const c = row[x];
+            let end = x + 1;
+            while (row[end] === c) end++;
+            if (c !== '.') rects.push(`<rect x="${x}" y="${y}" width="${end - x}" height="1" fill="${colors[c]}"/>`);
+            x = end;
+        }
+    });
+    return `<svg class="pixel" viewBox="0 0 ${rows[0].length} ${rows.length}" aria-hidden="true">${rects.join('')}</svg>`;
+}
+
+/* --------------------------------------------------------------------------
+   APPS — downloadable Windows apps (tools/apps.js)
+   -------------------------------------------------------------------------- */
+const downloadUrl = (a) => `${RELEASES}/download/${a.download.tag}/${a.download.file}`;
+
+/** The flavor of an app as CSS variables, under --f-* (or another prefix). */
+const flavorVars = (a, p = 'f') => {
+    const f = a.flavor;
+    return `--${p}-a:${f.a};--${p}-b:${f.b};--${p}-deep:${f.deep};--${p}-pop:${f.pop};--${p}-on:${f.on};--${p}-text:${f.text};`;
+};
+
+/** The software box of an app, in CSS 3D (styles in site.css). Decorative. */
+function box(a, { cls = '', s = null } = {}) {
+    const dim = DIMS[`media/${a.media}/icon`];
+    if (!dim) throw new Error(`no dimensions for: media/${a.media}/icon`);
+    return (
+        `<div class="box${cls ? ` ${cls}` : ''}" style="${flavorVars(a)}${s ? `--s:${s};` : ''}" aria-hidden="true"><div class="box-3d">` +
+        `<div class="face front" data-pattern="${a.flavor.pattern}">` +
+        `<span class="box-meta"><span>${esc(SITE.name)}</span><b>v${esc(a.version)}</b></span>` +
+        `<img src="ASSETSmedia/${a.media}/icon.png" alt="" width="${dim.w}" height="${dim.h}" loading="lazy" decoding="async">` +
+        `<span class="box-name">${esc(a.name)}</span><span class="box-tag">${esc(a.box.tag)}</span></div>` +
+        `<div class="face back"><b>${esc(a.name)}</b><ul>${a.box.back.map((t) => `<li>${esc(t)}</li>`).join('')}</ul><span class="box-code"></span></div>` +
+        `<div class="face side right"><span>${esc(a.name)}</span></div>` +
+        `<div class="face side left"><span>${esc(a.box.spine)}</span></div>` +
+        `<div class="face cap top"></div><div class="face cap bottom"></div>` +
+        `</div></div>`
+    );
+}
+
 /* --------------------------------------------------------------------------
    BRAND MARKS
    Simple-Icons paths — these are filled, not stroked, so they stay out of the
@@ -136,8 +192,12 @@ const ext = (href) => (href.startsWith('http') ? ' target="_blank" rel="noopener
 /* --------------------------------------------------------------------------
    SHELL
    -------------------------------------------------------------------------- */
-function head({ title, description, canonical, ogImage, depth, extraCss }) {
+/* `css` lists the page's stylesheets beyond site.css; `fonts` its extra Google Fonts URLs. */
+function head({ title, description, canonical, ogImage, depth, css = [], fonts = [] }) {
     const u = up(depth);
+    const extraFonts = fonts
+        .map((f) => `\n<link rel="stylesheet" media="print" onload="this.media='all'" href="${f}">\n<noscript><link rel="stylesheet" href="${f}"></noscript>`)
+        .join('');
     return `<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -177,16 +237,16 @@ document.documentElement.dataset.theme=s||(matchMedia('(prefers-color-scheme: da
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="${FONTS}">
 <link rel="stylesheet" media="print" onload="this.media='all'" href="${FONTS}">
-<noscript><link rel="stylesheet" href="${FONTS}"></noscript>
+<noscript><link rel="stylesheet" href="${FONTS}"></noscript>${extraFonts}
 
-<link rel="stylesheet" href="${u}css/site.css">${extraCss ? `\n<link rel="stylesheet" href="${u}css/project.css">` : ''}
+<link rel="stylesheet" href="${u}css/site.css">${css.map((name) => `\n<link rel="stylesheet" href="${u}css/${name}.css">`).join('')}
 </head>`;
 }
 
 const themeToggle = (icon) =>
     `<button class="theme-toggle" id="themeToggle" type="button" aria-label="Changer de thème">${icon('sun', 'icon icon-sun')}${icon('moon', 'icon icon-moon')}</button>`;
 
-function footer({ depth }) {
+function footer({ depth, scripts = [] }) {
     const u = up(depth);
     return `
     <footer class="footer">
@@ -199,7 +259,7 @@ function footer({ depth }) {
         </nav>
     </footer>
 
-    <script src="${u}js/app.js" defer></script>`;
+    <script src="${u}js/app.js" defer></script>${scripts.map((name) => `\n    <script src="${u}js/${name}.js" defer></script>`).join('')}`;
 }
 
 /* --------------------------------------------------------------------------
@@ -246,6 +306,27 @@ function buildIndex() {
             </a>`;
     };
 
+    /* The downloadable apps, as one full-width banner linking to apps/. Its
+       colours come from the first two flavors. */
+    const appsTile = () => {
+        if (APPS.length < 2) return '';
+        const [a, b] = APPS;
+        const names = APPS.map((x) => esc(x.name));
+        const band = [...names, 'Gratuit', 'Windows 10 · 11', 'ZIP portable', 'Sans compte'].join(' ✦ ');
+        return `
+            <a class="tile tile--link t-apps" href="./apps/" style="${flavorVars(a, 'fa')}${flavorVars(b, 'fb')}--i:${++i}" aria-label="Télécharger mes apps Windows : ${names.join(' et ')}">
+                ${arrow}
+                <div class="copy">
+                    <p class="eyebrow">À télécharger · Windows</p>
+                    <h2>Deux apps Windows,<br>prêtes à installer.</h2>
+                    <p>${names.join(' et ')} : gratuites, sans compte, en ZIP portable. Présentation complète et téléchargement sur la page dédiée.</p>
+                    <ul class="chips">${APPS.map((x) => `<li class="chip">${esc(x.name)} ${esc(x.version)} · ${esc(x.download.size)}</li>`).join('')}</ul>
+                </div>
+                <span class="duo">${APPS.map((x) => box(x)).join('')}</span>
+                <span class="band" aria-hidden="true"><span>${band} ✦ ${band} ✦ ${band} ✦ ${band} ✦ </span></span>
+            </a>`;
+    };
+
     const soonTile = (p, n) => `
             <a class="tile tile--link t-soon" href="${p.repo}" target="_blank" rel="noopener noreferrer" data-accent="${p.theme}" style="${n === 0 ? 'grid-area:soon;' : ''}--i:${++i}" aria-label="Dépôt ${esc(p.name)} sur GitHub — ${esc(p.kind)}">
                 ${arrow}
@@ -276,6 +357,7 @@ function buildIndex() {
                 </div>
             </section>
 ${featured.map(featuredTile).join('')}
+${appsTile()}
 
             <figure class="tile t-photo" style="--i:${++i}">
                 ${picture(PROFILE.avatar, 'Portrait d’Allan Vitu', { sizes: '(max-width: 700px) 92vw, 240px' })}
@@ -320,10 +402,18 @@ ${SOON.map(soonTile).join('')}
         sameAs: [SITE.github, SITE.linkedin, SITE.instagram],
         knowsAbout: ['Vue.js', 'Vite', 'PHP', 'Docker', 'CI/CD', 'Progressive Web Apps', 'Claude API', 'DevOps'],
         alumniOf: { '@type': 'EducationalOrganization', name: 'Centre de Réadaptation de Mulhouse' },
-        makesOffer: PAGES.map((p) => ({
-            '@type': 'Offer',
-            itemOffered: { '@type': 'SoftwareApplication', name: p.name, description: p.summary, url: p.live || p.repo },
-        })),
+        makesOffer: [
+            ...PAGES.map((p) => ({
+                '@type': 'Offer',
+                itemOffered: { '@type': 'SoftwareApplication', name: p.name, description: p.summary, url: p.live || p.repo },
+            })),
+            ...APPS.map((a) => ({
+                '@type': 'Offer',
+                price: '0',
+                priceCurrency: 'EUR',
+                itemOffered: { '@type': 'SoftwareApplication', name: a.name, description: a.pitch, url: `${SITE.base}apps/#${a.slug}` },
+            })),
+        ],
     });
 
     const body = `<body class="home">
@@ -342,7 +432,7 @@ ${footer({ depth: 0 })}
         head({
             title: `${SITE.name} — ${SITE.role}`,
             description:
-                "Portfolio d'Allan Vitu, développeur Full-Stack & DevOps : DevToolbox (PWA Vue 3 avec IA intégrée), BoxCraft (resource pack Minecraft) et les projets à venir.",
+                "Portfolio d'Allan Vitu, développeur Full-Stack & DevOps : DevToolbox (PWA Vue 3 avec IA intégrée), BoxCraft (resource pack Minecraft), deux apps Windows à télécharger et les projets à venir.",
             canonical: SITE.base,
             ogImage: `${SITE.base}assets/media/devtoolbox/dashboard.webp`,
             depth: 0,
@@ -527,7 +617,253 @@ ${footer({ depth: 1 })}
             canonical: `${SITE.base}projects/${p.slug}.html`,
             ogImage: `${SITE.base}assets/media/${p.media}/${p.cover}.webp`,
             depth: 1,
-            extraCss: true,
+            css: ['project'],
+        }) + body
+    );
+}
+
+/* --------------------------------------------------------------------------
+   APPS PAGE — download page for the Windows apps, one colour world per app.
+   Motion lives in js/apps.js; this markup is complete without it.
+   -------------------------------------------------------------------------- */
+
+/* Where the floating "ingredients" sit, around the hero boxes (first three
+   around the first app, last three around the second) and around a
+   chapter's pinned box. Positions are relative to their container. */
+const HERO_SLOTS = [
+    { x: '13%', y: '25%', size: 62, depth: 1.4 },
+    { x: '22%', y: '80%', size: 52, depth: 0.8 },
+    { x: '3%', y: '70%', size: 44, depth: 1.9 },
+    { x: '84%', y: '13%', size: 56, depth: 1.2 },
+    { x: '76%', y: '63%', size: 64, depth: 1.6 },
+    { x: '94%', y: '50%', size: 44, depth: 0.9 },
+];
+const PIN_SLOTS = [
+    { x: '6%', y: '14%', size: 78, depth: 1.3, spin: 70 },
+    { x: '74%', y: '9%', size: 62, depth: 0.8, spin: -60 },
+    { x: '82%', y: '52%', size: 86, depth: 1.6, spin: 90 },
+    { x: '3%', y: '60%', size: 64, depth: 1, spin: -40 },
+    { x: '62%', y: '82%', size: 56, depth: 1.2, spin: 50 },
+    { x: '22%', y: '86%', size: 50, depth: 1.8, spin: -80 },
+];
+
+const WAVE = 'M0 48C180 8 360 8 540 40S900 88 1080 52 1320 8 1440 30V80H0Z';
+
+function buildApps() {
+    const { icon, resolve } = makeIconSet();
+    const names = APPS.map((a) => a.name);
+
+    const floater = (a, item, slot, n) => {
+        const inner = a.floaters.type === 'pixel' ? pixelArt(item) : `<span class="chipicon">${icon(item)}</span>`;
+        return `<span class="a-float" style="${flavorVars(a)}--x:${slot.x};--y:${slot.y};--size:${slot.size}px;--depth:${slot.depth};--spin:${slot.spin || 40};--delay:${(-n * 0.7).toFixed(1)}s"><span>${inner}</span></span>`;
+    };
+
+    /* "1 657" counts up from 0 in apps.js; anything else stays as written. */
+    const number = ([value, label]) => {
+        const m = /^(\d[\d\s ]*)(.*)$/.exec(value);
+        const count = m ? ` data-count="${m[1].replace(/\D/g, '')}"${m[2] ? ` data-suffix="${esc(m[2])}"` : ''}` : '';
+        return `<div><dt${count}>${esc(value)}</dt><dd>${esc(label)}</dd></div>`;
+    };
+
+    const dlButton = (a, label, cls = 'a-btn') =>
+        `<a class="${cls}" href="${downloadUrl(a)}" data-download style="${flavorVars(a)}">${icon('download')} ${label}</a>`;
+
+    const band = (a, cls) => {
+        const words = [a.name, ...a.band].map(esc).join('<i>✦</i>') + '<i>✦</i>';
+        return `<p class="a-band ${cls}" style="${flavorVars(a)}" aria-hidden="true"><span>${words.repeat(4)}</span></p>`;
+    };
+
+    /* ---- hero ---- */
+    const hero = `
+        <section class="a-hero" aria-labelledby="hero-t">
+            <p class="a-kicker">${esc(SITE.name)} · Apps Windows gratuites</p>
+            <p class="lead">Découvrez mes deux apps</p>
+            <h1 class="d" id="hero-t">${APPS.map((a) => `<span class="name" style="${flavorVars(a)}">${esc(a.name)}</span>`).join(' <span class="amp">et</span> ')}</h1>
+            <p class="sub">Deux saveurs, une même recette : faites main, gratuites, sans compte, et livrées en ZIP prêt à lancer.</p>
+            <div class="acts">
+                <a class="a-btn a-btn--ink" href="#gamme">Voir la gamme ${icon('arrow-down', 'icon icon-down')}</a>
+            </div>
+            <div class="duo" aria-hidden="true">${APPS.map((a, n) => box(a, { cls: `b${n + 1}` })).join('')}</div>
+            <span class="a-sticker s1" style="${flavorVars(APPS[0])}" aria-hidden="true">100&nbsp;%<br>gratuit</span>
+            <span class="a-sticker s2" style="${flavorVars(APPS[1])}" aria-hidden="true">Windows<br>10 · 11</span>
+            ${APPS.map((a, n) => a.floaters.items.slice(0, 3).map((it, k) => floater(a, it, HERO_SLOTS[n * 3 + k], k)).join('')).join('')}
+            ${APPS.map((a, n) => band(a, `r${n + 1}`)).join('')}
+        </section>`;
+
+    /* ---- la gamme ---- */
+    const range = `
+        <section class="a-section" id="gamme" aria-labelledby="gamme-t">
+            <h2 class="a-h2 d" id="gamme-t" data-reveal>La gamme</h2>
+            <p class="a-sub" data-reveal>Deux apps, deux saveurs. L’une remet ton PC d’attaque, l’autre accompagne tes parties de Minecraft.</p>
+            <div class="a-cards">${APPS.map(
+                (a, n) => `
+                <article class="a-card" style="${flavorVars(a)}--rd:${n * 0.12}s"${a.font ? ` data-font="${a.font}"` : ''} data-reveal>
+                    <p class="num">Saveur n°${n + 1} · ${esc(a.flavor.label)}</p>
+                    ${box(a)}
+                    <h3 class="d">${esc(a.name)}</h3>
+                    <p>${esc(a.card)}</p>
+                    <ul class="chips">${a.chips.map((c) => `<li class="chip">${esc(c)}</li>`).join('')}</ul>
+                    <div class="acts">
+                        <a class="a-btn" href="#${a.slug}">Découvrir ${icon('arrow-down')}</a>
+                        ${dlButton(a, `Télécharger <small>${esc(a.download.size)}</small>`, 'a-btn a-btn--ghost')}
+                    </div>
+                </article>`
+            ).join('')}
+            </div>
+        </section>`;
+
+    /* ---- one chapter per app ---- */
+    const chapter = (a, n) => {
+        const dim = DIMS[`media/${a.media}/icon`];
+        const shots = a.shots
+            .map(
+                ([file, alt]) => `
+                        <figure class="a-shot">
+                            <div class="win"><div class="bar"><i></i><i></i><i></i><b>${esc(a.name)}</b></div>${picture(`media/${a.media}/${file}`, alt, { sizes: '(max-width: 700px) 80vw, 780px' })}</div>
+                            <figcaption>${esc(alt)}</figcaption>
+                        </figure>`
+            )
+            .join('');
+
+        return `
+        <section class="a-flavor" id="${a.slug}" style="${flavorVars(a)}"${a.font ? ` data-font="${a.font}"` : ''} aria-labelledby="${a.slug}-t">
+            <svg class="a-wave" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="${WAVE}"/></svg>
+            <div class="a-stage" data-scene>
+                <div class="a-pin" aria-hidden="true">
+                    ${box(a)}
+                    ${a.floaters.items.map((it, k) => floater(a, it, PIN_SLOTS[k % PIN_SLOTS.length], k)).join('')}
+                </div>
+                <div class="a-story">
+                    <p class="a-kicker">Saveur n°${n + 1} · ${esc(a.flavor.label)}</p>
+                    <h2 class="a-name d" id="${a.slug}-t">${esc(a.name)}</h2>
+                    <p class="a-tagline"><span>${esc(a.tagline)}</span></p>
+                    <p class="a-pitch">${esc(a.pitch)}</p>
+                    <dl class="a-nums">${a.numbers.map(number).join('')}</dl>
+
+                    <div class="a-ticket" data-reveal>
+                        <img class="ico" src="ASSETSmedia/${a.media}/icon.png" alt="" width="${dim.w}" height="${dim.h}" loading="lazy" decoding="async">
+                        <div>
+                            <p class="t-name">${esc(a.name)} ${esc(a.version)}</p>
+                            <p class="t-meta">${esc(a.download.meta)} · ${esc(a.download.size)}</p>
+                        </div>
+                        ${dlButton(a, `Télécharger <small>${esc(a.download.file)}</small>`)}
+                        <div class="dash" aria-hidden="true"></div>
+                        <p class="a-hash"><span>SHA-256</span><code>${esc(a.download.sha256)}</code><button type="button" data-copy="${esc(a.download.sha256)}" aria-label="Copier l’empreinte SHA-256 de ${esc(a.name)}">${icon('copy')}<span>Copier</span></button></p>
+                        <p class="alt">Toutes les versions sur <a href="${RELEASES}" target="_blank" rel="noopener noreferrer">GitHub Releases</a>.</p>
+                    </div>
+
+                    <h3 class="a-ingr-title d" data-reveal>Les ingrédients</h3>
+                    <ul class="a-ingr">${a.features
+                        .map(([ic, title, text], k) => `
+                        <li data-reveal style="--rd:${(k % 2) * 0.1}s"><span class="ic">${icon(ic)}</span><h4>${esc(title)}</h4><p>${text}</p></li>`)
+                        .join('')}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="a-reel" data-reel>
+                <div class="a-reel-sticky">
+                    <div class="a-reel-head">
+                        <h3 class="d">En vrai, ça donne ça</h3>
+                        <p>${a.shots.length} captures · faites défiler →</p>
+                    </div>
+                    <div class="a-reel-track" tabindex="0" role="region" aria-label="Captures d’écran de ${esc(a.name)}">${shots}
+                    </div>
+                </div>
+            </div>
+
+            <div class="a-how">
+                <div data-reveal>
+                    <h3 class="d">Installer en 3&nbsp;étapes</h3>
+                    <ol class="a-steps">${a.steps.map((s) => `<li><span>${s}</span></li>`).join('')}</ol>
+                    <ul class="a-req">${a.requirements.map((r) => `<li class="chip">${esc(r)}</li>`).join('')}</ul>
+                </div>
+                <aside class="a-notes" data-reveal style="--rd:0.15s" aria-label="Bon à savoir sur ${esc(a.name)}">
+                    <h3>Bon à savoir</h3>
+                    <ul>${a.notes.map((t) => `<li><span>${t}</span></li>`).join('')}</ul>
+                </aside>
+            </div>
+        </section>`;
+    };
+
+    /* ---- which one? ---- */
+    const pick = `
+        <section class="a-section" aria-labelledby="pick-t">
+            <h2 class="a-h2 d" id="pick-t" data-reveal>Laquelle est faite pour toi&nbsp;?</h2>
+            <div class="a-pick-grid">${APPS.map(
+                (a, n) => `
+                <div class="a-pick-col" style="${flavorVars(a)}--rd:${n * 0.12}s"${a.font ? ` data-font="${a.font}"` : ''} data-reveal>
+                    <h3 class="d">${esc(a.name)}</h3>
+                    <ul>${a.pick.map((t) => `<li><span>${esc(t)}</span></li>`).join('')}</ul>
+                    ${dlButton(a, `Télécharger <small>${esc(a.download.size)}</small>`)}
+                </div>`
+            ).join('\n                <p class="a-pick-vs d" aria-hidden="true">ou</p>')}
+            </div>
+        </section>`;
+
+    const faq = `
+        <section class="a-section a-faq" id="faq" aria-labelledby="faq-t">
+            <h2 class="a-h2 d" id="faq-t" data-reveal>Questions</h2>
+            ${FAQ.map(([q, a]) => `<details data-reveal><summary>${esc(q)}</summary><div class="ans">${a}</div></details>`).join('\n            ')}
+        </section>`;
+
+    const end = `
+        <section class="a-end" aria-labelledby="end-t">
+            <h2 class="d" id="end-t" data-reveal>Bonne install’&nbsp;!</h2>
+            <p data-reveal>Un bug, une idée, un retour&nbsp;? Écris-moi à <a href="mailto:${SITE.email}">${SITE.email}</a>.</p>
+            <div class="acts" data-reveal>${APPS.map((a) => dlButton(a, esc(a.name))).join('')}</div>
+            <a class="home" href="../">← Retour au portfolio</a>
+        </section>`;
+
+    const jsonLd = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': APPS.map((a) => ({
+            '@type': 'SoftwareApplication',
+            name: a.name,
+            description: a.pitch,
+            softwareVersion: a.version,
+            applicationCategory: a.category,
+            operatingSystem: 'Windows 10, Windows 11',
+            downloadUrl: downloadUrl(a),
+            fileSize: a.download.size,
+            url: `${SITE.base}apps/#${a.slug}`,
+            image: `${SITE.base}assets/media/${a.media}/icon.png`,
+            offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+            author: { '@type': 'Person', name: SITE.name, url: SITE.base },
+        })),
+    });
+
+    const body = `<body class="apps-page">
+${SPRITE_SLOT}
+    <a class="skip-link" href="#main">Aller au contenu</a>
+
+    <header class="a-nav">
+        <a class="brand" href="../">${picture(PROFILE.avatar, '', { sizes: '34px' })}<span>${SITE.name}</span></a>
+        <nav aria-label="Navigation">
+            ${APPS.map((a) => `<a href="#${a.slug}" style="${flavorVars(a)}"><span class="long">${esc(a.name)}</span><span class="short">${esc(a.short)}</span></a>`).join('\n            ')}
+            <a href="#faq">FAQ</a>
+        </nav>
+        ${themeToggle(icon)}
+    </header>
+
+    <main id="main">${hero}${range}${APPS.map(chapter).join('')}${pick}${faq}${end}
+    </main>
+${footer({ depth: 1, scripts: ['apps'] })}
+    <script type="application/ld+json">${jsonLd}</script>
+</body>
+</html>
+`;
+
+    const first = APPS[0];
+    return resolve(
+        head({
+            title: `Télécharger ${names.join(' & ')} — ${SITE.name}`,
+            description: `${names.join(' et ')}, deux apps Windows gratuites d’${SITE.name} : présentation, captures, installation et téléchargement.`,
+            canonical: `${SITE.base}apps/`,
+            ogImage: `${SITE.base}assets/media/${first.media}/${first.shots[0][0]}.webp`,
+            depth: 1,
+            css: ['apps'],
+            fonts: [APP_FONTS],
         }) + body
     );
 }
@@ -562,6 +898,7 @@ function buildSitemap() {
     const today = new Date().toISOString().slice(0, 10);
     const urls = [
         { loc: SITE.base, priority: '1.0' },
+        ...(APPS.length ? [{ loc: `${SITE.base}apps/`, priority: '0.9' }] : []),
         ...PAGES.map((p) => ({ loc: `${SITE.base}projects/${p.slug}.html`, priority: '0.8' })),
         { loc: `${SITE.base}${SITE.doc}`, priority: '0.6' },
     ];
@@ -601,7 +938,8 @@ function write(rel, content) {
 console.log('building docs/\n');
 write('index.html', buildIndex());
 PAGES.forEach((p, i) => write(`projects/${p.slug}.html`, buildProject(p, i)));
+if (APPS.length) write('apps/index.html', buildApps());
 write('site.webmanifest', buildManifest());
 write('sitemap.xml', buildSitemap());
 write('robots.txt', ROBOTS);
-console.log(`\ndone — ${PROJECTS.length} projects (${PAGES.length} with a page)`);
+console.log(`\ndone — ${PROJECTS.length} projects (${PAGES.length} with a page), ${APPS.length} downloadable apps`);

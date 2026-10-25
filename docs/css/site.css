@@ -193,19 +193,90 @@ html[data-theme='dark'] .theme-toggle .icon-moon { opacity: 1; transform: none; 
 .tile--link .eyebrow { padding-right: 48px; }
 
 /* --------------------------------------------------------------------------
+   4b. BOX — a software box in CSS 3D: the "packshot" of a downloadable app.
+   Used by the homepage tile and the apps page. --s scales it; colours come
+   from the flavor variables of the app (--f-a, --f-b, --f-deep, --f-pop,
+   --f-on), set inline by the build. --ry / --rx turn it; apps.js may drive
+   them from the scroll position.
+   -------------------------------------------------------------------------- */
+@property --ry { syntax: '<angle>'; inherits: true; initial-value: -28deg; }
+
+.box {
+    --s: 1;
+    --w: calc(220px * var(--s));
+    --h: calc(300px * var(--s));
+    --d: calc(66px * var(--s));
+    position: relative; flex-shrink: 0;
+    width: var(--w); height: var(--h);
+    perspective: calc(1500px * var(--s));
+    font-size: calc(16px * var(--s));
+}
+.box::after {
+    content: ''; position: absolute; left: 8%; right: 8%; bottom: -16%; height: 12%;
+    background: radial-gradient(closest-side, rgba(0, 0, 0, 0.32), transparent);
+}
+.box-3d { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transform: rotateX(var(--rx, -9deg)) rotateY(var(--ry)); }
+.box .face { position: absolute; left: 50%; top: 50%; overflow: hidden; backface-visibility: hidden; }
+.box .front, .box .back { width: var(--w); height: var(--h); margin: calc(var(--h) / -2) 0 0 calc(var(--w) / -2); }
+.box .side { width: var(--d); height: var(--h); margin: calc(var(--h) / -2) 0 0 calc(var(--d) / -2); }
+.box .cap { width: var(--w); height: var(--d); margin: calc(var(--d) / -2) 0 0 calc(var(--w) / -2); }
+.box .front { transform: translateZ(calc(var(--d) / 2)); }
+.box .back { transform: rotateY(180deg) translateZ(calc(var(--d) / 2)); }
+.box .right { transform: rotateY(90deg) translateZ(calc(var(--w) / 2)); }
+.box .left { transform: rotateY(-90deg) translateZ(calc(var(--w) / 2)); }
+.box .top { transform: rotateX(90deg) translateZ(calc(var(--h) / 2)); }
+.box .bottom { transform: rotateX(-90deg) translateZ(calc(var(--h) / 2)); }
+
+.box .front {
+    display: flex; flex-direction: column; padding: 1em;
+    background: radial-gradient(120% 70% at 30% 0%, color-mix(in srgb, var(--f-pop) 45%, transparent), transparent 60%), linear-gradient(170deg, var(--f-a), var(--f-b));
+    color: var(--f-on);
+}
+/* Two cover patterns: speed stripes and a pixel grid. */
+.box .front[data-pattern='stripes']::before,
+.box .front[data-pattern='pixels']::before { content: ''; position: absolute; inset: 0; pointer-events: none; }
+.box .front[data-pattern='stripes']::before { background: repeating-linear-gradient(118deg, transparent 0 1.1em, rgba(255, 255, 255, 0.07) 1.1em 2.2em); }
+.box .front[data-pattern='pixels']::before {
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px) 0 0 / 0.75em 0.75em,
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px) 0 0 / 0.75em 0.75em;
+}
+.box .front > * { position: relative; }
+.box-meta { display: flex; justify-content: space-between; align-items: center; font: 700 0.6em/1 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+.box-meta b { padding: 0.35em 0.6em; border-radius: var(--r-full); background: var(--f-pop); color: var(--f-deep); }
+.box .front img { width: 54%; margin: auto auto 0; filter: drop-shadow(0 0.5em 0.6em rgba(0, 0, 0, 0.35)); image-rendering: auto; }
+.box-name { display: block; margin-top: auto; font: 800 1.42em/0.92 var(--font-display, var(--font-sans)); letter-spacing: -0.02em; text-transform: uppercase; }
+.box-tag { display: block; margin-top: 0.45em; font-size: 0.62em; font-weight: 600; opacity: 0.85; }
+
+.box .back { display: flex; flex-direction: column; gap: 0.5em; padding: 1em; background: var(--f-deep); color: #fff; font-size: 0.7em; }
+.box .back ul { display: grid; gap: 0.45em; margin-top: 0.4em; }
+.box .back li::before { content: '✦ '; color: var(--f-pop); }
+.box-code { margin-top: auto; height: 3.2em; background: repeating-linear-gradient(90deg, #fff 0 2px, transparent 2px 4px, #fff 4px 5px, transparent 5px 8px, #fff 8px 11px, transparent 11px 13px); opacity: 0.85; }
+
+.box .side { display: grid; place-items: center; background: var(--f-deep); color: #fff; }
+.box .side span { writing-mode: vertical-rl; font: 800 0.8em var(--font-display, var(--font-sans)); text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
+.box .right span { transform: rotate(180deg); }
+.box .left { background: color-mix(in srgb, var(--f-deep) 80%, #000); }
+.box .left span { color: var(--f-pop); }
+.box .cap { background: var(--f-b); }
+.box .bottom { background: var(--f-deep); }
+
+/* --------------------------------------------------------------------------
    5. HOMEPAGE — BENTO
-   Four rows share the viewport, so the page barely scrolls on a laptop. The
-   areas are written for two featured projects and one "soon" repository;
-   anything beyond that is auto-placed after the grid.
+   Two pairs of rows each take half the viewport, with the full-width apps
+   banner between them. The areas are written for two featured projects and
+   one "soon" repository; anything beyond that is auto-placed after the grid.
    -------------------------------------------------------------------------- */
 .bento {
     max-width: 1440px; margin: 0 auto; padding: 20px;
     display: grid; gap: var(--gap);
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    grid-template-rows: repeat(4, minmax(190px, calc((100svh - 40px - 3 * var(--gap)) / 4)));
+    --row: minmax(190px, calc((100svh - 40px - 3 * var(--gap)) / 4));
+    grid-template-rows: var(--row) var(--row) minmax(250px, auto) var(--row) var(--row);
     grid-template-areas:
         'intro intro intro intro intro p1 p1 p1 p1 p1 photo photo'
         'intro intro intro intro intro p1 p1 p1 p1 p1 git git'
+        'apps apps apps apps apps apps apps apps apps apps apps apps'
         'p2 p2 p2 p2 path path path path stack stack stack stack'
         'p2 p2 p2 p2 path path path path soon soon contact contact';
     grid-auto-rows: minmax(260px, auto);
@@ -309,6 +380,46 @@ html[data-theme='dark'] .theme-toggle .icon-moon { opacity: 1; transform: none; 
 .t-contact .soc a:hover { background: rgba(255, 255, 255, 0.32); }
 .t-contact .soc .icon { width: 16px; height: 16px; }
 
+/* --- apps: full-width banner, the two downloadable apps spinning over a
+   moving band. Fixed colours from both flavors (--fa-* and --fb-*), set
+   inline by the build, so it reads the same in both themes. --- */
+.t-apps {
+    grid-area: apps; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 24px;
+    padding: 30px 34px; border: 0; color: var(--fa-on);
+    /* The seam falls between the two boxes, so each spins on its own colour. */
+    background: linear-gradient(100deg, var(--fa-a) 0 calc(100% - 262px), var(--fb-a) calc(100% - 262px));
+    --accent-fill: var(--fa-pop); --on-accent: var(--fa-deep);
+}
+.t-apps .copy, .t-apps .duo { position: relative; z-index: 1; }
+.t-apps .eyebrow { color: inherit; opacity: 0.85; display: inline-flex; align-items: center; gap: 8px; }
+.t-apps .eyebrow::before { content: 'Nouveau'; padding: 4px 9px; border-radius: var(--r-full); background: var(--fa-pop); color: var(--fa-deep); font-weight: 700; animation: wiggle 2.6s var(--ease) infinite; }
+@keyframes wiggle { 0%, 70%, 100% { rotate: 0deg; } 76% { rotate: -6deg; } 84% { rotate: 5deg; } 92% { rotate: -2deg; } }
+.t-apps h2 { font-size: clamp(30px, 3.4vw, 46px); font-weight: 800; letter-spacing: -0.045em; line-height: 0.98; margin-top: 12px; }
+.t-apps .copy > p:not(.eyebrow) { font-size: 14.5px; line-height: 1.5; margin-top: 10px; max-width: 46ch; opacity: 0.88; }
+.t-apps .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.t-apps .chip { background: rgba(255, 255, 255, 0.14); color: inherit; }
+.t-apps .arrow { background: rgba(255, 255, 255, 0.16); color: var(--fb-on); }
+
+.t-apps .duo { display: flex; align-items: center; gap: 34px; padding: 0 78px 10px 0; }
+.t-apps .box { --s: 0.62; animation: box-spin 16s linear infinite, box-bob 3.4s ease-in-out infinite; transition: scale 0.4s var(--ease); }
+.t-apps .box + .box { animation-delay: -8s, -1.7s; }
+.t-apps:hover .box { scale: 1.07; }
+@keyframes box-spin { from { --ry: -28deg; } to { --ry: 332deg; } }
+@keyframes box-bob { 50% { translate: 0 -9px; } }
+
+.t-apps .band {
+    /* Runs behind the boxes only, fading in at mid-tile so it never crosses the copy. */
+    position: absolute; left: 46%; right: -3%; top: 54%; rotate: -5deg;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%); mask-image: linear-gradient(90deg, transparent, #000 18%);
+    padding: 9px 0; overflow: hidden; white-space: nowrap;
+    background: #fff5e8; color: #1e150d;
+    font: 800 15px/1 var(--font-sans); letter-spacing: 0.02em; text-transform: uppercase;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+.t-apps .band span { display: inline-block; padding-right: 0; animation: marquee 26s linear infinite; }
+.t-apps:hover .band span { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
 /* --------------------------------------------------------------------------
    6. FOOTER
    -------------------------------------------------------------------------- */
@@ -332,6 +443,7 @@ html[data-theme='dark'] .theme-toggle .icon-moon { opacity: 1; transform: none; 
             'intro intro intro intro intro intro'
             'p1 p1 p1 p1 photo photo'
             'p1 p1 p1 p1 git git'
+            'apps apps apps apps apps apps'
             'p2 p2 p2 path path path'
             'p2 p2 p2 path path path'
             'stack stack stack stack stack stack'
@@ -343,9 +455,16 @@ html[data-theme='dark'] .theme-toggle .icon-moon { opacity: 1; transform: none; 
 @media (max-width: 700px) {
     .bento {
         grid-template-columns: minmax(0, 1fr);
-        grid-template-areas: 'intro' 'p1' 'photo' 'git' 'p2' 'path' 'stack' 'soon' 'contact';
+        grid-template-areas: 'intro' 'p1' 'apps' 'photo' 'git' 'p2' 'path' 'stack' 'soon' 'contact';
         padding: 12px; --gap: 12px;
     }
+    .t-apps {
+        grid-template-columns: minmax(0, 1fr); padding: 26px 26px 34px;
+        background: linear-gradient(90deg, var(--fa-a) 50%, var(--fb-a) 50%) bottom / 100% 250px no-repeat, var(--fa-a);
+    }
+    .t-apps .duo { justify-content: center; gap: 22px; padding: 46px 0 0; }
+    .t-apps .box { --s: 0.56; }
+    .t-apps .band { left: -3%; top: auto; bottom: 120px; -webkit-mask-image: none; mask-image: none; }
     .t-intro { padding: 26px; min-height: 0; }
     .t-intro h1 { margin-top: 40px; }
     .t-shot { min-height: 440px; }
