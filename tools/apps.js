@@ -166,7 +166,7 @@ const apps = [
             file: 'TheEclipseCraft-2.0.0-win-x64.zip',
             size: '151 Mo',
             meta: 'Windows 10 · 11 (x64) · ZIP portable',
-            sha256: 'dbbe3722afa06b67d6837ce41e1c2addff51cbd4714b7609fcf20152e5c1859d',
+            sha256: '2a1a209e73423f5469f454214ed7f5c76344969dd9fea2d1c78da610e4eeaa4b',
         },
     },
 ];
